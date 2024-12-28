@@ -1,0 +1,578 @@
+:root {
+  --font-color: #fff;
+  --font-color-dark: #000;
+  --flex-direction-column: column;
+}
+
+body {
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+
+.dark-mode {
+  background-color: var(--font-color-dark);
+  color: var(--font-color);
+}
+
+.dark-mode header,
+.dark-mode body,
+.dark-mode footer {
+  background-color: var(--font-color-dark);
+  color: var(--font-color);
+  border: 1px solid var(--font-color);
+}
+
+.dark-mode input {
+  background-color: #fff;
+}
+
+.dark-mode #forgotPwdForm {
+  background-color: var(--font-color);
+  color: var(--font-color-dark);
+}
+
+.dark-mode #RegisterBtnOnLoginPage {
+  background-color: #007bff;
+  color: var(--font-color);
+}
+
+.dark-mode #LoginBtnOnRegisterPage {
+  background-color: #007bff;
+  color: var(--font-color);
+}
+
+.dark-mode label {
+  color: var(--font-color-dark);
+}
+
+.dark-mode .TablePaper {
+  background-color: var(--font-color-dark);
+  color: var(--font-color);
+  border: 1px solid #eee;
+}
+
+.dark-mode .tableFont {
+  color: var(--font-color);
+}
+
+.dark-mode .TableFooter {
+  color: var(--font-color);
+}
+
+.dark-mode .FilterList {
+  color: var(--font-color);
+}
+
+.dark-mode .TableHeader {
+  color: var(--font-color);
+}
+
+.dark-mode .TableCell {
+  color: var(--font-color);
+}
+
+.dark-mode .ContainerVisibility {
+  background-color: #fff;
+}
+
+.dark-mode .UserDetailTableHeader {
+  color: var(--font-color-dark);
+}
+
+
+.dark-mode .UserDetailTableBody {
+  background-color: #fff;
+  color: black;
+}
+
+.dark-mode .toggleButton {
+  color: var(--font-color);
+}
+
+.dark-mode .DeleteIconOnTable {
+  color: var(--font-color);
+}
+
+.dark-mode .EditPageFontColor {
+  color: var(--font-color-dark);
+}
+
+.dark-mode #CancelButton {
+  background-color: red;
+  color: var(--font-color-);
+}
+
+.dark-mode #PasswordSaveLabel {
+  color: #fff;
+}
+
+.dark-mode #AuthentificationLabel {
+  color: #fff;
+}
+
+.dark-mode .UserDetailButton {
+  color: #fff;
+}
+
+.dark-mode #BtnCancel {
+  color: black;
+}
+
+/* ----------------------------------------- */
+
+.light-mode {
+  background-color: var(--font-color);
+  color: var(--font-color-dark);
+}
+
+.light-mode body,
+.light-mode label {
+  color: var(--font-color-dark);
+}
+
+.light-mode header,
+.light-mode footer {
+  color: var(--font-color);
+}
+
+/* ----------------------------------------- */
+
+.modalConfigPage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* ----------------------------------------- */
+.ContainerConfigPage {
+  height: 550px;
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.BoxConfigPage {
+  display: flex;
+  flex-direction: var(--flex-direction-column);
+  align-items: center;
+  text-align: center;
+  gap: 15px;
+  width: 100%;
+  min-height: 600px;
+  margin-top: 100px;
+}
+
+.ConfigPageButton {
+  width: 300px;
+  height: 100px;
+}
+
+.BoxConfigPageButtonIcon {
+  display: flex;
+  flex-direction: var(--flex-direction-column);
+  align-items: center;
+  gap: 8px;
+}
+
+.ConfigPageFont {
+  font-size: 1.3rem;
+  padding: 0;
+  margin: 0;
+}
+
+.ConfigPageButtonIcon {
+  width: 40px;
+  height: 40px;
+}
+
+/* ----------------------------------------- */
+
+#AdminPageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: var(--flex-direction-column);
+}
+
+.input-group {
+  min-width: 400px;
+}
+
+/* ----------------------------------------- */
+
+#ContainerProfile {
+  margin: 0 auto;
+  width: fit-content;
+  height: 950px;
+  display: flex;
+  flex-direction: var(--flex-direction-column);
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: -50px;
+  font-weight: bold;
+}
+
+#FormProfile {
+  display: flex;
+  flex-direction: var(--flex-direction-column);
+  gap: 15px;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: fit-content;
+  justify-content: center;
+  align-content: center;
+  color: #000;
+}
+
+#SubmitButtonProfile {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.inputStyleProfile {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* ----------------------------------------- */
+
+#ContainerDashboard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: var(--flex-direction-column);
+  width: 60%;
+  position: absolute;
+  left: 19%;
+}
+
+/* ----------------------------------------- */
+
+#ContainerPwdForgot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  flex-direction: var(--flex-direction-column);
+}
+
+#forgotPwdForm {
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  text-align: center;
+}
+
+#ContainerSuccessMessagePWDForgot {
+  color: #155724;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+#ContainerErrorMessagePWDForgot {
+  color: #721c24;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+#LabelPWDForgot {
+  display: block;
+  text-align: left;
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #000;
+}
+
+#EmailPWDForgot {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+#SubmitBtnPWDForgot {
+  width: 100%;
+  padding: 12px;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #1976d2;
+}
+
+/* ----------------------------------------- */
+
+#ContainerNotFound {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: var(--flex-direction-column);
+  background-color: #f8d7da;
+}
+
+/* ----------------------------------------- */
+#UserDetailContainer {
+  text-align: center;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: var(--flex-direction-column);
+  width: 100%;
+  height: 700px;
+  margin-bottom: 50px;
+
+}
+
+#UserDetailTable {
+  margin: 0;
+  border-collapse: collapse;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+}
+
+.UserDetailTableHeader {
+  padding: 10px;
+  border: 1px solid #ddd;
+  width: 25vmax;
+  height: 7vh;
+
+}
+
+.UserDetailTableBody {
+  padding: 10px;
+  border: 2px solid #ddd;
+  width: 25vmax;
+  height: 7vh;
+
+}
+
+#UserDetailModalContainer {
+  position: absolute;
+  left: 150px;
+  top: 750px;
+}
+
+.UserDetailButton {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  transform: scale(1.3);
+}
+
+.BtnCancel {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  transform: scale(1.3);
+}
+
+#UserDetailModal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 850px;
+  width: 100%;
+}
+
+#UserDetailModalContent {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  min-width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#UserDetailModalError {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+#UserDetailModalContentStyle {
+  position: relative;
+  left: 12%;
+  width: fit-content;
+  margin-top: 5%;
+}
+
+/* ----------------------------------------- */
+
+.ContainerLogin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+/* ----------------------------------------- */
+@media (max-width: 700px) {
+  #ContainerProfile {
+    left: 30px;
+  }
+}
+
+@media (max-width: 550px) {
+  .ContainerConfigPage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 50px;
+  }
+
+  #ContainerProfile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 500px) {
+  #ContainerDashboard {
+    margin-left: 6%;
+  }
+
+  .ContainerConfigPage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #ContainerProfile {
+    left: 25px;
+    width: 50%;
+  }
+}
+
+@media (max-width: 430px) {
+  #AdminContainer {
+    height: 110vh;
+  }
+
+  .input-group {
+    min-width: 280px;
+    margin-left: 50px;
+  }
+
+  #AdminHeader {
+    font-size: 17px;
+    margin-left: 50px;
+    margin-bottom: 20px;
+  }
+
+  #AdminActionsContainer {
+    flex-direction: var(--flex-direction-column);
+    margin-left: 50px;
+  }
+
+  #PasswordSaveLabel {
+    margin-left: 135px;
+  }
+
+  #AuthentificationLabel {
+    margin-left: 115px;
+  }
+
+
+  #UserDetailContainer {
+    margin-left: 30px;
+  }
+
+  .UserDetailTableHeader {
+    width: 126px;
+  }
+
+  .UserDetailTableBody {
+    width: 125px;
+  }
+
+  #UserDetailModalContainer {
+    left: 100px;
+  }
+
+  .FooterLorem {
+    margin-left: 25px;
+  }
+
+  .modalConfigPage {
+    width: 75%;
+    position: relative;
+    top: 350px;
+  }
+}
+
+@media (max-width: 376px) {
+  #AdminContainer {
+    height: 115vh;
+  }
+
+  #AuthentificationLabel {
+    margin-left: 90px;
+  }
+
+}
+
+@media (max-width: 360px) {
+  #ContainerDashboard {
+    margin-left: 8%;
+  }
+}
+
+@media (max-width: 321px) {
+  #AuthentificationLabel {
+    margin-left: 80px;
+  }
+
+  #PasswordSaveLabel {
+    margin-left: 120px;
+  }
+
+  #UserDetailContainer {
+    margin-left: 52px;
+  }
+
+  #UserDetailModalContainer {
+    left: 60px;
+  }
+}

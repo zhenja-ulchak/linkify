@@ -1,0 +1,484 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "user1",
+      "nickname": "nick1",
+      "name": {
+        "first_name": "FirstName1",
+        "last_name": "LastName1"
+      },
+      "password": "hashed_password_1",
+      "group": "admin",
+      "status": "active",
+      "actions": "actions",
+      "admin": "admin",
+      "license": {
+        "paid_at": "2024-11-09T14:15:09.694363",
+        "valid_until": "2024-11-29T14:15:09.694384"
+      },
+      "avatar": "https://example.com/avatar1.jpg",
+      "email": "user1@example.com",
+      "phone": "+491710000001",
+      "mobile": "+491510000001",
+      "created_at": "2024-10-30T14:15:09.694394",
+      "last_change": "2024-11-18T14:15:09.694398"
+    },
+    {
+      "id": 2,
+      "username": "user2",
+      "nickname": "nick2",
+      "name": {
+        "first_name": "FirstName2",
+        "last_name": "LastName2"
+      },
+      "password": "hashed_password_2",
+      "group": "user",
+      "status": "active",
+      "actions": "actions",
+      "admin": "admin",
+      "license": {
+        "paid_at": "2024-10-30T14:15:09.694406",
+        "valid_until": "2024-12-09T14:15:09.694410"
+      },
+      "avatar": "https://example.com/avatar2.jpg",
+      "email": "user2@example.com",
+      "phone": "+491710000002",
+      "mobile": "+491510000002",
+      "created_at": "2024-10-10T14:15:09.694416",
+      "last_change": "2024-11-17T14:15:09.694421"
+    },
+    {
+      "id": 3,
+      "username": "user3",
+      "nickname": "nick3",
+      "name": {
+        "first_name": "FirstName3",
+        "last_name": "LastName3"
+      },
+      "password": "hashed_password_3",
+      "group": "admin",
+      "status": "inactive",
+      "actions": "actions",
+      "admin": "admin",
+      "license": {
+        "paid_at": "2024-10-20T14:15:09.694429",
+        "valid_until": "2024-12-19T14:15:09.694432"
+      },
+      "avatar": "https://example.com/avatar3.jpg",
+      "email": "user3@example.com",
+      "phone": "+491710000003",
+      "mobile": "+491510000003",
+      "created_at": "2024-09-20T14:15:09.694437",
+      "last_change": "2024-11-16T14:15:09.694440"
+    },
+    {
+      "id": 4,
+      "username": "user4",
+      "nickname": "nick4",
+      "name": {
+        "first_name": "FirstName4",
+        "last_name": "LastName4"
+      },
+      "password": "hashed_password_4",
+      "group": "user",
+      "status": "active",
+      "actions": "actions",
+      "admin": "admin",
+      "license": {
+        "paid_at": "2024-10-10T14:15:09.694446",
+        "valid_until": "2024-12-29T14:15:09.694449"
+      },
+      "avatar": "https://example.com/avatar4.jpg",
+      "email": "user4@example.com",
+      "phone": "+491710000004",
+      "mobile": "+491510000004",
+      "created_at": "2024-08-31T14:15:09.694454",
+      "last_change": "2024-11-15T14:15:09.694457"
+    },
+    {
+      "id": 5,
+      "username": "user5",
+      "nickname": "nick5",
+      "name": {
+        "first_name": "FirstName5",
+        "last_name": "LastName5"
+      },
+      "password": "hashed_password_5",
+      "group": "admin",
+      "status": "active",
+      "actions": "actions",
+      "admin": "admin",
+      "license": {
+        "paid_at": "2024-09-30T14:15:09.694463",
+        "valid_until": "2025-01-08T14:15:09.694466"
+      },
+      "avatar": "https://example.com/avatar5.jpg",
+      "email": "user5@example.com",
+      "phone": "+491710000005",
+      "mobile": "+491510000005",
+      "created_at": "2024-08-11T14:15:09.694471",
+      "last_change": "2024-11-14T14:15:09.694474"
+    },
+    {
+      "id": 6,
+      "username": "user6",
+      "nickname": "nick6",
+      "name": {
+        "first_name": "FirstName6",
+        "last_name": "LastName6"
+      },
+      "password": "hashed_password_6",
+      "group": "user",
+      "status": "inactive",
+      "actions": "actions",
+      "admin": "admin",
+      "license": {
+        "paid_at": "2024-09-20T14:15:09.694479",
+        "valid_until": "2025-01-18T14:15:09.694483"
+      },
+      "avatar": "https://example.com/avatar6.jpg",
+      "email": "user6@example.com",
+      "phone": "+491710000006",
+      "mobile": "+491510000006",
+      "created_at": "2024-07-22T14:15:09.694487",
+      "last_change": "2024-11-13T14:15:09.694491"
+    },
+    {
+      "id": 7,
+      "username": "user7",
+      "nickname": "nick7",
+      "name": {
+        "first_name": "FirstName7",
+        "last_name": "LastName7"
+      },
+      "password": "hashed_password_7",
+      "group": "admin",
+      "status": "active",
+      "actions": "actions",
+      "admin": "admin",
+      "license": {
+        "paid_at": "2024-09-10T14:15:09.694496",
+        "valid_until": "2025-01-28T14:15:09.694500"
+      },
+      "avatar": "https://example.com/avatar7.jpg",
+      "email": "user7@example.com",
+      "phone": "+491710000007",
+      "mobile": "+491510000007",
+      "created_at": "2024-07-02T14:15:09.694504",
+      "last_change": "2024-11-12T14:15:09.694508"
+    },
+    {
+      "id": 8,
+      "username": "user8",
+      "nickname": "nick8",
+      "name": {
+        "first_name": "FirstName8",
+        "last_name": "LastName8"
+      },
+      "password": "hashed_password_8",
+      "group": "user",
+      "status": "active",
+      "actions": "actions",
+      "admin": "admin",
+      "license": {
+        "paid_at": "2024-08-31T14:15:09.694516",
+        "valid_until": "2025-02-07T14:15:09.694521"
+      },
+      "avatar": "https://example.com/avatar8.jpg",
+      "email": "user8@example.com",
+      "phone": "+491710000008",
+      "mobile": "+491510000008",
+      "created_at": "2024-06-12T14:15:09.694526",
+      "last_change": "2024-11-11T14:15:09.694529"
+    },
+    {
+      "id": 9,
+      "username": "user9",
+      "nickname": "nick9",
+      "name": {
+        "first_name": "FirstName9",
+        "last_name": "LastName9"
+      },
+      "password": "hashed_password_9",
+      "group": "admin",
+      "status": "inactive",
+      "actions": "actions",
+      "admin": "admin",
+      "license": {
+        "paid_at": "2024-08-21T14:15:09.694535",
+        "valid_until": "2025-02-17T14:15:09.694538"
+      },
+      "avatar": "https://example.com/avatar9.jpg",
+      "email": "user9@example.com",
+      "phone": "+491710000009",
+      "mobile": "+491510000009",
+      "created_at": "2024-05-23T14:15:09.694543",
+      "last_change": "2024-11-10T14:15:09.694546"
+    },
+    {
+      "id": 10,
+      "username": "user10",
+      "nickname": "nick10",
+      "name": {
+        "first_name": "FirstName10",
+        "last_name": "LastName10"
+      },
+      "password": "hashed_password_10",
+      "group": "user",
+      "status": "active",
+      "actions": "actions",
+      "admin": "admin",
+      "license": {
+        "paid_at": "2024-08-11T14:15:09.694552",
+        "valid_until": "2025-02-27T14:15:09.694556"
+      },
+      "avatar": "https://example.com/avatar10.jpg",
+      "email": "user10@example.com",
+      "phone": "+491710000010",
+      "mobile": "+491510000010",
+      "created_at": "2024-05-03T14:15:09.694561",
+      "last_change": "2024-11-09T14:15:09.694565"
+    },
+    {
+      "id": 11,
+      "username": "user11",
+      "nickname": "nick11",
+      "name": {
+        "first_name": "FirstName11",
+        "last_name": "LastName11"
+      },
+      "password": "hashed_password_11",
+      "group": "admin",
+      "status": "active",
+      "actions": "actions",
+      "admin": "admin",
+      "license": {
+        "paid_at": "2024-08-01T14:15:09.694570",
+        "valid_until": "2025-03-09T14:15:09.694574"
+      },
+      "avatar": "https://example.com/avatar11.jpg",
+      "email": "user11@example.com",
+      "phone": "+491710000011",
+      "mobile": "+491510000011",
+      "created_at": "2024-04-13T14:15:09.694578",
+      "last_change": "2024-11-08T14:15:09.694582"
+    },
+    {
+      "id": 12,
+      "username": "user12",
+      "nickname": "nick12",
+      "name": {
+        "first_name": "FirstName12",
+        "last_name": "LastName12"
+      },
+      "password": "hashed_password_12",
+      "group": "user",
+      "status": "inactive",
+      "actions": "actions",
+      "admin": "admin",
+      "license": {
+        "paid_at": "2024-07-22T14:15:09.694587",
+        "valid_until": "2025-03-19T14:15:09.694591"
+      },
+      "avatar": "https://example.com/avatar12.jpg",
+      "email": "user12@example.com",
+      "phone": "+491710000012",
+      "mobile": "+491510000012",
+      "created_at": "2024-03-24T14:15:09.694597",
+      "last_change": "2024-11-07T14:15:09.694600"
+    },
+    {
+      "id": 13,
+      "username": "user13",
+      "nickname": "nick13",
+      "name": {
+        "first_name": "FirstName13",
+        "last_name": "LastName13"
+      },
+      "password": "hashed_password_13",
+      "group": "admin",
+      "status": "active",
+      "actions": "actions",
+      "admin": "admin",
+      "license": {
+        "paid_at": "2024-07-12T14:15:09.694605",
+        "valid_until": "2025-03-29T14:15:09.694608"
+      },
+      "avatar": "https://example.com/avatar13.jpg",
+      "email": "user13@example.com",
+      "phone": "+491710000013",
+      "mobile": "+491510000013",
+      "created_at": "2024-03-04T14:15:09.694613",
+      "last_change": "2024-11-06T14:15:09.694616"
+    },
+    {
+      "id": 14,
+      "username": "user14",
+      "nickname": "nick14",
+      "name": {
+        "first_name": "FirstName14",
+        "last_name": "LastName14"
+      },
+      "password": "hashed_password_14",
+      "group": "user",
+      "status": "active",
+      "actions": "actions",
+      "admin": "admin",
+      "license": {
+        "paid_at": "2024-07-02T14:15:09.694637",
+        "valid_until": "2025-04-08T14:15:09.694641"
+      },
+      "avatar": "https://example.com/avatar14.jpg",
+      "email": "user14@example.com",
+      "phone": "+491710000014",
+      "mobile": "+491510000014",
+      "created_at": "2024-02-13T14:15:09.694646",
+      "last_change": "2024-11-05T14:15:09.694649"
+    },
+    {
+      "id": 15,
+      "username": "user15",
+      "nickname": "nick15",
+      "name": {
+        "first_name": "FirstName15",
+        "last_name": "LastName15"
+      },
+      "password": "hashed_password_15",
+      "group": "admin",
+      "status": "inactive",
+      "actions": "actions",
+      "admin": "admin",
+      "license": {
+        "paid_at": "2024-06-22T14:15:09.694654",
+        "valid_until": "2025-04-18T14:15:09.694658"
+      },
+      "avatar": "https://example.com/avatar15.jpg",
+      "email": "user15@example.com",
+      "phone": "+491710000015",
+      "mobile": "+491510000015",
+      "created_at": "2024-01-24T14:15:09.694662",
+      "last_change": "2024-11-04T14:15:09.694666"
+    },
+    {
+      "id": 16,
+      "username": "user16",
+      "nickname": "nick16",
+      "name": {
+        "first_name": "FirstName16",
+        "last_name": "LastName16"
+      },
+      "password": "hashed_password_16",
+      "group": "user",
+      "status": "active",
+      "actions": "actions",
+      "admin": "admin",
+      "license": {
+        "paid_at": "2024-06-12T14:15:09.694671",
+        "valid_until": "2025-04-28T14:15:09.694674"
+      },
+      "avatar": "https://example.com/avatar16.jpg",
+      "email": "user16@example.com",
+      "phone": "+491710000016",
+      "mobile": "+491510000016",
+      "created_at": "2024-01-04T14:15:09.694678",
+      "last_change": "2024-11-03T14:15:09.694682"
+    },
+    {
+      "id": 17,
+      "username": "user17",
+      "nickname": "nick17",
+      "name": {
+        "first_name": "FirstName17",
+        "last_name": "LastName17"
+      },
+      "password": "hashed_password_17",
+      "group": "admin",
+      "status": "active",
+      "actions": "actions",
+      "admin": "admin",
+      "license": {
+        "paid_at": "2024-06-02T14:15:09.694687",
+        "valid_until": "2025-05-08T14:15:09.694690"
+      },
+      "avatar": "https://example.com/avatar17.jpg",
+      "email": "user17@example.com",
+      "phone": "+491710000017",
+      "mobile": "+491510000017",
+      "created_at": "2023-12-15T14:15:09.694695",
+      "last_change": "2024-11-02T14:15:09.694698"
+    },
+    {
+      "id": 18,
+      "username": "user18",
+      "nickname": "nick18",
+      "name": {
+        "first_name": "FirstName18",
+        "last_name": "LastName18"
+      },
+      "password": "hashed_password_18",
+      "group": "user",
+      "status": "inactive",
+      "actions": "actions",
+      "admin": "admin",
+      "license": {
+        "paid_at": "2024-05-23T14:15:09.694704",
+        "valid_until": "2025-05-18T14:15:09.694707"
+      },
+      "avatar": "https://example.com/avatar18.jpg",
+      "email": "user18@example.com",
+      "phone": "+491710000018",
+      "mobile": "+491510000018",
+      "created_at": "2023-11-25T14:15:09.694713",
+      "last_change": "2024-11-01T14:15:09.694717"
+    },
+    {
+      "id": 19,
+      "username": "user19",
+      "nickname": "nick19",
+      "name": {
+        "first_name": "FirstName19",
+        "last_name": "LastName19"
+      },
+      "password": "hashed_password_19",
+      "group": "admin",
+      "status": "active",
+      "actions": "actions",
+      "admin": "admin",
+      "license": {
+        "paid_at": "2024-05-13T14:15:09.694721",
+        "valid_until": "2025-05-28T14:15:09.694725"
+      },
+      "avatar": "https://example.com/avatar19.jpg",
+      "email": "user19@example.com",
+      "phone": "+491710000019",
+      "mobile": "+491510000019",
+      "created_at": "2023-11-05T14:15:09.694729",
+      "last_change": "2024-10-31T14:15:09.694733"
+    },
+    {
+      "id": 20,
+      "username": "user20",
+      "nickname": "nick20",
+      "name": {
+        "first_name": "FirstName20",
+        "last_name": "LastName20"
+      },
+      "password": "hashed_password_20",
+      "group": "user",
+      "status": "active",
+      "actions": "actions",
+      "admin": "admin",
+      "license": {
+        "paid_at": "2024-05-03T14:15:09.694738",
+        "valid_until": "2025-06-07T14:15:09.694741"
+      },
+      "avatar": "https://example.com/avatar20.jpg",
+      "email": "user20@example.com",
+      "phone": "+491710000020",
+      "mobile": "+491510000020",
+      "created_at": "2023-10-16T14:15:09.694745",
+      "last_change": "2024-10-30T14:15:09.694749"
+    }
+  ]
+}
