@@ -5,7 +5,7 @@
       "password": "Пароль",
       "loginError": "Неверное имя пользователя или пароль",
       "registrierung": "Регистрация",
-      "passwort-vergessen": "Забыли свой пароль?"
+      "passwort-vergessen": "Вы забыли свой пароль?"
     },
     "LocaleSwitcher": {
       "en": "English",
@@ -13,7 +13,24 @@
       "ua": "Ukrainian",
       "ru": "Russian",
       "label": "Change Language"
+    },
+    "Dashboard": {
+        "dashboard": "Панель управления",
+        "welcome-message": "Здравствуйте и добро пожаловать! Спасибо, что присоединились к Linkify"
+      },
+      "Panel-sidebar": {
+        "dashboard": "Панель управления",
+        "user": "Пользователь",
+        "admin": "Администратор",
+        "admin-profile": "Профиль администратора",
+        "profile": "Профиль",
+        "logout": "Выход",
+        "smtp-email": "SMTP-Почта",
+        "admin-liste": "Список администраторов",
+        "Einstellungen": "Настройки",
+        "Superadmin": "Суперадминистратор"
+      }
     }
     
-  }
+
   

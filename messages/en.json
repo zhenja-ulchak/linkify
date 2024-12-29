@@ -13,7 +13,22 @@
       "ua": "Ukrainian",
       "ru": "Russian",
       "label": "Change Language"
+    },
+    "Dashboard": {
+      "dashboard": "Dashboard",
+      "welcome-message": "Hello and welcome! Thank you for joining Linkify"
+    },
+    "Panel-sidebar": {
+      "user": "User",
+      "admin": "Admin",
+      "admin-profile": "Admin-Profile",
+      "profile": "Profile",
+      "dashboard": "Dashboard",
+      "logout": "Logout",
+      "smtp-email": "SMTP-Email",
+      "admin-liste": "Admin list",
+      "Einstellungen": "Settings",
+      "Superadmin": "Superadmin"
     }
-    
   }
   

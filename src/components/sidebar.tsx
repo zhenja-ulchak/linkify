@@ -30,6 +30,8 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import SecurityIcon from '@mui/icons-material/Security';
 import axios from "axios";
+import { useTranslations } from "next-intl";
+
 
 const drawerWidth = 240;
 
@@ -157,18 +159,11 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
   };
 
 
-
-
-
-
-
-
-
-
-
   const handleImageClick = () => {
     router.push("/customer");
   };
+
+  const t = useTranslations("Panel-sidebar");
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -220,7 +215,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
           <ListItem disablePadding>
             <ListItemButton onClick={() => handleLogout()}>
               <Logout />
-              <ListItemText primary="Logout" style={{ marginLeft: "31px" }} />
+              <ListItemText primary={t("logout")} style={{ marginLeft: "31px" }} />
             </ListItemButton>
           </ListItem>
 
@@ -229,7 +224,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
               <ListItemIcon className="DashboadAndTableIcon">
                 <DashboardIcon style={{ color: "black" }} />
               </ListItemIcon>
-              <ListItemText primary="Dashboard" />
+              <ListItemText primary={t("dashboard")} />
             </ListItemButton>
           </ListItem>
 
@@ -238,7 +233,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
               <ListItemIcon className="DashboadAndTableIcon">
                 <FormatListBulletedIcon style={{ color: "black" }} />
               </ListItemIcon>
-              <ListItemText primary="User" />
+              <ListItemText primary={t("user")} />
             </ListItemButton>
           </ListItem>
           <ListItem
@@ -253,7 +248,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
               onClick={() => handleNavigation("/customer/profile")}
             >
               <AccountCircleIcon />
-              <ListItemText primary="Profile" style={{ marginLeft: "31px" }} />
+              <ListItemText primary={t("profile")} style={{ marginLeft: "31px" }} />
             </ListItemButton>
           </ListItem>
 
@@ -275,7 +270,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
             >
               <AdminPanelSettingsIcon />
               <ListItemText
-                primary="Admin"
+                primary={t("admin")}
                 style={{ marginLeft: "31px" }}
               />
             </ListItemButton>
@@ -284,14 +279,14 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
           <ListItem disablePadding>
             <ListItemButton onClick={() => handleNavigation("/customer/Admin-Profile")}>
               <AccountCircleIcon />
-              <ListItemText primary="Admin-Profile" style={{ marginLeft: "31px" }} />
+              <ListItemText primary={t("admin-profile")} style={{ marginLeft: "31px" }} />
             </ListItemButton>
           </ListItem>
 
           <ListItem disablePadding>
             <ListItemButton onClick={() => handleNavigation("/customer/SMTP-Email")}>
               <SupervisorAccountIcon />
-              <ListItemText primary="SMTP-Email" style={{ marginLeft: "31px" }} />
+              <ListItemText primary={t("smtp-email")} style={{ marginLeft: "31px" }} />
             </ListItemButton>
           </ListItem>
 
@@ -301,7 +296,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
               <ListItemIcon className="DashboadAndTableIcon">
                 <FormatListBulletedIcon style={{ color: "black" }} />
               </ListItemIcon>
-              <ListItemText primary="Adminliste" />
+              <ListItemText primary={t("admin-liste")} />
             </ListItemButton>
           </ListItem>
 
@@ -318,7 +313,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
             >
               <SettingsIcon />
               <ListItemText
-                primary="Einstellungen"
+                primary={t("Einstellungen")}
                 style={{ marginLeft: "31px" }}
               />
             </ListItemButton>
@@ -342,7 +337,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
             >
               <SecurityIcon />
               <ListItemText
-                primary="Superadmin"
+                primary={t("Superadmin")}
                 style={{ marginLeft: "31px" }}
               />
             </ListItemButton>
