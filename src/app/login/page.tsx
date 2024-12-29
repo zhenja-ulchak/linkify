@@ -15,6 +15,8 @@ import axios from "axios";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import ApiService from "../services/apiService";
+import { useTranslations } from 'next-intl';
+import LocaleSwitcher from '../../app/../components/LocaleSwitcher'; // Import LanguageSwitcher component
 
 
 const Login: React.FC = () => {
@@ -25,6 +27,7 @@ const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // Track login status
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null); // State to track the remaining time
+  const t = useTranslations('Login'); // Переводы для компонента логина
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
@@ -104,13 +107,16 @@ const Login: React.FC = () => {
 
   return (
     <>
+<div className="locale-switcher-container" style={{ position: 'absolute', top: '13px', left: '66px' }}>
+  <LocaleSwitcher />
+</div>
       <Button
         id="RegisterBtnOnLoginPage"
         sx={{ float: "right", marginTop: "10px", marginRight: "10px" }}
         variant="outlined"
         onClick={handleRegistrierung}
       >
-        Registrierung
+        {t("registrierung")}
       </Button>
 
       <Container maxWidth="sm" className="ContainerLogin">
@@ -122,12 +128,12 @@ const Login: React.FC = () => {
           minHeight="100vh"
         >
           <Typography variant="h2" component="h2" gutterBottom>
-            Login
+          {t("login")} 
           </Typography>
 
           <form onSubmit={handleLogin}>
             <TextField
-              label="Username"
+              label={t("username")}
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -137,7 +143,7 @@ const Login: React.FC = () => {
               variant="outlined"
             />
             <TextField
-              label="Password"
+              label={t("password")}
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -178,7 +184,7 @@ const Login: React.FC = () => {
                 style={{ width: "40%" }}
                 onClick={handlePasswordReset}
               >
-                Passwort vergessen?
+                {t("passwort-vergessen")}
               </Button>
 
               <Button
@@ -187,7 +193,7 @@ const Login: React.FC = () => {
                 color="primary"
                 style={{ width: "60%" }}
               >
-                Login22211
+                {t("login")}
               </Button>
             </Box>
           </form>

@@ -1,0 +1,19 @@
+{
+    "Login": {
+      "login": "Авторизация",
+      "username": "Имя пользователя",
+      "password": "Пароль",
+      "loginError": "Неверное имя пользователя или пароль",
+      "registrierung": "Регистрация",
+      "passwort-vergessen": "Забыли свой пароль?"
+    },
+    "LocaleSwitcher": {
+      "en": "English",
+      "de": "German",
+      "ua": "Ukrainian",
+      "ru": "Russian",
+      "label": "Change Language"
+    }
+    
+  }
+  

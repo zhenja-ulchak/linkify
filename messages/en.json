@@ -1,0 +1,19 @@
+{
+    "Login": {
+      "login": "Authorization",
+      "username": "Username",
+      "password": "Password",
+      "loginError": "Invalid username or password",
+      "registrierung": "Registration",
+      "passwort-vergessen": "Forgot your password?"
+    },
+    "LocaleSwitcher": {
+      "en": "English",
+      "de": "German",
+      "ua": "Ukrainian",
+      "ru": "Russian",
+      "label": "Change Language"
+    }
+    
+  }
+  
