@@ -11,8 +11,9 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const router = useRouter(); 
 
   useEffect(() => {
-    const cookie = getCookie('_CTA');
-    if (!cookie) {
+    // const cookie = getCookie('_CTA');
+    const getToken: any = sessionStorage.getItem('AuthToken')
+    if (!getToken) {
       router.push('/login'); // Redirect to a login or another page if the _CTA cookie is not present
     }
   }, [router]);

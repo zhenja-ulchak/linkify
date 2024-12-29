@@ -46,6 +46,11 @@ const Login: React.FC = () => {
       const resp = await ApiService.login<{ data: { user: { username: string } } }>(username, password);
 
       if (resp?.data?.user?.username === username) {
+        // @ts-ignore
+        console.log(resp.data.token);
+         // @ts-ignore
+        const token = resp.data.token
+        sessionStorage.setItem('AuthToken', `${token}`)
         setIsLoggedIn(true);
         router.push("/customer");
       } else {
