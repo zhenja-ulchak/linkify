@@ -33,7 +33,7 @@ import axios from "axios";
 import { useTranslations } from "next-intl";
 
 
-const drawerWidth = 240;
+const drawerWidth = 280;
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,

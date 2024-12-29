@@ -3,7 +3,7 @@
       "login": "Authorization",
       "username": "Username",
       "password": "Password",
-      "loginError": "Invalid username or password",
+      "loginError": "Incorrect username or password",
       "registrierung": "Registration",
       "passwort-vergessen": "Forgot your password?"
     },
@@ -16,19 +16,19 @@
     },
     "Dashboard": {
       "dashboard": "Dashboard",
-      "welcome-message": "Hello and welcome! Thank you for joining Linkify"
+      "welcome-message": "Hello and welcome! Thanks for joining Linkify"
     },
     "Panel-sidebar": {
       "user": "User",
-      "admin": "Admin",
-      "admin-profile": "Admin-Profile",
+      "admin": "Administrator",
+      "admin-profile": "Administrator Profile",
       "profile": "Profile",
       "dashboard": "Dashboard",
       "logout": "Logout",
-      "smtp-email": "SMTP-Email",
-      "admin-liste": "Admin list",
+      "smtp-email": "SMTP Mail",
+      "admin-liste": "Administrator List",
       "Einstellungen": "Settings",
-      "Superadmin": "Superadmin"
+      "Superadmin": "Super Administrator"
     }
   }
   

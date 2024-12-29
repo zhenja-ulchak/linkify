@@ -5,30 +5,30 @@
       "password": "Passwort",
       "loginError": "Ungültiger Benutzername oder Passwort",
       "registrierung": "Registrierung",
-      "passwort-vergessen": "Passwort Vergessen?"
+      "passwort-vergessen": "Passwort vergessen?"
     },
     "LocaleSwitcher": {
-      "en": "English",
-      "de": "German",
-      "ua": "Ukrainian",
-      "ru": "Russian",
-      "label": "Sprache wechseln"
+      "en": "Englisch",
+      "de": "Deutsch",
+      "ua": "Ukrainisch",
+      "ru": "Russisch",
+      "label": "Sprache ändern"
     },
     "Dashboard": {
       "dashboard": "Dashboard",
-      "welcome-message": "Hallo und herzlich willkommen! Vielen Dank, dass Sie sich bei Linkify"
+      "welcome-message": "Hallo und herzlich willkommen! Danke, dass Sie Linkify beigetreten sind"
     },
     "Panel-sidebar": {
       "user": "Benutzer",
-      "admin": "Admin",
-      "admin-profile": "Admin-Profil",
+      "admin": "Administrator",
+      "admin-profile": "Administratorprofil",
       "profile": "Profil",
       "dashboard": "Dashboard",
       "logout": "Abmelden",
-      "smtp-email": "SMTP-E-Mail",
-      "admin-liste": "Admin liste",
+      "smtp-email": "SMTP-Mail",
+      "admin-liste": "Liste der Administratoren",
       "Einstellungen": "Einstellungen",
-      "Superadmin": "Superadmin"
+      "Superadmin": "Superadministrator"
     }
   }
   
