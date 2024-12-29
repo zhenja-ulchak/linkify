@@ -96,12 +96,13 @@ export default function EnhancedTable() {
   const fetchRows = async () => {
     const getToken: any = sessionStorage.getItem('AuthToken')
 
-    console.log(getToken);
     
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}tenant`, getToken);
-      const tenantData: TenantData[] = response.data;
 
+      
+      const tenantData: TenantData[] = response.data.data.tenants;
+      console.log(tenantData);
       const mappedRows: Data[] = tenantData.map((tenant) =>
         createData(
           tenant.id,

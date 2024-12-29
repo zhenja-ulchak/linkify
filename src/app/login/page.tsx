@@ -15,10 +15,13 @@ import axios from "axios";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import ApiService from "../services/apiService";
+// @ts-ignore
+import CryptoJS from 'crypto-js';
 
 
 const Login: React.FC = () => {
   const router = useRouter();
+
   const [username, setUsername] = useState("john.doe@example.com");
   const [password, setPassword] = useState("password123");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -44,10 +47,15 @@ const Login: React.FC = () => {
 
     try {
       const resp = await ApiService.login<{ data: { user: { username: string } } }>(username, password);
-
+    
       if (resp?.data?.user?.username === username) {
         // @ts-ignore
-        console.log(resp.data.token);
+        if(resp.data.user.role){
+             // @ts-ignore
+          const ciphertext = CryptoJS.AES.encrypt(resp.data.user.role, 'secret-key').toString();
+          sessionStorage.setItem('user', ciphertext);
+        }
+    
          // @ts-ignore
         const token = resp.data.token
         sessionStorage.setItem('AuthToken', `${token}`)
