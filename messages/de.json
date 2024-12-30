@@ -29,6 +29,31 @@
       "admin-liste": "Liste der Administratoren",
       "Einstellungen": "Einstellungen",
       "Superadmin": "Superadministrator"
+    },
+    "User-list": {
+      "user-list": "Benutzerliste"
+    },
+    "Customer": {
+      "profile": "Profil",
+      "benutzername": "Benutzername",
+      "benutzer": "* Benutzer:",
+      "rechungsadresse": "+ Rechnungsadresse",
+      "firmenname": "Firmenname",
+      "name": "Name",
+      "vorname": "Vorname",
+       "street": "Straße und Hausnummer",
+       "postalcode": "Postleitzahl",
+       "city": "Stadt",
+       "region": "Region",
+       "land": "Land",
+       "addressAdditional": "Adresszusatz",
+       "licenseValidity": "Lizenz Gültigkeit",
+       "group": "Gruppe",
+       "firmenname2": "+ Firmenname:",
+       "licenseValidity2": "- Lizenz Gültigkeit",
+        "group2": "- Gruppe",
+        "save": "Speichern"
     }
   }
+
   

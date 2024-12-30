@@ -12,6 +12,7 @@ import {
   Alert,
   InputAdornment,
 } from "@mui/material";
+import { useTranslations } from 'next-intl';
 
 interface FormData {
   username: string;
@@ -48,7 +49,8 @@ export default function Profile() {
 
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-
+  const t = useTranslations('Customer');
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -89,18 +91,18 @@ export default function Profile() {
   return (
     <Paper elevation={0} sx={{ padding: 4, maxWidth: 600, margin: "auto" }}>
       <Typography variant="h4" gutterBottom textAlign="center">
-        Profile
+        {t("profile")} 
       </Typography>
 
       <Grid item xs={12}>
-            <Typography variant="h6">* Benutzer:</Typography>
+            <Typography variant="h6">{t("benutzer")}</Typography>
           </Grid>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
               fullWidth
-              label="Benutzername"
+              label={t("benutzername")} 
               name="username"
               required
               value={formData.username}
@@ -109,13 +111,13 @@ export default function Profile() {
           </Grid>
 
           <Grid item xs={12}>
-            <Typography variant="h6">+ Rechnungsadresse</Typography>
+            <Typography variant="h6">{t("rechungsadresse")} </Typography>
           </Grid>
 
           <Grid item xs={12}>
             <TextField
               fullWidth
-              label="Firmenname"
+              label={t("firmenname")}
               name="companyName"
               value={formData.companyName}
               onChange={handleInputChange}
@@ -125,7 +127,7 @@ export default function Profile() {
           <Grid item xs={6}>
             <TextField
               fullWidth
-              label="Name"
+              label={t("name")}
               name="name"
               value={formData.name}
               onChange={handleInputChange}
@@ -136,7 +138,7 @@ export default function Profile() {
           <Grid item xs={6}>
             <TextField
               fullWidth
-              label="Vorname"
+              label={t("vorname")}
               name="firstName"
               value={formData.firstName}
               onChange={handleInputChange}
@@ -147,7 +149,7 @@ export default function Profile() {
           <Grid item xs={12}>
             <TextField
               fullWidth
-              label="Straße und Hausnummer"
+              label={t("street")}
               name="street"
               value={formData.street}
               onChange={handleInputChange}
@@ -157,7 +159,7 @@ export default function Profile() {
           <Grid item xs={6}>
             <TextField
               fullWidth
-              label="Postleitzahl"
+              label={t("postalcode")}
               name="postalCode"
               value={formData.postalCode}
               onChange={handleInputChange}
@@ -168,7 +170,7 @@ export default function Profile() {
           <Grid item xs={6}>
             <TextField
               fullWidth
-              label="Ort"
+              label={t("city")}
               name="city"
               value={formData.city}
               onChange={handleInputChange}
@@ -178,7 +180,7 @@ export default function Profile() {
           <Grid item xs={6}>
             <TextField
               fullWidth
-              label="Region"
+              label={t("region")}
               name="region"
               value={formData.region}
               onChange={handleInputChange}
@@ -188,7 +190,7 @@ export default function Profile() {
           <Grid item xs={6}>
             <TextField
               fullWidth
-              label="Land"
+              label={t("land")}
               name="country"
               value={formData.country}
               onChange={handleInputChange}
@@ -198,7 +200,7 @@ export default function Profile() {
           <Grid item xs={12}>
             <TextField
               fullWidth
-              label="Adresszusatz"
+              label={t("addressAdditional")}
               name="addressAdditional"
               value={formData.addressAdditional}
               onChange={handleInputChange}
@@ -206,36 +208,36 @@ export default function Profile() {
           </Grid>
 
           <Grid item xs={12}>
-            <Typography variant="h6">+ Firmenname:</Typography>
+            <Typography variant="h6">{t("firmenname2")}</Typography>
           </Grid>
           <Grid item xs={12}>
             <TextField
               fullWidth
-              label="Firmenname"
+              label={t("firmenname")}
               name="companyName"
               value={formData.companyName}
               onChange={handleInputChange}
             />
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h6">- Lizenz Gültigkeit</Typography>
+            <Typography variant="h6">{t("licenseValidity2")}</Typography>
           </Grid>
           <Grid item xs={12}>
             <TextField
               fullWidth
-              label="Lizenz Gültigkeit"
+              label={t("licenseValidity")}
               name="licenseValidity"
               value={formData.licenseValidity}
               onChange={handleInputChange}
             />
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h6">- Gruppe</Typography>
+            <Typography variant="h6">{t("group2")}</Typography>
           </Grid>
           <Grid item xs={12}>
             <TextField
               fullWidth
-              label="Gruppe"
+              label={t("group")}
               name="group"
               value={formData.group}
               onChange={handleInputChange}
@@ -249,7 +251,7 @@ export default function Profile() {
               variant="contained"
               color="primary"
             >
-              Speichern
+             {t("save")}
             </Button>
           </Grid>
         </Grid>
