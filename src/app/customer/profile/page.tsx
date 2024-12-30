@@ -2,8 +2,17 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import {
+  TextField,
+  Button,
+  Box,
+  Typography,
+  Grid,
+  Paper,
+  Alert,
+  InputAdornment,
+} from "@mui/material";
 
-// Interface für das Formular-Datenobjekt
 interface FormData {
   username: string;
   companyName: string;
@@ -15,24 +24,12 @@ interface FormData {
   region: string;
   country: string;
   addressAdditional: string;
-  licenseValidity: string; // Lizenz Gültigkeit
-  group: string; // Gruppe
-  id: string; // ID, wird hidden
+  licenseValidity: string;
+  group: string;
+  id: string;
 }
 
 export default function Profile() {
-  const fieldsetStyle = {
-    border: "1px solid #ccc",
-    borderRadius: "4px",
-    padding: "10px",
-  };
-
-  const legendStyle = {
-    padding: "0 5px",
-    fontWeight: "bold",
-    color: "#000",
-  };
-
   const [formData, setFormData] = useState<FormData>({
     username: "",
     companyName: "",
@@ -46,7 +43,7 @@ export default function Profile() {
     addressAdditional: "",
     licenseValidity: "",
     group: "",
-    id: "", // ID bleibt hidden
+    id: "",
   });
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -55,28 +52,20 @@ export default function Profile() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}user/profile`,
-          {
-            headers: { "Content-Type": "application/json" },
-            // withCredentials: true,
-          }
-        );
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}user/profile`, {
+          headers: { "Content-Type": "application/json" },
+        });
         setFormData(response.data);
         setSuccessMessage(response.data.message);
       } catch (error: unknown) {
-        if (error instanceof Error) {
-          setErrorMessage(error.message); // Fehlernachricht des Error-Objekts
-        } else {
-          setErrorMessage("Ein unbekannter Fehler ist aufgetreten."); // Fallback für unbekannte Fehler
-        }
+        setErrorMessage(error instanceof Error ? error.message : "Ein unbekannter Fehler ist aufgetreten.");
       }
     };
 
     fetchData();
   }, []);
 
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -84,9 +73,7 @@ export default function Profile() {
     }));
   };
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ): Promise<void> => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const response = await axios.put(
@@ -95,194 +82,184 @@ export default function Profile() {
       );
       setSuccessMessage(response.data.message);
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        setErrorMessage(error.message); // Fehlernachricht aus dem Error-Objekt
-      } else {
-        setErrorMessage("Ein unbekannter Fehler ist aufgetreten.");
-      }
-    }
-  }
-
-
-  const handleNameInput = (e: React.FormEvent<HTMLInputElement>) => {
-    if (!/^[A-Za-z]+$/.test(e.currentTarget.value)) {
-      e.preventDefault();
-    }
-  };
-
-  const handlePostalCodeInput = (e: React.FormEvent<HTMLInputElement>) => {
-    if (!/^[0-9]+$/.test(e.currentTarget.value)) {
-      e.preventDefault();
+      setErrorMessage(error instanceof Error ? error.message : "Ein unbekannter Fehler ist aufgetreten.");
     }
   };
 
   return (
-    <div id="ContainerProfile">
-      <form onSubmit={handleSubmit} id="FormProfile">
-        <h1 style={{ textAlign: "center", margin: "0", color: "#000" }}>
-          Profile
-        </h1>
-        {/* Benutzer Section */}
-        <div>
-          <label style={{ color: "#000" }}>* Benutzer:</label>
-          <input
-            type="text"
-            name="username"
-            placeholder="Benutzername"
-            required
-            className="inputStyleProfile"
-            value={formData.username}
-            onChange={handleInputChange}
-          />
-        </div>
+    <Paper elevation={0} sx={{ padding: 4, maxWidth: 600, margin: "auto" }}>
+      <Typography variant="h4" gutterBottom textAlign="center">
+        Profile
+      </Typography>
 
-        {/* Rechnungsadresse Section */}
-        <fieldset style={fieldsetStyle}>
-          <legend style={legendStyle}>+ Rechnungsadresse</legend>
-          <div
-            style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-          >
-            <input
-              type="text"
+      <form onSubmit={handleSubmit}>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Benutzername"
+              name="username"
+              required
+              value={formData.username}
+              onChange={handleInputChange}
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Firmenname"
               name="companyName"
-              placeholder="Firmenname"
-              className="inputStyleProfile"
               value={formData.companyName}
               onChange={handleInputChange}
             />
-            <input
-              type="text"
+          </Grid>
+
+          <Grid item xs={12}>
+            <Typography variant="h6">Rechnungsadresse</Typography>
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="+ Firmenname"
+              name="companyName"
+              value={formData.companyName}
+              onChange={handleInputChange}
+            />
+          </Grid>
+
+          <Grid item xs={6}>
+            <TextField
+              fullWidth
+              label="Name"
               name="name"
-              placeholder="Name"
-              className="inputStyleProfile"
               value={formData.name}
               onChange={handleInputChange}
-              onInput={handleNameInput}
+              inputProps={{ pattern: "^[A-Za-z]+$" }}
             />
-            <input
-              type="text"
+          </Grid>
+
+          <Grid item xs={6}>
+            <TextField
+              fullWidth
+              label="Vorname"
               name="firstName"
-              placeholder="Vorname"
-              className="inputStyleProfile"
               value={formData.firstName}
               onChange={handleInputChange}
-              onInput={handleNameInput}
+              inputProps={{ pattern: "^[A-Za-z]+$" }}
             />
-            <input
-              type="text"
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Straße und Hausnummer"
               name="street"
-              placeholder="Straße und Hausnummer"
-              className="inputStyleProfile"
               value={formData.street}
               onChange={handleInputChange}
             />
-            <input
-              type="text"
+          </Grid>
+
+          <Grid item xs={6}>
+            <TextField
+              fullWidth
+              label="Postleitzahl"
               name="postalCode"
-              placeholder="Postleitzahl"
-              className="inputStyleProfile"
               value={formData.postalCode}
               onChange={handleInputChange}
-              onInput={handlePostalCodeInput}
+              inputProps={{ pattern: "^[0-9]+$" }}
             />
-            <input
-              type="text"
+          </Grid>
+
+          <Grid item xs={6}>
+            <TextField
+              fullWidth
+              label="Ort"
               name="city"
-              placeholder="Ort"
-              className="inputStyleProfile"
               value={formData.city}
               onChange={handleInputChange}
             />
-            <input
-              type="text"
+          </Grid>
+
+          <Grid item xs={6}>
+            <TextField
+              fullWidth
+              label="Region"
               name="region"
-              placeholder="Region"
-              className="inputStyleProfile"
               value={formData.region}
               onChange={handleInputChange}
             />
-            <input
-              type="text"
+          </Grid>
+
+          <Grid item xs={6}>
+            <TextField
+              fullWidth
+              label="Land"
               name="country"
-              placeholder="Land"
-              className="inputStyleProfile"
               value={formData.country}
               onChange={handleInputChange}
             />
-            <input
-              type="text"
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Adresszusatz"
               name="addressAdditional"
-              placeholder="Adresszusatz"
-              className="inputStyleProfile"
               value={formData.addressAdditional}
               onChange={handleInputChange}
             />
-          </div>
-        </fieldset>
+          </Grid>
 
-        {/* Firmenname Section */}
-        <div>
-          <label style={{ color: "#000" }}>+ Firmenname:</label>
-          <input
-            type="text"
-            name="companyName"
-            placeholder="Firmenname"
-            className="inputStyleProfile"
-            value={formData.companyName}
-            onChange={handleInputChange}
-          />
-        </div>
+          <Grid item xs={12}>
+            <Typography variant="h6">Weitere Informationen</Typography>
+          </Grid>
 
-        {/* Lizenz Gültigkeit Section (optional) */}
-        <div>
-          <label style={{ color: "#000" }}>- Lizenz Gültigkeit</label>
-          <input
-            type="text"
-            name="licenseValidity"
-            placeholder="Lizenz Gültigkeit"
-            className="inputStyleProfile"
-            value={formData.licenseValidity}
-            onChange={handleInputChange}
-          />
-        </div>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Lizenz Gültigkeit"
+              name="licenseValidity"
+              value={formData.licenseValidity}
+              onChange={handleInputChange}
+            />
+          </Grid>
 
-        {/* Gruppe Section */}
-        <div>
-          <label style={{ color: "#000" }}>- Gruppe</label>
-          <input
-            type="text"
-            name="group"
-            placeholder="Gruppe"
-            className="inputStyleProfile"
-            value={formData.group}
-            onChange={handleInputChange}
-          />
-        </div>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Gruppe"
+              name="group"
+              value={formData.group}
+              onChange={handleInputChange}
+            />
+          </Grid>
 
-        {/* ID (Hidden, nicht im Formular anzeigen) */}
-        <input
-          type="hidden"
-          name="id"
-          value={formData.id}
-          onChange={handleInputChange}
-        />
-
-        {/* Submit Button */}
-        <button type="submit" id="SubmitButtonProfile">
-          Speichern
-        </button>
+          <Grid item xs={12}>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+            >
+              Speichern
+            </Button>
+          </Grid>
+        </Grid>
       </form>
 
-
       {errorMessage && (
-
-        <div><p>{errorMessage}</p></div>
+        <Alert severity="error" sx={{ marginTop: 2 }}>
+          {errorMessage}
+        </Alert>
       )}
 
       {successMessage && (
-        <div><p>{successMessage}</p></div>
-
+        <Alert severity="success" sx={{ marginTop: 2 }}>
+          {successMessage}
+        </Alert>
       )}
-    </div>
+    </Paper>
   );
 }
