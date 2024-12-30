@@ -55,7 +55,6 @@ const Login: React.FC = () => {
           const ciphertext = CryptoJS.AES.encrypt(resp.data.user.role, 'secret-key').toString();
           sessionStorage.setItem('user', ciphertext);
         }
-    
          // @ts-ignore
         const token = resp.data.token
         sessionStorage.setItem('AuthToken', `${token}`)
