@@ -15,7 +15,7 @@ import axios from "axios";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import ApiService from "../services/apiService";
-// @ts-ignore
+// @ts-expect-error
 import CryptoJS from 'crypto-js';
 
 
@@ -49,13 +49,13 @@ const Login: React.FC = () => {
       const resp = await ApiService.login<{ data: { user: { username: string } } }>(username, password);
     
       if (resp?.data?.user?.username === username) {
-        // @ts-ignore
+        // @ts-expect-error
         if(resp.data.user.role){
-             // @ts-ignore
+             // @ts-expect-error
           const ciphertext = CryptoJS.AES.encrypt(resp.data.user.role, 'secret-key').toString();
           sessionStorage.setItem('user', ciphertext);
         }
-         // @ts-ignore
+         // @ts-expect-error
         const token = resp.data.token
         sessionStorage.setItem('AuthToken', `${token}`)
         setIsLoggedIn(true);

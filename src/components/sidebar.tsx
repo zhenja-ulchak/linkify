@@ -30,7 +30,7 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import SecurityIcon from '@mui/icons-material/Security';
 import axios from "axios";
-// @ts-ignore
+// @ts-expect-error
 import CryptoJS from 'crypto-js';
 
 
