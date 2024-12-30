@@ -1,21 +1,24 @@
 "use client";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { getCookie } from 'cookies-next'; // Assuming you're using 'cookies-next' for cookie handling
 
 interface ProtectedRouteProps {
-  children: React.ReactNode; 
+  children: React.ReactNode;
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const router = useRouter(); 
+  const router = useRouter();
 
   useEffect(() => {
-    // const cookie = getCookie('_CTA');
-    const getToken: any = sessionStorage.getItem('AuthToken')
+    // Отримуємо токен з sessionStorage
+    const getToken = sessionStorage.getItem('AuthToken');
+
     if (!getToken) {
-      router.push('/login'); // Redirect to a login or another page if the _CTA cookie is not present
+      router.push('/login'); // Якщо токен відсутній, редирект на сторінку входу
+      return;
     }
+
+
   }, [router]);
 
   return <>{children}</>;

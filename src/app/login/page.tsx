@@ -46,12 +46,14 @@ const Login: React.FC = () => {
     setErrorMessage(null);
 
     try {
-      const resp = await ApiService.login<{ data: { user: { username: string } } }>(username, password);
+      const resp = await ApiService.login<{ data: { user: {
+        [x: string]: string; username: string 
+} } }>(username, password);
     
       if (resp?.data?.user?.username === username) {
-        // @ts-expect-error
+      
         if(resp.data.user.role){
-             // @ts-expect-error
+          
           const ciphertext = CryptoJS.AES.encrypt(resp.data.user.role, 'secret-key').toString();
           sessionStorage.setItem('user', ciphertext);
         }
@@ -59,7 +61,19 @@ const Login: React.FC = () => {
         const token = resp.data.token
         sessionStorage.setItem('AuthToken', `${token}`)
         setIsLoggedIn(true);
-        router.push("/customer");
+       
+
+        if ( resp.data.user.role === "admin") {
+          router.push('/dashboard/admin'); // Редирект на адмін панель
+        } else if (resp.data.user.role === "super_admin") {
+          router.push('/dashboard/super-admin'); // Редирект на супер адмін панель
+        } else if (resp.data.user.role === "user") {
+          router.push('/dashboard/user'); // Редирект на панель користувача
+        } else {
+          router.push("/dashboard");
+        }
+
+
       } else {
         setErrorMessage("Login fehlgeschlagen. Bitte überprüfen Sie Ihre Daten.");
       }

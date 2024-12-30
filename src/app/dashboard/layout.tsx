@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Footer from "../../components/footer";
 import SideBar from "../../components/sidebar";
 import { useRouter } from "next/navigation";
+import ProtectedRole from "./ProtectRole";
 
 export default function DashboardLayout({
   children,
@@ -43,7 +44,9 @@ export default function DashboardLayout({
             transitionDelay: "5s",
           }}
         >
+          <ProtectedRole>
           {children}
+          </ProtectedRole>
           <Footer footerPosition={footerPosition} footerIndex={footerIndex} />
         </div>
       </div>

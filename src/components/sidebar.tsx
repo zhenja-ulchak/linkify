@@ -183,7 +183,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
 
 
   const handleImageClick = () => {
-    router.push("/customer");
+    router.push("/dashboard");
   };
 
   return (
@@ -244,7 +244,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
               case 'user':
                 return (<>
                   <ListItem disablePadding>
-                    <ListItemButton onClick={() => handleNavigation("/customer")}>
+                    <ListItemButton onClick={() => handleNavigation("/dashboard")}>
                       <ListItemIcon className="DashboadAndTableIcon">
                         <DashboardIcon style={{ color: "black" }} />
                       </ListItemIcon>
@@ -253,7 +253,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
                   </ListItem>
 
                   <ListItem disablePadding>
-                    <ListItemButton onClick={() => handleNavigation("/customer/user")}>
+                    <ListItemButton onClick={() => handleNavigation("/dashboard/user")}>
                       <ListItemIcon className="DashboadAndTableIcon">
                         <FormatListBulletedIcon style={{ color: "black" }} />
                       </ListItemIcon>
@@ -269,7 +269,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
                     }}
                   >
                     <ListItemButton
-                      onClick={() => handleNavigation("/customer/profile")}
+                      onClick={() => handleNavigation("/dashboard/profile")}
                     >
                       <AccountCircleIcon />
                       <ListItemText primary="Profile" style={{ marginLeft: "31px" }} />
@@ -290,28 +290,28 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
                         backgroundColor: "pink",
                       }}
                     >
-                      <ListItemButton onClick={() => handleNavigation("/customer/admin")}>
+                      <ListItemButton onClick={() => handleNavigation("/dashboard/admin")}>
                         <AdminPanelSettingsIcon />
                         <ListItemText primary="Admin" style={{ marginLeft: "31px" }} />
                       </ListItemButton>
                     </ListItem>
 
                     <ListItem disablePadding>
-                      <ListItemButton onClick={() => handleNavigation("/customer/Admin-Profile")}>
+                      <ListItemButton onClick={() => handleNavigation("/dashboard/Admin-Profile")}>
                         <AccountCircleIcon />
                         <ListItemText primary="Admin-Profile" style={{ marginLeft: "31px" }} />
                       </ListItemButton>
                     </ListItem>
 
                     <ListItem disablePadding>
-                      <ListItemButton onClick={() => handleNavigation("/customer/SMTP-Email")}>
+                      <ListItemButton onClick={() => handleNavigation("/dashboard/SMTP-Email")}>
                         <SupervisorAccountIcon />
                         <ListItemText primary="SMTP-Email" style={{ marginLeft: "31px" }} />
                       </ListItemButton>
                     </ListItem>
 
                     <ListItem disablePadding>
-                      <ListItemButton onClick={() => handleNavigation("/customer/tenant")}>
+                      <ListItemButton onClick={() => handleNavigation("/dashboard/tenant")}>
                         <ListItemIcon className="DashboadAndTableIcon">
                           <FormatListBulletedIcon style={{ color: "black" }} />
                         </ListItemIcon>
@@ -327,7 +327,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
                         justifyContent: "center",
                       }}
                     >
-                      <ListItemButton onClick={() => handleNavigation("/customer/einstellungen")}>
+                      <ListItemButton onClick={() => handleNavigation("/dashboard/einstellungen")}>
                         <SettingsIcon />
                         <ListItemText primary="Einstellungen" style={{ marginLeft: "31px" }} />
                       </ListItemButton>
@@ -346,7 +346,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
                       backgroundColor: "green",
                     }}
                   >
-                    <ListItemButton onClick={() => handleNavigation("/customer/superadmin")}>
+                    <ListItemButton onClick={() => handleNavigation("/dashboard/superadmin")}>
                       <SecurityIcon />
                       <ListItemText primary="Superadmin" style={{ marginLeft: "31px" }} />
                     </ListItemButton>
