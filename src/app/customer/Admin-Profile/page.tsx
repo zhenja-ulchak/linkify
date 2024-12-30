@@ -98,6 +98,7 @@ export default function AdminProfile() {
         Profile
       </Typography>
 
+      <Typography variant="h6">* Benutzer:</Typography>
       <form onSubmit={handleSubmit}>
         <Stack spacing={2}>
           <TextField
@@ -110,7 +111,7 @@ export default function AdminProfile() {
           />
 
           <FormControl component="fieldset">
-            <Typography variant="h6">+Rechnungsadresse</Typography>
+            <Typography variant="h6">+ Rechnungsadresse</Typography>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
