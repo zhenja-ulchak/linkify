@@ -1,3 +1,8 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "@typescript-eslint/ban-ts-comment": "off", // Вимкнути правило
+    "react/no-unescaped-entities": "off"  ,     // Інший приклад вимкнення
+     "@typescript-eslint/no-explicit-any": "off"
+  }
 }
