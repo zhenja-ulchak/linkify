@@ -3,20 +3,20 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { NextPage } from "next";
-import { Button } from "@mui/material";
+import { Button, TextField, Typography, Box, Container } from "@mui/material";
 import { useRouter } from "next/navigation";
 
 const ForgotPassword: NextPage = () => {
   const [email, setEmail] = useState<string>("");
-  const [successMessage, setSuccessMessage] = useState<string>("");
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     e.preventDefault();
-    setSuccessMessage("");
-    setErrorMessage("");
+    setSuccessMessage(null);
+    setErrorMessage(null);
 
     try {
       const response = await axios.put(
@@ -34,12 +34,31 @@ const ForgotPassword: NextPage = () => {
         setErrorMessage("Die eingegebene E-Mail-Adresse wurde nicht gefunden.");
       }
     } catch (error: unknown) {
-      if (axios.isAxiosError(error) && error.response?.data?.message) {
-        setErrorMessage(error.response.data.message);
+      if (axios.isAxiosError(error)) {
+        // Check if response contains the expected structure
+        const errorResponse = error.response?.data;
+        let errorMessageString = "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.";
+
+        // Check if the message is an object and extract the relevant information
+        if (errorResponse) {
+          if (typeof errorResponse.message === "object") {
+            // Extract the error message from the object structure
+            const guiMessage = errorResponse.message["gui-message"];
+            const errorMessageContent = errorResponse.message["error-message"];
+            errorMessageString = guiMessage || errorMessageContent || errorMessageString;
+          } else {
+            // Use the simple message if it's a string
+            errorMessageString = errorResponse.message || errorMessageString;
+          }
+        }
+
+        setErrorMessage(errorMessageString);
+      } else if (error instanceof Error) {
+        // Handle general JavaScript errors (non-Axios)
+        setErrorMessage(error.message || "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.");
       } else {
-        setErrorMessage(
-          "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
-        );
+        // Fallback error message if the error type is unknown
+        setErrorMessage("Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.");
       }
     }
   };
@@ -51,51 +70,85 @@ const ForgotPassword: NextPage = () => {
   }
 
   return (
-    <div id="ContainerPwdForgot">
-      <form id="forgotPwdForm" onSubmit={handleSubmit}>
-        <h1 style={{ fontSize: "24px", marginBottom: "20px" }}>
-          Passwort vergessen
-        </h1>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: "100vh",
+        backgroundColor: "#f5f5f5", // Light background for contrast
+      }}
+    >
+      <Container component="main" maxWidth="xs">
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            padding: 3,
+            boxShadow: 3,
+            borderRadius: 2,
+            backgroundColor: "white", // White background for the form
+          }}
+        >
+          <Typography variant="h5" gutterBottom>
+            Passwort vergessen
+          </Typography>
 
-        {successMessage && (
-          <div id="ContainerSuccessMessagePWDForgot">{successMessage}</div>
-        )}
+          {successMessage && (
+            <Box sx={{ color: "green", marginBottom: 2 }}>
+              <Typography variant="body2">{successMessage}</Typography>
+            </Box>
+          )}
 
-        {errorMessage && (
-          <div id="ContainerErrorMessagePWDForgot">{errorMessage}</div>
-        )}
+          {errorMessage && (
+            <Box sx={{ color: "red", marginBottom: 2 }}>
+              <Typography variant="body2">{errorMessage}</Typography>
+            </Box>
+          )}
 
-        <label htmlFor="email" id="LabelPWDForgot">
-          E-Mail-Adresse
-        </label>
-        <input
-          type="email"
-          id="EmailPWDForgot"
-          name="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          placeholder="Geben Sie Ihre E-Mail-Adresse ein"
-        />
+          <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="E-Mail-Adresse"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Geben Sie Ihre E-Mail-Adresse ein"
+            />
 
-        <button type="submit" id="SubmitBtnPWDForgot">
-          E-Mail senden
-        </button>
-      </form>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              sx={{ mt: 2 }}
+            >
+              E-Mail senden
+            </Button>
+          </form>
 
-      <Button
-        onClick={handleLoginLinkClick}
-        variant="text"
-        color="secondary"
-        style={{
-          marginTop: "16px",
-          fontSize: "14px",
-          fontWeight: "500",
-        }}
-      >
-        Zurück zum Login?
-      </Button>
-    </div>
+          <Button
+            onClick={handleLoginLinkClick}
+            variant="text"
+            color="secondary"
+            sx={{
+              marginTop: 2,
+              fontSize: "14px",
+              fontWeight: 500,
+            }}
+          >
+            Zurück zum Login?
+          </Button>
+        </Box>
+      </Container>
+    </Box>
   );
 };
 
