@@ -92,6 +92,9 @@ export default function Profile() {
         Profile
       </Typography>
 
+      <Grid item xs={12}>
+            <Typography variant="h6">* Benutzer:</Typography>
+          </Grid>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -106,23 +109,13 @@ export default function Profile() {
           </Grid>
 
           <Grid item xs={12}>
+            <Typography variant="h6">+ Rechnungsadresse</Typography>
+          </Grid>
+
+          <Grid item xs={12}>
             <TextField
               fullWidth
               label="Firmenname"
-              name="companyName"
-              value={formData.companyName}
-              onChange={handleInputChange}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <Typography variant="h6">Rechnungsadresse</Typography>
-          </Grid>
-
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="+ Firmenname"
               name="companyName"
               value={formData.companyName}
               onChange={handleInputChange}
@@ -213,9 +206,20 @@ export default function Profile() {
           </Grid>
 
           <Grid item xs={12}>
-            <Typography variant="h6">Weitere Informationen</Typography>
+            <Typography variant="h6">+ Firmenname:</Typography>
           </Grid>
-
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Firmenname"
+              name="companyName"
+              value={formData.companyName}
+              onChange={handleInputChange}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="h6">- Lizenz Gültigkeit</Typography>
+          </Grid>
           <Grid item xs={12}>
             <TextField
               fullWidth
@@ -225,7 +229,9 @@ export default function Profile() {
               onChange={handleInputChange}
             />
           </Grid>
-
+          <Grid item xs={12}>
+            <Typography variant="h6">- Gruppe</Typography>
+          </Grid>
           <Grid item xs={12}>
             <TextField
               fullWidth
