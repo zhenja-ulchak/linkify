@@ -47,6 +47,24 @@
       "speichern": "Speichern"
     },
 
+    "Smtp-Email": {
+      "smtp-email": "Admin: SMTP-E-Mail konfigurieren",
+      "smtp-server": "SMTP-Server",
+      "smtp-port": "SMTP-Port",
+      "art-der": "Art der Verschlüsselung (z. B. SSL, TLS)",
+      "benutzername": "Benutzername",
+      "email-adresse": "E-Mail-Adresse",
+      "passwort": "Passwort",
+      "passwort-umschalten": "Passwort Umschalten",
+      "passwort-speichern": "Passwort Speichern",
+      "authentificationLabel": "Automatische Authentifizierung",
+      "abbrechen": "Abbrechen",
+      "test-email-senden": "Test-E-Mail senden",
+      "fertigstellen": "Fertigstellen"
+
+    },
+
+
     "Customer": {
       "profile": "Profil",
       "benutzername": "Benutzername",
