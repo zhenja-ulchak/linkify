@@ -3,13 +3,14 @@
 import React, { useEffect, useState } from 'react';
 import ApiService from "../../services/apiService";
 import { useTranslations } from 'next-intl';
-
+import { Box, Typography, List, ListItem } from '@mui/material';
 
 type User = { id: number; username: string; }
 
 const UserList = () => {
   const [users, setUsers] = useState<User[]>([]);
-const t = useTranslations('User-list');
+  const t = useTranslations('User-list');
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -24,19 +25,18 @@ const t = useTranslations('User-list');
   }, []);
 
   return (
-    <div style={{
-      display: 'flex', 
-      justifyContent: 'center', 
-      alignItems: 'center', 
-      flexDirection: 'column', 
-    }}>
-      <h1>{t("user-list")}</h1>
-      <ul>
+    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+      <Typography variant="h4" gutterBottom>
+        {t("user-list")}
+      </Typography>
+      <List>
         {users.map(user => (
-          <li key={user.id}>{user.username}</li>
+          <ListItem key={user.id}>
+            {user.username}
+          </ListItem>
         ))}
-      </ul>
-    </div>
+      </List>
+    </Box>
   );
 };
 
