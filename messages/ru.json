@@ -33,6 +33,20 @@
       "User-list": {
         "user-list": "Список пользователей"
       },
+      "Admin-profile": {
+        "profile": "Профиль",
+        "benutzer": "* Пользователи:",
+        "rechnungsadresse": "+ Платежный адрес",
+        "benutzername": "Имя пользователя",
+        "firmenname": "Название компании",
+        "name": "Фамилия",
+        "vorname": "Имя",
+        "hausnummer": "Улица и номер дома",
+        "postleitzahl": "Почтовый индекс",
+        "ort": "Страна",
+        "speichern": "Сохранить"
+      },
+  
       "Customer": {
         "profile": "Профиль",
         "benutzername": "Имя пользователя",

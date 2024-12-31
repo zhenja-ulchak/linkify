@@ -33,6 +33,20 @@
     "User-list": {
       "user-list": "Benutzerliste"
     },
+    "Admin-profile": {
+      "profile": "Profil",
+      "benutzer": "* Benutzer:",
+      "rechnungsadresse": "+ Rechnungsadresse",
+      "benutzername": "Benutzername",
+      "firmenname": "Firmenname",
+      "name": "Name",
+      "vorname": "Vorname",
+      "hausnummer": "Straße und Hausnummer",
+      "postleitzahl": "Postleitzahl",
+      "ort": "Ort",
+      "speichern": "Speichern"
+    },
+
     "Customer": {
       "profile": "Profil",
       "benutzername": "Benutzername",
