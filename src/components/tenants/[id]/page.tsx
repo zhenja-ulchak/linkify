@@ -12,7 +12,7 @@ import ApiService from "../../../../src/app/services/apiService";
 
 
 type Tenant = {
-    id: number;
+    id?: number;
     company_name: string;
     address: string;
     invoice_address: string;
@@ -25,13 +25,13 @@ type Tenant = {
 const TenantDetails: React.FC = () => {
     const { id } = useParams();
     console.log(id);
-    
+
     const router = useRouter();
 
 
     const [isEditing, setIsEditing] = useState(false);
     const [updatedTenant, setUpdatedTenant] = useState<Tenant>({
-        id: 0,
+
         company_name: "",
         address: "",
         invoice_address: "",
@@ -43,7 +43,7 @@ const TenantDetails: React.FC = () => {
     const [error, setError] = useState<string>("");
     const [modalTextColor, setModalTextColor] = useState("black"); // Declare state outside of conditionals
     const [tenants, setTenants] = useState<Tenant[]>([]);
-console.log(tenants);
+    console.log(tenants);
 
 
     useEffect(() => {
@@ -96,11 +96,11 @@ console.log(tenants);
                 const Auth: any = sessionStorage.getItem('AuthToken')
                 const response: any = await ApiService.get(`tenant/${id}`, Auth)
                 console.log(response);
-                
 
-               
-                    setTenants([response.data.tenant]);
-               
+
+
+                setTenants([response.data.tenant]);
+
             } catch (error) {
                 console.error("Fehler beim Abrufen der Daten:", error);
                 setError("Fehler beim Abrufen der Daten.");
@@ -110,15 +110,27 @@ console.log(tenants);
         fetchElements();
     }, [id]);
     const Auth: any = sessionStorage.getItem('AuthToken')
+
+
+    const removeEmptyValues = (obj: { [s: string]: unknown; } | ArrayLike<unknown>) => {
+        return Object.fromEntries(
+          Object.entries(obj).filter(([key, value]) => value != null && value !== "")
+        );
+      };
+      const cleanedObject = removeEmptyValues(updatedTenant);
+
+      console.log(cleanedObject);
+
     const handleSaveChanges = async () => {
         if (validateInputs()) {
+
             try {
                 const response = await ApiService.put(
                     `tenant/${id}`,
-                    updatedTenant, Auth
+                    cleanedObject , Auth
                 );
                 if (!response) {
-                    console.log("Benutzerdaten gespeichert:", updatedTenant);
+                    console.log("Benutzerdaten gespeichert:", cleanedObject);
                     setIsEditing(false);
                 }
             } catch (error) {
@@ -129,7 +141,7 @@ console.log(tenants);
 
     const handleDelete = async () => {
         try {
-            const response:any = await ApiService.delete(
+            const response: any = await ApiService.delete(
                 `tenant/${id}`, Auth
             );
             if (response.status === 200) {
@@ -228,7 +240,7 @@ console.log(tenants);
                                 onChange={handleEditChange}
                                 style={{ width: "100%", padding: "8px" }}
                                 placeholder={tenants[0]?.company_name}
-                                
+
                             />
                         </div>
                         <div style={{ marginBottom: "10px" }}>
@@ -240,7 +252,7 @@ console.log(tenants);
                                 onChange={handleEditChange}
                                 style={{ width: "100%", padding: "8px" }}
                                 placeholder={tenants[0]?.address}
-                                
+
                             />
                         </div>
                         <div style={{ marginBottom: "10px" }}>
@@ -251,8 +263,8 @@ console.log(tenants);
                                 value={updatedTenant.license_valid_until}
                                 onChange={handleEditChange}
                                 style={{ width: "100%", padding: "8px" }}
-                                
-                                
+
+
                             />
                         </div>
                         <div style={{ marginBottom: "10px" }}>
@@ -263,8 +275,8 @@ console.log(tenants);
                                 value={updatedTenant.contact_phone}
                                 onChange={handleEditChange}
                                 style={{ width: "100%", padding: "8px" }}
-                               
-                                
+
+
                             />
                         </div>
 
