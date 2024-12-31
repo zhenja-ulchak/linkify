@@ -297,21 +297,21 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
                     </ListItem>
 
                     <ListItem disablePadding>
-                      <ListItemButton onClick={() => handleNavigation("/dashboard/Admin-Profile")}>
+                      <ListItemButton onClick={() => handleNavigation("/dashboard/admin/profile")}>
                         <AccountCircleIcon />
                         <ListItemText primary="Admin-Profile" style={{ marginLeft: "31px" }} />
                       </ListItemButton>
                     </ListItem>
 
                     <ListItem disablePadding>
-                      <ListItemButton onClick={() => handleNavigation("/dashboard/SMTP-Email")}>
+                      <ListItemButton onClick={() => handleNavigation("/dashboard/admin/SMTP-Email")}>
                         <SupervisorAccountIcon />
                         <ListItemText primary="SMTP-Email" style={{ marginLeft: "31px" }} />
                       </ListItemButton>
                     </ListItem>
 
                     <ListItem disablePadding>
-                      <ListItemButton onClick={() => handleNavigation("/dashboard/tenant")}>
+                      <ListItemButton onClick={() => handleNavigation("/dashboard/admin/tenant")}>
                         <ListItemIcon className="DashboadAndTableIcon">
                           <FormatListBulletedIcon style={{ color: "black" }} />
                         </ListItemIcon>
@@ -327,7 +327,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
                         justifyContent: "center",
                       }}
                     >
-                      <ListItemButton onClick={() => handleNavigation("/dashboard/einstellungen")}>
+                      <ListItemButton onClick={() => handleNavigation("/dashboard/admin/einstellungen")}>
                         <SettingsIcon />
                         <ListItemText primary="Einstellungen" style={{ marginLeft: "31px" }} />
                       </ListItemButton>
@@ -337,6 +337,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
 
               case 'superadmin':
                 return (
+                 <>
                   <ListItem
                     disablePadding
                     style={{
@@ -351,6 +352,26 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
                       <ListItemText primary="Superadmin" style={{ marginLeft: "31px" }} />
                     </ListItemButton>
                   </ListItem>
+
+                  <ListItem disablePadding>
+                      <ListItemButton onClick={() => handleNavigation("/dashboard/superadmin/tenant")}>
+                        <ListItemIcon className="DashboadAndTableIcon">
+                          <FormatListBulletedIcon style={{ color: "black" }} />
+                        </ListItemIcon>
+                        <ListItemText primary="Adminliste" />
+                      </ListItemButton>
+                    </ListItem>
+
+                    <ListItem disablePadding>
+                      <ListItemButton onClick={() => handleNavigation("/dashboard/superadmin/profile")}>
+                        <AccountCircleIcon />
+                        <ListItemText primary="Admin-Profile" style={{ marginLeft: "31px" }} />
+                      </ListItemButton>
+                    </ListItem>
+                 
+                 </>
+
+                  
                 );
 
               // Add more roles here if needed (e.g., 'user', 'moderator')

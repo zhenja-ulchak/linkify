@@ -8,6 +8,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import AddIcon from "@mui/icons-material/Add";
 import CancelIcon from "@mui/icons-material/Cancel";
+import ApiService from "../../../../src/app/services/apiService";
+
 
 type Tenant = {
     id: number;
@@ -22,6 +24,8 @@ type Tenant = {
 
 const TenantDetails: React.FC = () => {
     const { id } = useParams();
+    console.log(id);
+    
     const router = useRouter();
 
 
@@ -39,6 +43,7 @@ const TenantDetails: React.FC = () => {
     const [error, setError] = useState<string>("");
     const [modalTextColor, setModalTextColor] = useState("black"); // Declare state outside of conditionals
     const [tenants, setTenants] = useState<Tenant[]>([]);
+console.log(tenants);
 
 
     useEffect(() => {
@@ -66,9 +71,9 @@ const TenantDetails: React.FC = () => {
     // Validierung der Benutzereingaben
     const validateInputs = () => {
         if (
-            !updatedTenant.company_name ||
-            !updatedTenant.address ||
-            !updatedTenant.invoice_address ||
+            // !updatedTenant.company_name ||
+            // !updatedTenant.address ||
+            // !updatedTenant.invoice_address ||
             !updatedTenant.contact_email ||
             !updatedTenant.invoice_email
         ) {
@@ -87,10 +92,15 @@ const TenantDetails: React.FC = () => {
             }
 
             try {
-                const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}tenant/${id}`);
-                if (response.status === 200) {
-                    setTenants([response.data]);
-                }
+                // const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}tenant/${id}`);
+                const Auth: any = sessionStorage.getItem('AuthToken')
+                const response: any = await ApiService.get(`tenant/${id}`, Auth)
+                console.log(response);
+                
+
+               
+                    setTenants([response.data.tenant]);
+               
             } catch (error) {
                 console.error("Fehler beim Abrufen der Daten:", error);
                 setError("Fehler beim Abrufen der Daten.");
@@ -99,15 +109,15 @@ const TenantDetails: React.FC = () => {
 
         fetchElements();
     }, [id]);
-
+    const Auth: any = sessionStorage.getItem('AuthToken')
     const handleSaveChanges = async () => {
         if (validateInputs()) {
             try {
-                const response = await axios.put(
-                    `${process.env.NEXT_PUBLIC_BASE_URL}tenant/${updatedTenant?.id}`,
-                    updatedTenant
+                const response = await ApiService.put(
+                    `tenant/${id}`,
+                    updatedTenant, Auth
                 );
-                if (response.status === 200) {
+                if (!response) {
                     console.log("Benutzerdaten gespeichert:", updatedTenant);
                     setIsEditing(false);
                 }
@@ -119,8 +129,8 @@ const TenantDetails: React.FC = () => {
 
     const handleDelete = async () => {
         try {
-            const response = await axios.delete(
-                `${process.env.NEXT_PUBLIC_BASE_URL}tenant/${updatedTenant?.id}`
+            const response:any = await ApiService.delete(
+                `tenant/${id}`, Auth
             );
             if (response.status === 200) {
                 console.log("Benutzer gelöscht:", updatedTenant);
@@ -217,7 +227,8 @@ const TenantDetails: React.FC = () => {
                                 value={updatedTenant.company_name}
                                 onChange={handleEditChange}
                                 style={{ width: "100%", padding: "8px" }}
-                                readOnly
+                                placeholder={tenants[0]?.company_name}
+                                
                             />
                         </div>
                         <div style={{ marginBottom: "10px" }}>
@@ -228,7 +239,8 @@ const TenantDetails: React.FC = () => {
                                 value={updatedTenant.address}
                                 onChange={handleEditChange}
                                 style={{ width: "100%", padding: "8px" }}
-                                readOnly
+                                placeholder={tenants[0]?.address}
+                                
                             />
                         </div>
                         <div style={{ marginBottom: "10px" }}>
@@ -239,7 +251,8 @@ const TenantDetails: React.FC = () => {
                                 value={updatedTenant.license_valid_until}
                                 onChange={handleEditChange}
                                 style={{ width: "100%", padding: "8px" }}
-                                readOnly
+                                
+                                
                             />
                         </div>
                         <div style={{ marginBottom: "10px" }}>
@@ -250,7 +263,8 @@ const TenantDetails: React.FC = () => {
                                 value={updatedTenant.contact_phone}
                                 onChange={handleEditChange}
                                 style={{ width: "100%", padding: "8px" }}
-                                readOnly
+                               
+                                
                             />
                         </div>
 
@@ -263,6 +277,7 @@ const TenantDetails: React.FC = () => {
                                 value={updatedTenant.invoice_address}
                                 onChange={handleEditChange}
                                 style={{ width: "100%", padding: "8px" }}
+                                placeholder={tenants[0]?.invoice_address}
                             />
                         </div>
                         <div style={{ marginBottom: "10px" }}>
@@ -273,6 +288,7 @@ const TenantDetails: React.FC = () => {
                                 value={updatedTenant.contact_email}
                                 onChange={handleEditChange}
                                 style={{ width: "100%", padding: "8px" }}
+                                placeholder={tenants[0]?.contact_email}
                             />
                         </div>
                         <div style={{ marginBottom: "10px" }}>
@@ -283,6 +299,7 @@ const TenantDetails: React.FC = () => {
                                 value={updatedTenant.invoice_email}
                                 onChange={handleEditChange}
                                 style={{ width: "100%", padding: "8px" }}
+                                placeholder={tenants[0]?.invoice_email}
                             />
                         </div>
 

@@ -26,9 +26,10 @@ import { useRouter } from "next/navigation";
 import ToggleSwitch from "@/components/toggleBtn";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import axios from 'axios';
+import apiService from "@/app/services/apiService";
+type Order = "asc" | "desc";
 
-
-export default function EnhancedTable() {
+export default  function EnhancedTable() {
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof Data>("company_name");
   const [selected, setSelected] = React.useState<readonly number[]>([]);
@@ -38,6 +39,7 @@ export default function EnhancedTable() {
   const router = useRouter();
   const [rows, setRows] = React.useState<Data[]>([]);  // Zustand für die Zeilen
 
+console.log(rows);
 
 
   // Data und TenantData Typen
@@ -68,28 +70,33 @@ export default function EnhancedTable() {
 
   
 
-  // Daten aus dem Backend abrufen
-  const fetchRows = async () => {
-    const getToken: any = sessionStorage.getItem('AuthToken')
 
-    
-    try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}tenantData`, getToken);
 
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const getToken: any = sessionStorage.getItem('AuthToken');
+        const response: any = await apiService.get("tenant", getToken);
+        console.log(response);
+        // Перевірка на наявність необхідних даних у відповіді
+       
+          const tenantData: any = response?.data?.tenants;
+          console.log(tenantData);
+          
+          setRows(tenantData);  // Зберігаємо дані в стан
       
-      const tenantData: any = response.data.data.tenants;
-      console.log(tenantData);
-
-
-
+      } catch (error) {
+        console.error('Помилка при отриманні даних:', error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+  
    
-      // setRows(mappedRows);  // Setze die Zeilen im Zustand
-    } catch (error) {
-      console.error('Fehler beim Abrufen der Daten:', error);
-    }
-  };
+  
 
-  fetchRows();  // Lade die Daten
+  // Lade die Daten
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = event.target.checked;
@@ -112,17 +119,17 @@ export default function EnhancedTable() {
     return 0;
   }
 
-  type Order = "asc" | "desc";
 
 
-  interface HeadCell {
-    disablePadding: boolean;
-    id: keyof Data;
-    label: string;
-    numeric: boolean;
-  }
 
-  const headCells: readonly HeadCell[] = [
+  // interface HeadCell {
+  //   disablePadding: boolean;
+  //   id: keyof Data;
+  //   label: string;
+  //   numeric: boolean;
+  // }
+
+  const headCells:  any = [
     {
       id: "company_name",
       numeric: false,
@@ -305,7 +312,7 @@ export default function EnhancedTable() {
   const handleRowClick = (id: number) => {
     console.log(id);
 
-    router.push(`/customer/tenantData/${id}`);
+    router.push(`/dashboard/superadmin/tenant/${id}`);
   };
 
   const handleRequestSort = (
@@ -358,15 +365,16 @@ export default function EnhancedTable() {
 
   const visibleRows = React.useMemo(() => {
     // Definiere getComparator innerhalb von useMemo
-    const getComparator = (order: Order, orderBy: keyof Data) => {
-      return order === "desc"
-        ? (a: Data, b: Data) => descendingComparator(a, b, orderBy)
-        : (a: Data, b: Data) => -descendingComparator(a, b, orderBy);
-    };
+    // const getComparator = (order: Order, orderBy: keyof Data) => {
+    //   return order === "desc"
+    //     ? (a: Data, b: Data) => descendingComparator(a, b, orderBy)
+    //     : (a: Data, b: Data) => -descendingComparator(a, b, orderBy);
+    // };
 
-    return [...rows]
-      .sort(getComparator(order, orderBy))
-      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+    return rows
+    // [...rows]
+    //   .sort(getComparator(order, orderBy))
+    //   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
   }, [rows, order, orderBy, page, rowsPerPage]); // Füge die Abhängigkeiten hinzu
 
   return (
@@ -407,7 +415,7 @@ export default function EnhancedTable() {
             />
             <TableBody>
               {visibleRows.map((row, index) => {
-                const isItemSelected = selected.includes(row.id);
+                const isItemSelected = selected.includes(row?.id);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (

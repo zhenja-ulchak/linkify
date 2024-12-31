@@ -8,35 +8,63 @@ interface ProtectedRouteProps {
     children: React.ReactNode;
 }
 
+// Функція для перевірки JWT
+function isJWT(token: string) {
+    if (typeof token !== "string") return false;
+
+    const parts = token.split(".");
+    if (parts.length !== 3) return false; // JWT повинні мати 3 частини
+
+    try {
+        // Декодуємо Header та Payload
+        const header = JSON.parse(atob(parts[0]));
+        const payload = JSON.parse(atob(parts[1]));
+
+        // Перевіряємо, чи є це валідними об'єктами
+        return typeof header === "object" && typeof payload === "object";
+    } catch (error) {
+        return false; // Якщо не вдалося декодувати або парсити JSON, це не JWT
+    }
+}
+
 const ProtectedRole: React.FC<ProtectedRouteProps> = ({ children }) => {
     const router = useRouter();
-    const getRole = sessionStorage.getItem('user');
 
     useEffect(() => {
+        // Отримуємо токен і роль з sessionStorage
+        const getToken = sessionStorage.getItem('AuthToken');
         const ciphertext = sessionStorage.getItem('user');
+
+        if (!getToken || !isJWT(getToken)) {
+            // Якщо токен відсутній або не є валідним JWT, редиректимо на сторінку входу
+            router.push('/login');
+            return;
+        }
+
         if (ciphertext) {
+            // Дешифруємо роль користувача
             const bytes = CryptoJS.AES.decrypt(ciphertext, 'secret-key');
             const getRole = bytes.toString(CryptoJS.enc.Utf8);
+
             if (!getRole) {
-                // Якщо роль не знайдена, можна редиректити на загальну сторінку або показати помилку
-                router.push('/dashboard'); // Редирект на сторінку з панелями
+                // Якщо роль не знайдена, редиректимо на сторінку панелі
+                router.push('/dashboard');
                 return;
             }
 
-            // Логіка редиректу в залежності від ролі
+            // Редирект залежно від ролі
             if (getRole === "admin") {
-                router.push('/dashboard/admin'); // Редирект на адмін панель
+                router.push('/dashboard/admin');
             } else if (getRole === "super_admin") {
-                router.push('/dashboard/superadmin'); // Редирект на супер адмін панель
+                router.push('/dashboard/superadmin');
             } else if (getRole === "user") {
-                router.push('/dashboard/user'); // Редирект на панель користувача
+                router.push('/dashboard/user');
             }
-
+            //  else {
+            //     // Якщо роль не відповідає жодному з випадків, редиректимо на загальну сторінку
+            //     router.push('/dashboard');
+            // }
         }
-
-
-
-
     }, [router]);
 
     return <>{children}</>;
