@@ -17,10 +17,13 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import ApiService from "../services/apiService";
 import { useTranslations } from 'next-intl';
 import LocaleSwitcher from '../../app/../components/LocaleSwitcher'; // Import LanguageSwitcher component
+// @ts-expect-error
+import CryptoJS from 'crypto-js';
 
 
 const Login: React.FC = () => {
   const router = useRouter();
+
   const [username, setUsername] = useState("john.doe@example.com");
   const [password, setPassword] = useState("password123");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -46,11 +49,34 @@ const Login: React.FC = () => {
     setErrorMessage(null);
 
     try {
-      const resp = await ApiService.login<{ data: { user: { username: string } } }>(username, password);
-
+      const resp = await ApiService.login<{ data: { user: {
+        [x: string]: string; username: string 
+} } }>(username, password);
+    
       if (resp?.data?.user?.username === username) {
+      
+        if(resp.data.user.role){
+          
+          const ciphertext = CryptoJS.AES.encrypt(resp.data.user.role, 'secret-key').toString();
+          sessionStorage.setItem('user', ciphertext);
+        }
+         // @ts-expect-error
+        const token = resp.data.token
+        sessionStorage.setItem('AuthToken', `${token}`)
         setIsLoggedIn(true);
-        router.push("/customer");
+       
+
+        if ( resp.data.user.role === "admin") {
+          router.push('/dashboard/admin'); // Редирект на адмін панель
+        } else if (resp.data.user.role === "super_admin") {
+          router.push('/dashboard/super-admin'); // Редирект на супер адмін панель
+        } else if (resp.data.user.role === "user") {
+          router.push('/dashboard/user'); // Редирект на панель користувача
+        } else {
+          router.push("/dashboard");
+        }
+
+
       } else {
         setErrorMessage("Login fehlgeschlagen. Bitte überprüfen Sie Ihre Daten.");
       }

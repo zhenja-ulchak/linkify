@@ -12,9 +12,11 @@ const UserList = () => {
   const t = useTranslations('User-list');
 
   useEffect(() => {
+    const getToken: any = sessionStorage.getItem('AuthToken')
+
     const fetchUsers = async () => {
       try {
-        const resp = await ApiService.get<{ data: { users: User[] } }>("user");
+        const resp = await ApiService.get<{ data: { users: User[] } }>("user", getToken);
         const users: User[] = resp.data.users;
         setUsers(users);
       } catch (error) {
