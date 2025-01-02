@@ -94,10 +94,15 @@ export default function EnhancedTable() {
 
   // Daten aus dem Backend abrufen
   const fetchRows = async () => {
-    try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}tenant`);
-      const tenantData: TenantData[] = response.data;
+    const getToken: any = sessionStorage.getItem('AuthToken')
 
+    
+    try {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}tenant`, getToken);
+
+      
+      const tenantData: TenantData[] = response.data.data.tenants;
+      console.log(tenantData);
       const mappedRows: Data[] = tenantData.map((tenant) =>
         createData(
           tenant.id,
