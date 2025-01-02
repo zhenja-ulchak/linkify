@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "next/navigation";
+import { useTranslations } from 'next-intl';
 import {
   TextField,
   Button,
@@ -38,6 +39,7 @@ export default function AdminProfile() {
     contact_phone: 0,
   });
 
+    const t = useTranslations('Admin-profile');
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const id = useParams();
@@ -95,14 +97,14 @@ export default function AdminProfile() {
   return (
     <Paper elevation={3} sx={{ padding: 4, maxWidth: 600, margin: "auto" }}>
       <Typography variant="h4" align="center" gutterBottom>
-        Profile
+        {t("profile")} 
       </Typography>
 
-      <Typography variant="h6">* Benutzer:</Typography>
+      <Typography variant="h6">{t("benutzer")} </Typography>
       <form onSubmit={handleSubmit}>
         <Stack spacing={2}>
           <TextField
-            label="Benutzername"
+            label={t("benutzername")}
             name="company_name"
             required
             value={formData.company_name}
@@ -111,11 +113,11 @@ export default function AdminProfile() {
           />
 
           <FormControl component="fieldset">
-            <Typography variant="h6">+ Rechnungsadresse</Typography>
+            <Typography variant="h6">{t("rechnungsadresse")} </Typography>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
-                  label="Firmenname"
+                  label={t("firmenname")}
                   name="address"
                   value={formData.address}
                   onChange={handleInputChange}
@@ -124,7 +126,7 @@ export default function AdminProfile() {
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  label="Name"
+                  label={t("name")}
                   name="invoice_address"
                   value={formData.invoice_address}
                   onChange={handleInputChange}
@@ -133,7 +135,7 @@ export default function AdminProfile() {
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  label="Vorname"
+                  label={t("vorname")}
                   name="license_valid_until"
                   value={formData.license_valid_until}
                   onChange={handleInputChange}
@@ -142,7 +144,7 @@ export default function AdminProfile() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  label="Straße und Hausnummer"
+                  label={t("hausnummer")}
                   name="contact_email"
                   value={formData.contact_email}
                   onChange={handleInputChange}
@@ -151,7 +153,7 @@ export default function AdminProfile() {
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  label="Postleitzahl"
+                  label={t("postleitzahl")}
                   name="invoice_email"
                   value={formData.invoice_email}
                   onChange={handleInputChange}
@@ -160,7 +162,7 @@ export default function AdminProfile() {
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  label="Ort"
+                  label={t("ort")}
                   name="contact_phone"
                   type="number"
                   value={formData.contact_phone}
@@ -172,7 +174,7 @@ export default function AdminProfile() {
           </FormControl>
 
           <Button variant="contained" type="submit" fullWidth>
-            Speichern
+            {t("speichern")}
           </Button>
 
           {errorMessage && <Alert severity="error">{errorMessage}</Alert>}

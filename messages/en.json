@@ -33,6 +33,37 @@
     "User-list": {
       "user-list": "User List"
     },
+    "Admin-profile": {
+      "profile": "Profile",
+      "benutzer": "* User:",
+      "rechnungsadresse": "+ Billing address",
+      "benutzername": "Username",
+      "firmenname": "Company name",
+      "name": "Name",
+      "vorname": "Surname",
+      "hausnummer": "Street and house number",
+      "postleitzahl": "Postal code",
+      "ort": "Country",
+      "speichern": "Save"
+    },
+
+    "Smtp-Email": {
+      "smtp-email": "Admin: Configure SMTP email",
+      "smtp-server": "SMTP-Server",
+      "smtp-port": "SMTP-Port",
+      "art-der": "Type of encryption (e.g. SSL, TLS)",
+      "benutzername": "Username",
+      "email-adresse": "E-mail address",
+      "passwort": "Password",
+      "passwort-umschalten": "Toggle password",
+      "passwort-speichern": "Save password",
+      "authentificationLabel": "Automatic authentication",
+      "abbrechen": "Cancel",
+      "test-email-senden": "Send test email",
+      "fertigstellen": "Finish"
+      
+    },
+
     "Customer": {
       "profile": "Profile",
       "benutzername": "Username",

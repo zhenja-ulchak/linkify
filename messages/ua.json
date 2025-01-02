@@ -33,6 +33,20 @@
       "User-list": {
         "user-list": "Список користувачів"
       },
+      "Admin-profile": {
+        "profile": "Профіль",
+        "benutzer": "* Користувачі:",
+        "rechnungsadresse": "+ Платіжна адреса",
+        "benutzername": "Ім'я користувача",
+        "firmenname": "Назва компанії",
+        "name": "Прізвище",
+        "vorname": "Ім'я",
+        "hausnummer": "Вулиця та номер будинку",
+        "postleitzahl": "Поштовий індекс",
+        "ort": "Країна",
+        "speichern": "Зберегти"
+      },
+  
       "Customer": {
         "profile": "Профіль",
         "benutzername": "Ім'я користувача",
