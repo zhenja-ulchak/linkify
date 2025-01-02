@@ -63,8 +63,8 @@ const Login: React.FC = () => {
 
         if ( RoleALl === "admin") {
           router.push('/dashboard/admin'); // Редирект на адмін панель
-        } else if (RoleALl === "super_admin") {
-          router.push('/dashboard/super-admin'); // Редирект на супер адмін панель
+        } else if (RoleALl === "superadmin") {
+          router.push('/dashboard/superadmin'); // Редирект на супер адмін панель
         } else if (RoleALl === "user") {
           router.push('/dashboard/user'); // Редирект на панель користувача
         } else {

@@ -55,7 +55,7 @@ const ProtectedRole: React.FC<ProtectedRouteProps> = ({ children }) => {
             // Редирект залежно від ролі
             if (getRole === "admin") {
                 router.push('/dashboard/admin');
-            } else if (getRole === "super_admin") {
+            } else if (getRole === "superadmin") {
                 router.push('/dashboard/superadmin');
             } else if (getRole === "user") {
                 router.push('/dashboard/user');
