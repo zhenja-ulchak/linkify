@@ -1,10 +1,12 @@
 "use client";
 import React from "react";
+import { useTranslations } from "next-intl";
 
 const DashboardPage = () => {
+  const t = useTranslations("Dashboard");
   return (
     <div id="ContainerDashboard">
-      <h1>Dashboard</h1>
+      <h1>{t("dashboard")}</h1>
 
       <p
         style={{
@@ -12,8 +14,7 @@ const DashboardPage = () => {
           textAlign: "center",
         }}
       >
-        Hallo und herzlich willkommen! Vielen Dank, dass Sie sich bei Linkify
-        registriert haben.
+         {t("welcome-message")}
       </p>
     </div>
   );

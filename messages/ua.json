@@ -1,0 +1,36 @@
+{
+    "Login": {
+      "login": "Авторизація",
+      "username": "Ім'я користувача",
+      "password": "Пароль",
+      "loginError": "Невірне ім'я користувача або пароль",
+      "registrierung": "Реєстрація",
+      "passwort-vergessen": "Ви забули свій пароль?"
+    },
+    "LocaleSwitcher": {
+      "en": "Англійський",
+      "de": "Німецька",
+      "ua": "Українська",
+      "ru": "Російська",
+      "label": "Змінити мову"
+    },
+    "Dashboard": {
+        "dashboard": "Приладова панель",
+        "welcome-message": "Привіт і ласкаво просимо! Дякуємо за приєднання до Linkify"
+      },
+      "Panel-sidebar": {
+        "dashboard": "Приладова панель",
+        "user": "Користувач",
+        "admin": "Адміністратор",
+        "admin-profile": "Профіль адміністратора",
+        "profile": "Профіль",
+        "logout": "Вийти",
+        "smtp-email": "SMTP-Пошта",
+        "admin-liste": "Список адміністраторів",
+        "Einstellungen": "Налаштування",
+        "Superadmin": "Суперадміністратор"
+      }
+    }
+    
+
+  

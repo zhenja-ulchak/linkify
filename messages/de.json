@@ -1,0 +1,34 @@
+{
+    "Login": {
+      "login": "Autorisierung",
+      "username": "Benutzername",
+      "password": "Passwort",
+      "loginError": "Ungültiger Benutzername oder Passwort",
+      "registrierung": "Registrierung",
+      "passwort-vergessen": "Passwort vergessen?"
+    },
+    "LocaleSwitcher": {
+      "en": "Englisch",
+      "de": "Deutsch",
+      "ua": "Ukrainisch",
+      "ru": "Russisch",
+      "label": "Sprache ändern"
+    },
+    "Dashboard": {
+      "dashboard": "Dashboard",
+      "welcome-message": "Hallo und herzlich willkommen! Danke, dass Sie Linkify beigetreten sind"
+    },
+    "Panel-sidebar": {
+      "user": "Benutzer",
+      "admin": "Administrator",
+      "admin-profile": "Administratorprofil",
+      "profile": "Profil",
+      "dashboard": "Dashboard",
+      "logout": "Abmelden",
+      "smtp-email": "SMTP-Mail",
+      "admin-liste": "Liste der Administratoren",
+      "Einstellungen": "Einstellungen",
+      "Superadmin": "Superadministrator"
+    }
+  }
+  
