@@ -46,6 +46,51 @@
         "ort": "Страна",
         "speichern": "Сохранить"
       },
+
+      "Smtp-Email": {
+        "smtp-email": "Администратор: настройка электронной почты SMTP",
+        "smtp-server": "SMTP-сервер",
+        "smtp-port": "SMTP-порт",
+        "art-der": "Тип шифрования (например, SSL, TLS)",
+        "benutzername": "Имя пользователя",
+        "email-adresse": "Адрес электронной почты",
+        "passwort": "Пароль",
+        "passwort-umschalten": "Переключить пароль",
+        "passwort-speichern": "Сохранить пароль",
+        "authentificationLabel": "Автоматическая аутентификация",
+        "abbrechen": "Отмена",
+        "test-email-senden": "Отправить тестовое письмо",
+        "fertigstellen": "Завершить",
+      "smtpServerEmpty": "SMTP-сервер не может быть пустым.",
+      "zahl": "Порт SMTP должен быть действительным номером.",
+      "versch": "Требуется шифрование.",
+      "benutzernamedarf": "Имя пользователя не может быть пустым.",
+      "bittegebensie": "Пожалуйста, введите действительный адрес электронной почты.",
+      "password": "Пароль не может быть пустым.",
+      "bitteaktivieren": "Пожалуйста, включите опцию «Сохранить пароль».",
+      "smtpSettingsSaved": "Настройки SMTP успешно сохранены!",
+      "saveSettingsError": "Ошибка сохранения настроек.",
+      "unknownError": "Произошла неизвестная ошибка.",
+      "testEmailSent": "Тестовое письмо отправлено:",
+      "emailTestError": "Ошибка при проверке электронной почты.",
+      "unknownError2": "Произошла неизвестная ошибка."
+      },
+
+      
+    "Tenant-List": {
+      "tenant-list": "Список арендаторов",
+      "firmenname": "Название компании",
+      "adress": "Адрес",
+      "invoice_address": "Адрес для выставления счета",
+      "license_valid_until": "Срок действия лицензии",
+      "contact_email": "Контактный Email",
+      "invoice_email": "Email для счет-фактуры",
+      "contact_phone": "Контактный телефон",
+      "actions": "Действия",
+      "selectAllDesserts": "Выбрать все",
+      "filterList": "Список фильтров",
+       "rowsPerPage": "Строк на странице:"
+    },
   
       "Customer": {
         "profile": "Профиль",

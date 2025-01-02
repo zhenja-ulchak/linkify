@@ -47,6 +47,7 @@
       "speichern": "Save"
     },
 
+
     "Smtp-Email": {
       "smtp-email": "Admin: Configure SMTP email",
       "smtp-server": "SMTP-Server",
@@ -60,9 +61,38 @@
       "authentificationLabel": "Automatic authentication",
       "abbrechen": "Cancel",
       "test-email-senden": "Send test email",
-      "fertigstellen": "Finish"
+      "fertigstellen": "Finish",
+      "smtpServerEmpty": "The SMTP server cannot be empty.",
+      "zahl": "The SMTP port must be a valid number.",
+      "versch": "Encryption required",
+      "benutzernamedarf": "The username cannot be empty",
+      "bittegebensie": "Please enter a valid email address.",
+      "password": "The password cannot be empty.",
+      "bitteaktivieren": "Please enable the Save Password option.",
+      "smtpSettingsSaved": "SMTP settings saved successfully!.",
+      "saveSettingsError": "Error saving settings.",
+      "unknownError": "An unknown error has occurred.",
+      "testEmailSent": "Test email sent:",
+      "emailTestError": "Error checking emails.",
+      "unknownError2": "An unknown error has occurred."
       
     },
+
+    "Tenant-List": {
+      "tenant-list": "Tenant-List",
+      "firmenname": "Company name",
+      "adress": "Adress",
+      "invoice_address": "Billing Address",
+      "license_valid_until": "License Validity",
+      "contact_email": "Contact Email",
+      "invoice_email": "Invoice Email",
+      "contact_phone": "Contact Phone",
+      "actions": "Actions",
+      "selectAllDesserts": "Select All",
+      "filterList": "Filter List",
+       "rowsPerPage": "Rows Per Page:"
+       },
+
 
     "Customer": {
       "profile": "Profile",

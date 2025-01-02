@@ -46,6 +46,50 @@
         "ort": "Країна",
         "speichern": "Зберегти"
       },
+
+      "Smtp-Email": {
+        "smtp-email": "Адміністратор: налаштування електронної пошти SMTP",
+        "smtp-server": "SMTP-сервер",
+        "smtp-port": "SMTP-порт",
+        "art-der": "Тип шифрування (наприклад, SSL, TLS)",
+        "benutzername": "Ім'я користувача",
+        "email-adresse": "Адреса електронної пошти",
+        "passwort": "Пароль",
+        "passwort-umschalten": "Переключити пароль",
+        "passwort-speichern": "Зберегти пароль",
+        "authentificationLabel": "Автоматична автентифікація",
+        "abbrechen": "Скасування",
+        "test-email-senden": "Надіслати тестовий лист",
+        "fertigstellen": "Завершити",
+        "smtpServerEmpty": "Сервер SMTP не може бути порожнім.",
+        "zahl": "Порт SMTP має бути дійсним номером.",
+        "versch": "Потрібне шифрування",
+        "benutzernamedarf": "Ім'я користувача не може бути пустим.",
+        "bittegebensie": "Введіть дійсну електронну адресу.",
+        "password": "Пароль не може бути пустим.",
+        "bitteaktivieren": "Увімкніть опцію «Зберегти пароль».",
+        "smtpSettingsSaved": "Налаштування SMTP успішно збережено!.",
+        "saveSettingsError": "Помилка збереження налаштувань.",
+        "unknownError": "Сталася невідома помилка.",
+        "testEmailSent": "Тестовий електронний лист надіслано:",
+        "emailTestError": "Помилка перевірки електронної пошти.",
+        "unknownError2": "Сталася невідома помилка."
+      },
+      
+      "Tenant-List": {
+        "tenant-list": "Список орендарів",
+        "firmenname": "Назва компанії",
+        "adress": "Адреса",
+        "invoice_address": "Адреса для виставлення рахунку",
+        "license_valid_until": "Строк дії ліцензії",
+        "contact_email": "Контактний Email",
+        "invoice_email": "Email для рахунок-фактури",
+        "contact_phone": "Контактний телефон",
+        "actions": "Дії",
+        "selectAllDesserts": "Вибрати все",
+         "filterList": "Список фільтрів",
+         "rowsPerPage": "Рядків на сторінці:"
+      },
   
       "Customer": {
         "profile": "Профіль",

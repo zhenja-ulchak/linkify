@@ -60,9 +60,36 @@
       "authentificationLabel": "Automatische Authentifizierung",
       "abbrechen": "Abbrechen",
       "test-email-senden": "Test-E-Mail senden",
-      "fertigstellen": "Fertigstellen"
+      "fertigstellen": "Fertigstellen",
+      "smtpServerEmpty": "Der SMTP-Server darf nicht leer sein.",
+      "zahl": "Der SMTP-Port muss eine gültige Nummer sein.",
+      "versch": "Verschlüsselung erforderlich",
+      "benutzernamedarf": "Der Benutzername darf nicht leer sein.",
+      "bittegebensie": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+      "password": "Das Passwort darf nicht leer sein.",
+      "bitteaktivieren": "Bitte aktivieren Sie die Option Passwort speichern.",
+      "smtpSettingsSaved": "SMTP-Einstellungen erfolgreich gespeichert!.",
+      "saveSettingsError": "Fehler beim Speichern der Einstellungen.",
+      "unknownError": "Es ist ein unbekannter Fehler aufgetreten.",
+      "testEmailSent": "Test-E-Mail gesendet:",
+      "emailTestError": "Fehler beim Überprüfen der E-Mails.",
+      "unknownError2": "Es ist ein unbekannter Fehler aufgetreten."
+      },
 
-    },
+      "Tenant-List": {
+        "tenant-list": "Tenant-Liste",
+        "firmenname": "Firmenname",
+        "adress": "Adresse",
+        "invoice_address": "Rechnungsadresse",
+        "license_valid_until": "Lizenzgültigkeit",
+        "contact_email": "Kontakt-Email",
+        "invoice_email": "Rechnungs-E-Mai",
+        "contact_phone": "Kontakttelefon",
+        "actions": "Actions",
+        "selectAllDesserts": "Wählen Sie alle",
+        "filterList": "Filterliste",
+         "rowsPerPage": "Zeilen pro Seite:"
+      },
 
 
     "Customer": {

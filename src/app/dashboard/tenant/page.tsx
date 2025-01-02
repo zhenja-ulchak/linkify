@@ -26,7 +26,7 @@ import { useRouter } from "next/navigation";
 import ToggleSwitch from "@/components/toggleBtn";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import axios from 'axios';
-
+import { useTranslations } from 'next-intl';
 
 export default function EnhancedTable() {
   const [order, setOrder] = React.useState<Order>("asc");
@@ -37,7 +37,7 @@ export default function EnhancedTable() {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const router = useRouter();
   const [rows, setRows] = React.useState<Data[]>([]);  // Zustand für die Zeilen
-
+  const t = useTranslations('Tenant-List');
 
 
   // Data und TenantData Typen
@@ -160,49 +160,49 @@ export default function EnhancedTable() {
       id: "company_name",
       numeric: false,
       disablePadding: true,
-      label: "Firmenname",
+      label: t('firmenname'),
     },
     {
       id: "address",
       numeric: false, // Text, daher numeric: false
       disablePadding: false,
-      label: "Adresse",
+      label:  t('adress'),
     },
     {
       id: "invoice_address",
       numeric: false, // Text, daher numeric: false
       disablePadding: false,
-      label: "Rechnungsadresse",
+      label: t('invoice_address'),
     },
     {
       id: "license_valid_until",
       numeric: false, // Text, daher numeric: false
       disablePadding: false,
-      label: "Lizenzgültigkeit",
+      label: t('license_valid_until'),
     },
     {
       id: "contact_email",
       numeric: false, // Text, daher numeric: false
       disablePadding: false,
-      label: "Kontakt-Email",
+      label: t('contact_email'),
     },
     {
       id: "invoice_email",
       numeric: false,
       disablePadding: false,
-      label: "Rechnungs-E-Mail",
+      label: t('invoice_email'),
     },
     {
       id: "contact_phone",
       numeric: false,
       disablePadding: false,
-      label: "Kontakttelefon",
+      label: t('contact_phone'),
     },
     {
       id: "actions",
       numeric: false,
       disablePadding: false,
-      label: "Actions",
+      label: t('actions'),
     },
   ];
 
@@ -241,7 +241,7 @@ export default function EnhancedTable() {
               checked={rowCount > 0 && numSelected === rowCount}
               onChange={onSelectAllClick}
               inputProps={{
-                "aria-label": "select all desserts",
+                "aria-label": t('selectAllDesserts'),
               }}
               className="TableCell"
             />
@@ -311,7 +311,7 @@ export default function EnhancedTable() {
             component="div"
             textAlign={"center"}
           >
-            Tenant Liste
+            {t('tenant-list')}
           </Typography>
         )}
         {numSelected > 0 ? (
@@ -321,7 +321,7 @@ export default function EnhancedTable() {
             </IconButton>
           </Tooltip>
         ) : (
-          <Tooltip className="FilterList" title="Filter list">
+          <Tooltip className="FilterList" title={t('filterList')}>
             <IconButton>
               <FilterListIcon />
             </IconButton>
@@ -537,6 +537,7 @@ export default function EnhancedTable() {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
           className="TableFooter"
+          labelRowsPerPage={t('rowsPerPage')}
         />
       </Paper>
       <FormControlLabel
@@ -545,7 +546,7 @@ export default function EnhancedTable() {
           width: "fit-content",
         }}
         control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
+        label={t('selectAllDesserts')}
       />
     </Box>
   );

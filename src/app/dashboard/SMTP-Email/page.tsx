@@ -42,19 +42,19 @@ const Administrator: React.FC = () => {
   // Eingabe validieren
   const validateInputs = () => {
     const newErrors: Record<string, string> = {};
-    if (!smtpServer) newErrors.smtpServer = "SMTP-Server darf nicht leer sein.";
+    if (!smtpServer) newErrors.smtpServer = t('smtpServerEmpty');
     if (!smtpPort || isNaN(Number(smtpPort))) {
-      newErrors.smtpPort = "SMTP-Port muss eine gültige Zahl sein.";
+      newErrors.smtpPort = t('zahl');
     }
-    if (!encryption) newErrors.encryption = "Verschlüsselung ist erforderlich.";
-    if (!username) newErrors.username = "Benutzername darf nicht leer sein.";
+    if (!encryption) newErrors.encryption = t('versch');
+    if (!username) newErrors.username = t('benutzernamedarf');
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      newErrors.email = "Bitte geben Sie eine gültige E-Mail-Adresse ein.";
+      newErrors.email = t('bittegebensie');
     }
-    if (!password) newErrors.password = "Passwort darf nicht leer sein.";
+    if (!password) newErrors.password = t('password');
     if (!savePassword) {
       newErrors.savePassword =
-        "Bitte aktivieren Sie die Option 'Passwort speichern'.";
+        t('bitteaktivieren');
     }
     return newErrors;
   };
@@ -94,19 +94,19 @@ const Administrator: React.FC = () => {
     try {
       setServerError(null); // Vorherige Fehler zurücksetzen
       await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}email/config`, payload);
-      alert("SMTP-Einstellungen erfolgreich gespeichert!");
+      alert(t('smtpSettingsSaved'));
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         // Axios-spezifischer Fehler
         setServerError(
-          error.response?.data?.message || "Fehler beim Speichern der Einstellungen."
+          error.response?.data?.message || t('saveSettingsError')
         );
       } else if (error instanceof Error) {
         // Allgemeiner JavaScript-Fehler
         setServerError(error.message);
       } else {
         // Fallback für unbekannte Fehler
-        setServerError("Ein unbekannter Fehler ist aufgetreten.");
+        setServerError(t('unknownError'));
       }
     }
   };
@@ -124,19 +124,19 @@ const Administrator: React.FC = () => {
         `${process.env.NEXT_PUBLIC_BASE_URL}email/test`,
         { email }
       );
-      alert(`Test-E-Mail gesendet: ${response.data.message}`);
+      alert(`${t('testEmailSent')} ${response.data.message}`);
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         // Axios-spezifischer Fehler
         setServerError(
-          error.response?.data?.message || "Fehler beim Testen der E-Mail."
+          error.response?.data?.message || t('emailTestError')
         );
       } else if (error instanceof Error) {
         // Allgemeiner JavaScript-Fehler
         setServerError(error.message);
       } else {
         // Fallback für unbekannte Fehler
-        setServerError("Ein unbekannter Fehler ist aufgetreten.");
+        setServerError(t('unknownError2'));
       }
     }
   };
