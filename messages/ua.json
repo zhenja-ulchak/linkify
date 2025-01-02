@@ -29,8 +29,32 @@
         "admin-liste": "Список адміністраторів",
         "Einstellungen": "Налаштування",
         "Superadmin": "Суперадміністратор"
+      },
+      "User-list": {
+        "user-list": "Список користувачів"
+      },
+      "Customer": {
+        "profile": "Профіль",
+        "benutzername": "Ім'я користувача",
+        "benutzer": "* Користувачі:",
+        "rechungsadresse": "+ Платіжна адреса",
+        "firmenname": "Назва компанії",
+         "name": "Прізвище",
+         "vorname": "Ім'я",
+         "street": "Вулиця і номер будинку",
+         "postalcode": "Поштовий індекс",
+         "city": "Місто",
+         "region": "Область",
+         "land": "Країна",
+         "addressAdditional": "Додаткова адреса",
+         "licenseValidity": "Термін дії ліцензії",
+         "group": "Група",
+         "firmenname2": "+ Назва компанії:",
+         "licenseValidity2": "- Термін дії ліцензії",
+         "group2": "- Група",
+         "save": "Зберегти"
+
       }
     }
-    
-
+  
   

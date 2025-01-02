@@ -1,8 +1,9 @@
 "use client"
 
 import React, { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation"; // Für URL-Parameter und Router
+import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
+import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
@@ -25,11 +26,8 @@ const UserDetail: React.FC = () => {
   const { id } = useParams();
   const router = useRouter();
 
-
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState<string>("");
-  const [modalTextColor, setModalTextColor] = useState("black"); // Declare state outside of conditionals
-
   const [updatedUser, setUpdatedUser] = useState<User>({
     id: 0,
     first_name: "",
@@ -41,47 +39,7 @@ const UserDetail: React.FC = () => {
     role: "",
     is_active: false
   });
-
   const [users, setUser] = useState<User[]>([]);
-
-  useEffect(() => {
-    const bodyBackgroundColor = window.getComputedStyle(
-      document.body
-    ).backgroundColor;
-    if (bodyBackgroundColor === "rgb(0, 0, 0)") {
-      setModalTextColor("black");
-    } else {
-      setModalTextColor("black");
-    }
-  }, [isEditing]);
-
-  // Falls kein Benutzer gefunden wurde
-  const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    if (updatedUser) {
-      setUpdatedUser({
-        ...updatedUser,
-        [name]: value,
-      });
-    }
-  };
-
-  // Validierung der Benutzereingaben
-  const validateInputs = () => {
-    if (
-      !updatedUser.first_name ||
-      !updatedUser.last_name ||
-      !updatedUser.language ||
-      !updatedUser.username ||
-      !updatedUser.contact_phone ||
-      !updatedUser.email
-    ) {
-      setError("Alle Felder müssen ausgefüllt werden.");
-      return false;
-    }
-    setError("");
-    return true;
-  };
 
   useEffect(() => {
     const fetchElements = async () => {
@@ -104,6 +62,30 @@ const UserDetail: React.FC = () => {
     fetchElements();
   }, [id]);
 
+  const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUpdatedUser({
+      ...updatedUser,
+      [name]: value,
+    });
+  };
+
+  const validateInputs = () => {
+    if (
+      !updatedUser.first_name ||
+      !updatedUser.last_name ||
+      !updatedUser.language ||
+      !updatedUser.username ||
+      !updatedUser.contact_phone ||
+      !updatedUser.email
+    ) {
+      setError("Alle Felder müssen ausgefüllt werden.");
+      return false;
+    }
+    setError("");
+    return true;
+  };
+
   const handleSaveChanges = async () => {
     if (validateInputs()) {
       try {
@@ -116,7 +98,7 @@ const UserDetail: React.FC = () => {
           setIsEditing(false);
         }
       } catch (error) {
-        setError("Fehler beim Speichern:" + error)
+        setError("Fehler beim Speichern:" + error);
       }
     }
   };
@@ -135,195 +117,155 @@ const UserDetail: React.FC = () => {
     }
   };
 
-
-  function handleGoingBack() {
+  const handleGoingBack = () => {
     router.back();
-  }
+  };
 
   return (
     <div id="UserDetailContainer">
-      <h3>Benutzer Details</h3>
+      <Typography variant="h3" gutterBottom>
+        Benutzer Details
+      </Typography>
 
-      <table id="UserDetailTable">
-        <thead>
-          <tr style={{ backgroundColor: "#f2f2f2" }}>
-            <th className="UserDetailTableHeader">Feld</th>
-            <th
-              className="UserDetailTableHeader"
-            >
-              Wert
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.id}>
-              <td className="UserDetailTableBody">{user.id}</td>
-              <td className="UserDetailTableBody">{user.first_name}</td>
-              <td className="UserDetailTableBody">{user.last_name}</td>
-              <td className="UserDetailTableBody">{user.language}</td>
-              <td className="UserDetailTableBody">{user.username}</td>
-              <td className="UserDetailTableBody">{user.contact_phone}</td>
-              <td className="UserDetailTableBody">{user.email}</td>
-              <td className="UserDetailTableBody">{user.role}</td>
-              <td className="UserDetailTableBody">{user.is_active}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell className="UserDetailTableHeader">Feld</TableCell>
+              <TableCell className="UserDetailTableHeader">Wert</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {users.map((user) => (
+              <TableRow key={user.id}>
+                <TableCell>{user.id}</TableCell>
+                <TableCell>{user.first_name}</TableCell>
+                <TableCell>{user.last_name}</TableCell>
+                <TableCell>{user.language}</TableCell>
+                <TableCell>{user.username}</TableCell>
+                <TableCell>{user.contact_phone}</TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell>{user.role}</TableCell>
+                <TableCell>{user.is_active ? 'Ja' : 'Nein'}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-evenly",
-          marginTop: "10px",
-        }}
-      >
-        <button
-          className="UserDetailButton"
+      <div style={{ display: "flex", justifyContent: "space-evenly", marginTop: "10px" }}>
+        <Button
+          variant="contained"
+          color="primary"
           title="Bearbeiten"
           onClick={() => setIsEditing(true)}
+          startIcon={<EditIcon />}
         >
-          <EditIcon />
-        </button>
-        <button
-          className="UserDetailButton"
+          Bearbeiten
+        </Button>
+        <Button
+          variant="contained"
+          color="secondary"
           title="Löschen"
           onClick={handleDelete}
+          startIcon={<DeleteIcon />}
         >
-          <DeleteIcon />
-        </button>
+          Löschen
+        </Button>
       </div>
 
       <div id="UserDetailModalContainer">
-        <button
-          className="UserDetailButton"
-          title="Zurück"
+        <Button
+          variant="outlined"
           onClick={handleGoingBack}
+          startIcon={<KeyboardBackspaceIcon />}
         >
-          <KeyboardBackspaceIcon />
-        </button>
+          Zurück
+        </Button>
       </div>
 
-
-      {/* -------------------------------- */}
+      {/* Edit Modal */}
       {isEditing && (
-        <div id="UserDetailModal" style={{ color: modalTextColor }}>
-          <div id="UserDetailModalContent" style={{ color: modalTextColor }}>
-            <h4>Benutzerdaten bearbeiten</h4>
+        <Dialog open={isEditing} onClose={() => setIsEditing(false)}>
+          <DialogTitle>Benutzerdaten bearbeiten</DialogTitle>
+          <DialogContent>
+            {error && <Typography color="error">{error}</Typography>}
 
-            {error && <div id="UserDetailModalError">{error}</div>}
-
-            {/* Firmenname, Adresse und andere Felder sind nur lesbar */}
-            <div style={{ marginBottom: "10px" }}>
-              <label className="EditPageFontColor">Username * :</label>
-              <input
-                type="text"
-                name="contact_phone"
-                value={updatedUser?.username}
-                onChange={handleEditChange}
-                style={{ width: "100%", padding: "8px" }}
-                readOnly
-              />
-            </div>
-
-            <div style={{ marginBottom: "10px" }}>
-              <label className="EditPageFontColor">Vorname:</label>
-              <input
-                type="text"
-                name="company_name"
-                value={updatedUser?.first_name}
-                onChange={handleEditChange}
-                style={{ width: "100%", padding: "8px" }}
-                readOnly
-              />
-            </div>
-            <div style={{ marginBottom: "10px" }}>
-              <label className="EditPageFontColor">Nachname:</label>
-              <input
-                type="text"
-                name="address"
-                value={updatedUser?.last_name}
-                onChange={handleEditChange}
-                style={{ width: "100%", padding: "8px" }}
-                readOnly
-              />
-            </div>
-            <div style={{ marginBottom: "10px" }}>
-              <label className="EditPageFontColor">Sprache:</label>
-              <input
-                type="text"
-                name="license_valid_until"
-                value={updatedUser?.language}
-                onChange={handleEditChange}
-                style={{ width: "100%", padding: "8px" }}
-                readOnly
-              />
-            </div>
-
-            {/* Die änderbaren Felder */}
-            <div style={{ marginBottom: "10px" }}>
-              <label className="EditPageFontColor">Kontaktnummer * :</label>
-              <input
-                type="text"
-                name="invoice_address"
-                value={updatedUser?.contact_phone}
-                onChange={handleEditChange}
-                style={{ width: "100%", padding: "8px" }}
-              />
-            </div>
-            <div style={{ marginBottom: "10px" }}>
-              <label className="EditPageFontColor">Email * :</label>
-              <input
-                type="text"
-                name="contact_email"
-                value={updatedUser?.email}
-                onChange={handleEditChange}
-                style={{ width: "100%", padding: "8px" }}
-              />
-            </div>
-
-            <div style={{ marginBottom: "10px" }}>
-              <label className="EditPageFontColor">Role:</label>
-              <input
-                type="text"
-                name="contact_email"
-                value={updatedUser?.role}
-                onChange={handleEditChange}
-                style={{ width: "100%", padding: "8px" }}
-              />
-            </div>
-
-            {/* Buttons zum Speichern und Schließen */}
-            <div
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "space-evenly",
+            <TextField
+              label="Username *"
+              name="username"
+              value={updatedUser?.username}
+              onChange={handleEditChange}
+              fullWidth
+              margin="normal"
+              InputProps={{
+                readOnly: true,
               }}
-              className="CancelBtn"
-            >
-              <button
-                onClick={handleSaveChanges}
-                style={{
-                  border: "none",
-                  backgroundColor: "transparent",
-                  cursor: "pointer",
-                }}
-                title="Speichern"
-              >
-                <AddIcon style={{ transform: "scale(1.5)" }} />
-              </button>
-              <button
-                className="BtnCancel"
-                title="Schließen"
-                onClick={() => setIsEditing(false)}
-              >
-                <CancelIcon />
-              </button>
-            </div>
-          </div>
-        </div>
+            />
+
+            <TextField
+              label="Vorname:"
+              name="first_name"
+              value={updatedUser?.first_name}
+              onChange={handleEditChange}
+              fullWidth
+              margin="normal"
+            />
+
+            <TextField
+              label="Nachname:"
+              name="last_name"
+              value={updatedUser?.last_name}
+              onChange={handleEditChange}
+              fullWidth
+              margin="normal"
+            />
+
+            <TextField
+              label="Sprache:"
+              name="language"
+              value={updatedUser?.language}
+              onChange={handleEditChange}
+              fullWidth
+              margin="normal"
+            />
+
+            <TextField
+              label="Kontaktnummer *"
+              name="contact_phone"
+              value={updatedUser?.contact_phone}
+              onChange={handleEditChange}
+              fullWidth
+              margin="normal"
+            />
+
+            <TextField
+              label="Email *"
+              name="email"
+              value={updatedUser?.email}
+              onChange={handleEditChange}
+              fullWidth
+              margin="normal"
+            />
+
+            <TextField
+              label="Role:"
+              name="role"
+              value={updatedUser?.role}
+              onChange={handleEditChange}
+              fullWidth
+              margin="normal"
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleSaveChanges} color="primary" startIcon={<AddIcon />}>
+              Speichern
+            </Button>
+            <Button onClick={() => setIsEditing(false)} color="secondary" startIcon={<CancelIcon />}>
+              Abbrechen
+            </Button>
+          </DialogActions>
+        </Dialog>
       )}
     </div>
   );
