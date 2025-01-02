@@ -46,28 +46,26 @@ const Login: React.FC = () => {
     setErrorMessage(null);
 
     try {
-      const resp = await ApiService.login<{ data: { user: {
-        [x: string]: string; username: string 
-} } }>(username, password);
-    
-      if (resp?.data?.user?.username === username) {
+      const resp = await ApiService.login<any>(username, password);
+      if (resp?.data[0]?.user?.username === username) {
+        console.log(resp?.data[0]?.user);
+        const RoleALl = resp?.data[0]?.user?.role
       
-        if(resp.data.user.role){
-          
-          const ciphertext = CryptoJS.AES.encrypt(resp.data.user.role, 'secret-key').toString();
+        if(RoleALl){
+          const ciphertext = CryptoJS.AES.encrypt(RoleALl, 'secret-key').toString();
           sessionStorage.setItem('user', ciphertext);
         }
-         // @ts-expect-error
-        const token = resp.data.token
+        
+        const token = resp?.data[0]?.token
         sessionStorage.setItem('AuthToken', `${token}`)
         setIsLoggedIn(true);
        
 
-        if ( resp.data.user.role === "admin") {
+        if ( RoleALl === "admin") {
           router.push('/dashboard/admin'); // Редирект на адмін панель
-        } else if (resp.data.user.role === "super_admin") {
+        } else if (RoleALl === "super_admin") {
           router.push('/dashboard/super-admin'); // Редирект на супер адмін панель
-        } else if (resp.data.user.role === "user") {
+        } else if (RoleALl === "user") {
           router.push('/dashboard/user'); // Редирект на панель користувача
         } else {
           router.push("/dashboard");
