@@ -47,7 +47,7 @@ export default function DashboardLayout({
           <ProtectedRole>
           {children}
           </ProtectedRole>
-          <Footer footerPosition={footerPosition} footerIndex={footerIndex} />
+          <Footer   />
         </div>
       </div>
     </>

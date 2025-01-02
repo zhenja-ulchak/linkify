@@ -1,35 +1,48 @@
-"use client";
-
 import React, { useEffect, useState, useCallback } from "react";
-import { Box, Container, Typography, Link, Modal, Button } from "@mui/material";
+import { Box, Typography, Modal, Button } from "@mui/material";
+import Tooltip from '@mui/material/Tooltip';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'; 
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'; 
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'; 
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'; 
 
-interface FooterProps {
-  footerPosition?: string | number;
-  footerIndex?: string | number;
-  borderTop?: string | number;
-}
-
-// .env datei muss im Root verzeichnis gespeichert sein
-// Die .env Variablen Müssen mit NEXT_PUBLIC anfangen
-// const isDebugON = process.env.NEXT_PUBLIC_APP_DEBUG === "ON" ? true : false;
 const Timeout = parseInt(process.env.NEXT_PUBLIC_APP_TIMEOUT || "300", 10);
-const LogoutViewTimer = parseInt(
-  process.env.NEXT_PUBLIC_APP_LOGOUT_VIEW_TIMER || "20",
-  10
-);
+const LogoutViewTimer = parseInt(process.env.NEXT_PUBLIC_APP_LOGOUT_VIEW_TIMER || "20", 10);
 
-const Footer: React.FC<FooterProps> = ({
-  footerPosition = "0",
-  footerIndex = "9999",
-  borderTop = "1px solid rgba(255, 255, 255, 1)",
-}) => {
-  const [counter, setCounter] = useState(Timeout); // Zustand für den Countdown
-  const [showModal, setShowModal] = useState(false); // Zustand für das Modal
+const Footer: React.FC = () => {
+  const [counter, setCounter] = useState(Timeout); 
+  const [showModal, setShowModal] = useState(false); 
+  const [footerVisible, setFooterVisible] = useState(false);
+  const [tooltipVisible, setTooltipVisible] = useState({
+    user: false,
+    time: false,
+    licInfo: false,
+    objectPage: false,
+  });
+  const [arrowDirection, setArrowDirection] = useState({
+    user: 'up',
+    time: 'up',
+    licInfo: 'up',
+    objectPage: 'up',
+  });
 
-  // Funktion zum Zurücksetzen des Timers bei Benutzeraktivität (z. B. Mausbewegung)
+  const handleTooltipToggle = (key: keyof typeof tooltipVisible) => {
+    setTooltipVisible((prevState) => ({
+      ...prevState,
+      [key]: !prevState[key],
+    }));
+  };
+
+  const handleArrowToggle = (key: keyof typeof arrowDirection) => {
+    setArrowDirection((prevState) => ({
+      ...prevState,
+      [key]: prevState[key] === 'up' ? 'down' : 'up',
+    }));
+  };
+
   const resetTimer = useCallback(() => {
-    setCounter(Timeout); // Timer wird auf den ursprünglichen Wert (Timeout) zurückgesetzt
-    setShowModal(false); // Modal wird geschlossen, falls es sichtbar ist
+    setCounter(Timeout); 
+    setShowModal(false); 
   }, []);
 
   const handleLogoutLocal = () => {
@@ -38,24 +51,21 @@ const Footer: React.FC<FooterProps> = ({
     window.location.href = "/login";
   };
 
-  // Effekt für den Countdown-Mechanismus
   useEffect(() => {
     const timer = setInterval(() => {
       setCounter((prev) => {
         if (prev <= 1) {
-          clearInterval(timer); // Timer stoppen, wenn der Countdown abläuft
+          clearInterval(timer); 
           handleLogoutLocal();
-          return 0; // Countdown auf 0 setzen
+          return 0;
         }
-        if (prev <= LogoutViewTimer) setShowModal(true); // Modal anzeigen, wenn der Countdown unter `LogoutViewTimer` fällt
-        return prev - 1; // Countdown um 1 Sekunde verringern
+        if (prev <= LogoutViewTimer) setShowModal(true);
+        return prev - 1;
       });
-    }, 1000); // Intervall: 1 Sekunde
+    }, 1000);
 
-    // Event-Listener hinzufügen, um Timer bei Mausbewegung zurückzusetzen
     window.addEventListener("mousemove", resetTimer);
 
-    // Aufräumen: Event-Listener entfernen und Timer stoppen
     return () => {
       clearInterval(timer);
       window.removeEventListener("mousemove", resetTimer);
@@ -63,76 +73,8 @@ const Footer: React.FC<FooterProps> = ({
   }, [resetTimer]);
 
   return (
-    <Box
-      component="footer"
-      sx={{
-        backgroundColor: "#1976d2",
-        color: "#fff",
-        position: "fixed",
-        bottom: "0",
-        minWidth: "100%",
-        minHeight: "auto",
-        zIndex: footerIndex,
-        left: footerPosition,
-        transition: "left 0.23s ease",
-        borderTop: borderTop,
-      }}
-
-    >
-      <Container maxWidth="lg" sx={{ margin: 0, padding: 0, width: "100vw" }}>
-        {/* Social Media Links */}
-        <Link
-          href="https://facebook.com"
-          color="inherit"
-          target="_blank"
-          sx={{
-            display: "inline-block",
-            mb: 1,
-            marginRight: "2%",
-            marginLeft: "20px",
-          }}
-        >
-          Facebook
-        </Link>
-        <Link
-          href="https://twitter.com"
-          color="inherit"
-          target="_blank"
-          sx={{ display: "inline-block", mb: 1, marginRight: "2%" }}
-        >
-          Twitter
-        </Link>
-        <Link
-          href="https://linkedin.com"
-          color="inherit"
-          target="_blank"
-          sx={{ display: "inline-block", mb: 1 }}
-        >
-          LinkedIn
-        </Link>
-
-        <Box
-          width={"100vw"}
-          display={"flex"}
-          justifyContent={"center"}
-          alignItems={"center"}
-        >
-          <Typography variant="body2" sx={{ color: "#fff", }} className="FooterLorem">
-            &copy; {new Date().getFullYear()} Lorem ipsum dolor sit amet
-            consectetur, adipisicing elit. Nemo, amet.
-          </Typography>
-        </Box>
-      </Container>
-
-      {/* Kann hier Im Footer Countdown Anzeigen */}
-      {/* {isDebugON && (
-        <Box sx={{ textAlign: "center", zIndex: 9999 }}>
-          <Typography variant="body2" sx={{ color: "#fff" }}>
-            Timeout: {counter} Sekunden
-          </Typography>
-        </Box>
-      )} */}
-
+    <>
+      {/* Modal for inactivity warning */}
       <Modal open={showModal} onClose={() => setShowModal(false)}>
         <Box
           sx={{
@@ -159,7 +101,146 @@ const Footer: React.FC<FooterProps> = ({
           </Button>
         </Box>
       </Modal>
-    </Box>
+
+      {/* Fixed Footer */}
+      <Button
+        variant="contained"
+        sx={{
+          position: 'fixed',
+          bottom: 68,
+          right: 0,
+          backgroundColor: '#007BFF',
+          borderRadius: 0,
+          zIndex: 9999,
+          padding: '10px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: 'auto',
+          minWidth: '80px',
+          minHeight: '47px',
+          maxWidth: '100px',
+          maxHeight: '47px',
+          transition: 'width 0.3s ease',
+          '@media (max-width: 600px)': {
+            minWidth: '60px',
+            maxWidth: '80px',
+            right: '-10px',
+          },
+          '@media (max-width: 400px)': {
+            minWidth: '50px',
+            maxWidth: '60px',
+            right: '-20px',
+          },
+        }}
+        onClick={() => setFooterVisible(!footerVisible)}
+      >
+        {footerVisible ? <ArrowForwardIcon sx={{ color: 'white', marginRight: 'auto' }} /> : <ArrowBackIcon sx={{ color: 'white', marginRight: 'auto' }} />}
+      </Button>
+
+      <Box
+        sx={{
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          backgroundColor: '#1976D2',
+          color: 'white',
+          padding: 2,
+          transform: footerVisible ? 'translateY(0)' : 'translateY(100%)',
+          transition: 'transform 0.5s ease',
+          visibility: footerVisible ? 'visible' : 'hidden',
+          zIndex: 9998,
+        }}
+      >
+        <Box sx={{ display: 'flex', justifyContent: 'center', gap: 3 }}>
+          {/* Tooltip Buttons */}
+          <Tooltip title="User Info" placement="top" open={tooltipVisible.user}>
+            <Button
+              variant="text"
+              color="inherit"
+              onClick={() => {
+                handleTooltipToggle('user');
+                handleArrowToggle('user');
+              }}
+              sx={{
+                textTransform: 'capitalize',
+                color: 'white',
+                '&:hover': {
+                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                },
+              }}
+            >
+              USER
+              {arrowDirection.user === 'up' ? <ArrowUpwardIcon sx={{ color: 'white', marginLeft: 1 }} /> : <ArrowDownwardIcon sx={{ color: 'white', marginLeft: 1 }} />}
+            </Button>
+          </Tooltip>
+
+          <Tooltip title="Time Info" placement="top" open={tooltipVisible.time}>
+            <Button
+              variant="text"
+              color="inherit"
+              onClick={() => {
+                handleTooltipToggle('time');
+                handleArrowToggle('time');
+              }}
+              sx={{
+                textTransform: 'capitalize',
+                color: 'white',
+                '&:hover': {
+                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                },
+              }}
+            >
+              TIME
+              {arrowDirection.time === 'up' ? <ArrowUpwardIcon sx={{ color: 'white', marginLeft: 1 }} /> : <ArrowDownwardIcon sx={{ color: 'white', marginLeft: 1 }} />}
+            </Button>
+          </Tooltip>
+
+          <Tooltip title="License Info" placement="top" open={tooltipVisible.licInfo}>
+            <Button
+              variant="text"
+              color="inherit"
+              onClick={() => {
+                handleTooltipToggle('licInfo');
+                handleArrowToggle('licInfo');
+              }}
+              sx={{
+                textTransform: 'capitalize',
+                color: 'white',
+                '&:hover': {
+                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                },
+              }}
+            >
+              LIC INFO
+              {arrowDirection.licInfo === 'up' ? <ArrowUpwardIcon sx={{ color: 'white', marginLeft: 1 }} /> : <ArrowDownwardIcon sx={{ color: 'white', marginLeft: 1 }} />}
+            </Button>
+          </Tooltip>
+
+          <Tooltip title="Object Page Info" placement="top" open={tooltipVisible.objectPage}>
+            <Button
+              variant="text"
+              color="inherit"
+              onClick={() => {
+                handleTooltipToggle('objectPage');
+                handleArrowToggle('objectPage');
+              }}
+              sx={{
+                textTransform: 'capitalize',
+                color: 'white',
+                '&:hover': {
+                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                },
+              }}
+            >
+              OBJECT PAGE
+              {arrowDirection.objectPage === 'up' ? <ArrowUpwardIcon sx={{ color: 'white', marginLeft: 1 }} /> : <ArrowDownwardIcon sx={{ color: 'white', marginLeft: 1 }} />}
+            </Button>
+          </Tooltip>
+        </Box>
+      </Box>
+    </>
   );
 };
 
