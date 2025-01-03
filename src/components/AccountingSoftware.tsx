@@ -27,6 +27,7 @@ import ToggleSwitch from "@/components/toggleBtn";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 
 import apiService from "@/app/services/apiService";
+
 type Order = "asc" | "desc";
 
 type TableHelperType = {
@@ -44,7 +45,7 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
   const router = useRouter();
   const [rows, setRows] = React.useState<Data[]>([]);  // Zustand für die Zeilen
 
-  console.log(rows);
+
 
 
   // Data und TenantData Typen
@@ -315,7 +316,7 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
 
   const handleRowClick = (id: number) => {
     console.log(id);
-
+ 
     router.push(`/dashboard/superadmin/tenant/${id}`);
   };
 
@@ -530,5 +531,6 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
         label="Dense padding"
       />
     </Box>
+    
   );
 }

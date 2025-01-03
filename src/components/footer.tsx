@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Box, Container, Typography, Link, Modal, Button } from "@mui/material";
 
+
 interface FooterProps {
   footerPosition?: string | number;
   footerIndex?: string | number;
@@ -23,13 +24,28 @@ const Footer: React.FC<FooterProps> = ({
   footerIndex = "9999",
   borderTop = "1px solid rgba(255, 255, 255, 1)",
 }) => {
-  const [counter, setCounter] = useState(Timeout); // Zustand für den Countdown
-  const [showModal, setShowModal] = useState(false); // Zustand für das Modal
+  const [counter, setCounter] = useState(Timeout); 
+  const [showModal, setShowModal] = useState(false); 
+  const getSharedObject = () => {
+    const storedSetting = sessionStorage.getItem("setting");
+    if (storedSetting) {
+      try {
+        return JSON.parse(storedSetting); // Парсимо JSON
+      } catch (error) {
+        console.error("Помилка парсингу JSON із sessionStorage:", error);
+        return {}; // Повертаємо порожній об'єкт у разі помилки
+      }
+    }
+    return {}; // Повертаємо порожній об'єкт, якщо дані відсутні
+  };
 
-  // Funktion zum Zurücksetzen des Timers bei Benutzeraktivität (z. B. Mausbewegung)
+  const [sharedObject, setSharedObject] = useState(getSharedObject());
+
+  
+
   const resetTimer = useCallback(() => {
-    setCounter(Timeout); // Timer wird auf den ursprünglichen Wert (Timeout) zurückgesetzt
-    setShowModal(false); // Modal wird geschlossen, falls es sichtbar ist
+    setCounter(Timeout); 
+    setShowModal(false); 
   }, []);
 
   const handleLogoutLocal = () => {
@@ -81,35 +97,7 @@ const Footer: React.FC<FooterProps> = ({
     >
       <Container maxWidth="lg" sx={{ margin: 0, padding: 0, width: "100vw" }}>
         {/* Social Media Links */}
-        <Link
-          href="https://facebook.com"
-          color="inherit"
-          target="_blank"
-          sx={{
-            display: "inline-block",
-            mb: 1,
-            marginRight: "2%",
-            marginLeft: "20px",
-          }}
-        >
-          Facebook
-        </Link>
-        <Link
-          href="https://twitter.com"
-          color="inherit"
-          target="_blank"
-          sx={{ display: "inline-block", mb: 1, marginRight: "2%" }}
-        >
-          Twitter
-        </Link>
-        <Link
-          href="https://linkedin.com"
-          color="inherit"
-          target="_blank"
-          sx={{ display: "inline-block", mb: 1 }}
-        >
-          LinkedIn
-        </Link>
+       
 
         <Box
           width={"100vw"}
@@ -118,8 +106,7 @@ const Footer: React.FC<FooterProps> = ({
           alignItems={"center"}
         >
           <Typography variant="body2" sx={{ color: "#fff", }} className="FooterLorem">
-            &copy; {new Date().getFullYear()} Lorem ipsum dolor sit amet
-            consectetur, adipisicing elit. Nemo, amet.
+         hi - {sharedObject.name}  {sharedObject.last_name}
           </Typography>
         </Box>
       </Container>

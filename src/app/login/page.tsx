@@ -19,6 +19,7 @@ import ApiService from "../services/apiService";
 import CryptoJS from 'crypto-js';
 
 
+
 const Login: React.FC = () => {
   const router = useRouter();
 
@@ -47,6 +48,16 @@ const Login: React.FC = () => {
 
     try {
       const resp = await ApiService.login<any>(username, password);
+      if (resp?.data?.length > 0 && resp.data[0]?.user) {
+        const obj: any = {
+          name: resp.data[0].user.first_name || "Default Name", // Підстраховка на випадок відсутності значення
+          last_name: resp.data[0].user.last_name || "Default Last Name",
+        };
+    
+        sessionStorage.setItem('setting', JSON.stringify(obj));
+        console.log("Об'єкт успішно збережено в sessionStorage:", obj);
+      }
+
       if (resp?.data[0]?.user?.username === username) {
         console.log(resp?.data[0]?.user);
         const RoleALl = resp?.data[0]?.user?.role

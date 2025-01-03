@@ -22,7 +22,7 @@ type Tenant = {
     contact_phone: number;
 };
 
-const TenantDetails: React.FC = () => {
+const DetailsTable: React.FC = () => {
     const { id } = useParams();
     console.log(id);
 
@@ -350,4 +350,4 @@ const TenantDetails: React.FC = () => {
     );
 };
 
-export default TenantDetails;
+export default DetailsTable;
