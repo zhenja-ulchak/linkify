@@ -518,17 +518,9 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
                       </>) :
                       (
                         <>
-
                         </>
                       )
-
-
-
                     }
-
-
-
-
 
                   </TableRow>
                 );

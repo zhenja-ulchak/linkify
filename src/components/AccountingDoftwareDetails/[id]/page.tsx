@@ -149,7 +149,7 @@ const DetailsTable: React.FC = () => {
 
     return (
         <div id="UserDetailContainer" style={{ display: 'flex', justifyContent: 'center', maxWidth: '800px', margin: '0 auto' }}>
-            <h3>Benutzer Details</h3>
+            <h3>Details</h3>
 
             <TableContainer component={Paper} style={{ width: '100%' }}>
                 <Table>

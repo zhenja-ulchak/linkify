@@ -242,159 +242,234 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
 
 
           {/* ------------------------------------------- */}
-          {(() => {
-            switch (TextRule) {
 
-              case 'user':
-                return (<>
+          <ListItem disablePadding>
+            <ListItemButton onClick={() => handleNavigation("/dashboard/user")}>
+              <ListItemIcon className="DashboadAndTableIcon">
+                <DashboardIcon style={{ color: "black" }} />
+              </ListItemIcon>
+              <ListItemText primary="DOCS-LIst" />
+            </ListItemButton>
+          </ListItem>
+
+       
+
+
+
+          {(() => {
+
+            if (TextRule === 'admin') {
+              return (
+                <>
+                   <Divider style={{ backgroundColor: "black", height: "2px" }} />
+                  <ListItem
+                    disablePadding
+                    style={{
+                      display: "flex",
+                      alignContent: "center",
+                      justifyContent: "center",
+                      backgroundColor: "pink",
+                    }}
+                  >
+                    <ListItemButton onClick={() => handleNavigation("/dashboard/admin")}>
+                      <AdminPanelSettingsIcon />
+                      <ListItemText primary="Admin" style={{ marginLeft: "31px" }} />
+                    </ListItemButton>
+                  </ListItem>
+
+
                   <ListItem disablePadding>
-                    <ListItemButton onClick={() => handleNavigation("/dashboard/user")}>
+                    <ListItemButton onClick={() => handleNavigation("/dashboard/admin/accounting-software")}>
                       <ListItemIcon className="DashboadAndTableIcon">
-                        <DashboardIcon style={{ color: "black" }} />
+                        <WysiwygIcon style={{ color: "black" }} />
                       </ListItemIcon>
-                      <ListItemText primary="Dashboard" />
+                      <ListItemText primary="Accounting-software" />
+                    </ListItemButton>
+                  </ListItem>
+
+                  <ListItem disablePadding>
+                    <ListItemButton onClick={() => handleNavigation("/dashboard/admin/dms-config")}>
+                      <ListItemIcon className="DashboadAndTableIcon">
+                        <EngineeringIcon style={{ color: "black" }} />
+                      </ListItemIcon>
+                      <ListItemText primary="Dms-config" />
+                    </ListItemButton>
+                  </ListItem>
+
+                  <ListItem disablePadding>
+                    <ListItemButton onClick={() => handleNavigation("/dashboard/admin/user-list")}>
+                      <ListItemIcon className="DashboadAndTableIcon">
+                        <RecentActorsIcon style={{ color: "black" }} />
+                      </ListItemIcon>
+                      <ListItemText primary="User-list" />
+                    </ListItemButton>
+                  </ListItem>
+
+                  <ListItem disablePadding>
+                    <ListItemButton onClick={() => handleNavigation("/dashboard/admin/SMTP-Email")}>
+                      <SupervisorAccountIcon />
+                      <ListItemText primary="SMTP-Email" style={{ marginLeft: "31px" }} />
+                    </ListItemButton>
+                  </ListItem>
+
+                  <ListItem disablePadding>
+                    <ListItemButton onClick={() => handleNavigation("/dashboard/admin/tenant")}>
+                      <ListItemIcon className="DashboadAndTableIcon">
+                        <FormatListBulletedIcon style={{ color: "black" }} />
+                      </ListItemIcon>
+                      <ListItemText primary="Tenant" />
+                    </ListItemButton>
+                  </ListItem>
+
+                  <ListItem
+                    disablePadding
+                    style={{
+                      display: "flex",
+                      alignContent: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <ListItemButton onClick={() => handleNavigation("/dashboard/admin/einstellungen")}>
+                      <SettingsIcon />
+                      <ListItemText primary="Einstellungen" style={{ marginLeft: "31px" }} />
+                    </ListItemButton>
+                  </ListItem>
+                </>
+
+              )
+            }
+
+            if (TextRule === 'superadmin') {
+              return (
+                <>
+          <Divider style={{ backgroundColor: "black", height: "2px" }} />
+                  <ListItem
+                    disablePadding
+                    style={{
+                      display: "flex",
+                      alignContent: "center",
+                      justifyContent: "center",
+                      backgroundColor: "pink",
+                    }}
+                  >
+                    <ListItemButton onClick={() => handleNavigation("/dashboard/admin")}>
+                      <AdminPanelSettingsIcon />
+                      <ListItemText primary="Admin" style={{ marginLeft: "31px" }} />
+                    </ListItemButton>
+                  </ListItem>
+
+
+                  <ListItem disablePadding>
+                    <ListItemButton onClick={() => handleNavigation("/dashboard/admin/accounting-software")}>
+                      <ListItemIcon className="DashboadAndTableIcon">
+                        <WysiwygIcon style={{ color: "black" }} />
+                      </ListItemIcon>
+                      <ListItemText primary="Accounting-software" />
+                    </ListItemButton>
+                  </ListItem>
+
+                  <ListItem disablePadding>
+                    <ListItemButton onClick={() => handleNavigation("/dashboard/admin/dms-config")}>
+                      <ListItemIcon className="DashboadAndTableIcon">
+                        <EngineeringIcon style={{ color: "black" }} />
+                      </ListItemIcon>
+                      <ListItemText primary="Dms-config" />
+                    </ListItemButton>
+                  </ListItem>
+
+                  <ListItem disablePadding>
+                    <ListItemButton onClick={() => handleNavigation("/dashboard/admin/user-list")}>
+                      <ListItemIcon className="DashboadAndTableIcon">
+                        <RecentActorsIcon style={{ color: "black" }} />
+                      </ListItemIcon>
+                      <ListItemText primary="User-list" />
+                    </ListItemButton>
+                  </ListItem>
+
+                  <ListItem disablePadding>
+                    <ListItemButton onClick={() => handleNavigation("/dashboard/admin/SMTP-Email")}>
+                      <SupervisorAccountIcon />
+                      <ListItemText primary="SMTP-Email" style={{ marginLeft: "31px" }} />
+                    </ListItemButton>
+                  </ListItem>
+
+                  <ListItem disablePadding>
+                    <ListItemButton onClick={() => handleNavigation("/dashboard/admin/tenant")}>
+                      <ListItemIcon className="DashboadAndTableIcon">
+                        <FormatListBulletedIcon style={{ color: "black" }} />
+                      </ListItemIcon>
+                      <ListItemText primary="Tenant" />
+                    </ListItemButton>
+                  </ListItem>
+
+                  <ListItem
+                    disablePadding
+                    style={{
+                      display: "flex",
+                      alignContent: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <ListItemButton onClick={() => handleNavigation("/dashboard/admin/einstellungen")}>
+                      <SettingsIcon />
+                      <ListItemText primary="Einstellungen" style={{ marginLeft: "31px" }} />
+                    </ListItemButton>
+                  </ListItem>
+
+                  <Divider style={{ backgroundColor: "black", height: "2px" }} />
+
+
+                  <ListItem
+                    disablePadding
+                    style={{
+                      display: "flex",
+                      alignContent: "center",
+                      justifyContent: "center",
+                      backgroundColor: "green",
+                    }}
+                  >
+                    <ListItemButton onClick={() => handleNavigation("/dashboard/superadmin")}>
+                      <SecurityIcon />
+                      <ListItemText primary="Superadmin" style={{ marginLeft: "31px" }} />
+                    </ListItemButton>
+                  </ListItem>
+
+                  <ListItem disablePadding>
+                    <ListItemButton onClick={() => handleNavigation("/dashboard/superadmin/accounting-software")}>
+                      <ListItemIcon className="DashboadAndTableIcon">
+                        <WysiwygIcon style={{ color: "black" }} />
+                      </ListItemIcon>
+                      <ListItemText primary="Accounting-software" />
+                    </ListItemButton>
+                  </ListItem>
+
+                  <ListItem disablePadding>
+                    <ListItemButton onClick={() => handleNavigation("/dashboard/superadmin/dms-config")}>
+                      <ListItemIcon className="DashboadAndTableIcon">
+                        <EngineeringIcon style={{ color: "black" }} />
+                      </ListItemIcon>
+                      <ListItemText primary="Dms-config" />
+                    </ListItemButton>
+                  </ListItem>
+
+                  <ListItem disablePadding>
+                    <ListItemButton onClick={() => handleNavigation("/dashboard/superadmin/tenant")}>
+                      <ListItemIcon className="DashboadAndTableIcon">
+                        <FormatListBulletedIcon style={{ color: "black" }} />
+                      </ListItemIcon>
+                      <ListItemText primary="Tenant" />
                     </ListItemButton>
                   </ListItem>
 
 
 
-                </>)
-
-              case 'admin':
-                return (
-                  <>
-                    <ListItem
-                      disablePadding
-                      style={{
-                        display: "flex",
-                        alignContent: "center",
-                        justifyContent: "center",
-                        backgroundColor: "pink",
-                      }}
-                    >
-                      <ListItemButton onClick={() => handleNavigation("/dashboard/admin")}>
-                        <AdminPanelSettingsIcon />
-                        <ListItemText primary="Admin" style={{ marginLeft: "31px" }} />
-                      </ListItemButton>
-                    </ListItem>
+                </>
 
 
-                    <ListItem disablePadding>
-                      <ListItemButton onClick={() => handleNavigation("/dashboard/admin/accounting-software")}>
-                        <ListItemIcon className="DashboadAndTableIcon">
-                          <WysiwygIcon style={{ color: "black" }} />
-                        </ListItemIcon>
-                        <ListItemText primary="Accounting-software" />
-                      </ListItemButton>
-                    </ListItem>
-
-                    <ListItem disablePadding>
-                      <ListItemButton onClick={() => handleNavigation("/dashboard/admin/dms-config")}>
-                        <ListItemIcon className="DashboadAndTableIcon">
-                          <EngineeringIcon style={{ color: "black" }} />
-                        </ListItemIcon>
-                        <ListItemText primary="Dms-config" />
-                      </ListItemButton>
-                    </ListItem>
-
-                    <ListItem disablePadding>
-                      <ListItemButton onClick={() => handleNavigation("/dashboard/admin/user-list")}>
-                        <ListItemIcon className="DashboadAndTableIcon">
-                          <RecentActorsIcon style={{ color: "black" }} />
-                        </ListItemIcon>
-                        <ListItemText primary="User-list" />
-                      </ListItemButton>
-                    </ListItem>
-
-                    <ListItem disablePadding>
-                      <ListItemButton onClick={() => handleNavigation("/dashboard/admin/SMTP-Email")}>
-                        <SupervisorAccountIcon />
-                        <ListItemText primary="SMTP-Email" style={{ marginLeft: "31px" }} />
-                      </ListItemButton>
-                    </ListItem>
-
-                    <ListItem disablePadding>
-                      <ListItemButton onClick={() => handleNavigation("/dashboard/admin/tenant")}>
-                        <ListItemIcon className="DashboadAndTableIcon">
-                          <FormatListBulletedIcon style={{ color: "black" }} />
-                        </ListItemIcon>
-                        <ListItemText primary="Tenant" />
-                      </ListItemButton>
-                    </ListItem>
-
-                    <ListItem
-                      disablePadding
-                      style={{
-                        display: "flex",
-                        alignContent: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <ListItemButton onClick={() => handleNavigation("/dashboard/admin/einstellungen")}>
-                        <SettingsIcon />
-                        <ListItemText primary="Einstellungen" style={{ marginLeft: "31px" }} />
-                      </ListItemButton>
-                    </ListItem>
-                  </>
-                );
-
-              case 'superadmin':
-                return (
-                  <>
-                    <ListItem
-                      disablePadding
-                      style={{
-                        display: "flex",
-                        alignContent: "center",
-                        justifyContent: "center",
-                        backgroundColor: "green",
-                      }}
-                    >
-                      <ListItemButton onClick={() => handleNavigation("/dashboard/superadmin")}>
-                        <SecurityIcon />
-                        <ListItemText primary="Superadmin" style={{ marginLeft: "31px" }} />
-                      </ListItemButton>
-                    </ListItem>
-
-                    <ListItem disablePadding>
-                      <ListItemButton onClick={() => handleNavigation("/dashboard/superadmin/accounting-software")}>
-                        <ListItemIcon className="DashboadAndTableIcon">
-                          <WysiwygIcon style={{ color: "black" }} />
-                        </ListItemIcon>
-                        <ListItemText primary="Accounting-software" />
-                      </ListItemButton>
-                    </ListItem>
-
-                    <ListItem disablePadding>
-                      <ListItemButton onClick={() => handleNavigation("/dashboard/superadmin/dms-config")}>
-                        <ListItemIcon className="DashboadAndTableIcon">
-                          <EngineeringIcon style={{ color: "black" }} />
-                        </ListItemIcon>
-                        <ListItemText primary="Dms-config" />
-                      </ListItemButton>
-                    </ListItem>
-
-                    <ListItem disablePadding>
-                      <ListItemButton onClick={() => handleNavigation("/dashboard/superadmin/tenant")}>
-                        <ListItemIcon className="DashboadAndTableIcon">
-                          <FormatListBulletedIcon style={{ color: "black" }} />
-                        </ListItemIcon>
-                        <ListItemText primary="Tenant" />
-                      </ListItemButton>
-                    </ListItem>
-
-
-
-                  </>
-
-
-                );
-
-              // Add more roles here if needed (e.g., 'user', 'moderator')
-
-              default:
-                return null; // Return nothing if the role does not match
+              );
             }
+
+
           })()}
           <Divider style={{ backgroundColor: "black", height: "2px" }} />
 

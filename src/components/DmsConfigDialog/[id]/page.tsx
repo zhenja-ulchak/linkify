@@ -9,7 +9,7 @@ import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import AddIcon from "@mui/icons-material/Add";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ApiService from "../../../../src/app/services/apiService";
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, TextField, Button } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, TextField, Button, IconButton } from '@mui/material';
 type TenantDetails = {
     id: number;
     tenant_id: number;
@@ -136,7 +136,7 @@ const DetailsTableDms: React.FC = () => {
 
     return (
         <div id="UserDetailContainer" style={{ display: 'flex', justifyContent: 'center', maxWidth: '800px', margin: '0 auto' }}>
-            <h3>Benutzer Details</h3>
+            <h3>Details</h3>
 
             <TableContainer component={Paper} style={{ width: '100%' }}>
                 <Table>
@@ -216,93 +216,89 @@ const DetailsTableDms: React.FC = () => {
 
             {/* Якщо редагується */}
             {isEditing && (
-               <div id="UserDetailModal" style={{ color: 'black' }}>
-               <div id="UserDetailModalContent" style={{ color: 'black' }}>
-                   <Typography variant="h5" gutterBottom>Benutzerdaten bearbeiten</Typography>
-           
-                   {error && <div id="UserDetailModalError" style={{ color: 'red' }}>{error}</div>}
-           
-                   {/* Редагування полів */}
-                   <Box sx={{ marginBottom: 2 }}>
-                       <TextField
-                           fullWidth
-                           label="Endpoint URL"
-                           name="endpoint_url"
-                           value={updatedTenant.endpoint_url}
-                           onChange={handleEditChange}
-                           placeholder={tenantDetails?.endpoint_url}
-                       />
-                   </Box>
-           
-                   <Box sx={{ marginBottom: 2 }}>
-                       <TextField
-                           fullWidth
-                           label="Username"
-                           name="username"
-                           value={updatedTenant.username}
-                           onChange={handleEditChange}
-                           placeholder={tenantDetails?.username}
-                       />
-                   </Box>
-           
-                   <Box sx={{ marginBottom: 2 }}>
-                       <TextField
-                           fullWidth
-                           label="Repository"
-                           name="repository"
-                           value={updatedTenant.repository}
-                           onChange={handleEditChange}
-                           placeholder={tenantDetails?.repository}
-                       />
-                   </Box>
-           
-                   <Box sx={{ marginBottom: 2 }}>
-                       <TextField
-                           fullWidth
-                           label="API Key"
-                           name="api_key"
-                           value={updatedTenant.api_key || ""}
-                           onChange={handleEditChange}
-                           placeholder={tenantDetails?.api_key ?? "Optional"}
-                       />
-                   </Box>
-           
-                   <Box sx={{ marginBottom: 2 }}>
-                       <TextField
-                           fullWidth
-                           label="Extra Settings (JSON)"
-                           name="extra_settings"
-                           value={updatedTenant.extra_settings}
-                           onChange={handleEditChange}
-                           placeholder={tenantDetails?.extra_settings}
-                           multiline
-                           rows={4}
-                       />
-                   </Box>
-           
-                   {/* Кнопки для збереження та скасування */}
-                   <Box sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                       <Button
-                           onClick={handleSaveChanges}
-                           variant="contained"
-                           color="primary"
-                           startIcon={<AddIcon />}
-                       >
-                           Speichern
-                       </Button>
-           
-                       <Button
-                           onClick={() => setIsEditing(false)}
-                           variant="outlined"
-                           color="secondary"
-                           startIcon={<CancelIcon />}
-                       >
-                           Schließen
-                       </Button>
-                   </Box>
-               </div>
-           </div>
-           
+                <div id="UserDetailModal" style={{ color: 'black' }}>
+                    <div id="UserDetailModalContent" style={{ color: 'black' }}>
+                        <Typography variant="h5" gutterBottom>Benutzerdaten bearbeiten</Typography>
+
+                        {error && <div id="UserDetailModalError" style={{ color: 'red' }}>{error}</div>}
+
+                        {/* Редагування полів */}
+                        <Box sx={{ marginBottom: 2 }}>
+                            <TextField
+                                fullWidth
+                                label="Endpoint URL"
+                                name="endpoint_url"
+                                value={updatedTenant.endpoint_url}
+                                onChange={handleEditChange}
+                                placeholder={tenantDetails?.endpoint_url}
+                            />
+                        </Box>
+
+                        <Box sx={{ marginBottom: 2 }}>
+                            <TextField
+                                fullWidth
+                                label="Username"
+                                name="username"
+                                value={updatedTenant.username}
+                                onChange={handleEditChange}
+                                placeholder={tenantDetails?.username}
+                            />
+                        </Box>
+
+                        <Box sx={{ marginBottom: 2 }}>
+                            <TextField
+                                fullWidth
+                                label="Repository"
+                                name="repository"
+                                value={updatedTenant.repository}
+                                onChange={handleEditChange}
+                                placeholder={tenantDetails?.repository}
+                            />
+                        </Box>
+
+                        <Box sx={{ marginBottom: 2 }}>
+                            <TextField
+                                fullWidth
+                                label="API Key"
+                                name="api_key"
+                                value={updatedTenant.api_key || ""}
+                                onChange={handleEditChange}
+                                placeholder={tenantDetails?.api_key ?? "Optional"}
+                            />
+                        </Box>
+
+                        <Box sx={{ marginBottom: 2 }}>
+                            <TextField
+                                fullWidth
+                                label="Extra Settings (JSON)"
+                                name="extra_settings"
+                                value={updatedTenant.extra_settings}
+                                onChange={handleEditChange}
+                                placeholder={tenantDetails?.extra_settings}
+                                multiline
+                                rows={4}
+                            />
+                        </Box>
+
+                        {/* Кнопки для збереження та скасування */}
+                        <Box sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
+                            <IconButton
+                                onClick={handleSaveChanges}
+                                color="primary"
+                            >
+                                <AddIcon />
+                            </IconButton>
+
+                            <IconButton
+                                onClick={() => setIsEditing(false)}
+                                color="secondary"
+                            >
+                                <CancelIcon />
+                            </IconButton>
+                        </Box>
+                    </div>
+                </div>
+
             )}
         </div>
     );
