@@ -22,7 +22,7 @@ import CryptoJS from 'crypto-js';
 const Login: React.FC = () => {
   const router = useRouter();
 
-  const [username, setUsername] = useState("super.admin@tenant2.com"); // super.admin@tenant2.com superadmin          alice.smith@example.com user
+  const [username, setUsername] = useState("john.doe@example.com"); // super.admin@tenant2.com superadmin          alice.smith@example.com user   john.doe@example.com
   const [password, setPassword] = useState("password123");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState<boolean>(false);
