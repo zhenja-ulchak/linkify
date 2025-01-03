@@ -95,11 +95,11 @@ const TenantDetails: React.FC = () => {
                 // const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}tenant/${id}`);
                 const Auth: any = sessionStorage.getItem('AuthToken')
                 const response: any = await ApiService.get(`tenant/${id}`, Auth)
-                console.log(response);
+                console.log(response?.data[0]);
 
 
 
-                setTenants([response.data.tenant]);
+                setTenants(response?.data[0]);
 
             } catch (error) {
                 console.error("Fehler beim Abrufen der Daten:", error);

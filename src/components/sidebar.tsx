@@ -19,6 +19,11 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import PersonIcon from '@mui/icons-material/Person';
+import WysiwygIcon from '@mui/icons-material/Wysiwyg';
+import EngineeringIcon from '@mui/icons-material/Engineering';
+
+
 import { Url } from "next/dist/shared/lib/router/router";
 import Logout from "./Logout";
 import { useRouter } from "next/navigation";
@@ -32,6 +37,7 @@ import SecurityIcon from '@mui/icons-material/Security';
 import axios from "axios";
 // @ts-expect-error
 import CryptoJS from 'crypto-js';
+import apiService from "@/app/services/apiService";
 
 
 
@@ -149,19 +155,17 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
 
 
   const handleLogout = async () => {
-    sessionStorage.clear()
+    const getToken: any = sessionStorage.getItem('AuthToken');
     try {
-      await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}user/logout`,
-        {
-          withCredentials: true,
-        });
+      await apiService.get(`user/logout`,getToken);
 
-
+   
     } catch (error) {
       console.error("Fehler beim Logout:", error);
     }
 
     router.push("/login");
+    sessionStorage.clear()
   };
 
 
@@ -244,7 +248,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
               case 'user':
                 return (<>
                   <ListItem disablePadding>
-                    <ListItemButton onClick={() => handleNavigation("/dashboard")}>
+                    <ListItemButton onClick={() => handleNavigation("/dashboard/user")}>
                       <ListItemIcon className="DashboadAndTableIcon">
                         <DashboardIcon style={{ color: "black" }} />
                       </ListItemIcon>
@@ -252,14 +256,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
                     </ListItemButton>
                   </ListItem>
 
-                  <ListItem disablePadding>
-                    <ListItemButton onClick={() => handleNavigation("/dashboard/user")}>
-                      <ListItemIcon className="DashboadAndTableIcon">
-                        <FormatListBulletedIcon style={{ color: "black" }} />
-                      </ListItemIcon>
-                      <ListItemText primary="User" />
-                    </ListItemButton>
-                  </ListItem>
+         
                   <ListItem
                     disablePadding
                     style={{
@@ -269,7 +266,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
                     }}
                   >
                     <ListItemButton
-                      onClick={() => handleNavigation("/dashboard/profile")}
+                      onClick={() => handleNavigation("/dashboard/user/profile")}
                     >
                       <AccountCircleIcon />
                       <ListItemText primary="Profile" style={{ marginLeft: "31px" }} />
@@ -296,12 +293,24 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
                       </ListItemButton>
                     </ListItem>
 
-                    <ListItem disablePadding>
-                      <ListItemButton onClick={() => handleNavigation("/dashboard/admin/profile")}>
-                        <AccountCircleIcon />
-                        <ListItemText primary="Admin-Profile" style={{ marginLeft: "31px" }} />
-                      </ListItemButton>
-                    </ListItem>
+                  
+                  <ListItem disablePadding>
+                    <ListItemButton onClick={() => handleNavigation("/dashboard/superadmin/accounting-software")}>
+                      <ListItemIcon className="DashboadAndTableIcon">
+                        <WysiwygIcon style={{ color: "black" }} />
+                      </ListItemIcon>
+                      <ListItemText primary="User" />
+                    </ListItemButton>
+                  </ListItem>
+
+                  <ListItem disablePadding>
+                    <ListItemButton onClick={() => handleNavigation("/dashboard/superadmin/dms-config")}>
+                      <ListItemIcon className="DashboadAndTableIcon">
+                        <EngineeringIcon style={{ color: "black" }} />
+                      </ListItemIcon>
+                      <ListItemText primary="User" />
+                    </ListItemButton>
+                  </ListItem>
 
                     <ListItem disablePadding>
                       <ListItemButton onClick={() => handleNavigation("/dashboard/admin/SMTP-Email")}>
@@ -354,20 +363,33 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
                   </ListItem>
 
                   <ListItem disablePadding>
+                    <ListItemButton onClick={() => handleNavigation("/dashboard/superadmin/accounting-software")}>
+                      <ListItemIcon className="DashboadAndTableIcon">
+                        <WysiwygIcon style={{ color: "black" }} />
+                      </ListItemIcon>
+                      <ListItemText primary="User" />
+                    </ListItemButton>
+                  </ListItem>
+
+                  <ListItem disablePadding>
+                    <ListItemButton onClick={() => handleNavigation("/dashboard/superadmin/dms-config")}>
+                      <ListItemIcon className="DashboadAndTableIcon">
+                        <EngineeringIcon style={{ color: "black" }} />
+                      </ListItemIcon>
+                      <ListItemText primary="User" />
+                    </ListItemButton>
+                  </ListItem>
+
+                  <ListItem disablePadding>
                       <ListItemButton onClick={() => handleNavigation("/dashboard/superadmin/tenant")}>
                         <ListItemIcon className="DashboadAndTableIcon">
                           <FormatListBulletedIcon style={{ color: "black" }} />
                         </ListItemIcon>
-                        <ListItemText primary="Adminliste" />
+                        <ListItemText primary="tenant" />
                       </ListItemButton>
                     </ListItem>
 
-                    <ListItem disablePadding>
-                      <ListItemButton onClick={() => handleNavigation("/dashboard/superadmin/profile")}>
-                        <AccountCircleIcon />
-                        <ListItemText primary="Admin-Profile" style={{ marginLeft: "31px" }} />
-                      </ListItemButton>
-                    </ListItem>
+                  
                  
                  </>
 
