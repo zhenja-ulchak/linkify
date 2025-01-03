@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import ApiService from "../../services/apiService";
-import TableHelper from "../../../components/tableLIst/TableList";
+
 
 
 type User = { id: number; username: string; }
@@ -29,7 +29,7 @@ const UserList = () => {
 
   return (
     <div>
-          <TableHelper  title={"User-Documents"}/>
+          
     </div>
   );
 };

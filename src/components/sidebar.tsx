@@ -280,7 +280,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
 
 
                     <ListItem disablePadding>
-                      <ListItemButton onClick={() => handleNavigation("/dashboard/superadmin/accounting-software")}>
+                      <ListItemButton onClick={() => handleNavigation("/dashboard/admin/accounting-software")}>
                         <ListItemIcon className="DashboadAndTableIcon">
                           <WysiwygIcon style={{ color: "black" }} />
                         </ListItemIcon>
@@ -289,7 +289,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
                     </ListItem>
 
                     <ListItem disablePadding>
-                      <ListItemButton onClick={() => handleNavigation("/dashboard/superadmin/dms-config")}>
+                      <ListItemButton onClick={() => handleNavigation("/dashboard/admin/dms-config")}>
                         <ListItemIcon className="DashboadAndTableIcon">
                           <EngineeringIcon style={{ color: "black" }} />
                         </ListItemIcon>
