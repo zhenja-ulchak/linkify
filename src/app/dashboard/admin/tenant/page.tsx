@@ -5,10 +5,10 @@ import EnhancedTable from "../../../../components/tenant/TableTenant";
 
 
 
-export default function SuperAdminTenant() {
-
+export default function AdminTenant() {
+const CrudReadonly = false
   return (<>
-    <EnhancedTable />
+    <EnhancedTable CrudReadonly={CrudReadonly}  />
   </>)
 
 }

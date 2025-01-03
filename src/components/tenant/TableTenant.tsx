@@ -29,7 +29,11 @@ import axios from 'axios';
 import apiService from "@/app/services/apiService";
 type Order = "asc" | "desc";
 
-export default function EnhancedTable() {
+type EnhancedTableType = {
+  CrudReadonly: boolean
+}
+
+export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof Data>("company_name");
   const [selected, setSelected] = React.useState<readonly number[]>([]);
@@ -209,6 +213,9 @@ export default function EnhancedTable() {
     return (
       <TableHead>
         <TableRow>
+      {CrudReadonly && (
+
+        <>
           <TableCell padding="checkbox">
             <Checkbox
               indeterminate={numSelected > 0 && numSelected < rowCount}
@@ -220,6 +227,10 @@ export default function EnhancedTable() {
               className="TableCell"
             />
           </TableCell>
+        </>
+      )}
+
+        
           {headCells.map((headCell: any) => (
             <TableCell
               key={headCell.id}
@@ -326,22 +337,26 @@ export default function EnhancedTable() {
 
 
   const handleClick = (event: React.MouseEvent<unknown>, id: number) => {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected: readonly number[] = [];
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
+    if (CrudReadonly) {
+
+      const selectedIndex = selected.indexOf(id);
+      let newSelected: readonly number[] = [];
+
+      if (selectedIndex === -1) {
+        newSelected = newSelected.concat(selected, id);
+      } else if (selectedIndex === 0) {
+        newSelected = newSelected.concat(selected.slice(1));
+      } else if (selectedIndex === selected.length - 1) {
+        newSelected = newSelected.concat(selected.slice(0, -1));
+      } else if (selectedIndex > 0) {
+        newSelected = newSelected.concat(
+          selected.slice(0, selectedIndex),
+          selected.slice(selectedIndex + 1)
+        );
+      }
+      setSelected(newSelected);
     }
-    setSelected(newSelected);
   };
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -433,16 +448,23 @@ export default function EnhancedTable() {
 
                   // ---------------------------
                   >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        color="primary"
-                        checked={isItemSelected}
-                        inputProps={{
-                          "aria-labelledby": labelId,
-                        }}
-                        className="tableFont"
-                      />
-                    </TableCell>
+
+                    {CrudReadonly && (
+
+                      <>
+                        <TableCell padding="checkbox">
+                          <Checkbox
+                            color="primary"
+                            checked={isItemSelected}
+                            inputProps={{
+                              "aria-labelledby": labelId,
+                            }}
+                            className="tableFont"
+                          />
+                        </TableCell>
+                      </>
+                    )}
+
                     <TableCell
                       component="th"
                       id={labelId}
@@ -471,26 +493,43 @@ export default function EnhancedTable() {
                     <TableCell className="tableFont" align="left">
                       {row.contact_phone}
                     </TableCell>
-                    <TableCell className="tableFont" align="left">
-                      <button
-                        style={{
-                          width: "50px",
-                          backgroundColor: "#1976d2",
-                          height: "auto",
-                          color: "#fff",
-                          cursor: "pointer",
-                          borderRadius: "15px",
-                        }}
-                        onClick={() => handleRowClick(row.id)}
-                      >
-                        <VisibilityIcon />
-                        <div style={{ position: "absolute", margin: "0", padding: "0", opacity: "0" }}>
-                          {row.id}
-                        </div>
-                      </button>
-                    </TableCell>
+                    {CrudReadonly ?
+                      (<>
 
-                    <ToggleSwitch align="left" />
+                        <TableCell className="tableFont" align="left">
+                          <button
+                            style={{
+                              width: "50px",
+                              backgroundColor: "#1976d2",
+                              height: "auto",
+                              color: "#fff",
+                              cursor: "pointer",
+                              borderRadius: "15px",
+                            }}
+                            onClick={() => handleRowClick(row.id)}
+                          >
+                            <VisibilityIcon />
+                            <div style={{ position: "absolute", margin: "0", padding: "0", opacity: "0" }}>
+                              {row.id}
+                            </div>
+                          </button>
+                        </TableCell>
+                        <ToggleSwitch align="left" />
+                      </>) :
+                      (
+                        <>
+
+                        </>
+                      )
+
+
+
+                    }
+
+
+
+
+
                   </TableRow>
                 );
               })}

@@ -81,27 +81,13 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        // const getToken: any = sessionStorage.getItem('AuthToken');
-        // const response: any = await apiService.get("tenant", getToken);
-        // console.log(response);
-        // // Перевірка на наявність необхідних даних у відповіді
+        const getToken: any = sessionStorage.getItem('AuthToken');
+        const response: any = await apiService.get("accounting-software", getToken);
+        console.log(response);
 
-        const Data: any = [
-          {
-            "id": 1,
-     
-            "name": "Lexoffice",
-            "type": "lexoffice-cloud",
-            "url": "https://api.lexoffice.io",
-            "organization_id": "fb2344db-582e-4291-bf0e-87c9e647e8f9",
-            "event_type": null,
-            "description": "Cloud-based accounting software for small businesses.",
-            "is_active": 0,
-          }
-        ];
-        console.log(Data);
+        console.log(response.data[0]);
 
-        setRows(Data);  // Зберігаємо дані в стан
+        setRows(response.data[0]);  // Зберігаємо дані в стан
 
       } catch (error) {
         console.error('Помилка при отриманні даних:', error);

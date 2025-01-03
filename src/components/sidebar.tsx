@@ -284,7 +284,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
                         <ListItemIcon className="DashboadAndTableIcon">
                           <WysiwygIcon style={{ color: "black" }} />
                         </ListItemIcon>
-                        <ListItemText primary="User" />
+                        <ListItemText primary="Accounting-software" />
                       </ListItemButton>
                     </ListItem>
 
@@ -293,7 +293,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
                         <ListItemIcon className="DashboadAndTableIcon">
                           <EngineeringIcon style={{ color: "black" }} />
                         </ListItemIcon>
-                        <ListItemText primary="User" />
+                        <ListItemText primary="Dms-config" />
                       </ListItemButton>
                     </ListItem>
 
@@ -309,7 +309,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
                         <ListItemIcon className="DashboadAndTableIcon">
                           <FormatListBulletedIcon style={{ color: "black" }} />
                         </ListItemIcon>
-                        <ListItemText primary="Adminliste" />
+                        <ListItemText primary="Tenant" />
                       </ListItemButton>
                     </ListItem>
 
@@ -352,7 +352,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
                         <ListItemIcon className="DashboadAndTableIcon">
                           <WysiwygIcon style={{ color: "black" }} />
                         </ListItemIcon>
-                        <ListItemText primary="User" />
+                        <ListItemText primary="Accounting-software" />
                       </ListItemButton>
                     </ListItem>
 
@@ -361,7 +361,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
                         <ListItemIcon className="DashboadAndTableIcon">
                           <EngineeringIcon style={{ color: "black" }} />
                         </ListItemIcon>
-                        <ListItemText primary="User" />
+                        <ListItemText primary="Dms-config" />
                       </ListItemButton>
                     </ListItem>
 
@@ -370,7 +370,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
                         <ListItemIcon className="DashboadAndTableIcon">
                           <FormatListBulletedIcon style={{ color: "black" }} />
                         </ListItemIcon>
-                        <ListItemText primary="tenant" />
+                        <ListItemText primary="Tenant" />
                       </ListItemButton>
                     </ListItem>
 
