@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
 import React, { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation"; // Für URL-Parameter und Router
+import { useParams, useRouter } from "next/navigation"; // Для URL параметрів і маршрутизатора
 import axios from "axios";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -9,17 +9,26 @@ import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import AddIcon from "@mui/icons-material/Add";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ApiService from "../../../../src/app/services/apiService";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, TextField, Button } from '@mui/material';
 
-
-type Tenant = {
+type TenantDetails = {
     id?: number;
-    company_name: string;
-    address: string;
-    invoice_address: string;
-    license_valid_until: number;
-    contact_email: string;
-    invoice_email: string;
-    contact_phone: number;
+    tenant_id: number;
+    name: string;
+    type: string;
+    url: string;
+    organization_id: string;
+    event_type: string | null;
+    description: string;
+    additional_settings: {
+        region: string;
+    };
+    is_active: number;
+    created_by: string | null;
+    updated_by: string | null;
+    created_at: string;
+    updated_at: string;
+    deleted_at: string | null;
 };
 
 const DetailsTable: React.FC = () => {
@@ -28,36 +37,57 @@ const DetailsTable: React.FC = () => {
 
     const router = useRouter();
 
-
     const [isEditing, setIsEditing] = useState(false);
-    const [updatedTenant, setUpdatedTenant] = useState<Tenant>({
-
-        company_name: "",
-        address: "",
-        invoice_address: "",
-        license_valid_until: 0,
-        contact_email: "",
-        invoice_email: "",
-        contact_phone: 0,
+    const [updatedTenant, setUpdatedTenant] = useState<TenantDetails>({
+        tenant_id: 0,
+        name: "",
+        type: "",
+        url: "",
+        organization_id: "",
+        event_type: null,
+        description: "",
+        additional_settings: {
+            region: ""
+        },
+        is_active: 0,
+        created_by: null,
+        updated_by: null,
+        created_at: "",
+        updated_at: "",
+        deleted_at: null,
     });
     const [error, setError] = useState<string>("");
-    const [modalTextColor, setModalTextColor] = useState("black"); // Declare state outside of conditionals
-    const [tenants, setTenants] = useState<Tenant[]>([]);
-    console.log(tenants);
-
+    const [modalTextColor, setModalTextColor] = useState("black");
+    const [tenantDetails, setTenantDetails] = useState<TenantDetails | null>(null);
 
     useEffect(() => {
-        const bodyBackgroundColor = window.getComputedStyle(
-            document.body
-        ).backgroundColor;
-        if (bodyBackgroundColor === "rgb(0, 0, 0)") {
-            setModalTextColor("black");
-        } else {
-            setModalTextColor("black");
-        }
+        const bodyBackgroundColor = window.getComputedStyle(document.body).backgroundColor;
+        setModalTextColor(bodyBackgroundColor === "rgb(0, 0, 0)" ? "black" : "black");
     }, [isEditing]);
 
-    // Falls kein Benutzer gefunden wurde
+    // Для отримання даних про користувача
+    useEffect(() => {
+        const fetchTenantDetails = async () => {
+            if (!id) {
+                setError("Keine gültige ID angegeben.");
+                return;
+            }
+
+            try {
+                const Auth: any = sessionStorage.getItem('AuthToken');
+                const response: any = await ApiService.get(`accounting-software`, Auth); //${id}
+                console.log(response?.data[0][0]);
+                setTenantDetails(response?.data[0][0]);
+            } catch (error) {
+                console.error("Fehler beim Abrufen der Daten:", error);
+                setError("Fehler beim Abrufen der Daten.");
+            }
+        };
+
+        fetchTenantDetails();
+    }, [id]);
+
+    // Обробка змін в полях
     const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         if (updatedTenant) {
@@ -68,82 +98,42 @@ const DetailsTable: React.FC = () => {
         }
     };
 
-    // Validierung der Benutzereingaben
-    const validateInputs = () => {
-        if (
-            // !updatedTenant.company_name ||
-            // !updatedTenant.address ||
-            // !updatedTenant.invoice_address ||
-            !updatedTenant.contact_email ||
-            !updatedTenant.invoice_email
-        ) {
-            setError("Alle Felder müssen ausgefüllt werden.");
+    // Збереження змін
+    // Метод для збереження змін
+    const handleSaveChanges = async () => {
+        const cleanedObject = removeEmptyValues(updatedTenant);  // Функція для очищення порожніх значень
+        if (validateInputs(cleanedObject)) {
+            try {
+                const Auth: any = sessionStorage.getItem('AuthToken');
+                const response:any = await ApiService.put(`accounting-software/${tenantDetails?.id}`, cleanedObject, Auth);
+                if (response.status === 200) {
+                    console.log("Дані оновлено:", cleanedObject);
+                    setIsEditing(false);
+                }
+            } catch (error) {
+                setError("Помилка при збереженні: " + error);
+            }
+        }
+    };
+
+    // Валідація полів
+    const validateInputs = (data: any) => {
+        if (!data.contact_email || !data.invoice_email) {
+            setError("Всі поля повинні бути заповнені.");
             return false;
         }
         setError("");
         return true;
     };
 
-    useEffect(() => {
-        const fetchElements = async () => {
-            if (!id) {
-                setError("Keine gültige ID angegeben.");
-                return;
-            }
-
-            try {
-                // const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}tenant/${id}`);
-                const Auth: any = sessionStorage.getItem('AuthToken')
-                const response: any = await ApiService.get(`tenant/${id}`, Auth)
-                console.log(response?.data[0]);
-
-
-
-                setTenants(response?.data[0]);
-
-            } catch (error) {
-                console.error("Fehler beim Abrufen der Daten:", error);
-                setError("Fehler beim Abrufen der Daten.");
-            }
-        };
-
-        fetchElements();
-    }, [id]);
-    const Auth: any = sessionStorage.getItem('AuthToken')
-
-
-    const removeEmptyValues = (obj: { [s: string]: unknown; } | ArrayLike<unknown>) => {
-        return Object.fromEntries(
-          Object.entries(obj).filter(([key, value]) => value != null && value !== "")
-        );
-      };
-      const cleanedObject = removeEmptyValues(updatedTenant);
-
-      console.log(cleanedObject);
-
-    const handleSaveChanges = async () => {
-        if (validateInputs()) {
-
-            try {
-                const response = await ApiService.put(
-                    `tenant/${id}`,
-                    cleanedObject , Auth
-                );
-                if (!response) {
-                    console.log("Benutzerdaten gespeichert:", cleanedObject);
-                    setIsEditing(false);
-                }
-            } catch (error) {
-                setError("Fehler beim Speichern:" + error)
-            }
-        }
+    // Очищення об'єкта від порожніх значень
+    const removeEmptyValues = (obj: any) => {
+        return Object.fromEntries(Object.entries(obj).filter(([key, value]) => value != null && value !== ""));
     };
-
     const handleDelete = async () => {
         try {
-            const response: any = await ApiService.delete(
-                `tenant/${id}`, Auth
-            );
+            const Auth: any = sessionStorage.getItem('AuthToken');
+            const response: any = await ApiService.delete(`accounting-software/${id}`, Auth);
             if (response.status === 200) {
                 console.log("Benutzer gelöscht:", updatedTenant);
                 router.push("/users");
@@ -158,43 +148,75 @@ const DetailsTable: React.FC = () => {
     }
 
     return (
-        <div id="UserDetailContainer">
+        <div id="UserDetailContainer" style={{ display: 'flex', justifyContent: 'center', maxWidth: '800px', margin: '0 auto' }}>
             <h3>Benutzer Details</h3>
 
-            <table id="UserDetailTable">
-                <thead>
-                    <tr style={{ backgroundColor: "#f2f2f2" }}>
-                        <th className="UserDetailTableHeader">Feld</th>
-                        <th
-                            className="UserDetailTableHeader"
-                        >
-                            Wert
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {tenants.map((tenant) => (
-                        <tr key={tenant.id}>
-                            <td className="UserDetailTableBody">{tenant.id}</td>
-                            <td className="UserDetailTableBody">{tenant.company_name}</td>
-                            <td className="UserDetailTableBody">{tenant.address}</td>
-                            <td className="UserDetailTableBody">{tenant.invoice_address}</td>
-                            <td className="UserDetailTableBody">{tenant.license_valid_until}</td>
-                            <td className="UserDetailTableBody">{tenant.contact_email}</td>
-                            <td className="UserDetailTableBody">{tenant.invoice_email}</td>
-                            <td className="UserDetailTableBody">{tenant.contact_phone}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+            <TableContainer component={Paper} style={{ width: '100%' }}>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Feld</TableCell>
+                            <TableCell>Wert</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {tenantDetails && (
+                            <>
+                                <TableRow>
+                                    <TableCell style={{ fontWeight: 'bold' }}>ID</TableCell>
+                                    <TableCell>{tenantDetails.id}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell style={{ fontWeight: 'bold' }}>Tenant ID</TableCell>
+                                    <TableCell>{tenantDetails.tenant_id}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell style={{ fontWeight: 'bold' }}>Name</TableCell>
+                                    <TableCell>{tenantDetails.name}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell style={{ fontWeight: 'bold' }}>Type</TableCell>
+                                    <TableCell>{tenantDetails.type}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell style={{ fontWeight: 'bold' }}>URL</TableCell>
+                                    <TableCell>{tenantDetails.url}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell style={{ fontWeight: 'bold' }}>Organization ID</TableCell>
+                                    <TableCell>{tenantDetails.organization_id}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell style={{ fontWeight: 'bold' }}>Event Type</TableCell>
+                                    <TableCell>{tenantDetails.event_type ?? "N/A"}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell style={{ fontWeight: 'bold' }}>Description</TableCell>
+                                    <TableCell>{tenantDetails.description}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell style={{ fontWeight: 'bold' }}>Region</TableCell>
+                                    <TableCell>{tenantDetails.additional_settings?.region}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell style={{ fontWeight: 'bold' }}>Active</TableCell>
+                                    <TableCell>{tenantDetails.is_active ? "Yes" : "No"}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell style={{ fontWeight: 'bold' }}>Created At</TableCell>
+                                    <TableCell>{tenantDetails.created_at}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell style={{ fontWeight: 'bold' }}>Updated At</TableCell>
+                                    <TableCell>{tenantDetails.updated_at}</TableCell>
+                                </TableRow>
+                            </>
+                        )}
+                    </TableBody>
+                </Table>
+            </TableContainer>
 
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "space-evenly",
-                    marginTop: "10px",
-                }}
-            >
+            <div style={{ display: "flex", justifyContent: "space-evenly", marginTop: "10px" }}>
                 <button
                     className="UserDetailButton"
                     title="Bearbeiten"
@@ -221,128 +243,92 @@ const DetailsTable: React.FC = () => {
                 </button>
             </div>
 
-
-            {/* -------------------------------- */}
+            {/* Якщо редагується */}
             {isEditing && (
-                <div id="UserDetailModal" style={{ color: modalTextColor }}>
-                    <div id="UserDetailModalContent" style={{ color: modalTextColor }}>
-                        <h4>Benutzerdaten bearbeiten</h4>
+                <div id="UserDetailModal" style={{ color: 'black' }}>
+                    <div id="UserDetailModalContent" style={{ color: 'black' }}>
+                        <Typography variant="h5" gutterBottom>Benutzerdaten bearbeiten</Typography>
 
-                        {error && <div id="UserDetailModalError">{error}</div>}
+                        {error && <div id="UserDetailModalError" style={{ color: 'red' }}>{error}</div>}
 
-                        {/* Firmenname, Adresse und andere Felder sind nur lesbar */}
-                        <div style={{ marginBottom: "10px" }}>
-                            <label className="EditPageFontColor">Firmenname:</label>
-                            <input
-                                type="text"
-                                name="company_name"
-                                value={updatedTenant.company_name}
+                        {/* Редагування полів */}
+                        <Box sx={{ marginBottom: 2 }}>
+                            <TextField
+                                fullWidth
+                                label="URL"
+                                name="url"
+                                value={updatedTenant.url}
                                 onChange={handleEditChange}
-                                style={{ width: "100%", padding: "8px" }}
-                                placeholder={tenants[0]?.company_name}
-
+                                placeholder={tenantDetails?.url}
                             />
-                        </div>
-                        <div style={{ marginBottom: "10px" }}>
-                            <label className="EditPageFontColor">Adresse:</label>
-                            <input
-                                type="text"
-                                name="address"
-                                value={updatedTenant.address}
+                        </Box>
+
+                        <Box sx={{ marginBottom: 2 }}>
+                            <TextField
+                                fullWidth
+                                label="Organisation ID"
+                                name="organization_id"
+                                value={updatedTenant.organization_id}
                                 onChange={handleEditChange}
-                                style={{ width: "100%", padding: "8px" }}
-                                placeholder={tenants[0]?.address}
-
+                                placeholder={tenantDetails?.organization_id}
                             />
-                        </div>
-                        <div style={{ marginBottom: "10px" }}>
-                            <label className="EditPageFontColor">Lizenz gültig bis:</label>
-                            <input
-                                type="text"
-                                name="license_valid_until"
-                                value={updatedTenant.license_valid_until}
+                        </Box>
+
+                        <Box sx={{ marginBottom: 2 }}>
+                            <TextField
+                                fullWidth
+                                label="Event Type"
+                                name="event_type"
+                                value={updatedTenant.event_type}
                                 onChange={handleEditChange}
-                                style={{ width: "100%", padding: "8px" }}
-
-
+                                placeholder={tenantDetails?.event_type ?? "N/A"}
                             />
-                        </div>
-                        <div style={{ marginBottom: "10px" }}>
-                            <label className="EditPageFontColor">Kontakt-Telefon:</label>
-                            <input
-                                type="text"
-                                name="contact_phone"
-                                value={updatedTenant.contact_phone}
+                        </Box>
+
+                        <Box sx={{ marginBottom: 2 }}>
+                            <TextField
+                                fullWidth
+                                label="Description"
+                                name="description"
+                                value={updatedTenant.description}
                                 onChange={handleEditChange}
-                                style={{ width: "100%", padding: "8px" }}
-
-
+                                placeholder={tenantDetails?.description}
                             />
-                        </div>
+                        </Box>
 
-                        {/* Die änderbaren Felder */}
-                        <div style={{ marginBottom: "10px" }}>
-                            <label className="EditPageFontColor">Rechnungsadresse * :</label>
-                            <input
-                                type="text"
-                                name="invoice_address"
-                                value={updatedTenant.invoice_address}
+                        <Box sx={{ marginBottom: 2 }}>
+                            <TextField
+                                fullWidth
+                                label="Region"
+                                name="additional_settings.region"
+                                value={updatedTenant.additional_settings?.region}
                                 onChange={handleEditChange}
-                                style={{ width: "100%", padding: "8px" }}
-                                placeholder={tenants[0]?.invoice_address}
+                                placeholder={tenantDetails?.additional_settings?.region}
                             />
-                        </div>
-                        <div style={{ marginBottom: "10px" }}>
-                            <label className="EditPageFontColor">Kontakt-Email * :</label>
-                            <input
-                                type="text"
-                                name="contact_email"
-                                value={updatedTenant.contact_email}
-                                onChange={handleEditChange}
-                                style={{ width: "100%", padding: "8px" }}
-                                placeholder={tenants[0]?.contact_email}
-                            />
-                        </div>
-                        <div style={{ marginBottom: "10px" }}>
-                            <label className="EditPageFontColor">Rechnungs-E-Mail * :</label>
-                            <input
-                                type="text"
-                                name="invoice_email"
-                                value={updatedTenant.invoice_email}
-                                onChange={handleEditChange}
-                                style={{ width: "100%", padding: "8px" }}
-                                placeholder={tenants[0]?.invoice_email}
-                            />
-                        </div>
+                        </Box>
 
-                        {/* Buttons zum Speichern und Schließen */}
-                        <div
-                            style={{
-                                width: "100%",
-                                display: "flex",
-                                justifyContent: "space-evenly",
-                            }}
-                            className="CancelBtn"
-                        >
-                            <button
+
+
+                        {/* Кнопки для збереження та скасування */}
+                        <Box sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
+                            <Button
                                 onClick={handleSaveChanges}
-                                style={{
-                                    border: "none",
-                                    backgroundColor: "transparent",
-                                    cursor: "pointer",
-                                }}
-                                title="Speichern"
+                                variant="contained"
+                                color="primary"
+                                startIcon={<AddIcon />}
                             >
-                                <AddIcon style={{ transform: "scale(1.5)" }} />
-                            </button>
-                            <button
-                                className="BtnCancel"
-                                title="Schließen"
+                                Speichern
+                            </Button>
+
+                            <Button
                                 onClick={() => setIsEditing(false)}
+                                variant="outlined"
+                                color="secondary"
+                                startIcon={<CancelIcon />}
                             >
-                                <CancelIcon />
-                            </button>
-                        </div>
+                                Schließen
+                            </Button>
+                        </Box>
                     </div>
                 </div>
             )}

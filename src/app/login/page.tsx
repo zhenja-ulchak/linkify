@@ -55,7 +55,7 @@ const Login: React.FC = () => {
         };
     
         sessionStorage.setItem('setting', JSON.stringify(obj));
-        console.log("Об'єкт успішно збережено в sessionStorage:", obj);
+      
       }
 
       if (resp?.data[0]?.user?.username === username) {

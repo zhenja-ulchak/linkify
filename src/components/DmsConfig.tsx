@@ -407,12 +407,12 @@ export default function TableHelperDmsConfig({ title }: TableHelperType) {
                                     <TableRow
                                         hover
                                         onClick={(event) => {
-                                            handleClick(event, row.id);
+                                            handleClick(event, row?.id);
                                         }}
                                         role="checkbox"
                                         aria-checked={isItemSelected}
                                         tabIndex={-1}
-                                        key={row.id}
+                                        key={row?.id}
                                         selected={isItemSelected}
                                         className="tableRow"
 
@@ -435,23 +435,23 @@ export default function TableHelperDmsConfig({ title }: TableHelperType) {
                                             padding="none"
                                             className="tableFont"
                                         >
-                                            {row.username}
+                                            {row?.username}
                                         </TableCell>
 
                                         <TableCell className="tableFont" align="left">
-                                            {row.tenant_id}
+                                            {row?.tenant_id}
                                         </TableCell>
                                         <TableCell className="tableFont" align="left">
-                                            {row.type}
+                                            {row?.type}
                                         </TableCell>
                                         <TableCell className="tableFont" align="left">
-                                            {row.endpoint_url}
+                                            {row?.endpoint_url}
                                         </TableCell>
                                         <TableCell className="tableFont" align="left">
-                                            {row.api_key}
+                                            {row?.api_key}
                                         </TableCell>
                                         <TableCell className="tableFont" align="left">
-                                            {row.repository}
+                                            {row?.repository}
                                         </TableCell>
                                         {/* <TableCell className="tableFont" align="left">
                                             {row.is_active}
@@ -470,7 +470,7 @@ export default function TableHelperDmsConfig({ title }: TableHelperType) {
                                             >
                                                 <VisibilityIcon />
                                                 <div style={{ position: "absolute", margin: "0", padding: "0", opacity: "0" }}>
-                                                    {row.id}
+                                                    {row?.id}
                                                 </div>
                                             </button>
                                         </TableCell>

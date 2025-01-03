@@ -25,7 +25,8 @@ import { visuallyHidden } from "@mui/utils";
 import { useRouter } from "next/navigation";
 import ToggleSwitch from "@/components/toggleBtn";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-
+// @ts-expect-error
+import CryptoJS from 'crypto-js';
 import apiService from "@/app/services/apiService";
 
 type Order = "asc" | "desc";
@@ -44,7 +45,7 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const router = useRouter();
   const [rows, setRows] = React.useState<Data[]>([]);  // Zustand für die Zeilen
-
+  const [role, setRoles] = React.useState('');
 
 
 
@@ -83,12 +84,8 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
     const fetchData = async () => {
       try {
         const getToken: any = sessionStorage.getItem('AuthToken');
-        const response: any = await apiService.get("accounting-software", getToken);
-        console.log(response);
-
-        console.log(response.data[0]);
-
-        setRows(response.data[0]);  // Зберігаємо дані в стан
+        const response: any = await apiService.get("accounting-software", getToken)
+        setRows(response.data[0]); 
 
       } catch (error) {
         console.error('Помилка при отриманні даних:', error);
@@ -314,10 +311,30 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
   }
 
 
+
+  React.useEffect(() => {
+
+    const ciphertext = sessionStorage.getItem('user');
+    if (ciphertext) {
+      const bytes = CryptoJS.AES.decrypt(ciphertext, 'secret-key');
+      const getRole = bytes.toString(CryptoJS.enc.Utf8);
+      if (!getRole) {
+        router.push('/dashboard');
+        return;
+      }
+      setRoles(getRole)
+    }
+  }, [router]);
+
+
   const handleRowClick = (id: number) => {
     console.log(id);
- 
-    router.push(`/dashboard/superadmin/tenant/${id}`);
+    if (role === "admin") {
+      router.push(`/dashboard/admin/accounting-software/${id}`);
+    } else if (role === "superadmin") {
+      router.push(`/dashboard/superadmin/accounting-software/${id}`);
+    }
+
   };
 
   const handleRequestSort = (
@@ -427,12 +444,12 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
                   <TableRow
                     hover
                     onClick={(event) => {
-                      handleClick(event, row.id);
+                      handleClick(event, row?.id);
                     }}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
-                    key={row.id}
+                    key={row?.id}
                     selected={isItemSelected}
                     className="tableRow"
 
@@ -455,26 +472,26 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
                       padding="none"
                       className="tableFont"
                     >
-                      {row.name}
+                      {row?.name}
                     </TableCell>
 
                     <TableCell className="tableFont" align="left">
-                      {row.type}
+                      {row?.type}
                     </TableCell>
                     <TableCell className="tableFont" align="left">
-                      {row.url}
+                      {row?.url}
                     </TableCell>
                     <TableCell className="tableFont" align="left">
-                      {row.organization_id}
+                      {row?.organization_id}
                     </TableCell>
                     <TableCell className="tableFont" align="left">
-                      {row.event_type}
+                      {row?.event_type}
                     </TableCell>
                     <TableCell className="tableFont" align="left">
-                      {row.description}
+                      {row?.description}
                     </TableCell>
                     <TableCell className="tableFont" align="left">
-                      {row.is_active}
+                      {row?.is_active}
                     </TableCell>
                     <TableCell className="tableFont" align="left">
                       <button
@@ -490,7 +507,7 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
                       >
                         <VisibilityIcon />
                         <div style={{ position: "absolute", margin: "0", padding: "0", opacity: "0" }}>
-                          {row.id}
+                          {row?.id}
                         </div>
                       </button>
                     </TableCell>
@@ -531,6 +548,6 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
         label="Dense padding"
       />
     </Box>
-    
+
   );
 }
