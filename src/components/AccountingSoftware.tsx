@@ -386,11 +386,11 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
       id="BoxTable"
       sx={{
         position: "relative",
-        left: "65px",
+        left: "83px",
         display: "flex",
         alignContent: "center",
         justifyContent: "center",
-        width: "100%",
+        width: "95%",
         flexDirection: "column",
       }}
     >

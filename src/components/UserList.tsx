@@ -34,7 +34,7 @@ type TableHelperType = {
     tenantData?: any
 }
 
-export default function TableHelperDmsConfig({ title }: TableHelperType) {
+export default function TableHelperUserList({ title }: TableHelperType) {
     const [order, setOrder] = React.useState<Order>("asc");
     const [orderBy, setOrderBy] = React.useState<keyof Data>("username");
     const [selected, setSelected] = React.useState<readonly number[]>([]);
@@ -50,13 +50,15 @@ export default function TableHelperDmsConfig({ title }: TableHelperType) {
     // Data und TenantData Typen
     type Data = {
         id: number;
-        tenant_id?: number;
-        type: string;
-        endpoint_url: string;
+        first_name: string;
+        last_name: string;
+        language: string; // e.g., "de" for German
         username: string;
-        api_key: string | null;
-        repository: string;
-        extra_settings?: string; // JSON string (needs parsing for structured data)
+        contact_phone: string;
+        email: string;
+        role: string; // e.g., "admin", "user"
+        is_active: boolean;
+       
 
     };
 
@@ -65,7 +67,7 @@ export default function TableHelperDmsConfig({ title }: TableHelperType) {
         const fetchData = async () => {
             try {
                 const getToken: any = sessionStorage.getItem('AuthToken');
-                const response: any = await apiService.get("dms-config", getToken);
+                const response: any = await apiService.get("user", getToken);
                 console.log(response);
 
                 console.log(response.data[0]);
@@ -99,15 +101,15 @@ export default function TableHelperDmsConfig({ title }: TableHelperType) {
     };
 
 
-    function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
-        if (b[orderBy] < a[orderBy]) {
-            return -1;
-        }
-        if (b[orderBy] > a[orderBy]) {
-            return 1;
-        }
-        return 0;
-    }
+    // function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
+    //     if (b[orderBy] < a[orderBy]) {
+    //         return -1;
+    //     }
+    //     if (b[orderBy] > a[orderBy]) {
+    //         return 1;
+    //     }
+    //     return 0;
+    // }
 
 
 
@@ -121,40 +123,52 @@ export default function TableHelperDmsConfig({ title }: TableHelperType) {
 
     const headCells: any = [
         {
-            id: "username",
+            id: "first_name",
             numeric: false,
             disablePadding: true,
+            label: "first_name",
+        },
+        {
+            id: "last_name",
+            numeric: false, // Text, daher numeric: false
+            disablePadding: false,
+            label: "last_name",
+        },
+        {
+            id: "role",
+            numeric: false,
+            disablePadding: false,
+            label: "role",
+        },
+        {
+            id: "language",
+            numeric: false, // Text, daher numeric: false
+            disablePadding: false,
+            label: "language",
+        },
+        {
+            id: "username",
+            numeric: false, // Text, daher numeric: false
+            disablePadding: false,
             label: "username",
         },
         {
-            id: "tenant_id",
+            id: "contact_phone",
             numeric: false, // Text, daher numeric: false
             disablePadding: false,
-            label: "tenant_id",
+            label: "contact_phone",
         },
         {
-            id: "type",
-            numeric: false, // Text, daher numeric: false
-            disablePadding: false,
-            label: "type",
-        },
-        {
-            id: "endpoint_url",
-            numeric: false, // Text, daher numeric: false
-            disablePadding: false,
-            label: "endpoint_url",
-        },
-        {
-            id: "api_key",
-            numeric: false, // Text, daher numeric: false
-            disablePadding: false,
-            label: "api_key",
-        },
-        {
-            id: "repository",
+            id: "email",
             numeric: false,
             disablePadding: false,
-            label: "repository",
+            label: "email",
+        },
+        {
+            id: "is_active",
+            numeric: false,
+            disablePadding: false,
+            label: "is_active",
         },
 
         {
@@ -435,27 +449,30 @@ export default function TableHelperDmsConfig({ title }: TableHelperType) {
                                             padding="none"
                                             className="tableFont"
                                         >
-                                            {row.username}
+                                            {row.first_name}
                                         </TableCell>
 
                                         <TableCell className="tableFont" align="left">
-                                            {row.tenant_id}
+                                            {row.last_name}
                                         </TableCell>
                                         <TableCell className="tableFont" align="left">
-                                            {row.type}
+                                            {row.role}
                                         </TableCell>
                                         <TableCell className="tableFont" align="left">
-                                            {row.endpoint_url}
+                                            {row.language}
                                         </TableCell>
                                         <TableCell className="tableFont" align="left">
-                                            {row.api_key}
+                                            {row.username}
                                         </TableCell>
                                         <TableCell className="tableFont" align="left">
-                                            {row.repository}
+                                            {row.contact_phone}
                                         </TableCell>
-                                        {/* <TableCell className="tableFont" align="left">
+                                        <TableCell className="tableFont" align="left">
+                                            {row.email}
+                                        </TableCell>
+                                        <TableCell className="tableFont" align="left">
                                             {row.is_active}
-                                        </TableCell> */}
+                                        </TableCell>
                                         <TableCell className="tableFont" align="left">
                                             <button
                                                 style={{

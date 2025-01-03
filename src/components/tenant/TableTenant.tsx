@@ -213,24 +213,24 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
     return (
       <TableHead>
         <TableRow>
-      {CrudReadonly && (
+          {CrudReadonly && (
 
-        <>
-          <TableCell padding="checkbox">
-            <Checkbox
-              indeterminate={numSelected > 0 && numSelected < rowCount}
-              checked={rowCount > 0 && numSelected === rowCount}
-              onChange={onSelectAllClick}
-              inputProps={{
-                "aria-label": "select all desserts",
-              }}
-              className="TableCell"
-            />
-          </TableCell>
-        </>
-      )}
+            <>
+              <TableCell padding="checkbox">
+                <Checkbox
+                  indeterminate={numSelected > 0 && numSelected < rowCount}
+                  checked={rowCount > 0 && numSelected === rowCount}
+                  onChange={onSelectAllClick}
+                  inputProps={{
+                    "aria-label": "select all desserts",
+                  }}
+                  className="TableCell"
+                />
+              </TableCell>
+            </>
+          )}
 
-        
+
           {headCells.map((headCell: any) => (
             <TableCell
               key={headCell.id}
@@ -397,11 +397,11 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
       id="BoxTable"
       sx={{
         position: "relative",
-        left: "65px",
+        left: "83px",
         display: "flex",
         alignContent: "center",
         justifyContent: "center",
-        width: "100%",
+        width: "95%",
         flexDirection: "column",
       }}
     >

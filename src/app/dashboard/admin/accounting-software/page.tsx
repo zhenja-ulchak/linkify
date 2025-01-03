@@ -8,7 +8,11 @@ import TableHelperAccountingSoftwar from "../../../../components/AccountingSoftw
 export default function SuperAdminTenant() {
 
   return (<>
-    <TableHelperAccountingSoftwar  title={"Accounting-Software"}/>
+    <div>
+
+      <TableHelperAccountingSoftwar title={"Accounting-Software"} />
+    </div>
+
   </>)
 
 }

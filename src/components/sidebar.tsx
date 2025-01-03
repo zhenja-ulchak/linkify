@@ -22,7 +22,7 @@ import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import PersonIcon from '@mui/icons-material/Person';
 import WysiwygIcon from '@mui/icons-material/Wysiwyg';
 import EngineeringIcon from '@mui/icons-material/Engineering';
-
+import RecentActorsIcon from '@mui/icons-material/RecentActors';
 
 import { Url } from "next/dist/shared/lib/router/router";
 import Logout from "./Logout";
@@ -294,6 +294,15 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
                           <EngineeringIcon style={{ color: "black" }} />
                         </ListItemIcon>
                         <ListItemText primary="Dms-config" />
+                      </ListItemButton>
+                    </ListItem>
+
+                    <ListItem disablePadding>
+                      <ListItemButton onClick={() => handleNavigation("/dashboard/admin/user-list")}>
+                        <ListItemIcon className="DashboadAndTableIcon">
+                          <RecentActorsIcon style={{ color: "black" }} />
+                        </ListItemIcon>
+                        <ListItemText primary="User-list" />
                       </ListItemButton>
                     </ListItem>
 
