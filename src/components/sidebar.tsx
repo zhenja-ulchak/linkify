@@ -157,9 +157,9 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
   const handleLogout = async () => {
     const getToken: any = sessionStorage.getItem('AuthToken');
     try {
-      await apiService.get(`user/logout`,getToken);
+      await apiService.get(`user/logout`, getToken);
 
-   
+
     } catch (error) {
       console.error("Fehler beim Logout:", error);
     }
@@ -256,22 +256,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
                     </ListItemButton>
                   </ListItem>
 
-         
-                  <ListItem
-                    disablePadding
-                    style={{
-                      display: "flex",
-                      alignContent: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <ListItemButton
-                      onClick={() => handleNavigation("/dashboard/user/profile")}
-                    >
-                      <AccountCircleIcon />
-                      <ListItemText primary="Profile" style={{ marginLeft: "31px" }} />
-                    </ListItemButton>
-                  </ListItem>
+
 
                 </>)
 
@@ -293,24 +278,24 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
                       </ListItemButton>
                     </ListItem>
 
-                  
-                  <ListItem disablePadding>
-                    <ListItemButton onClick={() => handleNavigation("/dashboard/superadmin/accounting-software")}>
-                      <ListItemIcon className="DashboadAndTableIcon">
-                        <WysiwygIcon style={{ color: "black" }} />
-                      </ListItemIcon>
-                      <ListItemText primary="User" />
-                    </ListItemButton>
-                  </ListItem>
 
-                  <ListItem disablePadding>
-                    <ListItemButton onClick={() => handleNavigation("/dashboard/superadmin/dms-config")}>
-                      <ListItemIcon className="DashboadAndTableIcon">
-                        <EngineeringIcon style={{ color: "black" }} />
-                      </ListItemIcon>
-                      <ListItemText primary="User" />
-                    </ListItemButton>
-                  </ListItem>
+                    <ListItem disablePadding>
+                      <ListItemButton onClick={() => handleNavigation("/dashboard/superadmin/accounting-software")}>
+                        <ListItemIcon className="DashboadAndTableIcon">
+                          <WysiwygIcon style={{ color: "black" }} />
+                        </ListItemIcon>
+                        <ListItemText primary="User" />
+                      </ListItemButton>
+                    </ListItem>
+
+                    <ListItem disablePadding>
+                      <ListItemButton onClick={() => handleNavigation("/dashboard/superadmin/dms-config")}>
+                        <ListItemIcon className="DashboadAndTableIcon">
+                          <EngineeringIcon style={{ color: "black" }} />
+                        </ListItemIcon>
+                        <ListItemText primary="User" />
+                      </ListItemButton>
+                    </ListItem>
 
                     <ListItem disablePadding>
                       <ListItemButton onClick={() => handleNavigation("/dashboard/admin/SMTP-Email")}>
@@ -346,41 +331,41 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
 
               case 'superadmin':
                 return (
-                 <>
-                  <ListItem
-                    disablePadding
-                    style={{
-                      display: "flex",
-                      alignContent: "center",
-                      justifyContent: "center",
-                      backgroundColor: "green",
-                    }}
-                  >
-                    <ListItemButton onClick={() => handleNavigation("/dashboard/superadmin")}>
-                      <SecurityIcon />
-                      <ListItemText primary="Superadmin" style={{ marginLeft: "31px" }} />
-                    </ListItemButton>
-                  </ListItem>
+                  <>
+                    <ListItem
+                      disablePadding
+                      style={{
+                        display: "flex",
+                        alignContent: "center",
+                        justifyContent: "center",
+                        backgroundColor: "green",
+                      }}
+                    >
+                      <ListItemButton onClick={() => handleNavigation("/dashboard/superadmin")}>
+                        <SecurityIcon />
+                        <ListItemText primary="Superadmin" style={{ marginLeft: "31px" }} />
+                      </ListItemButton>
+                    </ListItem>
 
-                  <ListItem disablePadding>
-                    <ListItemButton onClick={() => handleNavigation("/dashboard/superadmin/accounting-software")}>
-                      <ListItemIcon className="DashboadAndTableIcon">
-                        <WysiwygIcon style={{ color: "black" }} />
-                      </ListItemIcon>
-                      <ListItemText primary="User" />
-                    </ListItemButton>
-                  </ListItem>
+                    <ListItem disablePadding>
+                      <ListItemButton onClick={() => handleNavigation("/dashboard/superadmin/accounting-software")}>
+                        <ListItemIcon className="DashboadAndTableIcon">
+                          <WysiwygIcon style={{ color: "black" }} />
+                        </ListItemIcon>
+                        <ListItemText primary="User" />
+                      </ListItemButton>
+                    </ListItem>
 
-                  <ListItem disablePadding>
-                    <ListItemButton onClick={() => handleNavigation("/dashboard/superadmin/dms-config")}>
-                      <ListItemIcon className="DashboadAndTableIcon">
-                        <EngineeringIcon style={{ color: "black" }} />
-                      </ListItemIcon>
-                      <ListItemText primary="User" />
-                    </ListItemButton>
-                  </ListItem>
+                    <ListItem disablePadding>
+                      <ListItemButton onClick={() => handleNavigation("/dashboard/superadmin/dms-config")}>
+                        <ListItemIcon className="DashboadAndTableIcon">
+                          <EngineeringIcon style={{ color: "black" }} />
+                        </ListItemIcon>
+                        <ListItemText primary="User" />
+                      </ListItemButton>
+                    </ListItem>
 
-                  <ListItem disablePadding>
+                    <ListItem disablePadding>
                       <ListItemButton onClick={() => handleNavigation("/dashboard/superadmin/tenant")}>
                         <ListItemIcon className="DashboadAndTableIcon">
                           <FormatListBulletedIcon style={{ color: "black" }} />
@@ -389,11 +374,11 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
                       </ListItemButton>
                     </ListItem>
 
-                  
-                 
-                 </>
 
-                  
+
+                  </>
+
+
                 );
 
               // Add more roles here if needed (e.g., 'user', 'moderator')
@@ -402,7 +387,25 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
                 return null; // Return nothing if the role does not match
             }
           })()}
-        <Divider style={{ backgroundColor: "black", height: "2px" }} />
+          <Divider style={{ backgroundColor: "black", height: "2px" }} />
+
+          <ListItem
+            disablePadding
+            style={{
+              display: "flex",
+              alignContent: "center",
+              justifyContent: "center",
+            }}
+          >
+            <ListItemButton
+              onClick={() => handleNavigation("/dashboard/profile")}
+            >
+              <AccountCircleIcon />
+              <ListItemText primary="Profile" style={{ marginLeft: "31px" }} />
+            </ListItemButton>
+          </ListItem>
+
+
           <ListItem disablePadding>
             <ListItemButton onClick={() => handleLogout()}>
               <Logout />

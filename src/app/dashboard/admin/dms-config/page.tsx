@@ -8,7 +8,7 @@ import TableHelper from "../../../../components/tableLIst/TableList";
 export default function SuperAdminTenant() {
 
   return (<>
-    <TableHelper />
+  <TableHelper title={"dms-config"} />
   </>)
 
 }
