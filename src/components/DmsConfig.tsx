@@ -25,7 +25,8 @@ import { visuallyHidden } from "@mui/utils";
 import { useRouter } from "next/navigation";
 import ToggleSwitch from "@/components/toggleBtn";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-
+// @ts-expect-error
+import CryptoJS from 'crypto-js';
 import apiService from "@/app/services/apiService";
 type Order = "asc" | "desc";
 
@@ -43,7 +44,7 @@ export default function TableHelperDmsConfig({ title }: TableHelperType) {
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const router = useRouter();
     const [rows, setRows] = React.useState<Data[]>([]);  // Zustand für die Zeilen
-
+    const [role, setRoles] = React.useState('');
     console.log(rows);
 
 
@@ -294,10 +295,29 @@ export default function TableHelperDmsConfig({ title }: TableHelperType) {
     }
 
 
+    React.useEffect(() => {
+
+        const ciphertext = sessionStorage.getItem('user');
+        if (ciphertext) {
+            const bytes = CryptoJS.AES.decrypt(ciphertext, 'secret-key');
+            const getRole = bytes.toString(CryptoJS.enc.Utf8);
+            if (!getRole) {
+                router.push('/dashboard');
+                return;
+            }
+            setRoles(getRole)
+        }
+    }, [router]);
+
+
     const handleRowClick = (id: number) => {
         console.log(id);
+        if (role === "admin") {
+            router.push(`/dashboard/admin/dms-config/${id}`);
+        } else if (role === "superadmin") {
+            router.push(`/dashboard/superadmin/dms-config/${id}`);
+        }
 
-        router.push(`/dashboard/superadmin/tenant/${id}`);
     };
 
     const handleRequestSort = (
