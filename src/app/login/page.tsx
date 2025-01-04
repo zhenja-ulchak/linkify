@@ -17,6 +17,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import ApiService from "../services/apiService";
 // @ts-expect-error
 import CryptoJS from 'crypto-js';
+import { enqueueSnackbar } from "notistack";
 
 
 
@@ -55,7 +56,7 @@ const Login: React.FC = () => {
         };
     
         sessionStorage.setItem('setting', JSON.stringify(obj));
-      
+        enqueueSnackbar('Login erfolgreich!', { variant: 'success' });
       }
 
       if (resp?.data[0]?.user?.username === username) {
@@ -70,7 +71,7 @@ const Login: React.FC = () => {
         const token = resp?.data[0]?.token
         sessionStorage.setItem('AuthToken', `${token}`)
         setIsLoggedIn(true);
-       
+        enqueueSnackbar('Willkommen!', { variant: 'info' });
 
         if ( RoleALl === "admin") {
           router.push('/dashboard/admin'); // Редирект на адмін панель
@@ -84,18 +85,21 @@ const Login: React.FC = () => {
 
 
       } else {
-        setErrorMessage("Login fehlgeschlagen. Bitte überprüfen Sie Ihre Daten.");
+        enqueueSnackbar('Login fehlgeschlagen!', { variant: 'error' });
       }
     } catch (error) {
       console.error("Fehler beim Login:", error);
-      if (axios.isAxiosError(error)) 
-        { if (error.response?.status === 401) 
-          { setErrorMessage("Ungültige Anmeldedaten."); } 
-          else if (error.response?.status === 500) 
-            { setErrorMessage("Serverfehler. Bitte später erneut versuchen."); } 
-          else { setErrorMessage(error.response?.data?.message || "Ein unbekannter Fehler ist aufgetreten."); } 
-        } else { setErrorMessage("Netzwerkfehler. Bitte prüfen Sie Ihre Verbindung."); }
-
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          enqueueSnackbar('Ungültige Anmeldedaten!', { variant: 'warning' });
+        } else if (error.response?.status === 500) {
+          enqueueSnackbar('Serverfehler. Bitte später erneut versuchen.', { variant: 'error' });
+        } else {
+          enqueueSnackbar('Ein unbekannter Fehler ist aufgetreten.', { variant: 'error' });
+        }
+      } else {
+        enqueueSnackbar('Netzwerkfehler. Bitte prüfen Sie Ihre Verbindung.', { variant: 'warning' });
+      }
     }
   }
 

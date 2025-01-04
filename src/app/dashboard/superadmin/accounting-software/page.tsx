@@ -8,6 +8,9 @@ import TableHelperAccountingSoftwar from "../../../../components/AccountingSoftw
 export default function SuperAdminTenant() {
 
   return (<>
+   {/* <SnackbarProvider maxSnack={3}>
+      <Component {...pageProps} />
+    </SnackbarProvider> */}
     <TableHelperAccountingSoftwar  title={"Accounting-Software"}/>
   </>)
 

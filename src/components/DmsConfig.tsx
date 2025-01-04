@@ -28,6 +28,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 // @ts-expect-error
 import CryptoJS from 'crypto-js';
 import apiService from "@/app/services/apiService";
+import { enqueueSnackbar } from "notistack";
 type Order = "asc" | "desc";
 
 type TableHelperType = {
@@ -74,12 +75,14 @@ export default function TableHelperDmsConfig({ title }: TableHelperType) {
                 setRows(response.data[0]);
 
 
-
+                enqueueSnackbar("Дані успішно завантажені!", { variant: "success" }); // Додано сповіщення
 
             } catch (error) {
                 console.error('Помилка при отриманні даних:', error);
+                enqueueSnackbar("Сталася помилка при завантаженні даних.", { variant: "error" }); // Додано сповіщення про помилку
+            
             }
-        };
+        }
 
         fetchData();
     }, []);

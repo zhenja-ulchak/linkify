@@ -38,6 +38,7 @@ import axios from "axios";
 // @ts-expect-error
 import CryptoJS from 'crypto-js';
 import apiService from "@/app/services/apiService";
+import { enqueueSnackbar } from "notistack";
 
 
 
@@ -156,12 +157,25 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
 
   const handleLogout = async () => {
     const getToken: any = sessionStorage.getItem('AuthToken');
+    if (!getToken) {
+      console.warn("Kein Token gefunden, automatisches Weiterleiten zur Login-Seite.");
+      enqueueSnackbar("Kein Token gefunden. Automatisches Weiterleiten zur Login-Seite.", { 
+        variant: "warning" 
+      });
+      router.push("/login");
+      sessionStorage.clear();
+      return;
+    }
     try {
       await apiService.get(`user/logout`, getToken);
-
+      enqueueSnackbar("Logout erfolgreich!", { 
+        variant: "success" 
+      });
 
     } catch (error) {
-      console.error("Fehler beim Logout:", error);
+      enqueueSnackbar("Fehler beim Logout. Bitte versuchen Sie es später erneut.", { 
+        variant: "error" 
+      });
     }
 
     router.push("/login");

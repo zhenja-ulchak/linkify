@@ -3,6 +3,8 @@
 import ChangeMode from "@/components/DarkLightMode";
 import "../globals.css";
 
+import { SnackbarProvider } from "notistack";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -27,7 +29,16 @@ export default function RootLayout({
         >
           <ChangeMode />
         </div>
-        {children}
+        <SnackbarProvider
+          maxSnack={3}
+          autoHideDuration={3000}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+        >
+          {children}
+        </SnackbarProvider>
       </body>
     </html>
   );
