@@ -42,16 +42,30 @@ const DocumentTable: React.FC = () => {
             <Table>
                 <TableHead>
                     <TableRow>
-                        <TableCell>Name</TableCell>
-                        <TableCell>Type</TableCell>
+                        <TableCell>id</TableCell>
+                        <TableCell>ExtantanionType</TableCell>
                         <TableCell>Size</TableCell>
-                        <TableCell>Created At</TableCell>
+                        <TableCell>mimeType</TableCell>
+                        <TableCell>docName</TableCell>
+                        <TableCell>docType</TableCell>
+                        <TableCell>docDescription</TableCell>
+                        <TableCell>docVersion</TableCell>
+                        <TableCell>docParentID</TableCell>
+                        <TableCell>docLAstChangeAt</TableCell>
+                        <TableCell>syncDms</TableCell>
+                        <TableCell>syncAcaunting</TableCell>
                         <TableCell>Actions</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {documentsList.map((document) => (
                         <TableRow key={document.id}>
+                            <TableCell>{document.name}</TableCell>
+                            <TableCell>{document.type}</TableCell>
+                            <TableCell>{document.size}</TableCell>
+                            <TableCell>{document.name}</TableCell>
+                            <TableCell>{document.type}</TableCell>
+                            <TableCell>{document.size}</TableCell>
                             <TableCell>{document.name}</TableCell>
                             <TableCell>{document.type}</TableCell>
                             <TableCell>{document.size}</TableCell>

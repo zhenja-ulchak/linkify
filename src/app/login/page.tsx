@@ -49,7 +49,9 @@ const Login: React.FC = () => {
 
     try {
       const resp = await ApiService.login<any>(username, password);
+ 
       if (resp?.data?.length > 0 && resp.data[0]?.user) {
+        sessionStorage.setItem('AuthUser', JSON.stringify(resp.data[0]?.user));
         const obj: any = {
           name: resp.data[0].user.first_name || "Default Name", // Підстраховка на випадок відсутності значення
           last_name: resp.data[0].user.last_name || "Default Last Name",

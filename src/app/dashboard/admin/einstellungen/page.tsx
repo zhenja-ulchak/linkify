@@ -28,8 +28,19 @@ const ConfigPage: React.FC = () => {
   const [lexofficeSetting, setLexofficeSetting] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
 
+  // const dmsOptions = [
+  //   { name: "SharePoint", type: "sharepoint", description: "Microsoft-based collaborative platform for document management and storage." },
+  //   { name: "Eco-dms", type: "ecodms", description: "An affordable and efficient document management system for small businesses." },
+  //   { name: "DocuWare", type: "docuware", description: "A cloud-based solution for managing documents and workflows." },
+  //   { name: "M-Files", type: "mfiles", description: "An intelligent information management platform with metadata-driven architecture." },
+  //   { name: "OpenText", type: "opentext", description: "A comprehensive enterprise information management solution." },
+  //   { name: "Alfresco", type: "alfresco", description: "An open-source, enterprise-grade document management system." },
+  //   { name: "Laserfiche", type: "laserfiche", description: "A digital transformation tool for managing and automating business processes." },
+  // ];
+
   const dmsOptions = [
     "SharePoint",
+   "Eco-dms",
     "DocuWare",
     "M-Files",
     "OpenText",
@@ -81,10 +92,12 @@ const ConfigPage: React.FC = () => {
   }
 
   return (
+// TODO FIX УДАЛИТИ МОДАЛКИ ЗРОБИТИ СИЛКИ НА ТАБЛИЦІ
+
     <Container className="ContainerConfigPage" maxWidth="sm">
       <Box className="BoxConfigPage">
         <Typography variant="h4" gutterBottom>
-          Einstellungen
+            Admin
         </Typography>
 
         {/* Email Button */}
