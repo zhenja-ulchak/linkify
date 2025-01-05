@@ -1,17 +1,22 @@
-"use client";
+// app/layout.tsx
 
 import ChangeMode from "@/components/DarkLightMode";
 import "../globals.css";
-
+import { NextIntlClientProvider } from 'next-intl';
+import { getLocale, getMessages } from 'next-intl/server';
 import { SnackbarProvider } from "notistack";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Серверная логика получения локали и сообщений
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body
         style={{
           margin: "0",

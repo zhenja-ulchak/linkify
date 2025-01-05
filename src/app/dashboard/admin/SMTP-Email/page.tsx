@@ -16,6 +16,7 @@ import {
 import axios from "axios";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { useTranslations } from 'next-intl';
 
 const Administrator: React.FC = () => {
   // Zustände für Eingaben
@@ -28,6 +29,7 @@ const Administrator: React.FC = () => {
   const [savePassword, setSavePassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [autoAuth, setAutoAuth] = useState(false);
+  const t = useTranslations('Smtp-Email');
 
   // Zustände für Fehlermeldungen
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -153,14 +155,14 @@ const Administrator: React.FC = () => {
         id="AdminHeader"
         fontWeight={"900"}
       >
-        Admin: SMTP-E-Mail konfigurieren
+        {t("smtp-email")}
       </Typography>
       {serverError && <Alert severity="error">{serverError}</Alert>}
       <Grid container spacing={3} id="AdminPageContainer">
         {/* SMTP-Server */}
         <Grid item xs={12} sm={6}>
           <TextField
-            label="SMTP-Server"
+            label={t("smtp-email")}
             value={smtpServer}
             onChange={(e) => setSmtpServer(e.target.value)}
             error={!!errors.smtpServer}
@@ -173,7 +175,7 @@ const Administrator: React.FC = () => {
         {/* SMTP-Port */}
         <Grid item xs={12} sm={6}>
           <TextField
-            label="SMTP-Port"
+            label={t("smtp-port")}
             value={smtpPort}
             onChange={(e) => setSmtpPort(e.target.value)}
             error={!!errors.smtpPort}
@@ -186,7 +188,7 @@ const Administrator: React.FC = () => {
         {/* Verschlüsselung */}
         <Grid item xs={12} sm={6}>
           <TextField
-            label="Art der Verschlüsselung (z. B. SSL, TLS)"
+            label={t("art-der")}
             value={encryption}
             onChange={(e) => setEncryption(e.target.value)}
             error={!!errors.encryption}
@@ -199,7 +201,7 @@ const Administrator: React.FC = () => {
         {/* Benutzername */}
         <Grid item xs={12} sm={6}>
           <TextField
-            label="Benutzername"
+            label={t("benutzername")}
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             error={!!errors.username}
@@ -212,7 +214,7 @@ const Administrator: React.FC = () => {
         {/* E-Mail-Adresse */}
         <Grid item xs={12} sm={6}>
           <TextField
-            label="E-Mail-Adresse"
+            label={t("email-adresse")}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             error={!!errors.email}
@@ -225,7 +227,7 @@ const Administrator: React.FC = () => {
         {/* Passwort */}
         <Grid item xs={12} sm={6}>
           <TextField
-            label="Passwort"
+            label={t("passwort")}
             type={showPassword ? "text" : "password"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -239,7 +241,7 @@ const Administrator: React.FC = () => {
                   <IconButton
                     onClick={togglePasswordVisibility}
                     edge="end"
-                    aria-label="Passwort umschalten"
+                    aria-label={t("passwort-umschalten")}
                   >
                     {showPassword ? (
                       <VisibilityOffIcon />
@@ -262,7 +264,7 @@ const Administrator: React.FC = () => {
                 onChange={(e) => setSavePassword(e.target.checked)}
               />
             }
-            label="Passwort speichern"
+            label={t("passwort-speichern")}
             id="PasswordSaveLabel"
           />
           {errors.savePassword && (
@@ -280,7 +282,7 @@ const Administrator: React.FC = () => {
                 onChange={(e) => setAutoAuth(e.target.checked)}
               />
             }
-            label="Automatische Authentifizierung"
+            label={t("authentificationLabel")}
             id="AuthentificationLabel"
           />
         </Grid>
@@ -299,18 +301,18 @@ const Administrator: React.FC = () => {
               color="error"
               onClick={() => console.log("Abbrechen")}
             >
-              Abbrechen
+              {t("abbrechen")}
             </Button>
             <Button
               variant="contained"
               color="primary"
               onClick={handleTestEmail}
             >
-              Test-E-Mail senden
+              {t("test-email-senden")}
             </Button>
             {isFormValid() && (
               <Button variant="contained" color="success" onClick={handleSave}>
-                Fertigstellen
+                {t("fertigstellen")}
               </Button>
             )}
           </Box>

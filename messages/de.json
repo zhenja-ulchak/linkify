@@ -1,0 +1,91 @@
+{
+    "Login": {
+      "login": "Autorisierung",
+      "username": "Benutzername",
+      "password": "Passwort",
+      "loginError": "Ungültiger Benutzername oder Passwort",
+      "registrierung": "Registrierung",
+      "passwort-vergessen": "Passwort vergessen?"
+    },
+    "LocaleSwitcher": {
+      "en": "Englisch",
+      "de": "Deutsch",
+      "ua": "Ukrainisch",
+      "ru": "Russisch",
+      "label": "Sprache ändern"
+    },
+    "Dashboard": {
+      "dashboard": "Dashboard",
+      "welcome-message": "Hallo und herzlich willkommen! Danke, dass Sie Linkify beigetreten sind"
+    },
+    "Panel-sidebar": {
+      "user": "Benutzer",
+      "admin": "Administrator",
+      "admin-profile": "Administratorprofil",
+      "profile": "Profil",
+      "dashboard": "Dashboard",
+      "logout": "Abmelden",
+      "smtp-email": "SMTP-Mail",
+      "admin-liste": "Liste der Administratoren",
+      "Einstellungen": "Einstellungen",
+      "Superadmin": "Superadministrator"
+    },
+    "User-list": {
+      "user-list": "Benutzerliste"
+    },
+    "Admin-profile": {
+      "profile": "Profil",
+      "benutzer": "* Benutzer:",
+      "rechnungsadresse": "+ Rechnungsadresse",
+      "benutzername": "Benutzername",
+      "firmenname": "Firmenname",
+      "name": "Name",
+      "vorname": "Vorname",
+      "hausnummer": "Straße und Hausnummer",
+      "postleitzahl": "Postleitzahl",
+      "ort": "Ort",
+      "speichern": "Speichern"
+    },
+
+    "Smtp-Email": {
+      "smtp-email": "Admin: SMTP-E-Mail konfigurieren",
+      "smtp-server": "SMTP-Server",
+      "smtp-port": "SMTP-Port",
+      "art-der": "Art der Verschlüsselung (z. B. SSL, TLS)",
+      "benutzername": "Benutzername",
+      "email-adresse": "E-Mail-Adresse",
+      "passwort": "Passwort",
+      "passwort-umschalten": "Passwort Umschalten",
+      "passwort-speichern": "Passwort Speichern",
+      "authentificationLabel": "Automatische Authentifizierung",
+      "abbrechen": "Abbrechen",
+      "test-email-senden": "Test-E-Mail senden",
+      "fertigstellen": "Fertigstellen"
+
+    },
+
+
+    "Customer": {
+      "profile": "Profil",
+      "benutzername": "Benutzername",
+      "benutzer": "* Benutzer:",
+      "rechungsadresse": "+ Rechnungsadresse",
+      "firmenname": "Firmenname",
+      "name": "Name",
+      "vorname": "Vorname",
+       "street": "Straße und Hausnummer",
+       "postalcode": "Postleitzahl",
+       "city": "Stadt",
+       "region": "Region",
+       "land": "Land",
+       "addressAdditional": "Adresszusatz",
+       "licenseValidity": "Lizenz Gültigkeit",
+       "group": "Gruppe",
+       "firmenname2": "+ Firmenname:",
+       "licenseValidity2": "- Lizenz Gültigkeit",
+        "group2": "- Gruppe",
+        "save": "Speichern"
+    }
+  }
+
+  

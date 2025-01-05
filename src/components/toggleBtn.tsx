@@ -1,6 +1,7 @@
 import ToggleOnIcon from "@mui/icons-material/ToggleOn";
 import ToggleOffIcon from "@mui/icons-material/ToggleOff";
 import TableCell from "@mui/material/TableCell";
+import IconButton from "@mui/material/IconButton";  // Используем IconButton вместо button
 import * as React from "react";
 
 interface ToggleSwitchProps {
@@ -12,12 +13,9 @@ export default function ToggleSwitch({ align }: ToggleSwitchProps) {
 
   return (
     <TableCell align={align}>
-      <button
+      <IconButton
         style={{
-          border: "none",
-          backgroundColor: "transparent",
-          cursor: "pointer",
-          color: toggle ? "green" : "initial", // Setzt die Farbe auf grün, wenn toggle true ist
+          color: toggle ? "green" : "initial", // Устанавливаем цвет в зависимости от состояния toggle
         }}
         onClick={() => setToggle(!toggle)}
       >
@@ -26,7 +24,7 @@ export default function ToggleSwitch({ align }: ToggleSwitchProps) {
         ) : (
           <ToggleOffIcon className="toggleButton" style={{ scale: "1.5" }} />
         )}
-      </button>
+      </IconButton>
     </TableCell>
   );
 }

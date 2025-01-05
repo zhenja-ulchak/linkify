@@ -1,0 +1,88 @@
+{
+    "Login": {
+      "login": "Authorization",
+      "username": "Username",
+      "password": "Password",
+      "loginError": "Incorrect username or password",
+      "registrierung": "Registration",
+      "passwort-vergessen": "Forgot your password?"
+    },
+    "LocaleSwitcher": {
+      "en": "English",
+      "de": "German",
+      "ua": "Ukrainian",
+      "ru": "Russian",
+      "label": "Change Language"
+    },
+    "Dashboard": {
+      "dashboard": "Dashboard",
+      "welcome-message": "Hello and welcome! Thanks for joining Linkify"
+    },
+    "Panel-sidebar": {
+      "user": "User",
+      "admin": "Administrator",
+      "admin-profile": "Administrator Profile",
+      "profile": "Profile",
+      "dashboard": "Dashboard",
+      "logout": "Logout",
+      "smtp-email": "SMTP Mail",
+      "admin-liste": "Administrator List",
+      "Einstellungen": "Settings",
+      "Superadmin": "Super Administrator"
+    },
+    "User-list": {
+      "user-list": "User List"
+    },
+    "Admin-profile": {
+      "profile": "Profile",
+      "benutzer": "* User:",
+      "rechnungsadresse": "+ Billing address",
+      "benutzername": "Username",
+      "firmenname": "Company name",
+      "name": "Name",
+      "vorname": "Surname",
+      "hausnummer": "Street and house number",
+      "postleitzahl": "Postal code",
+      "ort": "Country",
+      "speichern": "Save"
+    },
+
+    "Smtp-Email": {
+      "smtp-email": "Admin: Configure SMTP email",
+      "smtp-server": "SMTP-Server",
+      "smtp-port": "SMTP-Port",
+      "art-der": "Type of encryption (e.g. SSL, TLS)",
+      "benutzername": "Username",
+      "email-adresse": "E-mail address",
+      "passwort": "Password",
+      "passwort-umschalten": "Toggle password",
+      "passwort-speichern": "Save password",
+      "authentificationLabel": "Automatic authentication",
+      "abbrechen": "Cancel",
+      "test-email-senden": "Send test email",
+      "fertigstellen": "Finish"
+      
+    },
+
+    "Customer": {
+      "profile": "Profile",
+      "benutzername": "Username",
+      "benutzer": "* Users:",
+       "rechungsadresse": "+ Billing address",
+       "firmenname": "Company name",
+       "name": "Name",
+       "vorname": "Surname",
+      "street": "Street and house number",
+      "postalcode": "Postal code",
+      "city": "City",
+      "region": "Region",
+      "land": "Country",
+     "addressAdditional": "Additional Address",
+     "licenseValidity": "License Validity",
+      "group": "Group",
+      "firmenname2": "+ Company name:",
+      "licenseValidity2": "- License Validity",
+      "group2": "- Group",
+      "save": "Save"
+    }
+  }

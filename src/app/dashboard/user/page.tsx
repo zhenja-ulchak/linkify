@@ -10,6 +10,7 @@ type User = { id: number; username: string; }
 const UserList = () => {
   const [users, setUsers] = useState<User[]>([]);
 
+
   useEffect(() => {
     const getToken: any = sessionStorage.getItem('AuthToken')
 
