@@ -162,14 +162,7 @@ const DetailsTable: React.FC = () => {
                     <TableBody>
                         {tenantDetails && (
                             <>
-                                <TableRow>
-                                    <TableCell style={{ fontWeight: 'bold' }}>ID</TableCell>
-                                    <TableCell>{tenantDetails.id}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell style={{ fontWeight: 'bold' }}>Tenant ID</TableCell>
-                                    <TableCell>{tenantDetails.tenant_id}</TableCell>
-                                </TableRow>
+                       
                                 <TableRow>
                                     <TableCell style={{ fontWeight: 'bold' }}>Name</TableCell>
                                     <TableCell>{tenantDetails.name}</TableCell>
@@ -202,14 +195,7 @@ const DetailsTable: React.FC = () => {
                                     <TableCell style={{ fontWeight: 'bold' }}>Active</TableCell>
                                     <TableCell>{tenantDetails.is_active ? "Yes" : "No"}</TableCell>
                                 </TableRow>
-                                <TableRow>
-                                    <TableCell style={{ fontWeight: 'bold' }}>Created At</TableCell>
-                                    <TableCell>{tenantDetails.created_at}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell style={{ fontWeight: 'bold' }}>Updated At</TableCell>
-                                    <TableCell>{tenantDetails.updated_at}</TableCell>
-                                </TableRow>
+                         
                             </>
                         )}
                     </TableBody>

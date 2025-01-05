@@ -149,14 +149,7 @@ const DetailsTableDms: React.FC = () => {
                     <TableBody>
                         {tenantDetails && (
                             <>
-                                <TableRow>
-                                    <TableCell style={{ fontWeight: 'bold' }}>ID</TableCell>
-                                    <TableCell>{tenantDetails?.id}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell style={{ fontWeight: 'bold' }}>Tenant ID</TableCell>
-                                    <TableCell>{tenantDetails?.tenant_id}</TableCell>
-                                </TableRow>
+                    
                                 <TableRow>
                                     <TableCell style={{ fontWeight: 'bold' }}>Type</TableCell>
                                     <TableCell>{tenantDetails?.type}</TableCell>
@@ -173,14 +166,7 @@ const DetailsTableDms: React.FC = () => {
                                     <TableCell style={{ fontWeight: 'bold' }}>Repository</TableCell>
                                     <TableCell>{tenantDetails?.repository}</TableCell>
                                 </TableRow>
-                                <TableRow>
-                                    <TableCell style={{ fontWeight: 'bold' }}>Created At</TableCell>
-                                    <TableCell>{tenantDetails?.created_at}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell style={{ fontWeight: 'bold' }}>Updated At</TableCell>
-                                    <TableCell>{tenantDetails?.updated_at}</TableCell>
-                                </TableRow>
+                               
                             </>
                         )}
                     </TableBody>

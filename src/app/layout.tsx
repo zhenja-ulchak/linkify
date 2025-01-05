@@ -34,7 +34,7 @@ export default function RootLayout({
           autoHideDuration={3000}
           anchorOrigin={{
             vertical: "top",
-            horizontal: "right",
+            horizontal: "center",
           }}
         >
           {children}
