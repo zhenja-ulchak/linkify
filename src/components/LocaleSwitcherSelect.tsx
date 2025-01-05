@@ -4,27 +4,29 @@ import { CheckIcon, LanguageIcon } from '@heroicons/react/24/solid';
 import * as Select from '@radix-ui/react-select';
 import { useTransition } from 'react';
 import { Locale } from '@/i18n/config';
-import { setUserLocale } from '@/services/locale';
-
-
+import { setUserLocale } from '@/services/locale'; // Функция для смены локали в вашем приложении
 
 type Props = {
   defaultValue: string;
   items: Array<{ value: string; label: string }>;
   label: string;
+  onLocaleChange: (newLocale: string) => void;
 };
 
 export default function LocaleSwitcherSelect({
   defaultValue,
   items,
   label,
+  onLocaleChange,
 }: Props) {
   const [isPending, startTransition] = useTransition();
 
+  // Обработчик изменения локали
   function onChange(value: string) {
     const locale = value as Locale;
     startTransition(() => {
-      setUserLocale(locale);
+      setUserLocale(locale); // Устанавливаем локаль с помощью вашей функции
+      onLocaleChange(locale); // Вызываем переданный колбэк для перезагрузки страницы
     });
   }
 

@@ -27,6 +27,7 @@ import ToggleSwitch from "@/components/toggleBtn";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import axios from 'axios';
 import apiService from "@/app/services/apiService";
+import { enqueueSnackbar } from "notistack";
 type Order = "asc" | "desc";
 
 type EnhancedTableType = {
@@ -88,10 +89,12 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
         console.log(tenantData);
 
         setRows(tenantData);  // Зберігаємо дані в стан
-
+        enqueueSnackbar('Дані успішно завантажено!', { variant: 'success' });
       } catch (error) {
         console.error('Помилка при отриманні даних:', error);
+        enqueueSnackbar('Помилка при завантаженні даних', { variant: 'error' });
       }
+    
     };
 
     fetchData();
