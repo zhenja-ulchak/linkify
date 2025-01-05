@@ -9,7 +9,7 @@ import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import AddIcon from "@mui/icons-material/Add";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ApiService from "../../../../src/app/services/apiService";
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, TextField, Button } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, TextField, Button, IconButton, FormControl, InputLabel, Select, MenuItem, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 
 type TenantDetails = {
     id?: number;
@@ -30,6 +30,12 @@ type TenantDetails = {
     updated_at: string;
     deleted_at: string | null;
 };
+
+const dmsOptions = [
+    "sevdesk-cloud",
+    "lexoffice-cloud",
+
+];
 
 const DetailsTable: React.FC = () => {
     const { id } = useParams();
@@ -59,6 +65,29 @@ const DetailsTable: React.FC = () => {
     const [error, setError] = useState<string>("");
     const [modalTextColor, setModalTextColor] = useState("black");
     const [tenantDetails, setTenantDetails] = useState<TenantDetails | null>(null);
+    const [open, setOpen] = useState(false);
+    const [selectedOption, setSelectedOption] = useState(dmsOptions[1] || '');
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+        setSelectedOption(event.target.value);
+    };
+
+
+
+
+
+
+
+
+
+
 
     useEffect(() => {
         const bodyBackgroundColor = window.getComputedStyle(document.body).backgroundColor;
@@ -105,7 +134,7 @@ const DetailsTable: React.FC = () => {
         if (validateInputs(cleanedObject)) {
             try {
                 const Auth: any = sessionStorage.getItem('AuthToken');
-                const response:any = await ApiService.put(`accounting-software/${tenantDetails?.id}`, cleanedObject, Auth);
+                const response: any = await ApiService.put(`accounting-software/${tenantDetails?.id}`, cleanedObject, Auth);
                 if (response.status === 200) {
                     console.log("Дані оновлено:", cleanedObject);
                     setIsEditing(false);
@@ -162,7 +191,7 @@ const DetailsTable: React.FC = () => {
                     <TableBody>
                         {tenantDetails && (
                             <>
-                       
+
                                 <TableRow>
                                     <TableCell style={{ fontWeight: 'bold' }}>Name</TableCell>
                                     <TableCell>{tenantDetails.name}</TableCell>
@@ -195,7 +224,7 @@ const DetailsTable: React.FC = () => {
                                     <TableCell style={{ fontWeight: 'bold' }}>Active</TableCell>
                                     <TableCell>{tenantDetails.is_active ? "Yes" : "No"}</TableCell>
                                 </TableRow>
-                         
+
                             </>
                         )}
                     </TableBody>
@@ -203,13 +232,16 @@ const DetailsTable: React.FC = () => {
             </TableContainer>
 
             <div style={{ display: "flex", justifyContent: "space-evenly", marginTop: "10px" }}>
-                <button
-                    className="UserDetailButton"
-                    title="Bearbeiten"
-                    onClick={() => setIsEditing(true)}
-                >
-                    <EditIcon />
-                </button>
+
+                <EditIcon onClick={handleClickOpen} />
+
+                {/* <button
+    className="UserDetailButton"
+    title="Bearbeiten"
+    onClick={() => setIsEditing(true)}
+>
+    <EditIcon />
+</button> */}
                 <button
                     className="UserDetailButton"
                     title="Löschen"
@@ -228,16 +260,37 @@ const DetailsTable: React.FC = () => {
                     <KeyboardBackspaceIcon />
                 </button>
             </div>
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {"Use Google's location service?"}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
 
-            {/* Якщо редагується */}
-            {isEditing && (
-                <div id="UserDetailModal" style={{ color: 'black' }}>
-                    <div id="UserDetailModalContent" style={{ color: 'black' }}>
-                        <Typography variant="h5" gutterBottom>Benutzerdaten bearbeiten</Typography>
+                        <Box sx={{ marginBottom: 2 }}>
+                            <FormControl fullWidth>
+                                <InputLabel id="dms-select-label">DMS</InputLabel>
+                                <Select
+                                    labelId="dms-select-label"
+                                    value={selectedOption}
+                                    onChange={handleChange}
+                                    label="DMS"
+                                >
+                                    {dmsOptions.map((option, index) => (
+                                        <MenuItem key={index} value={option}>
+                                            {option}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </Box>
 
-                        {error && <div id="UserDetailModalError" style={{ color: 'red' }}>{error}</div>}
 
-                        {/* Редагування полів */}
                         <Box sx={{ marginBottom: 2 }}>
                             <TextField
                                 fullWidth
@@ -295,29 +348,18 @@ const DetailsTable: React.FC = () => {
 
 
 
-                        {/* Кнопки для збереження та скасування */}
-                        <Box sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                            <Button
-                                onClick={handleSaveChanges}
-                                variant="contained"
-                                color="primary"
-                                startIcon={<AddIcon />}
-                            >
-                                Speichern
-                            </Button>
+                      
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
 
-                            <Button
-                                onClick={() => setIsEditing(false)}
-                                variant="outlined"
-                                color="secondary"
-                                startIcon={<CancelIcon />}
-                            >
-                                Schließen
-                            </Button>
-                        </Box>
-                    </div>
-                </div>
-            )}
+                    <Button onClick={handleClose}>Disagree</Button>
+                    <Button onClick={handleSaveChanges} autoFocus>
+                        Agree
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
         </div>
     );
 };

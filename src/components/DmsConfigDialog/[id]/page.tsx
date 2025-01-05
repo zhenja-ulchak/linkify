@@ -9,7 +9,7 @@ import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import AddIcon from "@mui/icons-material/Add";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ApiService from "../../../../src/app/services/apiService";
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, TextField, Button, IconButton } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, TextField, Button, IconButton, FormControl, InputLabel, Select, MenuItem, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 type TenantDetails = {
     id: number;
     tenant_id: number;
@@ -23,6 +23,16 @@ type TenantDetails = {
     updated_at: string;
 };
 
+const dmsOptions = [
+    "SharePoint",
+    "Eco-dms",
+    "DocuWare",
+    "M-Files",
+    "OpenText",
+    "Alfresco",
+    "Laserfiche",
+];
+
 const DetailsTableDms: React.FC = () => {
     const { id } = useParams();
     console.log(id);
@@ -30,6 +40,9 @@ const DetailsTableDms: React.FC = () => {
     const router = useRouter();
 
     const [isEditing, setIsEditing] = useState(false);
+    // const [open, setOpen] = React.useState(false);
+
+
 
     const [updatedTenant, setUpdatedTenant] = useState<TenantDetails>({
         id: 0,
@@ -46,6 +59,25 @@ const DetailsTableDms: React.FC = () => {
     const [error, setError] = useState<string>("");
     const [modalTextColor, setModalTextColor] = useState("black");
     const [tenantDetails, setTenantDetails] = useState<TenantDetails | null>(null);
+    const [open, setOpen] = useState(false);
+    const [selectedOption, setSelectedOption] = useState(dmsOptions[1] || '');
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+        setSelectedOption(event.target.value);
+    };
+
+
+
+
+
+
 
     useEffect(() => {
         const bodyBackgroundColor = window.getComputedStyle(document.body).backgroundColor;
@@ -95,7 +127,7 @@ const DetailsTableDms: React.FC = () => {
                 const response: any = await ApiService.put(`dms-config/${tenantDetails?.id}`, cleanedObject, Auth);
                 if (response.status === 200) {
                     console.log("Дані оновлено:", cleanedObject);
-                    setIsEditing(false);
+                    setOpen(false);
                 }
             } catch (error) {
                 setError("Помилка при збереженні: " + error);
@@ -134,6 +166,7 @@ const DetailsTableDms: React.FC = () => {
         router.back();
     }
 
+
     return (
         <div id="UserDetailContainer" style={{ display: 'flex', justifyContent: 'center', maxWidth: '800px', margin: '0 auto' }}>
             <h3>Details</h3>
@@ -149,7 +182,7 @@ const DetailsTableDms: React.FC = () => {
                     <TableBody>
                         {tenantDetails && (
                             <>
-                    
+
                                 <TableRow>
                                     <TableCell style={{ fontWeight: 'bold' }}>Type</TableCell>
                                     <TableCell>{tenantDetails?.type}</TableCell>
@@ -166,7 +199,7 @@ const DetailsTableDms: React.FC = () => {
                                     <TableCell style={{ fontWeight: 'bold' }}>Repository</TableCell>
                                     <TableCell>{tenantDetails?.repository}</TableCell>
                                 </TableRow>
-                               
+
                             </>
                         )}
                     </TableBody>
@@ -174,13 +207,16 @@ const DetailsTableDms: React.FC = () => {
             </TableContainer>
 
             <div style={{ display: "flex", justifyContent: "space-evenly", marginTop: "10px" }}>
-                <button
+
+                <EditIcon onClick={handleClickOpen}/>
+          
+                {/* <button
                     className="UserDetailButton"
                     title="Bearbeiten"
                     onClick={() => setIsEditing(true)}
                 >
                     <EditIcon />
-                </button>
+                </button> */}
                 <button
                     className="UserDetailButton"
                     title="Löschen"
@@ -199,16 +235,17 @@ const DetailsTableDms: React.FC = () => {
                     <KeyboardBackspaceIcon />
                 </button>
             </div>
-
-            {/* Якщо редагується */}
-            {isEditing && (
-                <div id="UserDetailModal" style={{ color: 'black' }}>
-                    <div id="UserDetailModalContent" style={{ color: 'black' }}>
-                        <Typography variant="h5" gutterBottom>Benutzerdaten bearbeiten</Typography>
-
-                        {error && <div id="UserDetailModalError" style={{ color: 'red' }}>{error}</div>}
-
-                        {/* Редагування полів */}
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {"Use Google's location service?"}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
                         <Box sx={{ marginBottom: 2 }}>
                             <TextField
                                 fullWidth
@@ -219,6 +256,25 @@ const DetailsTableDms: React.FC = () => {
                                 placeholder={tenantDetails?.endpoint_url}
                             />
                         </Box>
+                        <Box sx={{ marginBottom: 2 }}>
+                            <FormControl fullWidth>
+                                <InputLabel id="dms-select-label">DMS</InputLabel>
+                                <Select
+                                    labelId="dms-select-label"
+                                    value={selectedOption}
+                                    onChange={handleChange}
+                                    label="DMS"
+                                >
+                                    {dmsOptions.map((option, index) => (
+                                        <MenuItem key={index} value={option}>
+                                            {option}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </Box>
+
+
 
                         <Box sx={{ marginBottom: 2 }}>
                             <TextField
@@ -265,27 +321,17 @@ const DetailsTableDms: React.FC = () => {
                                 rows={4}
                             />
                         </Box>
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
 
-                        {/* Кнопки для збереження та скасування */}
-                        <Box sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                            <IconButton
-                                onClick={handleSaveChanges}
-                                color="primary"
-                            >
-                                <AddIcon />
-                            </IconButton>
-
-                            <IconButton
-                                onClick={() => setIsEditing(false)}
-                                color="secondary"
-                            >
-                                <CancelIcon />
-                            </IconButton>
-                        </Box>
-                    </div>
-                </div>
-
-            )}
+                    <Button onClick={handleClose}>Disagree</Button>
+                    <Button onClick={handleSaveChanges} autoFocus>
+                        Agree
+                    </Button>
+                </DialogActions>
+            </Dialog>
+          
         </div>
     );
 };
