@@ -19,12 +19,14 @@ import { useTranslations } from 'next-intl';
 import LocaleSwitcher from '../../app/../components/LocaleSwitcher'; // Import LanguageSwitcher component
 // @ts-expect-error
 import CryptoJS from 'crypto-js';
+import { enqueueSnackbar } from "notistack";
+
 
 
 const Login: React.FC = () => {
   const router = useRouter();
 
-  const [username, setUsername] = useState("john.doe@example.com");
+  const [username, setUsername] = useState("super.admin@tenant2.com"); // super.admin@tenant2.com superadmin          alice.smith@example.com user   john.doe@example.com
   const [password, setPassword] = useState("password123");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -49,28 +51,38 @@ const Login: React.FC = () => {
     setErrorMessage(null);
 
     try {
-      const resp = await ApiService.login<{ data: { user: {
-        [x: string]: string; username: string 
-} } }>(username, password);
+      const resp = await ApiService.login<any>(username, password);
+ 
+      if (resp?.data?.length > 0 && resp.data[0]?.user) {
+        sessionStorage.setItem('AuthUser', JSON.stringify(resp.data[0]?.user));
+        const obj: any = {
+          name: resp.data[0].user.first_name || "Default Name", // Підстраховка на випадок відсутності значення
+          last_name: resp.data[0].user.last_name || "Default Last Name",
+        };
     
-      if (resp?.data?.user?.username === username) {
+        sessionStorage.setItem('setting', JSON.stringify(obj));
+        enqueueSnackbar('Login erfolgreich!', { variant: 'success' });
+      }
+
+      if (resp?.data[0]?.user?.username === username) {
+        console.log(resp?.data[0]?.user);
+        const RoleALl = resp?.data[0]?.user?.role
       
-        if(resp.data.user.role){
-          
-          const ciphertext = CryptoJS.AES.encrypt(resp.data.user.role, 'secret-key').toString();
+        if(RoleALl){
+          const ciphertext = CryptoJS.AES.encrypt(RoleALl, 'secret-key').toString();
           sessionStorage.setItem('user', ciphertext);
         }
-         // @ts-expect-error
-        const token = resp.data.token
+        
+        const token = resp?.data[0]?.token
         sessionStorage.setItem('AuthToken', `${token}`)
         setIsLoggedIn(true);
-       
+        enqueueSnackbar('Willkommen!', { variant: 'info' });
 
-        if ( resp.data.user.role === "admin") {
+        if ( RoleALl === "admin") {
           router.push('/dashboard/admin'); // Редирект на адмін панель
-        } else if (resp.data.user.role === "super_admin") {
-          router.push('/dashboard/super-admin'); // Редирект на супер адмін панель
-        } else if (resp.data.user.role === "user") {
+        } else if (RoleALl === "superadmin") {
+          router.push('/dashboard/superadmin'); // Редирект на супер адмін панель
+        } else if (RoleALl === "user") {
           router.push('/dashboard/user'); // Редирект на панель користувача
         } else {
           router.push("/dashboard");
@@ -78,32 +90,37 @@ const Login: React.FC = () => {
 
 
       } else {
-        setErrorMessage("Login fehlgeschlagen. Bitte überprüfen Sie Ihre Daten.");
+        enqueueSnackbar('Login fehlgeschlagen!', { variant: 'error' });
       }
     } catch (error) {
       console.error("Fehler beim Login:", error);
-      if (axios.isAxiosError(error)) 
-        { if (error.response?.status === 401) 
-          { setErrorMessage("Ungültige Anmeldedaten."); } 
-          else if (error.response?.status === 500) 
-            { setErrorMessage("Serverfehler. Bitte später erneut versuchen."); } 
-          else { setErrorMessage(error.response?.data?.message || "Ein unbekannter Fehler ist aufgetreten."); } 
-        } else { setErrorMessage("Netzwerkfehler. Bitte prüfen Sie Ihre Verbindung."); }
-
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          enqueueSnackbar('Ungültige Anmeldedaten!', { variant: 'warning' });
+        } else if (error.response?.status === 500) {
+          enqueueSnackbar('Serverfehler. Bitte später erneut versuchen.', { variant: 'error' });
+        } else {
+          enqueueSnackbar('Ein unbekannter Fehler ist aufgetreten.', { variant: 'error' });
+        }
+      } else {
+        enqueueSnackbar('Netzwerkfehler. Bitte prüfen Sie Ihre Verbindung.', { variant: 'warning' });
+      }
     }
   }
 
   // Memoize loginRefresh function using useCallback
   const loginRefresh = useCallback(async () => {
     if (isLoggedIn) {
+      const getToken: any = sessionStorage.getItem('AuthToken');
       try {
-        await axios.get(
-          `${process.env.NEXT_PUBLIC_BASE_URL}user/login-refresh`,
-          { withCredentials: true }
+        await ApiService.get(
+          `user/login-refresh`,
+          getToken
         );
         console.log("Login Refresh erfolgreich!");
       } catch (error) {
-        console.error("Fehler beim Refresh:", error);
+       
+        enqueueSnackbar("Fehler beim Refresh:", { variant: 'info' });
       }
     }
   }, [isLoggedIn]);

@@ -29,6 +29,8 @@ class ApiService {
             'Content-Type': 'application/json',
           },
         });
+        console.log(response);
+        
 
       return response.data;
     } catch (error) {
@@ -54,8 +56,9 @@ class ApiService {
           withCredentials: true
 
         });
- 
+        console.log(response);
         
+       
       return response.data;
     } 
     catch (error) {
@@ -99,6 +102,9 @@ class ApiService {
              Authorization: `Bearer ${token}`,
           },
         });
+        console.log(response);
+        
+
       return response.data;
     } catch (error) {
       if (error instanceof Error) {

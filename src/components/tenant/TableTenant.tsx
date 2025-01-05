@@ -26,9 +26,14 @@ import { useRouter } from "next/navigation";
 import ToggleSwitch from "@/components/toggleBtn";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import axios from 'axios';
+import apiService from "@/app/services/apiService";
+type Order = "asc" | "desc";
 
+type EnhancedTableType = {
+  CrudReadonly: boolean
+}
 
-export default function EnhancedTable() {
+export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof Data>("company_name");
   const [selected, setSelected] = React.useState<readonly number[]>([]);
@@ -38,6 +43,7 @@ export default function EnhancedTable() {
   const router = useRouter();
   const [rows, setRows] = React.useState<Data[]>([]);  // Zustand für die Zeilen
 
+  console.log(rows);
 
 
   // Data und TenantData Typen
@@ -66,63 +72,35 @@ export default function EnhancedTable() {
 
   };
 
-  // Funktion, um das Data-Objekt zu erstellen
-  function createData(
-    id: number,
-    company_name: string,
-    address: string,
-    invoice_address: string,
-    license_valid_until: string,
-    contact_email: string,
-    invoice_email: string,
-    contact_phone: string,
-    actions: boolean
 
-  ): Data {
-    return {
-      id,
-      company_name,
-      address,
-      invoice_address,
-      license_valid_until,
-      contact_email,
-      invoice_email,
-      contact_phone,
-      actions
+
+
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const getToken: any = sessionStorage.getItem('AuthToken');
+        const response: any = await apiService.get("tenant", getToken);
+        console.log(response);
+        // Перевірка на наявність необхідних даних у відповіді
+
+        const tenantData: any = response?.data[0];
+        console.log(tenantData);
+
+        setRows(tenantData);  // Зберігаємо дані в стан
+
+      } catch (error) {
+        console.error('Помилка при отриманні даних:', error);
+      }
     };
-  }
 
-  // Daten aus dem Backend abrufen
-  const fetchRows = async () => {
-    const getToken: any = sessionStorage.getItem('AuthToken')
+    fetchData();
+  }, []);
 
-    
-    try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}tenant`, getToken);
 
-      
-      const tenantData: TenantData[] = response.data.data.tenants;
-      console.log(tenantData);
-      const mappedRows: Data[] = tenantData.map((tenant) =>
-        createData(
-          tenant.id,
-          tenant.company_name,
-          tenant.address,
-          tenant.invoice_address,
-          tenant.license_valid_until,
-          tenant.contact_email,
-          tenant.invoice_email,
-          tenant.contact_phone,
-          tenant.actions
-        )
-      );
-      setRows(mappedRows);  // Setze die Zeilen im Zustand
-    } catch (error) {
-      console.error('Fehler beim Abrufen der Daten:', error);
-    }
-  };
 
-  fetchRows();  // Lade die Daten
+
+  // Lade die Daten
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = event.target.checked;
@@ -145,17 +123,17 @@ export default function EnhancedTable() {
     return 0;
   }
 
-  type Order = "asc" | "desc";
 
 
-  interface HeadCell {
-    disablePadding: boolean;
-    id: keyof Data;
-    label: string;
-    numeric: boolean;
-  }
 
-  const headCells: readonly HeadCell[] = [
+  // interface HeadCell {
+  //   disablePadding: boolean;
+  //   id: keyof Data;
+  //   label: string;
+  //   numeric: boolean;
+  // }
+
+  const headCells: any = [
     {
       id: "company_name",
       numeric: false,
@@ -235,18 +213,25 @@ export default function EnhancedTable() {
     return (
       <TableHead>
         <TableRow>
-          <TableCell padding="checkbox">
-            <Checkbox
-              indeterminate={numSelected > 0 && numSelected < rowCount}
-              checked={rowCount > 0 && numSelected === rowCount}
-              onChange={onSelectAllClick}
-              inputProps={{
-                "aria-label": "select all desserts",
-              }}
-              className="TableCell"
-            />
-          </TableCell>
-          {headCells.map((headCell) => (
+          {CrudReadonly && (
+
+            <>
+              <TableCell padding="checkbox">
+                <Checkbox
+                  indeterminate={numSelected > 0 && numSelected < rowCount}
+                  checked={rowCount > 0 && numSelected === rowCount}
+                  onChange={onSelectAllClick}
+                  inputProps={{
+                    "aria-label": "select all desserts",
+                  }}
+                  className="TableCell"
+                />
+              </TableCell>
+            </>
+          )}
+
+
+          {headCells.map((headCell: any) => (
             <TableCell
               key={headCell.id}
               align={headCell.numeric ? "right" : "left"}
@@ -276,6 +261,9 @@ export default function EnhancedTable() {
   interface EnhancedTableToolbarProps {
     numSelected: number;
   }
+
+
+
   function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
     const { numSelected } = props;
     return (
@@ -335,7 +323,7 @@ export default function EnhancedTable() {
   const handleRowClick = (id: number) => {
     console.log(id);
 
-    router.push(`/customer/tenant/${id}`);
+    router.push(`/dashboard/superadmin/tenant/${id}`);
   };
 
   const handleRequestSort = (
@@ -349,22 +337,26 @@ export default function EnhancedTable() {
 
 
   const handleClick = (event: React.MouseEvent<unknown>, id: number) => {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected: readonly number[] = [];
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
+    if (CrudReadonly) {
+
+      const selectedIndex = selected.indexOf(id);
+      let newSelected: readonly number[] = [];
+
+      if (selectedIndex === -1) {
+        newSelected = newSelected.concat(selected, id);
+      } else if (selectedIndex === 0) {
+        newSelected = newSelected.concat(selected.slice(1));
+      } else if (selectedIndex === selected.length - 1) {
+        newSelected = newSelected.concat(selected.slice(0, -1));
+      } else if (selectedIndex > 0) {
+        newSelected = newSelected.concat(
+          selected.slice(0, selectedIndex),
+          selected.slice(selectedIndex + 1)
+        );
+      }
+      setSelected(newSelected);
     }
-    setSelected(newSelected);
   };
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -388,15 +380,16 @@ export default function EnhancedTable() {
 
   const visibleRows = React.useMemo(() => {
     // Definiere getComparator innerhalb von useMemo
-    const getComparator = (order: Order, orderBy: keyof Data) => {
-      return order === "desc"
-        ? (a: Data, b: Data) => descendingComparator(a, b, orderBy)
-        : (a: Data, b: Data) => -descendingComparator(a, b, orderBy);
-    };
+    // const getComparator = (order: Order, orderBy: keyof Data) => {
+    //   return order === "desc"
+    //     ? (a: Data, b: Data) => descendingComparator(a, b, orderBy)
+    //     : (a: Data, b: Data) => -descendingComparator(a, b, orderBy);
+    // };
 
-    return [...rows]
-      .sort(getComparator(order, orderBy))
-      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+    return rows
+    // [...rows]
+    //   .sort(getComparator(order, orderBy))
+    //   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
   }, [rows, order, orderBy, page, rowsPerPage]); // Füge die Abhängigkeiten hinzu
 
   return (
@@ -404,11 +397,11 @@ export default function EnhancedTable() {
       id="BoxTable"
       sx={{
         position: "relative",
-        left: "65px",
+        left: "83px",
         display: "flex",
         alignContent: "center",
         justifyContent: "center",
-        width: "100%",
+        width: "95%",
         flexDirection: "column",
       }}
     >
@@ -437,7 +430,7 @@ export default function EnhancedTable() {
             />
             <TableBody>
               {visibleRows.map((row, index) => {
-                const isItemSelected = selected.includes(row.id);
+                const isItemSelected = selected.includes(row?.id);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
@@ -455,16 +448,23 @@ export default function EnhancedTable() {
 
                   // ---------------------------
                   >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        color="primary"
-                        checked={isItemSelected}
-                        inputProps={{
-                          "aria-labelledby": labelId,
-                        }}
-                        className="tableFont"
-                      />
-                    </TableCell>
+
+                    {CrudReadonly && (
+
+                      <>
+                        <TableCell padding="checkbox">
+                          <Checkbox
+                            color="primary"
+                            checked={isItemSelected}
+                            inputProps={{
+                              "aria-labelledby": labelId,
+                            }}
+                            className="tableFont"
+                          />
+                        </TableCell>
+                      </>
+                    )}
+
                     <TableCell
                       component="th"
                       id={labelId}
@@ -493,26 +493,35 @@ export default function EnhancedTable() {
                     <TableCell className="tableFont" align="left">
                       {row.contact_phone}
                     </TableCell>
-                    <TableCell className="tableFont" align="left">
-                      <button
-                        style={{
-                          width: "50px",
-                          backgroundColor: "#1976d2",
-                          height: "auto",
-                          color: "#fff",
-                          cursor: "pointer",
-                          borderRadius: "15px",
-                        }}
-                        onClick={() => handleRowClick(row.id)}
-                      >
-                        <VisibilityIcon />
-                        <div style={{ position: "absolute", margin: "0", padding: "0", opacity: "0" }}>
-                          {row.id}
-                        </div>
-                      </button>
-                    </TableCell>
+                    {CrudReadonly ?
+                      (<>
 
-                    <ToggleSwitch align="left" />
+                        <TableCell className="tableFont" align="left">
+                          <button
+                            style={{
+                              width: "50px",
+                              backgroundColor: "#1976d2",
+                              height: "auto",
+                              color: "#fff",
+                              cursor: "pointer",
+                              borderRadius: "15px",
+                            }}
+                            onClick={() => handleRowClick(row.id)}
+                          >
+                            <VisibilityIcon />
+                            <div style={{ position: "absolute", margin: "0", padding: "0", opacity: "0" }}>
+                              {row.id}
+                            </div>
+                          </button>
+                        </TableCell>
+                        <ToggleSwitch align="left" />
+                      </>) :
+                      (
+                        <>
+                        </>
+                      )
+                    }
+
                   </TableRow>
                 );
               })}

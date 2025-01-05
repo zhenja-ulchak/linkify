@@ -1,5 +1,6 @@
 "use client";
 
+import ApiService from "../../../../src/app/services/apiService";
 import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
@@ -35,96 +36,138 @@ type Tenant = {
 
 const TenantDetails: React.FC = () => {
   const { id } = useParams();
+  console.log(id);
+
   const router = useRouter();
+
 
   const [isEditing, setIsEditing] = useState(false);
   const [updatedTenant, setUpdatedTenant] = useState<Tenant>({
-    id: 0,
-    company_name: "",
-    address: "",
-    invoice_address: "",
-    license_valid_until: 0,
-    contact_email: "",
-    invoice_email: "",
-    contact_phone: 0,
+        id:1 ,
+      company_name: "",
+      address: "",
+      invoice_address: "",
+      license_valid_until: 0,
+      contact_email: "",
+      invoice_email: "",
+      contact_phone: 0,
   });
   const [error, setError] = useState<string>("");
+  const [modalTextColor, setModalTextColor] = useState("black"); // Declare state outside of conditionals
   const [tenants, setTenants] = useState<Tenant[]>([]);
+  console.log(tenants);
 
+
+  useEffect(() => {
+      const bodyBackgroundColor = window.getComputedStyle(
+          document.body
+      ).backgroundColor;
+      if (bodyBackgroundColor === "rgb(0, 0, 0)") {
+          setModalTextColor("black");
+      } else {
+          setModalTextColor("black");
+      }
+  }, [isEditing]);
+
+  // Falls kein Benutzer gefunden wurde
   const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setUpdatedTenant((prev) => ({ ...prev, [name]: value }));
+      const { name, value } = e.target;
+      if (updatedTenant) {
+          setUpdatedTenant({
+              ...updatedTenant,
+              [name]: value,
+          });
+      }
   };
 
+  // Validierung der Benutzereingaben
   const validateInputs = () => {
-    if (
-      !updatedTenant.company_name ||
-      !updatedTenant.address ||
-      !updatedTenant.invoice_address ||
-      !updatedTenant.contact_email ||
-      !updatedTenant.invoice_email
-    ) {
-      setError("Alle Felder müssen ausgefüllt werden.");
-      return false;
-    }
-    setError("");
-    return true;
+      if (
+          // !updatedTenant.company_name ||
+          // !updatedTenant.address ||
+          // !updatedTenant.invoice_address ||
+          !updatedTenant.contact_email ||
+          !updatedTenant.invoice_email
+      ) {
+          setError("Alle Felder müssen ausgefüllt werden.");
+          return false;
+      }
+      setError("");
+      return true;
   };
 
   useEffect(() => {
-    const fetchElements = async () => {
-      if (!id) {
-        setError("Keine gültige ID angegeben.");
-        return;
-      }
+      const fetchElements = async () => {
+          if (!id) {
+              setError("Keine gültige ID angegeben.");
+              return;
+          }
 
-      try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}tenant/${id}`);
-        if (response.status === 200) {
-          setTenants([response.data]);
-        }
-      } catch (error) {
-        console.error("Fehler beim Abrufen der Daten:", error);
-        setError("Fehler beim Abrufen der Daten.");
-      }
-    };
+          try {
+              // const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}tenant/${id}`);
+              const Auth: any = sessionStorage.getItem('AuthToken')
+              const response: any = await ApiService.get(`tenant/${id}`, Auth)
+              console.log(response?.data[0]);
 
-    fetchElements();
+
+
+              setTenants(response?.data[0]);
+
+          } catch (error) {
+              console.error("Fehler beim Abrufen der Daten:", error);
+              setError("Fehler beim Abrufen der Daten.");
+          }
+      };
+
+      fetchElements();
   }, [id]);
+  const Auth: any = sessionStorage.getItem('AuthToken')
+
+
+  const removeEmptyValues = (obj: { [s: string]: unknown; } | ArrayLike<unknown>) => {
+      return Object.fromEntries(
+        Object.entries(obj).filter(([key, value]) => value != null && value !== "")
+      );
+    };
+    const cleanedObject = removeEmptyValues(updatedTenant);
+
+    console.log(cleanedObject);
 
   const handleSaveChanges = async () => {
-    if (validateInputs()) {
-      try {
-        const response = await axios.put(
-          `${process.env.NEXT_PUBLIC_BASE_URL}tenant/${updatedTenant?.id}`,
-          updatedTenant
-        );
-        if (response.status === 200) {
-          setIsEditing(false);
-        }
-      } catch (error) {
-        setError("Fehler beim Speichern:" + error);
+      if (validateInputs()) {
+
+          try {
+              const response = await ApiService.put(
+                  `tenant/${id}`,
+                  cleanedObject , Auth
+              );
+              if (!response) {
+                  console.log("Benutzerdaten gespeichert:", cleanedObject);
+                  setIsEditing(false);
+              }
+          } catch (error) {
+              setError("Fehler beim Speichern:" + error)
+          }
       }
-    }
   };
 
   const handleDelete = async () => {
-    try {
-      const response = await axios.delete(
-        `${process.env.NEXT_PUBLIC_BASE_URL}tenant/${updatedTenant?.id}`
-      );
-      if (response.status === 200) {
-        router.push("/users");
+      try {
+          const response: any = await ApiService.delete(
+              `tenant/${id}`, Auth
+          );
+          if (response.status === 200) {
+              console.log("Benutzer gelöscht:", updatedTenant);
+              router.push("/users");
+          }
+      } catch (error) {
+          console.error("Fehler beim Löschen:", error);
       }
-    } catch (error) {
-      console.error("Fehler beim Löschen:", error);
-    }
   };
 
-  const handleGoingBack = () => {
-    router.back();
-  };
-
+  function handleGoingBack() {
+      router.back();
+  }
   return (
     <Box sx={{ p: 3 }}>
       <Typography variant="h5" gutterBottom>
