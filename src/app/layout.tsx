@@ -1,4 +1,4 @@
-// app/layout.tsx
+
 
 import ChangeMode from "@/components/DarkLightMode";
 import "../globals.css";
