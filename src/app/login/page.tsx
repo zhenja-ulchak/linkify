@@ -111,14 +111,16 @@ const Login: React.FC = () => {
   // Memoize loginRefresh function using useCallback
   const loginRefresh = useCallback(async () => {
     if (isLoggedIn) {
+      const getToken: any = sessionStorage.getItem('AuthToken');
       try {
-        await axios.get(
-          `${process.env.NEXT_PUBLIC_BASE_URL}user/login-refresh`,
-          { withCredentials: true }
+        await ApiService.get(
+          `user/login-refresh`,
+          getToken
         );
         console.log("Login Refresh erfolgreich!");
       } catch (error) {
-        console.error("Fehler beim Refresh:", error);
+       
+        enqueueSnackbar("Fehler beim Refresh:", { variant: 'info' });
       }
     }
   }, [isLoggedIn]);
