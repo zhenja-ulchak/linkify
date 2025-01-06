@@ -19,7 +19,7 @@ export const GlobalModalProvider: React.FC<{ children: React.ReactNode }> = ({ c
       const timeDifference = certificateExpiryDate.getTime() - today.getTime();
       const daysRemaining = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
 
-      if (daysRemaining <= 0) {
+      if (daysRemaining <= 30) {
         setOpen(true);
       }
     };
