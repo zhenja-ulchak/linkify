@@ -23,6 +23,7 @@ import { enqueueSnackbar } from "notistack";
 
 
 
+
 const Login: React.FC = () => {
   const router = useRouter();
 
@@ -52,9 +53,13 @@ const Login: React.FC = () => {
 
     try {
       const resp = await ApiService.login<any>(username, password);
+
+
       if (resp instanceof Error) {
-        console.log(resp.message);
-            enqueueSnackbar(resp.message, { variant: 'error' });
+        const { status, variant, message } = ApiService.CheckAndShow(resp, t);
+        console.log(message);
+        // @ts-ignore
+        enqueueSnackbar(t(message), { variant: variant });
         }else{
 
 

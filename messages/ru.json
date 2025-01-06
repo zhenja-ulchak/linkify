@@ -1,77 +1,80 @@
 {
-    "Login": {
-      "login": "Авторизация",
-      "username": "Имя пользователя",
-      "password": "Пароль",
-      "loginError": "Неверное имя пользователя или пароль",
-      "registrierung": "Регистрация",
-      "passwort-vergessen": "Вы забыли свой пароль?"
-    },
-    "LocaleSwitcher": {
-      "en": "Английский",
-      "de": "Немецкий",
-      "ua": "Украинский",
-      "ru": "Русский",
-      "label": "Изменить язык"
-    },
-    "Dashboard": {
-        "dashboard": "Панель управления",
-        "welcome-message": "Здравствуйте и добро пожаловать! Спасибо, что присоединились к Linkify"
-      },
-      "Panel-sidebar": {
-        "dashboard": "Панель управления",
-        "user": "Пользователь",
-        "admin": "Администратор",
-        "admin-profile": "Профиль администратора",
-        "profile": "Профиль",
-        "logout": "Выход",
-        "smtp-email": "SMTP-Почта",
-        "admin-liste": "Список администраторов",
-        "Einstellungen": "Настройки",
-        "Superadmin": "Суперадминистратор"
-      },
-      "User-list": {
-        "user-list": "Список пользователей"
-      },
-      "Admin-profile": {
-        "profile": "Профиль",
-        "benutzer": "* Пользователи:",
-        "rechnungsadresse": "+ Платежный адрес",
-        "benutzername": "Имя пользователя",
-        "firmenname": "Название компании",
-        "name": "Фамилия",
-        "vorname": "Имя",
-        "hausnummer": "Улица и номер дома",
-        "postleitzahl": "Почтовый индекс",
-        "ort": "Страна",
-        "speichern": "Сохранить"
-      },
-  
-      "Customer": {
-        "profile": "Профиль",
-        "benutzername": "Имя пользователя",
-        "benutzer": "* Пользователи:",
-        "rechungsadresse": "+ Платежный адрес",
-        "firmenname": "Название компании",
-        "name": "Фамилия",
-        "vorname": "Имя",
-        "street": "Улица и номер дома",
-        "postalcode": "Почтовый индекс",
-        "city": "Город",
-        "region": "Регион",
-        "land": "Страна",
-        "addressAdditional": "Дополнительный адресс",
-        "licenseValidity": "Срок действия лицензии",
-        "group": "Группа",
-        "firmenname2": "+ Название компании:",
-         "licenseValidity2": "- Срок действия лицензии",
-         "group2": "- Группа",
-         "save": "Сохранить"
-        
-      }
-    }
-
-  
-    
-
-  
+  "Login": {
+    "login": "Авторизация",
+    "username": "Имя пользователя",
+    "password": "Пароль",
+    "loginError": "Неверное имя пользователя или пароль",
+    "registrierung": "Регистрация",
+    "passwort-vergessen": "Вы забыли свой пароль?"
+  },
+  "LocaleSwitcher": {
+    "en": "Английский",
+    "de": "Немецкий",
+    "ua": "Украинский",
+    "ru": "Русский",
+    "label": "Изменить язык"
+  },
+  "Dashboard": {
+    "dashboard": "Панель управления",
+    "welcome-message": "Здравствуйте и добро пожаловать! Спасибо, что присоединились к Linkify"
+  },
+  "Panel-sidebar": {
+    "dashboard": "Панель управления",
+    "user": "Пользователь",
+    "admin": "Администратор",
+    "admin-profile": "Профиль администратора",
+    "profile": "Профиль",
+    "logout": "Выход",
+    "smtp-email": "SMTP-Почта",
+    "admin-liste": "Список администраторов",
+    "Einstellungen": "Настройки",
+    "Superadmin": "Суперадминистратор"
+  },
+  "User-list": {
+    "user-list": "Список пользователей"
+  },
+  "Admin-profile": {
+    "profile": "Профиль",
+    "benutzer": "* Пользователи:",
+    "rechnungsadresse": "+ Платежный адрес",
+    "benutzername": "Имя пользователя",
+    "firmenname": "Название компании",
+    "name": "Фамилия",
+    "vorname": "Имя",
+    "hausnummer": "Улица и номер дома",
+    "postleitzahl": "Почтовый индекс",
+    "ort": "Страна",
+    "speichern": "Сохранить"
+  },
+  "Customer": {
+    "profile": "Профиль",
+    "benutzername": "Имя пользователя",
+    "benutzer": "* Пользователи:",
+    "rechungsadresse": "+ Платежный адрес",
+    "firmenname": "Название компании",
+    "name": "Фамилия",
+    "vorname": "Имя",
+    "street": "Улица и номер дома",
+    "postalcode": "Почтовый индекс",
+    "city": "Город",
+    "region": "Регион",
+    "land": "Страна",
+    "addressAdditional": "Дополнительный адресс",
+    "licenseValidity": "Срок действия лицензии",
+    "group": "Группа",
+    "firmenname2": "+ Название компании:",
+    "licenseValidity2": "- Срок действия лицензии",
+    "group2": "- Группа",
+    "save": "Сохранить"
+  },
+  "errors": {
+    "serverError": "Ошибка сервера. Попробуйте позже.",
+    "unauthorized": "Неверные данные для входа!",
+    "notFound": "Не найдено",
+    "forbidden": "Доступ запрещен",
+    "internalServerError": "Внутренняя ошибка сервера. Попробуйте позже.",
+    "badGateway": "Плохой шлюз. Попробуйте позже.",
+    "serviceUnavailable": "Служба недоступна. Попробуйте позже.",
+    "gatewayTimeout": "Время ожидания шлюза истекло. Попробуйте позже."
+  }
+}
