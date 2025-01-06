@@ -132,7 +132,17 @@
        "licenseValidity2": "- Lizenz Gültigkeit",
         "group2": "- Gruppe",
         "save": "Speichern"
-    }
+    },
+    "errors": {
+    "serverError": "Serverfehler. Bitte später erneut versuchen.",
+    "unauthorized": "Ungültige Anmeldedaten!",
+    "notFound": "Nicht gefunden",
+    "forbidden": "Zugriff verweigert",
+    "internalServerError": "Interner Serverfehler. Bitte später erneut versuchen.",
+    "badGateway": "Bad Gateway. Bitte später erneut versuchen.",
+    "serviceUnavailable": "Dienst nicht verfügbar. Bitte später erneut versuchen.",
+    "gatewayTimeout": "Gateway Timeout. Bitte später erneut versuchen."
+  }
   }
 
   

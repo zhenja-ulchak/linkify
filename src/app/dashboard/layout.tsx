@@ -4,6 +4,7 @@ import Footer from "../../components/footer";
 import SideBar from "../../components/sidebar";
 import { useRouter } from "next/navigation";
 import ProtectedRole from "./ProtectRole";
+import { GlobalModalProvider } from "../providers/GlobalModalProvider";
 
 export default function DashboardLayout({
   children,
@@ -11,7 +12,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);5
   const footerPosition = isSideBarOpen ? "230px" : "0";
   const footerIndex = isSideBarOpen ? "0" : "9999";
   const router = useRouter();
@@ -45,7 +46,9 @@ export default function DashboardLayout({
           }}
         >
           <ProtectedRole>
-          {children}
+            <GlobalModalProvider>
+                   {children}
+                 </GlobalModalProvider>
           </ProtectedRole>
           <Footer   />
         </div>

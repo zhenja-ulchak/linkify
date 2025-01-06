@@ -27,7 +27,7 @@ const ConfigPage: React.FC = () => {
   const [dmsSetting, setDmsSetting] = useState<string>("");
   const [lexofficeSetting, setLexofficeSetting] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
-
+  const router = useRouter();
   // const dmsOptions = [
   //   { name: "SharePoint", type: "sharepoint", description: "Microsoft-based collaborative platform for document management and storage." },
   //   { name: "Eco-dms", type: "ecodms", description: "An affordable and efficient document management system for small businesses." },
@@ -52,182 +52,92 @@ const ConfigPage: React.FC = () => {
     option.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleOpen = (type: "email" | "dms" | "lexoffice") => {
-    setOpenModal(type);
-  };
+
 
   const handleClose = () => {
     setOpenModal(null);
   };
 
-  const handleSave = async () => {
-    try {
-      if (openModal === "email") {
-        await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}settings/email`, {
-          email,
-        });
-      } else if (openModal === "dms") {
-        await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}settings/dms`, {
-          dms: dmsSetting,
-        });
-      } else if (openModal === "lexoffice") {
-        await axios.post(
-          `${process.env.NEXT_PUBLIC_BASE_URL}settings/lexoffice`,
-          {
-            lexoffice: lexofficeSetting,
-          }
-        );
-      }
 
-      handleClose();
-    } catch (error) {
-      console.error("Fehler beim Speichern:", error);
-    }
-  };
 
-  const router = useRouter();
+
 
   function handleClickOnProfile() {
-    router.push("/customer/profile");
+    router.push("/dashboard/profile");
   }
 
   return (
 // TODO FIX УДАЛИТИ МОДАЛКИ ЗРОБИТИ СИЛКИ НА ТАБЛИЦІ
+<Container className="ContainerConfigPage" maxWidth="sm">
+  <Box
+    className="BoxConfigPage"
+    display="flex"
+    flexDirection="column" // Встановлюємо вертикальне вирівнювання
+    alignItems="center" // Центруємо елементи по горизонталі
+    gap={2} // Додаємо відстань між кнопками
+  >
+    <Typography variant="h4" gutterBottom>
+      Admin
+    </Typography>
 
-    <Container className="ContainerConfigPage" maxWidth="sm">
-      <Box className="BoxConfigPage">
-        <Typography variant="h4" gutterBottom>
-            Admin
-        </Typography>
-
-        {/* Email Button */}
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => handleOpen("email")}
-          className="ConfigPageButton"
-        >
-          <Box className="BoxConfigPageButtonIcon">
-            <EmailIcon className="ConfigPageButtonIcon" />
-            <p className="ConfigPageFont">E-Mail anpassen</p>
-          </Box>
-        </Button>
-
-        {/* DMS Button */}
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => handleOpen("dms")}
-          className="ConfigPageButton"
-        >
-          <Box className="BoxConfigPageButtonIcon">
-            <FilePresentIcon className="ConfigPageButtonIcon" />
-            <p className="ConfigPageFont">DMS anpassen</p>
-          </Box>
-        </Button>
-
-        {/* Lexoffice Button */}
-        <Button
-          variant="contained"
-          color="success"
-          onClick={() => handleOpen("lexoffice")}
-          className="ConfigPageButton"
-        >
-          <Box className="BoxConfigPageButtonIcon">
-            <EuroIcon className="ConfigPageButtonIcon" />
-            <p className="ConfigPageFont">Lexoffice anpassen</p>
-          </Box>
-        </Button>
-
-        {/* Profil Button */}
-        <Button
-          variant="contained"
-          color="warning"
-          onClick={() => handleClickOnProfile()}
-          className="ConfigPageButton"
-        >
-          <Box className="BoxConfigPageButtonIcon">
-            <AccountCircleIcon className="ConfigPageButtonIcon" />
-            <p className="ConfigPageFont">Profile anpassen</p>
-          </Box>
-        </Button>
+    {/* Email Button */}
+    <Button
+      variant="contained"
+      color="primary"
+      onClick={() => router.push("/dashboard/admin/SMTP-Email")}
+      className="ConfigPageButton"
+      fullWidth // Робимо кнопку шириною на весь контейнер
+    >
+      <Box className="BoxConfigPageButtonIcon" display="flex" alignItems="center" justifyContent="center">
+        <EmailIcon className="ConfigPageButtonIcon" />
+        <p className="ConfigPageFont">E-Mail anpassen</p>
       </Box>
+    </Button>
 
-      {/* Modal */}
-      <Modal open={openModal !== null} onClose={handleClose}>
-        <Box className="modalConfigPage">
-          <Typography variant="h6" gutterBottom color="black">
-            {openModal === "email" && "E-Mail anpassen"}
-            {openModal === "dms" && "DMS anpassen"}
-            {openModal === "lexoffice" && "Lexoffice anpassen"}
-          </Typography>
+    {/* DMS Button */}
+    <Button
+      variant="contained"
+      color="secondary"
+      onClick={() => router.push("/dashboard/admin/dms-config")}
+      className="ConfigPageButton"
+      fullWidth // Робимо кнопку шириною на весь контейнер
+    >
+      <Box className="BoxConfigPageButtonIcon" display="flex" alignItems="center" justifyContent="center">
+        <FilePresentIcon className="ConfigPageButtonIcon" />
+        <p className="ConfigPageFont">DMS anpassen</p>
+      </Box>
+    </Button>
 
-          {openModal === "dms" ? (
-            <>
-              <TextField
-                fullWidth
-                margin="normal"
-                variant="outlined"
-                label="DMS suchen"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                InputLabelProps={{
-                  style: { color: "black", fontWeight: "bold" },
-                }}
-              />
-              <FormControl fullWidth margin="normal" >
-                <InputLabel style={{ color: "black" }} >
-                  DMS auswählen
-                </InputLabel>
-                <Select
-                  labelId="dms-select-label"
-                  value={dmsSetting}
-                  onChange={(e) => setDmsSetting(e.target.value)}
-                  variant="outlined"
-                >
-                  {filteredDmsOptions.length === 0 ? (
-                    <MenuItem disabled>Keine Ergebnisse</MenuItem> // Wenn keine Ergebnisse, zeige "Keine Ergebnisse"
-                  ) : (
-                    filteredDmsOptions.map((option) => (
-                      <MenuItem key={option} value={option}>
-                        {option}
-                      </MenuItem>
-                    ))
-                  )}
-                </Select>
-              </FormControl>
-            </>
-          ) : (
-            <TextField
-              fullWidth
-              margin="normal"
-              variant="outlined"
-              label={
-                openModal === "email" ? "Neue E-Mail" : "Lexoffice-Einstellung"
-              }
-              InputLabelProps={{
-                style: { color: "black", fontWeight: "bold" },
-              }}
-              value={openModal === "email" ? email : lexofficeSetting}
-              onChange={(e) =>
-                openModal === "email"
-                  ? setEmail(e.target.value)
-                  : setLexofficeSetting(e.target.value)
-              }
-            />
-          )}
+    {/* Lexoffice Button */}
+    <Button
+      variant="contained"
+      color="success"
+      onClick={() => router.push("/dashboard/admin/accounting-software")}
+      className="ConfigPageButton"
+      fullWidth // Робимо кнопку шириною на весь контейнер
+    >
+      <Box className="BoxConfigPageButtonIcon" display="flex" alignItems="center" justifyContent="center">
+        <EuroIcon className="ConfigPageButtonIcon" />
+        <p className="ConfigPageFont">Accounting-Software</p>
+      </Box>
+    </Button>
 
-          <Box display="flex" justifyContent="space-between" marginTop="16px">
-            <Button variant="outlined" onClick={handleClose}>
-              Abbrechen
-            </Button>
-            <Button variant="contained" color="primary" onClick={handleSave}>
-              Speichern
-            </Button>
-          </Box>
-        </Box>
-      </Modal>
-    </Container>
+    {/* Profil Button */}
+    <Button
+      variant="contained"
+      color="warning"
+      onClick={() => handleClickOnProfile()}
+      className="ConfigPageButton"
+      fullWidth // Робимо кнопку шириною на весь контейнер
+    >
+      <Box className="BoxConfigPageButtonIcon" display="flex" alignItems="center" justifyContent="center">
+        <AccountCircleIcon className="ConfigPageButtonIcon" />
+        <p className="ConfigPageFont">Profile anpassen</p>
+      </Box>
+    </Button>
+  </Box>
+</Container>
+
   );
 };
 

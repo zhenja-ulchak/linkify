@@ -174,11 +174,13 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
       return;
     }
     try {
-      await apiService.get(`user/logout`, getToken);
+      const response = await apiService.get(`user/logout`, getToken);
       enqueueSnackbar("Logout erfolgreich!", {
         variant: "success"
       });
-
+      if (response instanceof Error) {
+        enqueueSnackbar(response.message, { variant: 'error' });
+      }
     } catch (error) {
       enqueueSnackbar("Fehler beim Logout. Bitte versuchen Sie es später erneut.", {
         variant: "error"
@@ -280,8 +282,8 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
 
 
           {(() => {
-  const isAdmin = TextRule === 'admin';
-  const isSuperAdmin = TextRule === 'superadmin';
+            const isAdmin = TextRule === 'admin';
+            const isSuperAdmin = TextRule === 'superadmin';
 
   const adminItems = [
     { path: "/dashboard/admin/einstellungen", icon: <AdminPanelSettingsIcon style={{ color: "black" }} />, text: t("admin"), style: { backgroundColor: "pink" } },
@@ -299,39 +301,39 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
     { path: "/dashboard/superadmin/tenant", icon: <FormatListBulletedIcon style={{ color: "black" }} />, text: t("tenant") },
   ];
 
-  const adminSection = isAdmin || isSuperAdmin ? (
-    adminItems.map((item, index) => (
-      <ListItem key={`admin-${index}`} disablePadding style={item.style || {}}>
-        <ListItemButton onClick={() => handleNavigation(item.path)}>
-          <ListItemIcon className="DashboadAndTableIcon">{item.icon}</ListItemIcon>
-          <ListItemText primary={item.text} />
-        </ListItemButton>
-      </ListItem>
-    ))
-  ) : null;
+            const adminSection = isAdmin || isSuperAdmin ? (
+              adminItems.map((item, index) => (
+                <ListItem key={`admin-${index}`} disablePadding style={item.style || {}}>
+                  <ListItemButton onClick={() => handleNavigation(item.path)}>
+                    <ListItemIcon className="DashboadAndTableIcon">{item.icon}</ListItemIcon>
+                    <ListItemText primary={item.text} />
+                  </ListItemButton>
+                </ListItem>
+              ))
+            ) : null;
 
-  const superAdminSection = isSuperAdmin ? (
-    <>
-      <Divider style={{ backgroundColor: "black", height: "2px" }} />
-      {superAdminItems.map((item, index) => (
-        <ListItem key={`superadmin-${index}`} disablePadding style={item.style || {}}>
-          <ListItemButton onClick={() => handleNavigation(item.path)}>
-            <ListItemIcon className="DashboadAndTableIcon">{item.icon}</ListItemIcon>
-            <ListItemText primary={item.text} />
-          </ListItemButton>
-        </ListItem>
-      ))}
-    </>
-  ) : null;
+            const superAdminSection = isSuperAdmin ? (
+              <>
+                <Divider style={{ backgroundColor: "black", height: "2px" }} />
+                {superAdminItems.map((item, index) => (
+                  <ListItem key={`superadmin-${index}`} disablePadding style={item.style || {}}>
+                    <ListItemButton onClick={() => handleNavigation(item.path)}>
+                      <ListItemIcon className="DashboadAndTableIcon">{item.icon}</ListItemIcon>
+                      <ListItemText primary={item.text} />
+                    </ListItemButton>
+                  </ListItem>
+                ))}
+              </>
+            ) : null;
 
-  return (
-    <>
-      <Divider style={{ backgroundColor: "black", height: "2px" }} />
-      {adminSection}
-      {superAdminSection}
-    </>
-  );
-})()}
+            return (
+              <>
+                <Divider style={{ backgroundColor: "black", height: "2px" }} />
+                {adminSection}
+                {superAdminSection}
+              </>
+            );
+          })()}
 
           <Divider style={{ backgroundColor: "black", height: "2px" }} />
 
