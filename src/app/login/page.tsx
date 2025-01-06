@@ -33,7 +33,7 @@ const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // Track login status
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null); // State to track the remaining time
-  const t = useTranslations('Login'); // Переводы для компонента логина
+  const t = useTranslations('API'); // Переводы для компонента логина
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
@@ -59,7 +59,7 @@ const Login: React.FC = () => {
         const { status, variant, message } = ApiService.CheckAndShow(resp, t);
         console.log(message);
         // @ts-ignore
-        enqueueSnackbar(t(message), { variant: variant });
+        enqueueSnackbar(message, { variant: variant });
         }else{
 
 

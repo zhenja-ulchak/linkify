@@ -21,7 +21,8 @@ export default function LocaleSwitcher() {
         { value: 'en', label: t('en'), shortLabel: 'EN' },
         { value: 'de', label: t('de'), shortLabel: 'DE' },
         { value: 'ua', label: t('ua'), shortLabel: 'UA' },
-        { value: 'ru', label: t('ru'), shortLabel: 'RU' }
+        { value: 'ru', label: t('ru'), shortLabel: 'RU' },
+        { value: 'zh-CN', label: t('zh-CN'), shortLabel: 'zh-CN' }
       ]}
       label={t('label')}
       onLocaleChange={handleLocaleChange}

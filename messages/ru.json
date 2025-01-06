@@ -1,5 +1,15 @@
 {
-    "Login": {
+    "API": {
+      "errors": {
+        "serverError": "Ошибка сервера. Попробуйте позже.",
+        "unauthorized": "Неверные данные для входа!",
+        "notFound": "Не найдено",
+        "forbidden": "Доступ запрещен",
+        "internalServerError": "Внутренняя ошибка сервера. Попробуйте позже.",
+        "badGateway": "Плохой шлюз. Попробуйте позже.",
+        "serviceUnavailable": "Служба недоступна. Попробуйте позже.",
+        "gatewayTimeout": "Время ожидания шлюза истекло. Попробуйте позже."
+      },
       "login": "Авторизация",
       "username": "Имя пользователя",
       "password": "Пароль",
@@ -9,9 +19,10 @@
     },
     "LocaleSwitcher": {
       "en": "English",
-      "de": "German",
-      "ua": "Ukrainian",
-      "ru": "Russian",
+      "de": "Deutsch",
+      "ua": "Українська",
+      "ru": "Русский",
+      "zh-CN": "简体中文",
       "label": "Change Language"
     },
     "Dashboard": {
@@ -114,17 +125,8 @@
          "group2": "- Группа",
          "save": "Сохранить"
         
-      },
-        "errors": {
-        "serverError": "Ошибка сервера. Попробуйте позже.",
-        "unauthorized": "Неверные данные для входа!",
-        "notFound": "Не найдено",
-        "forbidden": "Доступ запрещен",
-        "internalServerError": "Внутренняя ошибка сервера. Попробуйте позже.",
-        "badGateway": "Плохой шлюз. Попробуйте позже.",
-        "serviceUnavailable": "Служба недоступна. Попробуйте позже.",
-        "gatewayTimeout": "Время ожидания шлюза истекло. Попробуйте позже."
       }
+       
     }
 
   

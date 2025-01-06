@@ -6,15 +6,16 @@ import enMessages from '../../messages/en.json';
 import ukMessages from '../../messages/ua.json';
 import deMessages from '../../messages/de.json';
 import ruMessages from '../../messages/ru.json';
+import zhcnMessages from '../../messages/zh-CN.json';
 import ChangeMode from '@/components/DarkLightMode';
 import { SnackbarProvider } from 'notistack';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const [locale, setLocale] = useState<string>('uk');
-  const [messages, setMessages] = useState<any>(ukMessages);
+  const [locale, setLocale] = useState<string>('en');
+  const [messages, setMessages] = useState<any>(enMessages);
 
   useEffect(() => {
-    const savedLocale = localStorage.getItem('locale') || 'uk';
+    const savedLocale = localStorage.getItem('locale') || 'en';
     setLocale(savedLocale);
 
     // Логика для загрузки сообщений в зависимости от локали
@@ -31,6 +32,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       case 'ru':
         setMessages(ruMessages);
         break;
+        case 'zh-CN':
+          setMessages(zhcnMessages);
+          break;
       default:
         setMessages(ukMessages);
         break;

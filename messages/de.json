@@ -1,5 +1,15 @@
 {
-    "Login": {
+    "API": {
+      "errors": {
+        "serverError": "Serverfehler. Bitte später erneut versuchen.",
+        "unauthorized": "Ungültige Anmeldedaten!",
+        "notFound": "Nicht gefunden",
+        "forbidden": "Zugriff verweigert",
+        "internalServerError": "Interner Serverfehler. Bitte später erneut versuchen.",
+        "badGateway": "Bad Gateway. Bitte später erneut versuchen.",
+        "serviceUnavailable": "Dienst nicht verfügbar. Bitte später erneut versuchen.",
+        "gatewayTimeout": "Gateway Timeout. Bitte später erneut versuchen."
+      },
       "login": "Autorisierung",
       "username": "Benutzername",
       "password": "Passwort",
@@ -10,8 +20,9 @@
     "LocaleSwitcher": {
       "en": "English",
       "de": "Deutsch",
-      "ua": "Ukrainian",
-      "ru": "Russian",
+      "ua": "Українська",
+      "ru": "Русский",
+      "zh-CN": "简体中文",
       "label": "Change Language"
     },
     "Dashboard": {
@@ -132,17 +143,8 @@
        "licenseValidity2": "- Lizenz Gültigkeit",
         "group2": "- Gruppe",
         "save": "Speichern"
-    },
-    "errors": {
-    "serverError": "Serverfehler. Bitte später erneut versuchen.",
-    "unauthorized": "Ungültige Anmeldedaten!",
-    "notFound": "Nicht gefunden",
-    "forbidden": "Zugriff verweigert",
-    "internalServerError": "Interner Serverfehler. Bitte später erneut versuchen.",
-    "badGateway": "Bad Gateway. Bitte später erneut versuchen.",
-    "serviceUnavailable": "Dienst nicht verfügbar. Bitte später erneut versuchen.",
-    "gatewayTimeout": "Gateway Timeout. Bitte später erneut versuchen."
-  }
+    }
+   
   }
 
   
