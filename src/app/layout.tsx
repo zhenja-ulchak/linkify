@@ -7,6 +7,7 @@ import enMessages from '../../messages/en.json';
 import ukMessages from '../../messages/ua.json';
 import ChangeMode from "@/components/DarkLightMode";
 import { SnackbarProvider } from "notistack";
+import { GlobalModalProvider } from "./providers/GlobalModalProvider";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [locale, setLocale] = useState<string>('en');
@@ -29,9 +30,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div style={{ position: "absolute", left: "0", marginLeft: "60px", marginTop: "10px" }}>
           <ChangeMode />
         </div>
-        <NextIntlClientProvider locale={locale}  messages={messages}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
           <SnackbarProvider maxSnack={3} autoHideDuration={3000} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
-            {children}
+            <GlobalModalProvider>
+              {children}
+            </GlobalModalProvider>
           </SnackbarProvider>
         </NextIntlClientProvider>
       </body>

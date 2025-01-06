@@ -9,7 +9,7 @@ import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import AddIcon from "@mui/icons-material/Add";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ApiService from "../../../../src/app/services/apiService";
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, TextField, Button, IconButton, FormControl, InputLabel, Select, MenuItem, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, TextField, Button, IconButton, FormControl, InputLabel, Select, MenuItem, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid } from '@mui/material';
 type TenantDetails = {
     id: number;
     tenant_id: number;
@@ -169,72 +169,67 @@ const DetailsTableDms: React.FC = () => {
 
     return (
         <div id="UserDetailContainer" style={{ display: 'flex', justifyContent: 'center', maxWidth: '800px', margin: '0 auto' }}>
-            <h3>Details</h3>
-
-            <TableContainer component={Paper} style={{ width: '100%' }}>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Feld</TableCell>
-                            <TableCell>Wert</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {tenantDetails && (
-                            <>
-
+            <Grid container spacing={2} style={{ width: '100%' }}>
+                <Grid item xs={12} style={{ textAlign: "center" }}>
+                    <h3>Details</h3>
+                </Grid>
+                <Grid item xs={12}>
+                    <TableContainer component={Paper} style={{ width: '100%' }}>
+                        <Table>
+                            <TableHead>
                                 <TableRow>
-                                    <TableCell style={{ fontWeight: 'bold' }}>Type</TableCell>
-                                    <TableCell>{tenantDetails?.type}</TableCell>
+                                    <TableCell>Feld</TableCell>
+                                    <TableCell>Wert</TableCell>
                                 </TableRow>
-                                <TableRow>
-                                    <TableCell style={{ fontWeight: 'bold' }}>Endpoint URL</TableCell>
-                                    <TableCell>{tenantDetails?.endpoint_url}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell style={{ fontWeight: 'bold' }}>Username</TableCell>
-                                    <TableCell>{tenantDetails?.username}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell style={{ fontWeight: 'bold' }}>Repository</TableCell>
-                                    <TableCell>{tenantDetails?.repository}</TableCell>
-                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {tenantDetails && (
+                                    <>
 
-                            </>
-                        )}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                                        <TableRow>
+                                            <TableCell style={{ fontWeight: 'bold' }}>Type</TableCell>
+                                            <TableCell>{tenantDetails?.type}</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell style={{ fontWeight: 'bold' }}>Endpoint URL</TableCell>
+                                            <TableCell>{tenantDetails?.endpoint_url}</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell style={{ fontWeight: 'bold' }}>Username</TableCell>
+                                            <TableCell>{tenantDetails?.username}</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell style={{ fontWeight: 'bold' }}>Repository</TableCell>
+                                            <TableCell>{tenantDetails?.repository}</TableCell>
+                                        </TableRow>
 
-            <div style={{ display: "flex", justifyContent: "space-evenly", marginTop: "10px" }}>
+                                    </>
+                                )}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Grid>
+                <Grid item xs={12} display="flex" justifyContent="space-evenly">
+                    <IconButton color="primary" onClick={handleClickOpen} title="Bearbeiten">
+                        <EditIcon />
+                    </IconButton>
 
-                <EditIcon onClick={handleClickOpen}/>
-          
-                {/* <button
-                    className="UserDetailButton"
-                    title="Bearbeiten"
-                    onClick={() => setIsEditing(true)}
-                >
-                    <EditIcon />
-                </button> */}
-                <button
-                    className="UserDetailButton"
-                    title="Löschen"
-                    onClick={handleDelete}
-                >
-                    <DeleteIcon />
-                </button>
-            </div>
+                    <IconButton color="error" onClick={handleDelete} title="Löschen">
+                        <DeleteIcon />
+                    </IconButton>
+                </Grid>
 
-            <div id="UserDetailModalContainer">
-                <button
-                    className="UserDetailButton"
-                    title="Zurück"
-                    onClick={handleGoingBack}
-                >
-                    <KeyboardBackspaceIcon />
-                </button>
-            </div>
+                <Grid item xs={12}>
+                    <Button
+                        variant="outlined"
+                        startIcon={<KeyboardBackspaceIcon />}
+                        onClick={handleGoingBack}
+                        title="back"
+                    >
+                        back
+                    </Button>
+                </Grid>
+            </Grid>
             <Dialog
                 open={open}
                 onClose={handleClose}
@@ -331,7 +326,7 @@ const DetailsTableDms: React.FC = () => {
                     </Button>
                 </DialogActions>
             </Dialog>
-          
+
         </div>
     );
 };
