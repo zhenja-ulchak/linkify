@@ -65,7 +65,7 @@ export default function TableHelperDmsConfig({ title }: TableHelperType) {
 
     React.useEffect(() => {
         const fetchData = async () => {
-            try {
+         
                 const getToken: any = sessionStorage.getItem('AuthToken');
                 const response: any = await apiService.get("dms-config", getToken);
                 if (response instanceof Error) {
@@ -77,9 +77,7 @@ export default function TableHelperDmsConfig({ title }: TableHelperType) {
 
                 enqueueSnackbar("Дані успішно завантажені!", { variant: "success" }); // Додано сповіщення
 
-            } catch (error) {
-                enqueueSnackbar("Сталася помилка при завантаженні даних.", { variant: "error" }); // Додано сповіщення про помилку
-            }
+            
         }
 
         fetchData();
