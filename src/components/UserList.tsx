@@ -25,8 +25,8 @@ import { visuallyHidden } from "@mui/utils";
 import { useRouter } from "next/navigation";
 import ToggleSwitch from "@/components/toggleBtn";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-
-import apiService from "@/app/services/apiService";
+import { useTranslations } from 'next-intl';
+import ApiService from "../app/services/apiService";
 import { enqueueSnackbar } from "notistack";
 type Order = "asc" | "desc";
 
@@ -44,7 +44,7 @@ export default function TableHelperUserList({ title }: TableHelperType) {
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const router = useRouter();
     const [rows, setRows] = React.useState<Data[]>([]);  // Zustand für die Zeilen
-
+    const t = useTranslations('Login');
     console.log(rows);
 
 
@@ -68,7 +68,7 @@ export default function TableHelperUserList({ title }: TableHelperType) {
         const fetchData = async () => {
             try {
                 const getToken: any = sessionStorage.getItem('AuthToken');
-                const response: any = await apiService.get("user", getToken);
+                const response: any = await ApiService.get("user", getToken);
                 if (response instanceof Error) {
                     enqueueSnackbar(response.message, { variant: 'error' });
                 }
@@ -76,7 +76,13 @@ export default function TableHelperUserList({ title }: TableHelperType) {
                 setRows(response.data[0]);
 
 
-                enqueueSnackbar("Дані успішно завантажені!", { variant: "success" }); // Додано сповіщення
+
+                if (response instanceof Error) {
+                    const { status, variant, message } = ApiService.CheckAndShow(response, t);
+                    console.log(message);
+                    // @ts-ignore
+                    enqueueSnackbar(t(message), { variant: variant });
+                }
 
             } catch (error) {
 
