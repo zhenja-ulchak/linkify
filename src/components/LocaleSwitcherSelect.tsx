@@ -8,7 +8,7 @@ import { setUserLocale } from '@/services/locale'; // Функция для см
 
 type Props = {
   defaultValue: string;
-  items: Array<{ value: string; label: string }>;
+  items: Array<{ value: string; label: string; shortLabel: string }>; // Добавляем shortLabel для сокращения
   label: string;
   onLocaleChange: (newLocale: string) => void;
 };
@@ -96,7 +96,12 @@ export default function LocaleSwitcherSelect({
                       />
                     )}
                   </div>
-                  <span style={{ color: '#111827' }}>{item.label}</span>
+                  <span style={{ color: '#111827' }}>
+                    <span style={{ fontSize: '12px', marginRight: '4px' }}>
+                      {item.shortLabel} {/* Сокращение с меньшим размером */}
+                    </span>
+                    {item.label} {/* Полное название языка */}
+                  </span>
                 </Select.Item>
               ))}
             </Select.Viewport>

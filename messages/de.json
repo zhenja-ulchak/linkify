@@ -8,11 +8,11 @@
       "passwort-vergessen": "Passwort vergessen?"
     },
     "LocaleSwitcher": {
-      "en": "Englisch",
+      "en": "English",
       "de": "Deutsch",
-      "ua": "Ukrainisch",
-      "ru": "Russisch",
-      "label": "Sprache ändern"
+      "ua": "Ukrainian",
+      "ru": "Russian",
+      "label": "Change Language"
     },
     "Dashboard": {
       "dashboard": "Dashboard",

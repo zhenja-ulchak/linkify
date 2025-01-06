@@ -8,11 +8,11 @@
       "passwort-vergessen": "Ви забули свій пароль?"
     },
     "LocaleSwitcher": {
-      "en": "Англійський",
-      "de": "Німецька",
-      "ua": "Українська",
-      "ru": "Російська",
-      "label": "Змінити мову"
+      "en": "English",
+      "de": "German",
+      "ua": "Ukrainian",
+      "ru": "Russian",
+      "label": "Change Language"
     },
     "Dashboard": {
         "dashboard": "Приладова панель",

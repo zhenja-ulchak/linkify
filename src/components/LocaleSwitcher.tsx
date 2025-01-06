@@ -18,10 +18,10 @@ export default function LocaleSwitcher() {
     <LocaleSwitcherSelect
       defaultValue={locale}
       items={[
-        { value: 'en', label: t('en') },
-        { value: 'de', label: t('de') },
-        { value: 'ua', label: t('ua') },
-        { value: 'ru', label: t('ru') }
+        { value: 'en', label: t('en'), shortLabel: 'EN' },
+        { value: 'de', label: t('de'), shortLabel: 'DE' },
+        { value: 'ua', label: t('ua'), shortLabel: 'UA' },
+        { value: 'ru', label: t('ru'), shortLabel: 'RU' }
       ]}
       label={t('label')}
       onLocaleChange={handleLocaleChange}
