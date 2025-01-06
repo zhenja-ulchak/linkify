@@ -12,7 +12,6 @@ import ApiService from "../../../../src/app/services/apiService";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, TextField, Button, IconButton, FormControl, InputLabel, Select, MenuItem, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid } from '@mui/material';
 import { enqueueSnackbar } from "notistack";
 import { useTranslations } from 'next-intl';
-
 type TenantDetails = {
     id?: number;
     tenant_id?: number;
@@ -48,8 +47,7 @@ const DetailsTable: React.FC = () => {
     const [tenantDetails, setTenantDetails] = useState<TenantDetails | null>(null);
     const [open, setOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState('');
-    const t = useTranslations('API');
-
+    const t = useTranslations('');
 
     const [updatedTenant, setUpdatedTenant] = useState<TenantDetails>({
 
@@ -102,14 +100,17 @@ const DetailsTable: React.FC = () => {
                 return;
             }
 
-                const Auth: any = sessionStorage.getItem('AuthToken');
-                const response: any = await ApiService.get(`accounting-software`, Auth); //${id}
-                if (response instanceof Error) {
-                            const { status, variant, message } = ApiService.CheckAndShow(response, t);
-                                    // @ts-ignore
-                    enqueueSnackbar(message, { variant: variant});
-                }
-                setTenantDetails(response?.data[0][0]);
+
+            const Auth: any = sessionStorage.getItem('AuthToken');
+            const response: any = await ApiService.get(`accounting-software`, Auth); //${id}
+            if (response instanceof Error) {
+                const { status, variant, message } = ApiService.CheckAndShow(response, t);
+                console.log(message);
+                // @ts-ignore
+                enqueueSnackbar(message, { variant: variant });
+            }
+            setTenantDetails(response?.data[0][0]);
+
         };
 
         fetchTenantDetails();
@@ -135,7 +136,7 @@ const DetailsTable: React.FC = () => {
         const cleanedObject = removeEmptyValues(updatedTenant);
         console.log(cleanedObject);
         if (validateInputs(cleanedObject)) {
-            try {
+        
                 console.log(cleanedObject);
 
                 const Auth: any = sessionStorage.getItem('AuthToken');
@@ -150,16 +151,14 @@ const DetailsTable: React.FC = () => {
                             // @ts-ignore
                             enqueueSnackbar(message, { variant: variant });
                 }
-            } catch (error) {
-                setError("Помилка при збереженні: " + error);
-            }
+           
         }
     };
 
     // Валідація полів
     const validateInputs = (data: any) => {
         if (!data.contact_email || !data.invoice_email) {
-            setError("Всі поля повинні бути заповнені.");
+           
             return false;
         }
         setError("");
@@ -171,7 +170,7 @@ const DetailsTable: React.FC = () => {
         return Object.fromEntries(Object.entries(obj).filter(([key, value]) => value != null && value !== ""));
     };
     const handleDelete = async () => {
-        try {
+       
             const Auth: any = sessionStorage.getItem('AuthToken');
             const response: any = await ApiService.delete(`accounting-software/${id}`, Auth);
             if (response.status === 200) {
@@ -179,11 +178,12 @@ const DetailsTable: React.FC = () => {
                 router.push("/users");
             }
             if (response instanceof Error) {
-                enqueueSnackbar(response.message, { variant: 'error' });
+                const { status, variant, message } = ApiService.CheckAndShow(response, t);
+                console.log(message);
+                // @ts-ignore
+                enqueueSnackbar(message, { variant: variant });
             }
-        } catch (error) {
-            console.error("Fehler beim Löschen:", error);
-        }
+        
     };
 
     function handleGoingBack() {

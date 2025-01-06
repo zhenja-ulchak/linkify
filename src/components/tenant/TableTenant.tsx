@@ -28,6 +28,10 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import axios from 'axios';
 import apiService from "@/app/services/apiService";
 import { enqueueSnackbar } from "notistack";
+import { useTranslations } from 'next-intl';
+
+
+
 type Order = "asc" | "desc";
 
 type EnhancedTableType = {
@@ -43,7 +47,7 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const router = useRouter();
   const [rows, setRows] = React.useState<Data[]>([]);  // Zustand für die Zeilen
-
+  const t = useTranslations('');
   console.log(rows);
 
 
@@ -82,16 +86,18 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
       try {
         const getToken: any = sessionStorage.getItem('AuthToken');
         const response: any = await apiService.get("tenant", getToken);
-      
-        if(response.data[0]){
-              enqueueSnackbar('Дані успішно завантажено!', { variant: 'success' });
-            }
+
+        if (response.data[0]) {
+          enqueueSnackbar('Дані успішно завантажено!', { variant: 'success' });
+        }
 
         const tenantData: any = response?.data[0];
         if (response instanceof Error) {
-          enqueueSnackbar(response.message, { variant: 'error' });
+          const { status, variant, message } = apiService.CheckAndShow(response, t);
+          console.log(message);
+          // @ts-ignore
+          enqueueSnackbar(message, { variant: variant });
         }
-
         setRows(tenantData);  // Зберігаємо дані в стан
         enqueueSnackbar('Дані успішно завантажено!', { variant: 'success' });
       } catch (error) {

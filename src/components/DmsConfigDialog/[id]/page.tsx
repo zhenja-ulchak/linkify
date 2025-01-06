@@ -11,6 +11,10 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import ApiService from "../../../../src/app/services/apiService";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, TextField, Button, IconButton, FormControl, InputLabel, Select, MenuItem, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid } from '@mui/material';
 import { enqueueSnackbar } from "notistack";
+import { useTranslations } from 'next-intl';
+
+
+
 type TenantDetails = {
     id?: number;
     tenant_id?: number;
@@ -37,7 +41,7 @@ const dmsOptions = [
 const DetailsTableDms: React.FC = () => {
     const { id } = useParams();
     console.log(id);
-
+  const t = useTranslations('');
     const router = useRouter();
 
     const [isEditing, setIsEditing] = useState(false);
@@ -94,17 +98,17 @@ const DetailsTableDms: React.FC = () => {
                 return;
             }
 
-            try {
+          
                 const Auth: any = sessionStorage.getItem('AuthToken');
                 const response: any = await ApiService.get(`dms-config`, Auth); //${id}
                 if (response instanceof Error) {
-                    enqueueSnackbar(response.message, { variant: 'error' });
+                    const { status, variant, message } = ApiService.CheckAndShow(response, t);
+                    console.log(message);
+                    // @ts-ignore
+                    enqueueSnackbar(message, { variant: variant });
                 }
                 setTenantDetails(response?.data[0][0]);
-            } catch (error) {
-                console.error("Fehler beim Abrufen der Daten:", error);
-                setError("Fehler beim Abrufen der Daten.");
-            }
+           
         };
 
         fetchTenantDetails();
@@ -128,19 +132,20 @@ const DetailsTableDms: React.FC = () => {
         const cleanedObject = removeEmptyValues(updatedTenant);  // Функція для очищення порожніх значень
 
         if (validateInputs(cleanedObject)) {
-            try {
+    
                 const Auth: any = sessionStorage.getItem('AuthToken');
                 const response: any = await ApiService.put(`dms-config/${tenantDetails?.id}`, cleanedObject, Auth);
                 if (response instanceof Error) {
-                    enqueueSnackbar(response.message, { variant: 'error' });
+                    const { status, variant, message } = ApiService.CheckAndShow(response, t);
+                    console.log(message);
+                    // @ts-ignore
+                    enqueueSnackbar(message, { variant: variant });
                 }
                 if (response.status === 200) {
-                    console.log("Дані оновлено:", cleanedObject);
+                   
                     setOpen(false);
                 }
-            } catch (error) {
-                setError("Помилка при збереженні: " + error);
-            }
+            
         }
     };
 
@@ -159,19 +164,20 @@ const DetailsTableDms: React.FC = () => {
         return Object.fromEntries(Object.entries(obj).filter(([key, value]) => value != null && value !== ""));
     };
     const handleDelete = async () => {
-        try {
+      
             const Auth: any = sessionStorage.getItem('AuthToken');
             const response: any = await ApiService.delete(`dms-config/${id}`, Auth);
             if (response instanceof Error) {
-                enqueueSnackbar(response.message, { variant: 'error' });
+                const { status, variant, message } = ApiService.CheckAndShow(response, t);
+                console.log(message);
+                // @ts-ignore
+                enqueueSnackbar(message, { variant: variant });
             }
             if (response.status === 200) {
-                console.log("Benutzer gelöscht:", updatedTenant);
+         
                 router.push("/users");
             }
-        } catch (error) {
-            console.error("Fehler beim Löschen:", error);
-        }
+        
     };
 
     function handleGoingBack() {
