@@ -1,4 +1,3 @@
-
 import { Box, Typography, Button } from "@mui/material";
 import Link from "next/link";
 import { JSX } from "react";
@@ -27,7 +26,7 @@ export default function NotFound(): JSX.Element {
         <Typography variant="body1" gutterBottom>
           Vielleicht möchten Sie zur Startseite zurückkehren?
         </Typography>
-        <Link href="/login" passHref>
+        <Link href="/" passHref>
           <Button variant="contained" color="primary">
             Zurück zur Startseite
           </Button>
