@@ -72,24 +72,18 @@ export default function TableHelperUserList({ title }: TableHelperType) {
                 if (response instanceof Error) {
                     enqueueSnackbar(response.message, { variant: 'error' });
                 }
-
                 setRows(response.data[0]);
-
-
-
                 if (response instanceof Error) {
                     const { status, variant, message } = ApiService.CheckAndShow(response, t);
                     console.log(message);
                     // @ts-ignore
                     enqueueSnackbar(t(message), { variant: variant });
                 }
-
             } catch (error) {
 
                 enqueueSnackbar("Сталася помилка при завантаженні даних.", { variant: "error" }); // Додано сповіщення про помилку
             }
         };
-
         fetchData();
     }, []);
 
