@@ -47,8 +47,9 @@ const DetailsTable: React.FC = () => {
     const [tenantDetails, setTenantDetails] = useState<TenantDetails | null>(null);
     const [open, setOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState('');
-    const t = useTranslations('');
-
+    const t = useTranslations('API');
+    console.log(id);
+    
     const [updatedTenant, setUpdatedTenant] = useState<TenantDetails>({
 
         name: "",

@@ -29,6 +29,10 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import CryptoJS from 'crypto-js';
 import apiService from "@/app/services/apiService";
 import { enqueueSnackbar } from "notistack";
+import { useTranslations } from 'next-intl';
+
+
+
 type Order = "asc" | "desc";
 
 type TableHelperType = {
@@ -47,7 +51,7 @@ export default function TableHelperDmsConfig({ title }: TableHelperType) {
     const [rows, setRows] = React.useState<Data[]>([]);  // Zustand für die Zeilen
     const [role, setRoles] = React.useState('');
     console.log(rows);
-
+  const t = useTranslations('API');
 
     // Data und TenantData Typen
     type Data = {
@@ -65,19 +69,22 @@ export default function TableHelperDmsConfig({ title }: TableHelperType) {
 
     React.useEffect(() => {
         const fetchData = async () => {
-         
-                const getToken: any = sessionStorage.getItem('AuthToken');
-                const response: any = await apiService.get("dms-config", getToken);
-                if (response instanceof Error) {
-                    enqueueSnackbar(response.message, { variant: 'error' });
-                }
 
-                setRows(response.data[0]);
+            const getToken: any = sessionStorage.getItem('AuthToken');
+            const response: any = await apiService.get("dms-config", getToken);
+            if (response instanceof Error) {
+                const { status, variant, message } = apiService.CheckAndShow(response, t);
+                console.log(message);
+                // @ts-ignore
+                enqueueSnackbar(message, { variant: variant });
+            }
+
+            setRows(response.data[0]);
 
 
-                enqueueSnackbar("Дані успішно завантажені!", { variant: "success" }); // Додано сповіщення
+            enqueueSnackbar("Дані успішно завантажені!", { variant: "success" }); // Додано сповіщення
 
-            
+
         }
 
         fetchData();
