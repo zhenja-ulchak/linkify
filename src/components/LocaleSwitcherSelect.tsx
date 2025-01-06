@@ -44,6 +44,7 @@ export default function LocaleSwitcherSelect({
             backgroundColor: isPending ? '#f0f0f0' : '#fff',
             opacity: isPending ? 0.6 : 1,
             border: '1px solid #ccc',
+            fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
           }}
         >
           <Select.Icon>
@@ -66,6 +67,7 @@ export default function LocaleSwitcherSelect({
               backgroundColor: '#fff',
               padding: '8px 0',
               boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+              fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
             }}
             position="popper"
           >
@@ -81,6 +83,7 @@ export default function LocaleSwitcherSelect({
                     fontSize: '14px',
                     cursor: 'default',
                     backgroundColor: item.value === defaultValue ? '#f0f0f0' : 'transparent',
+                    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
                   }}
                 >
                   <div style={{ marginRight: '8px', width: '16px' }}>
