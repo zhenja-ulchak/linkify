@@ -354,9 +354,9 @@ const DetailsTable: React.FC = () => {
                 </DialogContent>
                 <DialogActions>
 
-                    <Button onClick={handleClose}>Disagree</Button>
+                    <Button onClick={handleClose}>Cancel</Button>
                     <Button onClick={()=>handleSaveChanges()} autoFocus>
-                        Agree
+                        OK
                     </Button>
                 </DialogActions>
             </Dialog>

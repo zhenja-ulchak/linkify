@@ -52,7 +52,11 @@ const Login: React.FC = () => {
 
     try {
       const resp = await ApiService.login<any>(username, password);
- 
+      
+      if (resp?.data?.length > 0 && resp.data[0]?.tanant) {
+        sessionStorage.setItem('tenant', JSON.stringify(resp.data[0]?.tanant.license_valid_until));
+      }
+
       if (resp?.data?.length > 0 && resp.data[0]?.user) {
         sessionStorage.setItem('AuthUser', JSON.stringify(resp.data[0]?.user));
         const obj: any = {
