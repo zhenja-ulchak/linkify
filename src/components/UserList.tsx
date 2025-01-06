@@ -44,7 +44,7 @@ export default function TableHelperUserList({ title }: TableHelperType) {
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const router = useRouter();
     const [rows, setRows] = React.useState<Data[]>([]);  // Zustand für die Zeilen
-    const t = useTranslations('Login');
+    const t = useTranslations('API');
     console.log(rows);
 
 

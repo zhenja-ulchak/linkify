@@ -48,7 +48,7 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
   const router = useRouter();
   const [rows, setRows] = React.useState<Data[]>([]);  // Zustand für die Zeilen
   const [role, setRoles] = React.useState('');
- const t = useTranslations('Login');
+ const t = useTranslations('API');
 
 
   // Data und TenantData Typen
