@@ -59,7 +59,7 @@ export default function TableHelperUserList({ title }: TableHelperType) {
         email: string;
         role: string; // e.g., "admin", "user"
         is_active: boolean;
-       
+
 
     };
 
@@ -69,9 +69,9 @@ export default function TableHelperUserList({ title }: TableHelperType) {
             try {
                 const getToken: any = sessionStorage.getItem('AuthToken');
                 const response: any = await apiService.get("user", getToken);
-                console.log(response);
-
-                console.log(response.data[0]);
+                if (response instanceof Error) {
+                    enqueueSnackbar(response.message, { variant: 'error' });
+                }
 
                 setRows(response.data[0]);
 
@@ -79,7 +79,7 @@ export default function TableHelperUserList({ title }: TableHelperType) {
                 enqueueSnackbar("Дані успішно завантажені!", { variant: "success" }); // Додано сповіщення
 
             } catch (error) {
-          
+
                 enqueueSnackbar("Сталася помилка при завантаженні даних.", { variant: "error" }); // Додано сповіщення про помилку
             }
         };

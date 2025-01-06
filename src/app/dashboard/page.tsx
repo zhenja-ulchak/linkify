@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 const DashboardPage = () => {
   const t = useTranslations("Dashboard");
   return (
-    <div id="ContainerDashboard">
+    <div id="ContainerDashboard" style={{textAlign:'center'}}>
       <h1>{t("dashboard")}</h1>
 
       <p

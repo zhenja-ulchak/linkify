@@ -26,7 +26,7 @@ export const GlobalModalProvider: React.FC<{ children: React.ReactNode }> = ({ c
       const daysRemaining = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
       console.log(certificateExpiryDate);
 
-      if (daysRemaining <= 30) {
+      if (daysRemaining <= 3) {
         setOpen(true);
       }
     };

@@ -171,11 +171,13 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
       return;
     }
     try {
-      await apiService.get(`user/logout`, getToken);
+      const response = await apiService.get(`user/logout`, getToken);
       enqueueSnackbar("Logout erfolgreich!", {
         variant: "success"
       });
-
+      if (response instanceof Error) {
+        enqueueSnackbar(response.message, { variant: 'error' });
+      }
     } catch (error) {
       enqueueSnackbar("Fehler beim Logout. Bitte versuchen Sie es später erneut.", {
         variant: "error"
@@ -277,58 +279,58 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
 
 
           {(() => {
-  const isAdmin = TextRule === 'admin';
-  const isSuperAdmin = TextRule === 'superadmin';
+            const isAdmin = TextRule === 'admin';
+            const isSuperAdmin = TextRule === 'superadmin';
 
-  const adminItems = [
-    { path: "/dashboard/admin/einstellungen", icon: <AdminPanelSettingsIcon style={{ color: "black" }} />, text: "Admin", style: { backgroundColor: "pink" } },
-    { path: `/dashboard/admin/accounting-software/${authUser?.tenant_id || ""}`, icon: <WysiwygIcon style={{ color: "black" }} />, text: "Accounting-software" },
-    { path: `/dashboard/admin/dms-config/${authUser?.tenant_id || ""}`, icon: <EngineeringIcon style={{ color: "black" }} />, text: "Dms-config" },
-    { path: "/dashboard/admin/user-list", icon: <RecentActorsIcon style={{ color: "black" }} />, text: "User-list" },
-    { path: "/dashboard/admin/SMTP-Email", icon: <SupervisorAccountIcon style={{ color: "black" }} />, text: "SMTP-Email" },
-    { path: `/dashboard/admin/tenant/${authUser?.tenant_id || ""}`, icon: <FormatListBulletedIcon style={{ color: "black" }} />, text: "Tenant" },
-  ];
+            const adminItems = [
+              { path: "/dashboard/admin/einstellungen", icon: <AdminPanelSettingsIcon style={{ color: "black" }} />, text: "Admin", style: { backgroundColor: "pink" } },
+              { path: `/dashboard/admin/accounting-software/${authUser?.tenant_id || ""}`, icon: <WysiwygIcon style={{ color: "black" }} />, text: "Accounting-software" },
+              { path: `/dashboard/admin/dms-config/${authUser?.tenant_id || ""}`, icon: <EngineeringIcon style={{ color: "black" }} />, text: "Dms-config" },
+              { path: "/dashboard/admin/user-list", icon: <RecentActorsIcon style={{ color: "black" }} />, text: "User-list" },
+              { path: "/dashboard/admin/SMTP-Email", icon: <SupervisorAccountIcon style={{ color: "black" }} />, text: "SMTP-Email" },
+              { path: `/dashboard/admin/tenant/${authUser?.tenant_id || ""}`, icon: <FormatListBulletedIcon style={{ color: "black" }} />, text: "Tenant" },
+            ];
 
-  const superAdminItems = [
-    { path: "/dashboard/superadmin", icon: <SecurityIcon style={{ color: "black" }} />, text: "Superadmin", style: { backgroundColor: "green" } },
-    { path: "/dashboard/superadmin/accounting-software", icon: <WysiwygIcon style={{ color: "black" }} />, text: "Accounting-software" },
-    { path: "/dashboard/superadmin/dms-config", icon: <EngineeringIcon style={{ color: "black" }} />, text: "Dms-config" },
-    { path: "/dashboard/superadmin/tenant", icon: <FormatListBulletedIcon style={{ color: "black" }} />, text: "Tenant" },
-  ];
+            const superAdminItems = [
+              { path: "/dashboard/superadmin", icon: <SecurityIcon style={{ color: "black" }} />, text: "Superadmin", style: { backgroundColor: "green" } },
+              { path: "/dashboard/superadmin/accounting-software", icon: <WysiwygIcon style={{ color: "black" }} />, text: "Accounting-software" },
+              { path: "/dashboard/superadmin/dms-config", icon: <EngineeringIcon style={{ color: "black" }} />, text: "Dms-config" },
+              { path: "/dashboard/superadmin/tenant", icon: <FormatListBulletedIcon style={{ color: "black" }} />, text: "Tenant" },
+            ];
 
-  const adminSection = isAdmin || isSuperAdmin ? (
-    adminItems.map((item, index) => (
-      <ListItem key={`admin-${index}`} disablePadding style={item.style || {}}>
-        <ListItemButton onClick={() => handleNavigation(item.path)}>
-          <ListItemIcon className="DashboadAndTableIcon">{item.icon}</ListItemIcon>
-          <ListItemText primary={item.text} />
-        </ListItemButton>
-      </ListItem>
-    ))
-  ) : null;
+            const adminSection = isAdmin || isSuperAdmin ? (
+              adminItems.map((item, index) => (
+                <ListItem key={`admin-${index}`} disablePadding style={item.style || {}}>
+                  <ListItemButton onClick={() => handleNavigation(item.path)}>
+                    <ListItemIcon className="DashboadAndTableIcon">{item.icon}</ListItemIcon>
+                    <ListItemText primary={item.text} />
+                  </ListItemButton>
+                </ListItem>
+              ))
+            ) : null;
 
-  const superAdminSection = isSuperAdmin ? (
-    <>
-      <Divider style={{ backgroundColor: "black", height: "2px" }} />
-      {superAdminItems.map((item, index) => (
-        <ListItem key={`superadmin-${index}`} disablePadding style={item.style || {}}>
-          <ListItemButton onClick={() => handleNavigation(item.path)}>
-            <ListItemIcon className="DashboadAndTableIcon">{item.icon}</ListItemIcon>
-            <ListItemText primary={item.text} />
-          </ListItemButton>
-        </ListItem>
-      ))}
-    </>
-  ) : null;
+            const superAdminSection = isSuperAdmin ? (
+              <>
+                <Divider style={{ backgroundColor: "black", height: "2px" }} />
+                {superAdminItems.map((item, index) => (
+                  <ListItem key={`superadmin-${index}`} disablePadding style={item.style || {}}>
+                    <ListItemButton onClick={() => handleNavigation(item.path)}>
+                      <ListItemIcon className="DashboadAndTableIcon">{item.icon}</ListItemIcon>
+                      <ListItemText primary={item.text} />
+                    </ListItemButton>
+                  </ListItem>
+                ))}
+              </>
+            ) : null;
 
-  return (
-    <>
-      <Divider style={{ backgroundColor: "black", height: "2px" }} />
-      {adminSection}
-      {superAdminSection}
-    </>
-  );
-})()}
+            return (
+              <>
+                <Divider style={{ backgroundColor: "black", height: "2px" }} />
+                {adminSection}
+                {superAdminSection}
+              </>
+            );
+          })()}
 
           <Divider style={{ backgroundColor: "black", height: "2px" }} />
 

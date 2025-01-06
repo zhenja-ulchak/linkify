@@ -27,6 +27,7 @@ import ToggleSwitch from "@/components/toggleBtn";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import axios from 'axios';
 import apiService from "@/app/services/apiService";
+import { enqueueSnackbar } from "notistack";
 type Order = "asc" | "desc";
 
 type EnhancedTableType = {
@@ -81,11 +82,15 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
       try {
         const getToken: any = sessionStorage.getItem('AuthToken');
         const response: any = await apiService.get("tenant", getToken);
-        console.log(response);
-        // Перевірка на наявність необхідних даних у відповіді
+      
+        if(response.data[0]){
+              enqueueSnackbar('Дані успішно завантажено!', { variant: 'success' });
+            }
 
         const tenantData: any = response?.data[0];
-        console.log(tenantData);
+        if (response instanceof Error) {
+          enqueueSnackbar(response.message, { variant: 'error' });
+        }
 
         setRows(tenantData);  // Зберігаємо дані в стан
 

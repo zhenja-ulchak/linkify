@@ -10,6 +10,7 @@ import AddIcon from "@mui/icons-material/Add";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ApiService from "../../../../src/app/services/apiService";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, TextField, Button, IconButton, FormControl, InputLabel, Select, MenuItem, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid } from '@mui/material';
+import { enqueueSnackbar } from "notistack";
 
 type TenantDetails = {
     id?: number;
@@ -49,7 +50,7 @@ const DetailsTable: React.FC = () => {
 
 
     const [updatedTenant, setUpdatedTenant] = useState<TenantDetails>({
-  
+
         name: "",
         type: '',
         url: "",
@@ -78,7 +79,7 @@ const DetailsTable: React.FC = () => {
         const newValue = event.target.value;
         setSelectedOption(newValue);
 
-   
+
         setUpdatedTenant((prevTenant) => ({
             ...prevTenant,
             type: newValue,
@@ -102,11 +103,13 @@ const DetailsTable: React.FC = () => {
             try {
                 const Auth: any = sessionStorage.getItem('AuthToken');
                 const response: any = await ApiService.get(`accounting-software`, Auth); //${id}
-
+                if (response instanceof Error) {
+                    enqueueSnackbar(response.message, { variant: 'error' });
+                }
                 setTenantDetails(response?.data[0][0]);
             } catch (error) {
-                console.error("Fehler beim Abrufen der Daten:", error);
-                setError("Fehler beim Abrufen der Daten.");
+               
+                enqueueSnackbar("Сталася помилка при завантаженні даних.", { variant: "error" });
             }
         };
 
@@ -116,20 +119,20 @@ const DetailsTable: React.FC = () => {
     // Обробка змін в полях
     const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-   
-            setUpdatedTenant((prevTenant) => ({
-                ...prevTenant,
-                [name]: value,
-            }));
-        
+
+        setUpdatedTenant((prevTenant) => ({
+            ...prevTenant,
+            [name]: value,
+        }));
+
     };
 
- 
+
 
     const handleSaveChanges = async () => {
 
-        
-        
+
+
         const cleanedObject = removeEmptyValues(updatedTenant);
         console.log(cleanedObject);
         if (validateInputs(cleanedObject)) {
@@ -141,6 +144,9 @@ const DetailsTable: React.FC = () => {
                 if (response.status === 200) {
                     console.log("Дані оновлено:", cleanedObject);
                     setIsEditing(false);
+                }
+                if (response instanceof Error) {
+                    enqueueSnackbar(response.message, { variant: 'error' });
                 }
             } catch (error) {
                 setError("Помилка при збереженні: " + error);
@@ -169,6 +175,9 @@ const DetailsTable: React.FC = () => {
             if (response.status === 200) {
                 console.log("Benutzer gelöscht:", updatedTenant);
                 router.push("/users");
+            }
+            if (response instanceof Error) {
+                enqueueSnackbar(response.message, { variant: 'error' });
             }
         } catch (error) {
             console.error("Fehler beim Löschen:", error);
@@ -355,7 +364,7 @@ const DetailsTable: React.FC = () => {
                 <DialogActions>
 
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={()=>handleSaveChanges()} autoFocus>
+                    <Button onClick={() => handleSaveChanges()} autoFocus>
                         OK
                     </Button>
                 </DialogActions>

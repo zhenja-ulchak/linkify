@@ -10,6 +10,7 @@ import AddIcon from "@mui/icons-material/Add";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ApiService from "../../../../src/app/services/apiService";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, TextField, Button, IconButton, FormControl, InputLabel, Select, MenuItem, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid } from '@mui/material';
+import { enqueueSnackbar } from "notistack";
 type TenantDetails = {
     id?: number;
     tenant_id?: number;
@@ -45,7 +46,7 @@ const DetailsTableDms: React.FC = () => {
 
 
     const [updatedTenant, setUpdatedTenant] = useState<TenantDetails>({
-  
+
         type: "",
         endpoint_url: "",
         username: "",
@@ -73,7 +74,7 @@ const DetailsTableDms: React.FC = () => {
         const newValue = event.target.value;
         setSelectedOption(newValue);
 
-   
+
         setUpdatedTenant((prevTenant) => ({
             ...prevTenant,
             type: newValue,
@@ -96,7 +97,9 @@ const DetailsTableDms: React.FC = () => {
             try {
                 const Auth: any = sessionStorage.getItem('AuthToken');
                 const response: any = await ApiService.get(`dms-config`, Auth); //${id}
-                console.log(response?.data[0][0]);
+                if (response instanceof Error) {
+                    enqueueSnackbar(response.message, { variant: 'error' });
+                }
                 setTenantDetails(response?.data[0][0]);
             } catch (error) {
                 console.error("Fehler beim Abrufen der Daten:", error);
@@ -110,24 +113,27 @@ const DetailsTableDms: React.FC = () => {
     // Обробка змін в полях
     const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-    
-            setUpdatedTenant({
-                ...updatedTenant,
-                [name]: value,
-            });
-       
+
+        setUpdatedTenant({
+            ...updatedTenant,
+            [name]: value,
+        });
+
     };
-console.log(updatedTenant);
+    console.log(updatedTenant);
 
     // Збереження змін
     // Метод для збереження змін
     const handleSaveChanges = async () => {
         const cleanedObject = removeEmptyValues(updatedTenant);  // Функція для очищення порожніх значень
-       
+
         if (validateInputs(cleanedObject)) {
             try {
                 const Auth: any = sessionStorage.getItem('AuthToken');
                 const response: any = await ApiService.put(`dms-config/${tenantDetails?.id}`, cleanedObject, Auth);
+                if (response instanceof Error) {
+                    enqueueSnackbar(response.message, { variant: 'error' });
+                }
                 if (response.status === 200) {
                     console.log("Дані оновлено:", cleanedObject);
                     setOpen(false);
@@ -156,6 +162,9 @@ console.log(updatedTenant);
         try {
             const Auth: any = sessionStorage.getItem('AuthToken');
             const response: any = await ApiService.delete(`dms-config/${id}`, Auth);
+            if (response instanceof Error) {
+                enqueueSnackbar(response.message, { variant: 'error' });
+            }
             if (response.status === 200) {
                 console.log("Benutzer gelöscht:", updatedTenant);
                 router.push("/users");
@@ -324,7 +333,7 @@ console.log(updatedTenant);
                 <DialogActions>
 
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={()=>handleSaveChanges()} autoFocus>
+                    <Button onClick={() => handleSaveChanges()} autoFocus>
                         OK
                     </Button>
                 </DialogActions>

@@ -38,9 +38,8 @@ type UserType = {
   deleted_at: string | null; // може бути null або рядок для дати
 }
 
-// .env datei muss im Root verzeichnis gespeichert sein
-// Die .env Variablen Müssen mit NEXT_PUBLIC anfangen
-// const isDebugON = process.env.NEXT_PUBLIC_APP_DEBUG === "ON" ? true : false;
+// token_expires add time resresh
+
 const Timeout = parseInt(process.env.NEXT_PUBLIC_APP_TIMEOUT || "300", 10);
 const LogoutViewTimer = parseInt(process.env.NEXT_PUBLIC_APP_LOGOUT_VIEW_TIMER || "20", 10);
 
