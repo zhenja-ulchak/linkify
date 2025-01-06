@@ -10,7 +10,7 @@
       "serviceUnavailable": "Service unavailable. Please try again later.",
       "gatewayTimeout": "Gateway Timeout. Please try again later."
     },
-    "login": "Authorization",
+    "login": "Sign in to",
     "username": "Username",
     "password": "Password",
     "loginError": "Incorrect username or password",

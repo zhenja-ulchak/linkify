@@ -18,6 +18,7 @@ import FilePresentIcon from "@mui/icons-material/FilePresent";
 import EmailIcon from "@mui/icons-material/Email";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useRouter } from "next/navigation";
+import { useTranslations } from 'next-intl';
 
 const ConfigPage: React.FC = () => {
   const [openModal, setOpenModal] = useState<
@@ -27,6 +28,7 @@ const ConfigPage: React.FC = () => {
   const [dmsSetting, setDmsSetting] = useState<string>("");
   const [lexofficeSetting, setLexofficeSetting] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
+   const t = useTranslations('einstellungen');
   const router = useRouter();
   // const dmsOptions = [
   //   { name: "SharePoint", type: "sharepoint", description: "Microsoft-based collaborative platform for document management and storage." },

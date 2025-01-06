@@ -10,7 +10,7 @@
         "serviceUnavailable": "Dienst nicht verfügbar. Bitte später erneut versuchen.",
         "gatewayTimeout": "Gateway Timeout. Bitte später erneut versuchen."
       },
-      "login": "Autorisierung",
+      "login": "Anmelden",
       "username": "Benutzername",
       "password": "Passwort",
       "loginError": "Ungültiger Benutzername oder Passwort",
@@ -41,6 +41,7 @@
       "profile": "Profil",
       "logout": "Abmelden"
     },
+
 
     "Document-Table": {
       "document-table": "Dokumenttabelle",

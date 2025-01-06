@@ -11,6 +11,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import ApiService from "../../../../src/app/services/apiService";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, TextField, Button, IconButton, FormControl, InputLabel, Select, MenuItem, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid } from '@mui/material';
 import { enqueueSnackbar } from "notistack";
+import { useTranslations } from 'next-intl';
 
 type TenantDetails = {
     id?: number;
@@ -47,6 +48,7 @@ const DetailsTable: React.FC = () => {
     const [tenantDetails, setTenantDetails] = useState<TenantDetails | null>(null);
     const [open, setOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState('');
+    const t = useTranslations('API');
 
 
     const [updatedTenant, setUpdatedTenant] = useState<TenantDetails>({
@@ -100,17 +102,14 @@ const DetailsTable: React.FC = () => {
                 return;
             }
 
-            try {
                 const Auth: any = sessionStorage.getItem('AuthToken');
                 const response: any = await ApiService.get(`accounting-software`, Auth); //${id}
                 if (response instanceof Error) {
-                    enqueueSnackbar(response.message, { variant: 'error' });
+                            const { status, variant, message } = ApiService.CheckAndShow(response, t);
+                                    // @ts-ignore
+                    enqueueSnackbar(message, { variant: variant});
                 }
                 setTenantDetails(response?.data[0][0]);
-            } catch (error) {
-               
-                enqueueSnackbar("Сталася помилка при завантаженні даних.", { variant: "error" });
-            }
         };
 
         fetchTenantDetails();
@@ -146,7 +145,10 @@ const DetailsTable: React.FC = () => {
                     setIsEditing(false);
                 }
                 if (response instanceof Error) {
-                    enqueueSnackbar(response.message, { variant: 'error' });
+                    const { status, variant, message } = ApiService.CheckAndShow(response, t);
+                            console.log(message);
+                            // @ts-ignore
+                            enqueueSnackbar(message, { variant: variant });
                 }
             } catch (error) {
                 setError("Помилка при збереженні: " + error);

@@ -11,11 +11,11 @@ import ChangeMode from '@/components/DarkLightMode';
 import { SnackbarProvider } from 'notistack';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const [locale, setLocale] = useState<string>('en');
+  const [locale, setLocale] = useState<string>('es');
   const [messages, setMessages] = useState<any>(enMessages);
 
   useEffect(() => {
-    const savedLocale = localStorage.getItem('locale') || 'en';
+    const savedLocale = localStorage.getItem('locale') || 'es';
     setLocale(savedLocale);
 
     // Логика для загрузки сообщений в зависимости от локали

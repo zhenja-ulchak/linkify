@@ -10,7 +10,7 @@
         "serviceUnavailable": "服务不可用。请稍后再试。",
         "gatewayTimeout": "网关超时。请稍后再试。"
       },
-      "login": "授权",
+      "login": "登入",
       "username": "用户名",
       "password": "密码",
       "loginError": "用户名或密码错误",
