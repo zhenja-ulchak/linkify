@@ -9,7 +9,7 @@ import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import AddIcon from "@mui/icons-material/Add";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ApiService from "../../../../src/app/services/apiService";
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, TextField, Button, IconButton, FormControl, InputLabel, Select, MenuItem, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, TextField, Button, IconButton, FormControl, InputLabel, Select, MenuItem, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid } from '@mui/material';
 
 type TenantDetails = {
     id?: number;
@@ -177,89 +177,87 @@ const DetailsTable: React.FC = () => {
     }
 
     return (
+       
         <div id="UserDetailContainer" style={{ display: 'flex', justifyContent: 'center', maxWidth: '800px', margin: '0 auto' }}>
+          
+            <Grid container spacing={2} style={{ width: '100%' }}>
+            <Grid item xs={12} style={{    textAlign: "center"}}>
             <h3>Details</h3>
+            </Grid>
+                <Grid item xs={12}>
+                    <TableContainer component={Paper}>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Feld</TableCell>
+                                    <TableCell>Wert</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {tenantDetails && (
+                                    <>
 
-            <TableContainer component={Paper} style={{ width: '100%' }}>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Feld</TableCell>
-                            <TableCell>Wert</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {tenantDetails && (
-                            <>
+                                        <TableRow>
+                                            <TableCell style={{ fontWeight: 'bold' }}>Name</TableCell>
+                                            <TableCell>{tenantDetails.name}</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell style={{ fontWeight: 'bold' }}>Type</TableCell>
+                                            <TableCell>{tenantDetails.type}</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell style={{ fontWeight: 'bold' }}>URL</TableCell>
+                                            <TableCell>{tenantDetails.url}</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell style={{ fontWeight: 'bold' }}>Organization ID</TableCell>
+                                            <TableCell>{tenantDetails.organization_id}</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell style={{ fontWeight: 'bold' }}>Event Type</TableCell>
+                                            <TableCell>{tenantDetails.event_type ?? "N/A"}</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell style={{ fontWeight: 'bold' }}>Description</TableCell>
+                                            <TableCell>{tenantDetails.description}</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell style={{ fontWeight: 'bold' }}>Region</TableCell>
+                                            <TableCell>{tenantDetails.additional_settings?.region}</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell style={{ fontWeight: 'bold' }}>Active</TableCell>
+                                            <TableCell>{tenantDetails.is_active ? "Yes" : "No"}</TableCell>
+                                        </TableRow>
 
-                                <TableRow>
-                                    <TableCell style={{ fontWeight: 'bold' }}>Name</TableCell>
-                                    <TableCell>{tenantDetails.name}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell style={{ fontWeight: 'bold' }}>Type</TableCell>
-                                    <TableCell>{tenantDetails.type}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell style={{ fontWeight: 'bold' }}>URL</TableCell>
-                                    <TableCell>{tenantDetails.url}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell style={{ fontWeight: 'bold' }}>Organization ID</TableCell>
-                                    <TableCell>{tenantDetails.organization_id}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell style={{ fontWeight: 'bold' }}>Event Type</TableCell>
-                                    <TableCell>{tenantDetails.event_type ?? "N/A"}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell style={{ fontWeight: 'bold' }}>Description</TableCell>
-                                    <TableCell>{tenantDetails.description}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell style={{ fontWeight: 'bold' }}>Region</TableCell>
-                                    <TableCell>{tenantDetails.additional_settings?.region}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell style={{ fontWeight: 'bold' }}>Active</TableCell>
-                                    <TableCell>{tenantDetails.is_active ? "Yes" : "No"}</TableCell>
-                                </TableRow>
+                                    </>
+                                )}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Grid>
 
-                            </>
-                        )}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                <Grid item xs={12} display="flex" justifyContent="space-evenly">
+                    <IconButton color="primary" onClick={handleClickOpen} title="Bearbeiten">
+                        <EditIcon />
+                    </IconButton>
 
-            <div style={{ display: "flex", justifyContent: "space-evenly", marginTop: "10px" }}>
+                    <IconButton color="error" onClick={handleDelete} title="Löschen">
+                        <DeleteIcon />
+                    </IconButton>
+                </Grid>
 
-                <EditIcon onClick={handleClickOpen} />
-
-                {/* <button
-    className="UserDetailButton"
-    title="Bearbeiten"
-    onClick={() => setIsEditing(true)}
->
-    <EditIcon />
-</button> */}
-                <button
-                    className="UserDetailButton"
-                    title="Löschen"
-                    onClick={handleDelete}
-                >
-                    <DeleteIcon />
-                </button>
-            </div>
-
-            <div id="UserDetailModalContainer">
-                <button
-                    className="UserDetailButton"
-                    title="Zurück"
-                    onClick={handleGoingBack}
-                >
-                    <KeyboardBackspaceIcon />
-                </button>
-            </div>
+                <Grid item xs={12}>
+                    <Button
+                        variant="outlined"
+                        startIcon={<KeyboardBackspaceIcon />}
+                        onClick={handleGoingBack}
+                        title="  back"
+                    >
+                          back
+                    </Button>
+                </Grid>
+            </Grid>
             <Dialog
                 open={open}
                 onClose={handleClose}
@@ -348,7 +346,7 @@ const DetailsTable: React.FC = () => {
 
 
 
-                      
+
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
