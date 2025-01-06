@@ -11,8 +11,8 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import ApiService from "../../../../src/app/services/apiService";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, TextField, Button, IconButton, FormControl, InputLabel, Select, MenuItem, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid } from '@mui/material';
 type TenantDetails = {
-    id: number;
-    tenant_id: number;
+    id?: number;
+    tenant_id?: number;
     type: string;
     endpoint_url: string;
     username: string;
@@ -45,8 +45,7 @@ const DetailsTableDms: React.FC = () => {
 
 
     const [updatedTenant, setUpdatedTenant] = useState<TenantDetails>({
-        id: 0,
-        tenant_id: 0,
+  
         type: "",
         endpoint_url: "",
         username: "",
@@ -60,7 +59,7 @@ const DetailsTableDms: React.FC = () => {
     const [modalTextColor, setModalTextColor] = useState("black");
     const [tenantDetails, setTenantDetails] = useState<TenantDetails | null>(null);
     const [open, setOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState(dmsOptions[1] || '');
+    const [selectedOption, setSelectedOption] = useState('');
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -69,15 +68,17 @@ const DetailsTableDms: React.FC = () => {
         setOpen(false);
     };
 
-    const handleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-        setSelectedOption(event.target.value);
+
+    const handleChange = (event: { target: { value: string }; }) => {
+        const newValue = event.target.value;
+        setSelectedOption(newValue);
+
+   
+        setUpdatedTenant((prevTenant) => ({
+            ...prevTenant,
+            type: newValue,
+        }));
     };
-
-
-
-
-
-
 
     useEffect(() => {
         const bodyBackgroundColor = window.getComputedStyle(document.body).backgroundColor;
@@ -109,18 +110,20 @@ const DetailsTableDms: React.FC = () => {
     // Обробка змін в полях
     const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        if (updatedTenant) {
+    
             setUpdatedTenant({
                 ...updatedTenant,
                 [name]: value,
             });
-        }
+       
     };
+console.log(updatedTenant);
 
     // Збереження змін
     // Метод для збереження змін
     const handleSaveChanges = async () => {
         const cleanedObject = removeEmptyValues(updatedTenant);  // Функція для очищення порожніх значень
+       
         if (validateInputs(cleanedObject)) {
             try {
                 const Auth: any = sessionStorage.getItem('AuthToken');
@@ -321,7 +324,7 @@ const DetailsTableDms: React.FC = () => {
                 <DialogActions>
 
                     <Button onClick={handleClose}>Disagree</Button>
-                    <Button onClick={handleSaveChanges} autoFocus>
+                    <Button onClick={()=>handleSaveChanges()} autoFocus>
                         Agree
                     </Button>
                 </DialogActions>

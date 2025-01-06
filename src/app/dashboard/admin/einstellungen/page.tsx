@@ -27,7 +27,7 @@ const ConfigPage: React.FC = () => {
   const [dmsSetting, setDmsSetting] = useState<string>("");
   const [lexofficeSetting, setLexofficeSetting] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
-
+  const router = useRouter();
   // const dmsOptions = [
   //   { name: "SharePoint", type: "sharepoint", description: "Microsoft-based collaborative platform for document management and storage." },
   //   { name: "Eco-dms", type: "ecodms", description: "An affordable and efficient document management system for small businesses." },
@@ -52,43 +52,18 @@ const ConfigPage: React.FC = () => {
     option.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleOpen = (type: "email" | "dms" | "lexoffice") => {
-    setOpenModal(type);
-  };
+
 
   const handleClose = () => {
     setOpenModal(null);
   };
 
-  const handleSave = async () => {
-    try {
-      if (openModal === "email") {
-        await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}settings/email`, {
-          email,
-        });
-      } else if (openModal === "dms") {
-        await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}settings/dms`, {
-          dms: dmsSetting,
-        });
-      } else if (openModal === "lexoffice") {
-        await axios.post(
-          `${process.env.NEXT_PUBLIC_BASE_URL}settings/lexoffice`,
-          {
-            lexoffice: lexofficeSetting,
-          }
-        );
-      }
 
-      handleClose();
-    } catch (error) {
-      console.error("Fehler beim Speichern:", error);
-    }
-  };
 
-  const router = useRouter();
+
 
   function handleClickOnProfile() {
-    router.push("/customer/profile");
+    router.push("/dashboard/profile");
   }
 
   return (
@@ -104,7 +79,7 @@ const ConfigPage: React.FC = () => {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => handleOpen("email")}
+          onClick={() => router.push("/dashboard/admin/SMTP-Email")}
           className="ConfigPageButton"
         >
           <Box className="BoxConfigPageButtonIcon">
@@ -117,7 +92,7 @@ const ConfigPage: React.FC = () => {
         <Button
           variant="contained"
           color="secondary"
-          onClick={() => handleOpen("dms")}
+          onClick={() => router.push("/dashboard/admin/dms-config")}
           className="ConfigPageButton"
         >
           <Box className="BoxConfigPageButtonIcon">
@@ -130,12 +105,12 @@ const ConfigPage: React.FC = () => {
         <Button
           variant="contained"
           color="success"
-          onClick={() => handleOpen("lexoffice")}
+          onClick={() => router.push("/dashboard/admin/accounting-software")}
           className="ConfigPageButton"
         >
           <Box className="BoxConfigPageButtonIcon">
             <EuroIcon className="ConfigPageButtonIcon" />
-            <p className="ConfigPageFont">Lexoffice anpassen</p>
+            <p className="ConfigPageFont">Accounting-Software</p>
           </Box>
         </Button>
 
@@ -221,9 +196,7 @@ const ConfigPage: React.FC = () => {
             <Button variant="outlined" onClick={handleClose}>
               Abbrechen
             </Button>
-            <Button variant="contained" color="primary" onClick={handleSave}>
-              Speichern
-            </Button>
+        
           </Box>
         </Box>
       </Modal>
