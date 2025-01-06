@@ -19,20 +19,41 @@
         "welcome-message": "Привіт і ласкаво просимо! Дякуємо за приєднання до Linkify"
       },
       "Panel-sidebar": {
-        "dashboard": "Приладова панель",
-        "user": "Користувач",
+        "DOCS-LIst": "Список документів",
         "admin": "Адміністратор",
-        "admin-profile": "Профіль адміністратора",
+        "accounting-software": "Бухгалтерське програмне забезпечення",
+        "dms-config": "DMS-конфігурація",
+        "user-list": "Список користувачів",
+        "smtp-email": "SMTP пошта",
+        "tenant": "Орендар",
+        "superadmin": "Суперадміністратор",
         "profile": "Профіль",
-        "logout": "Вийти",
-        "smtp-email": "SMTP-Пошта",
-        "admin-liste": "Список адміністраторів",
-        "Einstellungen": "Налаштування",
-        "Superadmin": "Суперадміністратор"
+        "logout": "Вийти"
       },
       "User-list": {
         "user-list": "Список користувачів"
       },
+
+
+  
+      "Document-Table": {
+        "document-table": "Таблиця документів",
+        "id": "Ідентифікатор",
+        "ExtantanionType": "Тип розширення",
+        "Size": "Размер",
+        "mimeType": "Тип пантомимы",
+        "docName": "Имя документа",
+        "docType": "Тип документа",
+        "docDescription": "Описание документа",
+        "docVersion": "Версия документа",
+        "docParentID": "Родительский идентификатор документа",
+        "docLAstChangeAt": "Последние изменения документа",
+        "syncDms": "Синхронизация Dms",
+        "syncAcaunting": "Синхронизация учета",
+        "Actions": "Действия"
+      },
+
+
       "Admin-profile": {
         "profile": "Профіль",
         "benutzer": "* Користувачі:",

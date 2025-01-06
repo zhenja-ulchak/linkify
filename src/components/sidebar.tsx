@@ -39,6 +39,7 @@ import axios from "axios";
 import CryptoJS from 'crypto-js';
 import apiService from "@/app/services/apiService";
 import { enqueueSnackbar } from "notistack";
+import { useTranslations } from 'next-intl';
 
 
 
@@ -131,7 +132,9 @@ type MiniDrawerProps = {
 };
 
 export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
+  const t = useTranslations('Panel-sidebar');
   const theme = useTheme();
+
   // @ts-ignore
   const authUser = JSON.parse(sessionStorage.getItem('AuthUser'))
   const [TextRule, setTextRule] = useState('');
@@ -268,7 +271,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
               <ListItemIcon className="DashboadAndTableIcon">
                 <DashboardIcon style={{ color: "black" }} />
               </ListItemIcon>
-              <ListItemText primary="DOCS-LIst" />
+              <ListItemText primary={t("DOCS-LIst")} />
             </ListItemButton>
           </ListItem>
 
@@ -281,19 +284,19 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
   const isSuperAdmin = TextRule === 'superadmin';
 
   const adminItems = [
-    { path: "/dashboard/admin/einstellungen", icon: <AdminPanelSettingsIcon style={{ color: "black" }} />, text: "Admin", style: { backgroundColor: "pink" } },
-    { path: `/dashboard/admin/accounting-software/${authUser?.tenant_id || ""}`, icon: <WysiwygIcon style={{ color: "black" }} />, text: "Accounting-software" },
-    { path: `/dashboard/admin/dms-config/${authUser?.tenant_id || ""}`, icon: <EngineeringIcon style={{ color: "black" }} />, text: "Dms-config" },
-    { path: "/dashboard/admin/user-list", icon: <RecentActorsIcon style={{ color: "black" }} />, text: "User-list" },
-    { path: "/dashboard/admin/SMTP-Email", icon: <SupervisorAccountIcon style={{ color: "black" }} />, text: "SMTP-Email" },
-    { path: `/dashboard/admin/tenant/${authUser?.tenant_id || ""}`, icon: <FormatListBulletedIcon style={{ color: "black" }} />, text: "Tenant" },
+    { path: "/dashboard/admin/einstellungen", icon: <AdminPanelSettingsIcon style={{ color: "black" }} />, text: t("admin"), style: { backgroundColor: "pink" } },
+    { path: `/dashboard/admin/accounting-software/${authUser?.tenant_id || ""}`, icon: <WysiwygIcon style={{ color: "black" }} />, text: t("accounting-software") },
+    { path: `/dashboard/admin/dms-config/${authUser?.tenant_id || ""}`, icon: <EngineeringIcon style={{ color: "black" }} />, text: t("dms-config") },
+    { path: "/dashboard/admin/user-list", icon: <RecentActorsIcon style={{ color: "black" }} />, text: t("user-list") },
+    { path: "/dashboard/admin/SMTP-Email", icon: <SupervisorAccountIcon style={{ color: "black" }} />, text: t("smtp-email") },
+    { path: `/dashboard/admin/tenant/${authUser?.tenant_id || ""}`, icon: <FormatListBulletedIcon style={{ color: "black" }} />, text: t("tenant") },
   ];
 
   const superAdminItems = [
-    { path: "/dashboard/superadmin", icon: <SecurityIcon style={{ color: "black" }} />, text: "Superadmin", style: { backgroundColor: "green" } },
-    { path: "/dashboard/superadmin/accounting-software", icon: <WysiwygIcon style={{ color: "black" }} />, text: "Accounting-software" },
-    { path: "/dashboard/superadmin/dms-config", icon: <EngineeringIcon style={{ color: "black" }} />, text: "Dms-config" },
-    { path: "/dashboard/superadmin/tenant", icon: <FormatListBulletedIcon style={{ color: "black" }} />, text: "Tenant" },
+    { path: "/dashboard/superadmin", icon: <SecurityIcon style={{ color: "black" }} />, text: t("superadmin"), style: { backgroundColor: "green" } },
+    { path: "/dashboard/superadmin/accounting-software", icon: <WysiwygIcon style={{ color: "black" }} />, text: t("accounting-software") },
+    { path: "/dashboard/superadmin/dms-config", icon: <EngineeringIcon style={{ color: "black" }} />, text: t("dms-config") },
+    { path: "/dashboard/superadmin/tenant", icon: <FormatListBulletedIcon style={{ color: "black" }} />, text: t("tenant") },
   ];
 
   const adminSection = isAdmin || isSuperAdmin ? (
@@ -344,7 +347,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
               onClick={() => handleNavigation("/dashboard/profile")}
             >
               <AccountCircleIcon />
-              <ListItemText primary="Profile" style={{ marginLeft: "31px" }} />
+              <ListItemText primary={t("profile")}  style={{ marginLeft: "31px" }} />
             </ListItemButton>
           </ListItem>
 
@@ -352,7 +355,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
           <ListItem disablePadding>
             <ListItemButton onClick={() => handleLogout()}>
               <Logout />
-              <ListItemText primary="Logout" style={{ marginLeft: "31px" }} />
+              <ListItemText primary={t("logout")}  style={{ marginLeft: "31px" }} />
             </ListItemButton>
           </ListItem>
 

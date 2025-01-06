@@ -19,17 +19,36 @@
       "welcome-message": "Hello and welcome! Thanks for joining Linkify"
     },
     "Panel-sidebar": {
-      "user": "User",
-      "admin": "Administrator",
-      "admin-profile": "Administrator Profile",
+      "DOCS-LIst": "DOCS-LIst",
+      "admin": "Admin",
+      "accounting-software": "Accounting-software",
+      "dms-config": "DMS-config",
+      "user-list": "User-list",
+      "smtp-email": "SMTP-Email",
+      "tenant": "Tenant",
+      "superadmin": "Superadmin",
       "profile": "Profile",
-      "dashboard": "Dashboard",
-      "logout": "Logout",
-      "smtp-email": "SMTP Mail",
-      "admin-liste": "Administrator List",
-      "Einstellungen": "Settings",
-      "Superadmin": "Super Administrator"
+      "logout": "Logout"
     },
+
+
+    "Document-Table": {
+      "document-table": "Document-Table",
+      "id": "id",
+      "ExtantanionType": "ExtantanionType",
+      "Size": "Size",
+      "mimeType": "mimeType",
+      "docName": "docName",
+      "docType": "docType",
+      "docDescription": "docDescription",
+      "docVersion": "docVersion",
+      "docParentID": "docParentID",
+      "docLAstChangeAt": "docLAstChangeAt",
+      "syncDms": "syncDms",
+      "syncAcaunting": "syncAcaunting",
+      "Actions": "Actions"
+    },
+
     "User-list": {
       "user-list": "User List"
     },

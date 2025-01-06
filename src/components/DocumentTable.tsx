@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Typography } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material';
+import { useTranslations } from 'next-intl';
 
 interface Document {
     id: number;
@@ -29,7 +30,8 @@ const DocumentTable: React.FC = () => {
         setDocumentsList(documentsList.filter(doc => doc.id !== id));
         console.log(`Deleted document with ID: ${id}`);
     };
-
+    
+    const t = useTranslations('Panel-sidebar');
     return (
         <TableContainer component={Paper} sx={{ width: '95%', marginLeft: '86px' }}>
             <Typography

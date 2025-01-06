@@ -19,17 +19,36 @@
         "welcome-message": "Здравствуйте и добро пожаловать! Спасибо, что присоединились к Linkify"
       },
       "Panel-sidebar": {
-        "dashboard": "Панель управления",
-        "user": "Пользователь",
+        "DOCS-LIst": "Список документов",
         "admin": "Администратор",
-        "admin-profile": "Профиль администратора",
+        "accounting-software": "Бухгалтерское программное обеспечение",
+        "dms-config": "DMS-конфигурация",
+        "user-list": "Список пользователей",
+        "smtp-email": "SMTP почта",
+        "tenant": "Арендатор",
+        "superadmin": "Суперадминистратор",
         "profile": "Профиль",
-        "logout": "Выход",
-        "smtp-email": "SMTP-Почта",
-        "admin-liste": "Список администраторов",
-        "Einstellungen": "Настройки",
-        "Superadmin": "Суперадминистратор"
+        "logout": "Выйти"
       },
+
+      "Document-Table": {
+        "document-table": "Таблица документов",
+        "id": "Идентификатор",
+        "ExtantanionType": "Тип расширения",
+        "Size": "Размер",
+        "mimeType": "Тип пантомимы",
+        "docName": "Имя документа",
+        "docType": "Тип документа",
+        "docDescription": "Описание документа",
+        "docVersion": "Версия документа",
+        "docParentID": "Родительский идентификатор документа",
+        "docLAstChangeAt": "Последние изменения документа",
+        "syncDms": "Синхронизация Dms",
+        "syncAcaunting": "Синхронизация учета",
+        "Actions": "Действия"
+      },
+
+
       "User-list": {
         "user-list": "Список пользователей"
       },
