@@ -84,5 +84,18 @@
       "licenseValidity2": "- License Validity",
       "group2": "- Group",
       "save": "Save"
-    }
+    },
+
+      "errors": {
+        "serverError": "Server error. Please try again later.",
+        "unauthorized": "Invalid login credentials!",
+        "notFound": "Not found",
+        "forbidden": "Access denied",
+        "internalServerError": "Internal server error. Please try again later.",
+        "badGateway": "Bad Gateway. Please try again later.",
+        "serviceUnavailable": "Service unavailable. Please try again later.",
+        "gatewayTimeout": "Gateway Timeout. Please try again later."
+      }
+    
+    
   }
