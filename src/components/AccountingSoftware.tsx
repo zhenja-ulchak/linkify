@@ -92,7 +92,7 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
           const { status, variant, message } = apiService.CheckAndShow(response, t);
           console.log(message);
           // @ts-ignore
-          enqueueSnackbar(t(message), { variant: variant });
+          enqueueSnackbar(message, { variant: variant });
         }
      
     };

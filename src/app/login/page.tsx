@@ -59,7 +59,7 @@ const Login: React.FC = () => {
         const { status, variant, message } = ApiService.CheckAndShow(resp, t);
         console.log(message);
         // @ts-ignore
-        enqueueSnackbar(t(message), { variant: variant });
+        enqueueSnackbar(message, { variant: variant });
         }else{
 
 

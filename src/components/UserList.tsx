@@ -77,7 +77,7 @@ export default function TableHelperUserList({ title }: TableHelperType) {
                     const { status, variant, message } = ApiService.CheckAndShow(response, t);
                     console.log(message);
                     // @ts-ignore
-                    enqueueSnackbar(t(message), { variant: variant });
+                    enqueueSnackbar(message, { variant: variant });
                 }
             
         };
