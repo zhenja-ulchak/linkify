@@ -29,6 +29,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import CryptoJS from 'crypto-js';
 import apiService from "@/app/services/apiService";
 import { enqueueSnackbar } from "notistack";
+import { useTranslations } from 'next-intl';
 
 type Order = "asc" | "desc";
 
@@ -47,7 +48,7 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
   const router = useRouter();
   const [rows, setRows] = React.useState<Data[]>([]);  // Zustand für die Zeilen
   const [role, setRoles] = React.useState('');
-
+ const t = useTranslations('Login');
 
 
   // Data und TenantData Typen
@@ -83,21 +84,17 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
 
   React.useEffect(() => {
     const fetchData = async () => {
-      try {
+   
         const getToken: any = sessionStorage.getItem('AuthToken');
         const response: any = await apiService.get("accounting-software", getToken)
-        setRows(response.data[0]); 
-        if(response.data[0]){
-          enqueueSnackbar('Дані успішно завантажено!', { variant: 'success' });
-        }
-
-       
+        setRows(response.data[0]);
         if (response instanceof Error) {
-          enqueueSnackbar(response.message, { variant: 'error' });
+          const { status, variant, message } = apiService.CheckAndShow(response, t);
+          console.log(message);
+          // @ts-ignore
+          enqueueSnackbar(t(message), { variant: variant });
         }
-      } catch (error) {
-        enqueueSnackbar('Помилка при завантаженні даних', { variant: 'error' });
-      }
+     
     };
 
     fetchData();

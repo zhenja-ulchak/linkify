@@ -66,7 +66,7 @@ export default function TableHelperUserList({ title }: TableHelperType) {
 
     React.useEffect(() => {
         const fetchData = async () => {
-            try {
+           
                 const getToken: any = sessionStorage.getItem('AuthToken');
                 const response: any = await ApiService.get("user", getToken);
                 if (response instanceof Error) {
@@ -79,10 +79,7 @@ export default function TableHelperUserList({ title }: TableHelperType) {
                     // @ts-ignore
                     enqueueSnackbar(t(message), { variant: variant });
                 }
-            } catch (error) {
-
-                enqueueSnackbar("Сталася помилка при завантаженні даних.", { variant: "error" }); // Додано сповіщення про помилку
-            }
+            
         };
         fetchData();
     }, []);

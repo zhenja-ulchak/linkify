@@ -99,18 +99,12 @@ const DetailsTable: React.FC = () => {
                 setError("Keine gültige ID angegeben.");
                 return;
             }
-
-            try {
-                const Auth: any = sessionStorage.getItem('AuthToken');
-                const response: any = await ApiService.get(`accounting-software`, Auth); //${id}
-                if (response instanceof Error) {
-                    enqueueSnackbar(response.message, { variant: 'error' });
-                }
-                setTenantDetails(response?.data[0][0]);
-            } catch (error) {
-               
-                enqueueSnackbar("Сталася помилка при завантаженні даних.", { variant: "error" });
+            const Auth: any = sessionStorage.getItem('AuthToken');
+            const response: any = await ApiService.get(`accounting-software`, Auth); //${id}
+            if (response instanceof Error) {
+                enqueueSnackbar(response.message, { variant: 'error' });
             }
+            setTenantDetails(response?.data[0][0]);
         };
 
         fetchTenantDetails();
