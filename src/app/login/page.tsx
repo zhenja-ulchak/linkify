@@ -22,8 +22,6 @@ import CryptoJS from 'crypto-js';
 import { enqueueSnackbar } from "notistack";
 
 
-
-
 const Login: React.FC = () => {
   const router = useRouter();
 
