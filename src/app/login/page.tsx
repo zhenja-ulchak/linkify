@@ -22,8 +22,6 @@ import CryptoJS from 'crypto-js';
 import { enqueueSnackbar } from "notistack";
 
 
-
-
 const Login: React.FC = () => {
   const router = useRouter();
 
@@ -33,7 +31,7 @@ const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // Track login status
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null); // State to track the remaining time
-  const t = useTranslations('Login'); // Переводы для компонента логина
+  const t = useTranslations('API'); // Переводы для компонента логина
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);

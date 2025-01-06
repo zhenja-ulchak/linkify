@@ -99,10 +99,12 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
           enqueueSnackbar(message, { variant: variant });
         }
         setRows(tenantData);  // Зберігаємо дані в стан
-
+        enqueueSnackbar('Дані успішно завантажено!', { variant: 'success' });
       } catch (error) {
         console.error('Помилка при отриманні даних:', error);
+        enqueueSnackbar('Помилка при завантаженні даних', { variant: 'error' });
       }
+    
     };
 
     fetchData();

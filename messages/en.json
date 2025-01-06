@@ -1,101 +1,139 @@
 {
-    "Login": {
-      "login": "Authorization",
-      "username": "Username",
-      "password": "Password",
-      "loginError": "Incorrect username or password",
-      "registrierung": "Registration",
-      "passwort-vergessen": "Forgot your password?"
+  "API": {
+    "errors": {
+      "serverError": "Server error. Please try again later.",
+      "unauthorized": "Invalid login credentials!",
+      "notFound": "Not found",
+      "forbidden": "Access denied",
+      "internalServerError": "Internal server error. Please try again later.",
+      "badGateway": "Bad Gateway. Please try again later.",
+      "serviceUnavailable": "Service unavailable. Please try again later.",
+      "gatewayTimeout": "Gateway Timeout. Please try again later."
     },
-    "LocaleSwitcher": {
-      "en": "English",
-      "de": "German",
-      "ua": "Ukrainian",
-      "ru": "Russian",
-      "label": "Change Language"
-    },
-    "Dashboard": {
-      "dashboard": "Dashboard",
-      "welcome-message": "Hello and welcome! Thanks for joining Linkify"
-    },
-    "Panel-sidebar": {
-      "user": "User",
-      "admin": "Administrator",
-      "admin-profile": "Administrator Profile",
-      "profile": "Profile",
-      "dashboard": "Dashboard",
-      "logout": "Logout",
-      "smtp-email": "SMTP Mail",
-      "admin-liste": "Administrator List",
-      "Einstellungen": "Settings",
-      "Superadmin": "Super Administrator"
-    },
-    "User-list": {
-      "user-list": "User List"
-    },
-    "Admin-profile": {
-      "profile": "Profile",
-      "benutzer": "* User:",
-      "rechnungsadresse": "+ Billing address",
-      "benutzername": "Username",
-      "firmenname": "Company name",
-      "name": "Name",
-      "vorname": "Surname",
-      "hausnummer": "Street and house number",
-      "postleitzahl": "Postal code",
-      "ort": "Country",
-      "speichern": "Save"
-    },
-
-    "Smtp-Email": {
-      "smtp-email": "Admin: Configure SMTP email",
-      "smtp-server": "SMTP-Server",
-      "smtp-port": "SMTP-Port",
-      "art-der": "Type of encryption (e.g. SSL, TLS)",
-      "benutzername": "Username",
-      "email-adresse": "E-mail address",
-      "passwort": "Password",
-      "passwort-umschalten": "Toggle password",
-      "passwort-speichern": "Save password",
-      "authentificationLabel": "Automatic authentication",
-      "abbrechen": "Cancel",
-      "test-email-senden": "Send test email",
-      "fertigstellen": "Finish"
-      
-    },
-
-    "Customer": {
-      "profile": "Profile",
-      "benutzername": "Username",
-      "benutzer": "* Users:",
-       "rechungsadresse": "+ Billing address",
-       "firmenname": "Company name",
-       "name": "Name",
-       "vorname": "Surname",
-      "street": "Street and house number",
-      "postalcode": "Postal code",
-      "city": "City",
-      "region": "Region",
-      "land": "Country",
-     "addressAdditional": "Additional Address",
-     "licenseValidity": "License Validity",
-      "group": "Group",
-      "firmenname2": "+ Company name:",
-      "licenseValidity2": "- License Validity",
-      "group2": "- Group",
-      "save": "Save"
-    },
-
-      "errors": {
-        "serverError": "Server error. Please try again later.",
-        "unauthorized": "Invalid login credentials!",
-        "notFound": "Not found",
-        "forbidden": "Access denied",
-        "internalServerError": "Internal server error. Please try again later.",
-        "badGateway": "Bad Gateway. Please try again later.",
-        "serviceUnavailable": "Service unavailable. Please try again later.",
-        "gatewayTimeout": "Gateway Timeout. Please try again later."
-      }
-    
-    
+    "login": "Sign in to",
+    "username": "Username",
+    "password": "Password",
+    "loginError": "Incorrect username or password",
+    "registrierung": "Registration",
+    "passwort-vergessen": "Forgot your password?"
+  },
+  "LocaleSwitcher": {
+    "en": "English",
+    "de": "Deutsch",
+    "ua": "Українська",
+    "ru": "Русский",
+    "zh-CN": "简体中文",
+    "label": "Change Language"
+  },
+  "Dashboard": {
+    "dashboard": "Dashboard",
+    "welcome-message": "Hello and welcome! Thanks for joining Linkify"
+  },
+  "Panel-sidebar": {
+    "DOCS-LIst": "DOCS-LIst",
+    "admin": "Admin",
+    "accounting-software": "Accounting-software",
+    "dms-config": "DMS-config",
+    "user-list": "User-list",
+    "smtp-email": "SMTP-Email",
+    "tenant": "Tenant",
+    "superadmin": "Superadmin",
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+  "Document-Table": {
+    "document-table": "Document-Table",
+    "id": "id",
+    "ExtantanionType": "ExtantanionType",
+    "Size": "Size",
+    "mimeType": "mimeType",
+    "docName": "docName",
+    "docType": "docType",
+    "docDescription": "docDescription",
+    "docVersion": "docVersion",
+    "docParentID": "docParentID",
+    "docLAstChangeAt": "docLAstChangeAt",
+    "syncDms": "syncDms",
+    "syncAcaunting": "syncAcaunting",
+    "Actions": "Actions"
+  },
+  "User-list": {
+    "user-list": "User List"
+  },
+  "Admin-profile": {
+    "profile": "Profile",
+    "benutzer": "* User:",
+    "rechnungsadresse": "+ Billing address",
+    "benutzername": "Username",
+    "firmenname": "Company name",
+    "name": "Name",
+    "vorname": "Surname",
+    "hausnummer": "Street and house number",
+    "postleitzahl": "Postal code",
+    "ort": "Country",
+    "speichern": "Save"
+  },
+  "Smtp-Email": {
+    "smtp-email": "Admin: Configure SMTP email",
+    "smtp-server": "SMTP-Server",
+    "smtp-port": "SMTP-Port",
+    "art-der": "Type of encryption (e.g. SSL, TLS)",
+    "benutzername": "Username",
+    "email-adresse": "E-mail address",
+    "passwort": "Password",
+    "passwort-umschalten": "Toggle password",
+    "passwort-speichern": "Save password",
+    "authentificationLabel": "Automatic authentication",
+    "abbrechen": "Cancel",
+    "test-email-senden": "Send test email",
+    "fertigstellen": "Finish"
+  },
+  "Registrierung": {
+    "benutzername-muss": "Username must contain at least 4 characters.",
+    "darf": "Username must not contain special characters.",
+    "passworter": "Passwords do not match.",
+    "pass-muss": "The password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number and one special character (!@#$%^&*?).",
+    "erfolgreich": "Successfully registered, you will be redirected.",
+    "email-ist": "Email is already taken:",
+    "serverfehler": "Server error, please try again later:",
+    "unbekannter": "An unknown error has occurred.",
+    "zuruck": "back to login",
+    "registrierung": "Registration",
+    "vorname": "First Name",
+    "nachname": "Last Name",
+    "adresse": "Address",
+    "hausnummer": "House number",
+    "postleitzahl": "Postal code",
+    "ort": "Location",
+    "region": "Region",
+    "land": "Country",
+    "adresszusatz": "Additional address",
+    "firma": "Company",
+    "benutzername": "Username",
+    "email": "E-Mail",
+    "passwort": "Password",
+    "passwort-bestatigen": "Confirm password"
+  },
+  "Customer": {
+    "profile": "Profile",
+    "benutzername": "Username",
+    "benutzer": "* Users:",
+    "rechungsadresse": "+ Billing address",
+    "firmenname": "Company name",
+    "name": "Name",
+    "vorname": "Surname",
+    "street": "Street and house number",
+    "postalcode": "Postal code",
+    "city": "City",
+    "region": "Region",
+    "land": "Country",
+    "addressAdditional": "Additional Address",
+    "licenseValidity": "License Validity",
+    "group": "Group",
+    "firmenname2": "+ Company name:",
+    "licenseValidity2": "- License Validity",
+    "group2": "- Group",
+    "save": "Save"
   }
+
+}

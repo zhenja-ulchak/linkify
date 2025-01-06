@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Typography } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material';
+import { useTranslations } from 'next-intl';
 
 interface Document {
     id: number;
@@ -29,7 +30,8 @@ const DocumentTable: React.FC = () => {
         setDocumentsList(documentsList.filter(doc => doc.id !== id));
         console.log(`Deleted document with ID: ${id}`);
     };
-
+    
+    const t = useTranslations('Document-Table');
     return (
         <TableContainer component={Paper} sx={{ width: '95%', marginLeft: '86px' }}>
             <Typography
@@ -37,24 +39,24 @@ const DocumentTable: React.FC = () => {
                 align="center"
                 sx={{ fontWeight: 'bold', fontSize: '1.5rem', marginBottom: '16px' }}
             >
-                Document Table
+                {t('document-table')}
             </Typography>
             <Table>
                 <TableHead>
                     <TableRow>
-                        <TableCell>id</TableCell>
-                        <TableCell>ExtantanionType</TableCell>
-                        <TableCell>Size</TableCell>
-                        <TableCell>mimeType</TableCell>
-                        <TableCell>docName</TableCell>
-                        <TableCell>docType</TableCell>
-                        <TableCell>docDescription</TableCell>
-                        <TableCell>docVersion</TableCell>
-                        <TableCell>docParentID</TableCell>
-                        <TableCell>docLAstChangeAt</TableCell>
-                        <TableCell>syncDms</TableCell>
-                        <TableCell>syncAcaunting</TableCell>
-                        <TableCell>Actions</TableCell>
+                        <TableCell>{t('id')}</TableCell>
+                        <TableCell>{t('ExtantanionType')}</TableCell>
+                        <TableCell>{t('Size')}</TableCell>
+                        <TableCell>{t('mimeType')}</TableCell>
+                        <TableCell>{t('docName')}</TableCell>
+                        <TableCell>{t('docType')}</TableCell>
+                        <TableCell>{t('docDescription')}</TableCell>
+                        <TableCell>{t('docVersion')}</TableCell>
+                        <TableCell>{t('docParentID')}</TableCell>
+                        <TableCell>{t('docLAstChangeAt')}</TableCell>
+                        <TableCell>{t('syncDms')}</TableCell>
+                        <TableCell>{t('syncAcaunting')}</TableCell>
+                        <TableCell>{t('Actions')}</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>

@@ -1,6 +1,16 @@
 {
-    "Login": {
-      "login": "Autorisierung",
+    "API": {
+      "errors": {
+        "serverError": "Serverfehler. Bitte später erneut versuchen.",
+        "unauthorized": "Ungültige Anmeldedaten!",
+        "notFound": "Nicht gefunden",
+        "forbidden": "Zugriff verweigert",
+        "internalServerError": "Interner Serverfehler. Bitte später erneut versuchen.",
+        "badGateway": "Bad Gateway. Bitte später erneut versuchen.",
+        "serviceUnavailable": "Dienst nicht verfügbar. Bitte später erneut versuchen.",
+        "gatewayTimeout": "Gateway Timeout. Bitte später erneut versuchen."
+      },
+      "login": "Anmelden",
       "username": "Benutzername",
       "password": "Passwort",
       "loginError": "Ungültiger Benutzername oder Passwort",
@@ -8,28 +18,49 @@
       "passwort-vergessen": "Passwort vergessen?"
     },
     "LocaleSwitcher": {
-      "en": "Englisch",
+      "en": "English",
       "de": "Deutsch",
-      "ua": "Ukrainisch",
-      "ru": "Russisch",
-      "label": "Sprache ändern"
+      "ua": "Українська",
+      "ru": "Русский",
+      "zh-CN": "简体中文",
+      "label": "Change Language"
     },
     "Dashboard": {
       "dashboard": "Dashboard",
       "welcome-message": "Hallo und herzlich willkommen! Danke, dass Sie Linkify beigetreten sind"
     },
     "Panel-sidebar": {
-      "user": "Benutzer",
-      "admin": "Administrator",
-      "admin-profile": "Administratorprofil",
+      "DOCS-LIst": "DOCS-LIste",
+      "admin": "Admin",
+      "accounting-software": "Buchhaltungssoftware",
+      "dms-config": "DMS-config",
+      "user-list": "Benutzerliste",
+      "smtp-email": "SMTP-Email",
+      "tenant": "Mieter",
+      "superadmin": "Superadmin",
       "profile": "Profil",
-      "dashboard": "Dashboard",
-      "logout": "Abmelden",
-      "smtp-email": "SMTP-Mail",
-      "admin-liste": "Liste der Administratoren",
-      "Einstellungen": "Einstellungen",
-      "Superadmin": "Superadministrator"
+      "logout": "Abmelden"
     },
+
+
+    "Document-Table": {
+      "document-table": "Dokumenttabelle",
+      "id": "id",
+      "ExtantanionType": "Erweiterungstyp",
+      "Size": "Größe",
+      "mimeType": "MIME-Typ",
+      "docName": "Dokumentname",
+      "docType": "Dokumenttyp",
+      "docDescription": "docBeschreibung",
+      "docVersion": "docVersion",
+      "docParentID": "docParentID",
+      "docLAstChangeAt": "docLetzteÄnderungam",
+      "syncDms": "synchronisierenDms",
+      "syncAcaunting": "synchronisieren",
+      "Actions": "Aktionen"
+    },
+
+
     "User-list": {
       "user-list": "Benutzerliste"
     },
@@ -64,6 +95,34 @@
 
     },
 
+    "Registrierung": {
+      "benutzername-muss": "Benutzername muss mindestens 4 Zeichen beinhalten.",
+      "darf": "Benutzername darf keine Sonderzeichen enthalten.",
+      "passworter": "Passwörter stimmen nicht überein.",
+      "pass-muss": "Das Passwort muss mindestens 8 Zeichen lang sein und mindestens einen Großbuchstaben, einen Kleinbuchstaben, eine Zahl und ein Sonderzeichen (!@#$%^&*?) enthalten.",
+      "erfolgreich": "Erfolgreich registriert, Sie werden weitergeleitet.",
+      "email-ist": "Email ist bereits vergeben:",
+      "serverfehler": "Serverfehler, bitte versuchen Sie es später erneut:",
+      "unbekannter": "Ein unbekannter Fehler ist aufgetreten.",
+      "zuruck": "zurück zum Login",
+      "registrierung": "Registrierung",
+      "vorname": "Vorname",
+      "nachname": "Nachname",
+      "adresse": "Adresse",
+      "hausnummer": "Hausnummer",
+      "postleitzahl": "Postleitzahl",
+      "ort": "Ort",
+      "region": "Region",
+      "land": "Land",
+      "adresszusatz": "Adresszusatz",
+      "firma": "Firma",
+      "benutzername": "Benutzername",
+      "email": "E-Mail",
+      "passwort": "Passwort",
+      "passwort-bestatigen": "Passwort bestätigen"
+    },
+
+
 
     "Customer": {
       "profile": "Profil",
@@ -85,17 +144,8 @@
        "licenseValidity2": "- Lizenz Gültigkeit",
         "group2": "- Gruppe",
         "save": "Speichern"
-    },
-    "errors": {
-    "serverError": "Serverfehler. Bitte später erneut versuchen.",
-    "unauthorized": "Ungültige Anmeldedaten!",
-    "notFound": "Nicht gefunden",
-    "forbidden": "Zugriff verweigert",
-    "internalServerError": "Interner Serverfehler. Bitte später erneut versuchen.",
-    "badGateway": "Bad Gateway. Bitte später erneut versuchen.",
-    "serviceUnavailable": "Dienst nicht verfügbar. Bitte später erneut versuchen.",
-    "gatewayTimeout": "Gateway Timeout. Bitte später erneut versuchen."
-  }
+    }
+   
   }
 
   

@@ -14,6 +14,8 @@ import { useRouter } from "next/navigation";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import axios from "axios";
+import LocaleSwitcher from '../../components/LocaleSwitcher';
+import { useTranslations } from 'next-intl';
 
 const Register: React.FC = () => {
   const [firstName, setFirstName] = useState<string>("");
@@ -32,7 +34,9 @@ const Register: React.FC = () => {
   const [showPasswords, setShowPasswords] = useState<boolean>(false);
   const [company, setCompany] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>(""); // Fehlernachricht
-  const [successMessage, setSuccessMessage] = useState<string>(""); // Erfolgsnachricht
+  const [successMessage, setSuccessMessage] = useState<string>("");
+  const t = useTranslations('Registrierung'); 
+  // Erfolgsnachricht
   const router = useRouter();
 
   const border = {
@@ -52,26 +56,24 @@ const Register: React.FC = () => {
     setSuccessMessage(""); // Erfolgsnachricht zurücksetzen
 
     if (username.length < 4) {
-      setErrorMessage("Benutzername muss mindestens 4 Zeichen beinhalten.");
+      setErrorMessage(t('benutzername-muss'));
       return;
     }
 
     // Erlaubt nur alphanumerische Zeichen
     const usernameRegex = /^[a-zA-Z0-9]+$/;
     if (!usernameRegex.test(username)) {
-      setErrorMessage("Benutzername darf keine Sonderzeichen enthalten.");
+      setErrorMessage(t('darf'));
       return;
     }
 
     if (password !== confirmPassword) {
-      setErrorMessage("Passwörter stimmen nicht überein.");
+      setErrorMessage(t('passworter'));
       return;
     }
 
     if (!validatePassword(password)) {
-      setErrorMessage(
-        "Das Passwort muss mindestens 8 Zeichen lang sein und mindestens einen Großbuchstaben, einen Kleinbuchstaben, eine Zahl und ein Sonderzeichen (!@#$%^&*?) enthalten."
-      );
+      setErrorMessage(t('pass-muss'));
       return;
     }
 
@@ -97,19 +99,17 @@ const Register: React.FC = () => {
 
       // Erfolgreiche Registrierung
       if (response.status === 200) {
-        setSuccessMessage(
-          "Erfolgreich registriert, Sie werden weitergeleitet."
-        );
+        setErrorMessage(t('erfolgreich'));
         setTimeout(() => {
           router.push("/customer");
         }, 3000);
       } else {
         // Fehler, wenn Status nicht 200 ist
-        setErrorMessage(`Email ist bereits vergeben: ${response.data.message}`);
+        setErrorMessage(t('email-ist', {message: response.data.message}));
       }
     } catch (error: unknown) {
       console.error(
-        "Serverfehler, bitte versuchen Sie es später erneut:",
+        (t('serverfehler')),
         error
       );
 
@@ -117,7 +117,7 @@ const Register: React.FC = () => {
       if (error instanceof Error) {
         setErrorMessage(error.message); // Nur, wenn `error` vom Typ `Error` ist
       } else {
-        setErrorMessage("Ein unbekannter Fehler ist aufgetreten.");
+        setErrorMessage(t('unbekannter'));
       }
     }
   };
@@ -128,13 +128,16 @@ const Register: React.FC = () => {
 
   return (
     <>
+    <div className="locale-switcher-container" style={{ position: 'absolute', top: '13px', left: '66px' }}>
+      <LocaleSwitcher />
+    </div>
       <Button
         id="LoginBtnOnRegisterPage"
         sx={{ float: "right", marginRight: "10px", marginTop: "10px" }}
         variant="outlined"
         onClick={handleLogin}
       >
-        zurück zum Login
+        {t('zuruck')}
       </Button>
 
       <Container maxWidth="sm">
@@ -161,12 +164,12 @@ const Register: React.FC = () => {
               component="h2"
               gutterBottom
             >
-              Registrierung
+              {t('registrierung')}
             </Typography>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Vorname"
+                  label={t('vorname')}
                   type="text"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
@@ -177,7 +180,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Nachname"
+                  label={t('nachname')}
                   type="text"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
@@ -188,7 +191,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Adresse"
+                  label={t('adresse')}
                   type="text"
                   value={street}
                   onChange={(e) => setStreet(e.target.value)}
@@ -199,7 +202,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Hausnummer"
+                  label={t('hausnummer')}
                   type="text"
                   value={houseNumber}
                   onChange={(e) => setHouseNumber(e.target.value)}
@@ -210,7 +213,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Postleitzahl"
+                  label={t('postleitzahl')}
                   type="text"
                   value={postalCode}
                   onChange={(e) => setPostalCode(e.target.value)}
@@ -221,7 +224,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Ort"
+                  label={t('ort')}
                   type="text"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
@@ -232,7 +235,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Region"
+                  label={t('region')}
                   type="text"
                   value={region}
                   onChange={(e) => setRegion(e.target.value)}
@@ -243,7 +246,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Land"
+                  label={t('land')}
                   type="text"
                   value={country}
                   onChange={(e) => setCountry(e.target.value)}
@@ -254,7 +257,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Adresszusatz"
+                  label={t('adresszusatz')}
                   type="text"
                   value={addressSupplement}
                   onChange={(e) => setAddressSupplement(e.target.value)}
@@ -265,7 +268,7 @@ const Register: React.FC = () => {
 
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Firma"
+                  label={t('firma')}
                   type="text"
                   value={company}
                   onChange={(e) => setCompany(e.target.value)}
@@ -275,7 +278,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  label="Benutzername"
+                  label={t('benutzername')}
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
@@ -286,7 +289,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  label="E-Mail"
+                  label={t('email')}
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -297,7 +300,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  label="Passwort"
+                  label={t('passwort')}
                   type={showPasswords ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -324,7 +327,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  label="Passwort bestätigen"
+                  label={t('passwort-bestatigen')}
                   type={showPasswords ? "text" : "password"}
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
@@ -365,7 +368,7 @@ const Register: React.FC = () => {
 
               <Grid item xs={12}>
                 <Button type="submit" fullWidth variant="contained">
-                  Registrierung
+                  {t('registrierung')}
                 </Button>
               </Grid>
             </Grid>

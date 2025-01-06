@@ -4,27 +4,29 @@ import { CheckIcon, LanguageIcon } from '@heroicons/react/24/solid';
 import * as Select from '@radix-ui/react-select';
 import { useTransition } from 'react';
 import { Locale } from '@/i18n/config';
-import { setUserLocale } from '@/services/locale';
-
-
+import { setUserLocale } from '@/services/locale'; // Функция для смены локали в вашем приложении
 
 type Props = {
   defaultValue: string;
-  items: Array<{ value: string; label: string }>;
+  items: Array<{ value: string; label: string; shortLabel: string }>; // Добавляем shortLabel для сокращения
   label: string;
+  onLocaleChange: (newLocale: string) => void;
 };
 
 export default function LocaleSwitcherSelect({
   defaultValue,
   items,
   label,
+  onLocaleChange,
 }: Props) {
   const [isPending, startTransition] = useTransition();
 
+  // Обработчик изменения локали
   function onChange(value: string) {
     const locale = value as Locale;
     startTransition(() => {
-      setUserLocale(locale);
+      setUserLocale(locale); // Устанавливаем локаль с помощью вашей функции
+      onLocaleChange(locale); // Вызываем переданный колбэк для перезагрузки страницы
     });
   }
 
@@ -42,6 +44,7 @@ export default function LocaleSwitcherSelect({
             backgroundColor: isPending ? '#f0f0f0' : '#fff',
             opacity: isPending ? 0.6 : 1,
             border: '1px solid #ccc',
+            fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
           }}
         >
           <Select.Icon>
@@ -64,6 +67,7 @@ export default function LocaleSwitcherSelect({
               backgroundColor: '#fff',
               padding: '8px 0',
               boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+              fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
             }}
             position="popper"
           >
@@ -79,6 +83,7 @@ export default function LocaleSwitcherSelect({
                     fontSize: '14px',
                     cursor: 'default',
                     backgroundColor: item.value === defaultValue ? '#f0f0f0' : 'transparent',
+                    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
                   }}
                 >
                   <div style={{ marginRight: '8px', width: '16px' }}>
@@ -91,7 +96,12 @@ export default function LocaleSwitcherSelect({
                       />
                     )}
                   </div>
-                  <span style={{ color: '#111827' }}>{item.label}</span>
+                  <span style={{ color: '#111827' }}>
+                    <span style={{ fontSize: '12px', marginRight: '4px' }}>
+                      {item.shortLabel} {/* Сокращение с меньшим размером */}
+                    </span>
+                    {item.label} {/* Полное название языка */}
+                  </span>
                 </Select.Item>
               ))}
             </Select.Viewport>

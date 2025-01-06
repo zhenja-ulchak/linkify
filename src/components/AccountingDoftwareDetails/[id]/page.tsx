@@ -146,7 +146,10 @@ const DetailsTable: React.FC = () => {
                     setIsEditing(false);
                 }
                 if (response instanceof Error) {
-                    enqueueSnackbar(response.message, { variant: 'error' });
+                    const { status, variant, message } = ApiService.CheckAndShow(response, t);
+                            console.log(message);
+                            // @ts-ignore
+                            enqueueSnackbar(message, { variant: variant });
                 }
            
         }
