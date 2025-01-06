@@ -64,6 +64,33 @@
       
     },
 
+    "Registrierung": {
+      "benutzername-muss": "Username must contain at least 4 characters.",
+      "darf": "Username must not contain special characters.",
+      "passworter": "Passwords do not match.",
+      "pass-muss": "The password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number and one special character (!@#$%^&*?).",
+      "erfolgreich": "Successfully registered, you will be redirected.",
+      "email-ist": "Email is already taken:",
+      "serverfehler": "Server error, please try again later:",
+      "unbekannter": "An unknown error has occurred.",
+      "zuruck": "back to login",
+      "registrierung": "Registration",
+      "vorname": "First Name",
+      "nachname": "Last Name",
+      "adresse": "Address",
+      "hausnummer": "House number",
+      "postleitzahl": "Postal code",
+      "ort": "Location",
+      "region": "Region",
+      "land": "Country",
+      "adresszusatz": "Additional address",
+      "firma": "Company",
+      "benutzername": "Username",
+      "email": "E-Mail",
+      "passwort": "Password",
+      "passwort-bestatigen": "Confirm password"
+    },
+
     "Customer": {
       "profile": "Profile",
       "benutzername": "Username",
