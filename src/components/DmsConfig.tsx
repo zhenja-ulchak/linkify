@@ -68,9 +68,9 @@ export default function TableHelperDmsConfig({ title }: TableHelperType) {
             try {
                 const getToken: any = sessionStorage.getItem('AuthToken');
                 const response: any = await apiService.get("dms-config", getToken);
-                console.log(response);
-
-                console.log(response.data[0]);
+                if (response instanceof Error) {
+                    enqueueSnackbar(response.message, { variant: 'error' });
+                }
 
                 setRows(response.data[0]);
 
@@ -78,9 +78,7 @@ export default function TableHelperDmsConfig({ title }: TableHelperType) {
                 enqueueSnackbar("Дані успішно завантажені!", { variant: "success" }); // Додано сповіщення
 
             } catch (error) {
-                console.error('Помилка при отриманні даних:', error);
                 enqueueSnackbar("Сталася помилка при завантаженні даних.", { variant: "error" }); // Додано сповіщення про помилку
-            
             }
         }
 

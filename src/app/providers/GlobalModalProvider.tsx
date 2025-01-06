@@ -5,21 +5,28 @@ import CloseIcon from "@mui/icons-material/Close";
 // Context for modal state
 const GlobalModalContext = createContext({
   open: false,
-  setOpen: (open: boolean) => {},
+  setOpen: (open: boolean) => { },
 });
+
 
 export const GlobalModalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [open, setOpen] = useState(false);
 
+
+
+
+
   useEffect(() => {
     const checkCertificateExpiry = async () => {
-      // Replace with your API call or logic to fetch certificate expiry date
-      const certificateExpiryDate = new Date("2024-02-15"); // Example date
+  
+      const userObj: any = sessionStorage.getItem('tenant')
+      const certificateExpiryDate = new Date(userObj);
       const today = new Date();
       const timeDifference = certificateExpiryDate.getTime() - today.getTime();
       const daysRemaining = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+      console.log(certificateExpiryDate);
 
-      if (daysRemaining <= 30) {
+      if (daysRemaining <= 3) {
         setOpen(true);
       }
     };
@@ -27,11 +34,13 @@ export const GlobalModalProvider: React.FC<{ children: React.ReactNode }> = ({ c
     checkCertificateExpiry();
   }, []);
 
+
+
   return (
     <GlobalModalContext.Provider value={{ open, setOpen }}>
       {children}
       <Modal open={open} onClose={() => setOpen(false)}>
-      <Box
+        <Box
           sx={{
             position: "absolute",
             top: "50%",
@@ -56,7 +65,7 @@ export const GlobalModalProvider: React.FC<{ children: React.ReactNode }> = ({ c
             }}
           >
             <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-             LINKIFY
+              LINKIFY
             </Typography>
             <IconButton
               size="small"
@@ -68,28 +77,26 @@ export const GlobalModalProvider: React.FC<{ children: React.ReactNode }> = ({ c
           </Box>
           <Box sx={{ padding: "24px" }}>
             <Typography variant="h6" gutterBottom>
-            У вас заканчивается время сертификата
+              У вас заканчивается время сертификата
 
 
             </Typography>
             <Typography variant="body1" gutterBottom>
-            Хотите ли вы продолжить время сертификата?
+              Хотите ли вы продолжить время сертификата?
             </Typography>
             <Button
-              variant="contained"
-              color="secondary"
+
               onClick={() => setOpen(false)}
-              sx={{ marginTop: "16px", marginRight:'20px' }}
+              sx={{ marginTop: "16px", marginRight: '20px' }}
             >
-             Cancel
+              Cancel
             </Button>
             <Button
-              variant="contained"
-              color="success"
+
               onClick={() => setOpen(false)}
               sx={{ marginTop: "16px" }}
             >
-             Agree
+              Сontinue
             </Button>
           </Box>
         </Box>

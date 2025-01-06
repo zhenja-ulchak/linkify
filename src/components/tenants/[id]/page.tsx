@@ -336,21 +336,18 @@ const TenantDetails: React.FC = () => {
             />
 
             <Box sx={{ display: "flex", justifyContent: "space-evenly", mt: 2 }}>
+
+              
+             
               <Button
-                variant="contained"
-                color="primary"
-                startIcon={<AddIcon />}
-                onClick={handleSaveChanges}
-              >
-                Speichern
-              </Button>
-              <Button
-                variant="outlined"
-                color="secondary"
-                startIcon={<CancelIcon />}
                 onClick={() => setIsEditing(false)}
               >
-                Schließen
+                Cancel
+              </Button>
+              <Button
+                onClick={handleSaveChanges}
+              >
+                OK
               </Button>
             </Box>
           </Box>

@@ -168,6 +168,7 @@ const Administrator: React.FC = () => {
             error={!!errors.smtpServer}
             helperText={errors.smtpServer}
             required
+            fullWidth
             className="input-group"
           />
         </Grid>
@@ -181,6 +182,7 @@ const Administrator: React.FC = () => {
             error={!!errors.smtpPort}
             helperText={errors.smtpPort}
             required
+            fullWidth
             className="input-group"
           />
         </Grid>
@@ -194,6 +196,7 @@ const Administrator: React.FC = () => {
             error={!!errors.encryption}
             helperText={errors.encryption}
             required
+            fullWidth
             className="input-group"
           />
         </Grid>
@@ -207,6 +210,7 @@ const Administrator: React.FC = () => {
             error={!!errors.username}
             helperText={errors.username}
             required
+            fullWidth
             className="input-group"
           />
         </Grid>
@@ -220,6 +224,7 @@ const Administrator: React.FC = () => {
             error={!!errors.email}
             helperText={errors.email}
             required
+            fullWidth
             className="input-group"
           />
         </Grid>
@@ -234,6 +239,7 @@ const Administrator: React.FC = () => {
             error={!!errors.password}
             helperText={errors.password}
             required
+            fullWidth
             className="input-group ContainerVisibility"
             InputProps={{
               endAdornment: (
@@ -256,7 +262,7 @@ const Administrator: React.FC = () => {
         </Grid>
 
         {/* Optionen */}
-        <Grid item xs={12} marginLeft={"-85px"}>
+        <Grid item xs={12} >
           <FormControlLabel
             control={
               <Switch

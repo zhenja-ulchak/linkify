@@ -10,17 +10,18 @@ import AddIcon from "@mui/icons-material/Add";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ApiService from "../../../../src/app/services/apiService";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, TextField, Button, IconButton, FormControl, InputLabel, Select, MenuItem, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid } from '@mui/material';
+import { enqueueSnackbar } from "notistack";
 
 type TenantDetails = {
     id?: number;
-    tenant_id: number;
+    tenant_id?: number;
     name: string;
     type: string;
     url: string;
     organization_id: string;
     event_type: string | null;
     description: string;
-    additional_settings: {
+    additional_settings?: {
         region: string;
     };
     is_active: number;
@@ -39,22 +40,23 @@ const dmsOptions = [
 
 const DetailsTable: React.FC = () => {
     const { id } = useParams();
-    console.log(id);
-
-    const router = useRouter();
-
+    const router = useRouter()
     const [isEditing, setIsEditing] = useState(false);
+    const [error, setError] = useState<string>("");
+    const [modalTextColor, setModalTextColor] = useState("black");
+    const [tenantDetails, setTenantDetails] = useState<TenantDetails | null>(null);
+    const [open, setOpen] = useState(false);
+    const [selectedOption, setSelectedOption] = useState('');
+
+
     const [updatedTenant, setUpdatedTenant] = useState<TenantDetails>({
-        tenant_id: 0,
+
         name: "",
-        type: "",
+        type: '',
         url: "",
         organization_id: "",
         event_type: null,
         description: "",
-        additional_settings: {
-            region: ""
-        },
         is_active: 0,
         created_by: null,
         updated_by: null,
@@ -62,11 +64,9 @@ const DetailsTable: React.FC = () => {
         updated_at: "",
         deleted_at: null,
     });
-    const [error, setError] = useState<string>("");
-    const [modalTextColor, setModalTextColor] = useState("black");
-    const [tenantDetails, setTenantDetails] = useState<TenantDetails | null>(null);
-    const [open, setOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState(dmsOptions[1] || '');
+    console.log(selectedOption);
+
+
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -75,18 +75,16 @@ const DetailsTable: React.FC = () => {
         setOpen(false);
     };
 
-    const handleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-        setSelectedOption(event.target.value);
+    const handleChange = (event: { target: { value: string }; }) => {
+        const newValue = event.target.value;
+        setSelectedOption(newValue);
+
+
+        setUpdatedTenant((prevTenant) => ({
+            ...prevTenant,
+            type: newValue,
+        }));
     };
-
-
-
-
-
-
-
-
-
 
 
     useEffect(() => {
@@ -105,11 +103,13 @@ const DetailsTable: React.FC = () => {
             try {
                 const Auth: any = sessionStorage.getItem('AuthToken');
                 const response: any = await ApiService.get(`accounting-software`, Auth); //${id}
-                console.log(response?.data[0][0]);
+                if (response instanceof Error) {
+                    enqueueSnackbar(response.message, { variant: 'error' });
+                }
                 setTenantDetails(response?.data[0][0]);
             } catch (error) {
-                console.error("Fehler beim Abrufen der Daten:", error);
-                setError("Fehler beim Abrufen der Daten.");
+               
+                enqueueSnackbar("Сталася помилка при завантаженні даних.", { variant: "error" });
             }
         };
 
@@ -119,25 +119,34 @@ const DetailsTable: React.FC = () => {
     // Обробка змін в полях
     const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        if (updatedTenant) {
-            setUpdatedTenant({
-                ...updatedTenant,
-                [name]: value,
-            });
-        }
+
+        setUpdatedTenant((prevTenant) => ({
+            ...prevTenant,
+            [name]: value,
+        }));
+
     };
 
-    // Збереження змін
-    // Метод для збереження змін
+
+
     const handleSaveChanges = async () => {
-        const cleanedObject = removeEmptyValues(updatedTenant);  // Функція для очищення порожніх значень
+
+
+
+        const cleanedObject = removeEmptyValues(updatedTenant);
+        console.log(cleanedObject);
         if (validateInputs(cleanedObject)) {
             try {
+                console.log(cleanedObject);
+
                 const Auth: any = sessionStorage.getItem('AuthToken');
                 const response: any = await ApiService.put(`accounting-software/${tenantDetails?.id}`, cleanedObject, Auth);
                 if (response.status === 200) {
                     console.log("Дані оновлено:", cleanedObject);
                     setIsEditing(false);
+                }
+                if (response instanceof Error) {
+                    enqueueSnackbar(response.message, { variant: 'error' });
                 }
             } catch (error) {
                 setError("Помилка при збереженні: " + error);
@@ -167,6 +176,9 @@ const DetailsTable: React.FC = () => {
                 console.log("Benutzer gelöscht:", updatedTenant);
                 router.push("/users");
             }
+            if (response instanceof Error) {
+                enqueueSnackbar(response.message, { variant: 'error' });
+            }
         } catch (error) {
             console.error("Fehler beim Löschen:", error);
         }
@@ -177,13 +189,13 @@ const DetailsTable: React.FC = () => {
     }
 
     return (
-       
+
         <div id="UserDetailContainer" style={{ display: 'flex', justifyContent: 'center', maxWidth: '800px', margin: '0 auto' }}>
-          
+
             <Grid container spacing={2} style={{ width: '100%' }}>
-            <Grid item xs={12} style={{    textAlign: "center"}}>
-            <h3>Details</h3>
-            </Grid>
+                <Grid item xs={12} style={{ textAlign: "center" }}>
+                    <h3>Details</h3>
+                </Grid>
                 <Grid item xs={12}>
                     <TableContainer component={Paper}>
                         <Table>
@@ -254,7 +266,7 @@ const DetailsTable: React.FC = () => {
                         onClick={handleGoingBack}
                         title="  back"
                     >
-                          back
+                        back
                     </Button>
                 </Grid>
             </Grid>
@@ -272,7 +284,7 @@ const DetailsTable: React.FC = () => {
 
                         <Box sx={{ marginBottom: 2 }}>
                             <FormControl fullWidth>
-                                <InputLabel id="dms-select-label">DMS</InputLabel>
+                                <InputLabel id="dms-select-label">type</InputLabel>
                                 <Select
                                     labelId="dms-select-label"
                                     value={selectedOption}
@@ -351,9 +363,9 @@ const DetailsTable: React.FC = () => {
                 </DialogContent>
                 <DialogActions>
 
-                    <Button onClick={handleClose}>Disagree</Button>
-                    <Button onClick={handleSaveChanges} autoFocus>
-                        Agree
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={() => handleSaveChanges()} autoFocus>
+                        OK
                     </Button>
                 </DialogActions>
             </Dialog>

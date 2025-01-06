@@ -19,7 +19,7 @@ class ApiService {
   }
 
 
-  public async login<R>(username: string, password: string): Promise<R> {
+  public async login<R>(username: string, password: string): Promise<R | Error> {
     try {
       const response: AxiosResponse<R> = await axios.post(`${this.baseURL}user/login`,
 
@@ -29,22 +29,13 @@ class ApiService {
             'Content-Type': 'application/json',
           },
         });
-        console.log(response);
-        
-
       return response.data;
     } catch (error) {
-      console.log(error);
-
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      } else {
-        throw new Error('An unknown error occurred.');
-      }
+      return  error as Error
     }
   }
 
-  public async get<T>(endpoint: string, token: string ): Promise<T> {
+  public async get<T>(endpoint: string, token: string ): Promise<T | Error> {
     
     try {
       const response: AxiosResponse<T> = await axios.get(`${this.baseURL}${endpoint}`,
@@ -62,15 +53,11 @@ class ApiService {
       return response.data;
     } 
     catch (error) {
-      if (error instanceof Error) {
-        throw new Error((error as Error).message);
-      } else {
-        throw new Error('An unknown error occurred.');
-      }
+      return  error as Error
     }
   }
 
-  public async post<T, R>(endpoint: string, data: T, token: string): Promise<R> {
+  public async post<T, R>(endpoint: string, data: T, token: string): Promise<R | Error> {
     try {
       const response: AxiosResponse<R> = await axios.post(`${this.baseURL}${endpoint}`, data, {
 
@@ -83,15 +70,11 @@ class ApiService {
 
       return response.data;
     } catch (error) {
-      if (error instanceof Error) {
-        throw new Error((error as Error).message);
-      } else {
-        throw new Error('An unknown error occurred.');
-      }
+      return  error as Error
     }
   }
 
-  public async put<T, R>(endpoint: string, data: T, token: string): Promise<R> {
+  public async put<T, R>(endpoint: string, data: T, token: string): Promise<R | Error> {
     try {
       const response: AxiosResponse<R> = await axios.put(
         `${this.baseURL}${endpoint}`,
@@ -107,15 +90,11 @@ class ApiService {
 
       return response.data;
     } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      } else {
-        throw new Error('An unknown error occurred.');
-      }
+      return  error as Error
     }
   }
 
-  public async delete<T>(endpoint: string, token: string): Promise<T> {
+  public async delete<T>(endpoint: string, token: string): Promise<T | Error> {
     try {
       const response: AxiosResponse<T> = await axios.delete(`${this.baseURL}${endpoint}`,{
         headers: {
@@ -125,11 +104,7 @@ class ApiService {
       
       return response.data;
     } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      } else {
-        throw new Error('An unknown error occurred.');
-      }
+      return  error as Error
     }
   }
 

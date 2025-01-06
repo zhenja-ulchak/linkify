@@ -87,9 +87,15 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
         const getToken: any = sessionStorage.getItem('AuthToken');
         const response: any = await apiService.get("accounting-software", getToken)
         setRows(response.data[0]); 
-        enqueueSnackbar('Дані успішно завантажено!', { variant: 'success' });
+        if(response.data[0]){
+          enqueueSnackbar('Дані успішно завантажено!', { variant: 'success' });
+        }
+
+       
+        if (response instanceof Error) {
+          enqueueSnackbar(response.message, { variant: 'error' });
+        }
       } catch (error) {
-        console.error('Помилка при отриманні даних:', error);
         enqueueSnackbar('Помилка при завантаженні даних', { variant: 'error' });
       }
     };
