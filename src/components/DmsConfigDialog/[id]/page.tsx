@@ -46,9 +46,6 @@ const DetailsTableDms: React.FC = () => {
 
     const [isEditing, setIsEditing] = useState(false);
     // const [open, setOpen] = React.useState(false);
-
-
-
     const [updatedTenant, setUpdatedTenant] = useState<TenantDetails>({
 
         type: "",
@@ -255,7 +252,7 @@ const DetailsTableDms: React.FC = () => {
                 aria-describedby="alert-dialog-description"
             >
                 <DialogTitle id="alert-dialog-title">
-                    {"Use Google's location service?"}
+                    {"DMS"}
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
