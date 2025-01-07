@@ -166,7 +166,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
     const getToken: any = sessionStorage.getItem('AuthToken');
     if (!getToken) {
       console.warn("Kein Token gefunden, automatisches Weiterleiten zur Login-Seite.");
-      enqueueSnackbar("Kein Token gefunden. Automatisches Weiterleiten zur Login-Seite.", {
+      enqueueSnackbar(t('logout-message'), {
         variant: "warning"
       });
       router.push("/login");
@@ -175,14 +175,14 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
     }
     try {
       const response = await apiService.get(`user/logout`, getToken);
-      enqueueSnackbar("Logout erfolgreich!", {
-        variant: "success"
+      enqueueSnackbar(t('logout-message'), {
+        variant: 'success',
       });
       if (response instanceof Error) {
         enqueueSnackbar(response.message, { variant: 'error' });
       }
     } catch (error) {
-      enqueueSnackbar("Fehler beim Logout. Bitte versuchen Sie es später erneut.", {
+      enqueueSnackbar(t('fehler-message'), {
         variant: "error"
       });
     }

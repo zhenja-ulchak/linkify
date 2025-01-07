@@ -25,13 +25,13 @@ import { enqueueSnackbar } from "notistack";
 const Login: React.FC = () => {
   const router = useRouter();
 
+  const t = useTranslations('API'); // Переводы для компонента логина
   const [username, setUsername] = useState("super-zhenja@ukr.net"); // super.admin@tenant2.com superadmin          alice.smith@example.com user   john.doe@example.com
   const [password, setPassword] = useState("password123");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // Track login status
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null); // State to track the remaining time
-  const t = useTranslations('API'); // Переводы для компонента логина
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
@@ -48,6 +48,7 @@ const Login: React.FC = () => {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrorMessage(null);
+
 
     try {
       const resp = await ApiService.login<any>(username, password);
@@ -74,7 +75,7 @@ const Login: React.FC = () => {
         };
     
         sessionStorage.setItem('setting', JSON.stringify(obj));
-        enqueueSnackbar('Login erfolgreich!', { variant: 'success' });
+        enqueueSnackbar(t('messages.login'), { variant: 'success' });
       }
 
       if (resp?.data[0]?.user?.username === username) {
@@ -89,12 +90,12 @@ const Login: React.FC = () => {
         const token = resp?.data[0]?.token
         sessionStorage.setItem('AuthToken', `${token}`)
         setIsLoggedIn(true);
-        enqueueSnackbar('Willkommen!', { variant: 'info' });
+        enqueueSnackbar(t('messages.willkommen'), { variant: 'info' });
 
 
         router.push('/dashboard');
       } else {
-        enqueueSnackbar('Login fehlgeschlagen!', { variant: 'error' });
+        enqueueSnackbar(t('messages.login-fehl'), { variant: 'error' });
       }
 
     
@@ -107,19 +108,19 @@ const Login: React.FC = () => {
       if (axios.isAxiosError(error)) {
         // Обробка HTTP-статусів
         if (error.response?.status === 401) {
-          enqueueSnackbar('Ungültige Anmeldedaten!', { variant: 'warning' });
+          enqueueSnackbar(t('messages.ungult'), { variant: 'warning' });
         } else if (error.response?.status === 500) {
-          enqueueSnackbar('Serverfehler. Bitte später erneut versuchen.', { variant: 'error' });
+          enqueueSnackbar(t('messages.serverfehler'), { variant: 'error' });
         } else {
           enqueueSnackbar(
-            error.response?.data?.message || 'Ein unbekannter Fehler ist aufgetreten.',
+            error.response?.data?.message || t('messages.ein-unbekannter'),
             { variant: 'error' }
           );
         }
       } else if (error instanceof Error) {
         enqueueSnackbar(error.message, { variant: 'error' });
       } else {
-        enqueueSnackbar('Netzwerkfehler. Bitte prüfen Sie Ihre Verbindung.', { variant: 'warning' });
+        enqueueSnackbar(t('messages.netzwerkfehler'), { variant: 'warning' });
       }
     }
   }
@@ -136,7 +137,7 @@ const Login: React.FC = () => {
         console.log("Login Refresh erfolgreich!");
       } catch (error) {
        
-        enqueueSnackbar("Fehler beim Refresh:", { variant: 'info' });
+        enqueueSnackbar(t('messages.fehler-beim'), { variant: 'info' });
       }
     }
   }, [isLoggedIn]);

@@ -28,7 +28,7 @@ const ConfigPage: React.FC = () => {
   const [dmsSetting, setDmsSetting] = useState<string>("");
   const [lexofficeSetting, setLexofficeSetting] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
-   const t = useTranslations('einstellungen');
+   const t = useTranslations('API');
   const router = useRouter();
   // const dmsOptions = [
   //   { name: "SharePoint", type: "sharepoint", description: "Microsoft-based collaborative platform for document management and storage." },
@@ -79,7 +79,7 @@ const ConfigPage: React.FC = () => {
     gap={2} // Додаємо відстань між кнопками
   >
     <Typography variant="h4" gutterBottom>
-      Admin
+    {t('einstellungen.admin')}
     </Typography>
 
     {/* Email Button */}
@@ -92,7 +92,7 @@ const ConfigPage: React.FC = () => {
     >
       <Box className="BoxConfigPageButtonIcon" display="flex" alignItems="center" justifyContent="center">
         <EmailIcon className="ConfigPageButtonIcon" />
-        <p className="ConfigPageFont">E-Mail anpassen</p>
+        <p className="ConfigPageFont">{t('einstellungen.email-anpassen')}</p>
       </Box>
     </Button>
 
@@ -106,7 +106,7 @@ const ConfigPage: React.FC = () => {
     >
       <Box className="BoxConfigPageButtonIcon" display="flex" alignItems="center" justifyContent="center">
         <FilePresentIcon className="ConfigPageButtonIcon" />
-        <p className="ConfigPageFont">DMS anpassen</p>
+        <p className="ConfigPageFont">{t('einstellungen.dms-anpassen')}</p>
       </Box>
     </Button>
 
@@ -120,7 +120,7 @@ const ConfigPage: React.FC = () => {
     >
       <Box className="BoxConfigPageButtonIcon" display="flex" alignItems="center" justifyContent="center">
         <EuroIcon className="ConfigPageButtonIcon" />
-        <p className="ConfigPageFont">Accounting-Software</p>
+        <p className="ConfigPageFont">{t('einstellungen.accounting-software')}</p>
       </Box>
     </Button>
 
@@ -134,7 +134,7 @@ const ConfigPage: React.FC = () => {
     >
       <Box className="BoxConfigPageButtonIcon" display="flex" alignItems="center" justifyContent="center">
         <AccountCircleIcon className="ConfigPageButtonIcon" />
-        <p className="ConfigPageFont">Profile anpassen</p>
+        <p className="ConfigPageFont">{t('einstellungen.profile-anpassen')}</p>
       </Box>
     </Button>
   </Box>

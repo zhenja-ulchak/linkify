@@ -1,86 +1,210 @@
 {
-    "API": {
-      "errors": {
-        "serverError": "Помилка сервера. Спробуйте пізніше.",
-        "unauthorized": "Невірні облікові дані!",
-        "notFound": "Не знайдено",
-        "forbidden": "Доступ заборонено",
-        "internalServerError": "Внутрішня помилка сервера. Спробуйте пізніше.",
-        "badGateway": "Поганий шлюз. Спробуйте пізніше.",
-        "serviceUnavailable": "Служба недоступна. Спробуйте пізніше.",
-        "gatewayTimeout": "Часовий ліміт шлюзу. Спробуйте пізніше."
-      },
-      "login": "Увійти в систему",
+  "API": {
+    "errors": {
+      "serverError": "Помилка сервера. Спробуйте пізніше.",
+      "unauthorized": "Невірні облікові дані!",
+      "notFound": "Не знайдено",
+      "forbidden": "Доступ заборонено",
+      "internalServerError": "Внутрішня помилка сервера. Спробуйте пізніше.",
+      "badGateway": "Поганий шлюз. Спробуйте пізніше.",
+      "serviceUnavailable": "Служба недоступна. Спробуйте пізніше.",
+      "gatewayTimeout": "Часовий ліміт шлюзу. Спробуйте пізніше."
+    },
+    "Userlist": {
+      "first_name": "Ім'я",
+      "last_name": "Прізвище",
+      "role": "Роль",
+      "language": "Мова",
       "username": "Ім'я користувача",
-      "password": "Пароль",
-      "loginError": "Невірне ім'я користувача або пароль",
-      "registrierung": "Реєстрація",
-      "passwort-vergessen": "Ви забули свій пароль?"
+      "contact_phone": "Контактний телефон",
+      "email": "Електронна пошта",
+      "is_active": "Активний",
+      "actions": "Дії",
+      "desserts": "вибрати всі десерти",
+      "filterlist": "Список фільтрів",
+      "densepadding": "Щільні відступи",
+      "rowsPerPage": "Рядків на сторінці:"
     },
-    "LocaleSwitcher": {
-      "en": "English",
-      "de": "Deutsch",
-      "ua": "Українська",
-      "ru": "Русский",
-      "zh-CN": "简体中文",
-      "label": "Change Language"
+
+    "messages": {
+      "login": "Успішний вхід!",
+      "willkommen": "Ласкаво просимо!",
+      "login-fehl": "Не вдалося увійти!",
+      "ungult": "Невірні облікові дані!",
+      "serverfehler": "Помилка сервера. Спробуйте пізніше.",
+      "ein-unbekannter": "Сталася невідома помилка.",
+      "netzwerkfehler": "Помилка мережі. Перевірте ваше з'єднання.",
+      "fehler-beim": "Помилка під час оновлення:"
     },
-    "Dashboard": {
-        "dashboard": "Приладова панель",
-        "welcome-message": "Привіт і ласкаво просимо! Дякуємо за приєднання до Linkify"
-      },
-      "Panel-sidebar": {
-        "dashboard": "Приладова панель",
-        "user": "Користувач",
-        "admin": "Адміністратор",
-        "admin-profile": "Профіль адміністратора",
-        "profile": "Профіль",
-        "logout": "Вийти",
-        "smtp-email": "SMTP-Пошта",
-        "admin-liste": "Список адміністраторів",
-        "Einstellungen": "Налаштування",
-        "Superadmin": "Суперадміністратор"
-      },
-      "User-list": {
-        "user-list": "Список користувачів"
-      },
-      "Admin-profile": {
-        "profile": "Профіль",
-        "benutzer": "* Користувачі:",
-        "rechnungsadresse": "+ Платіжна адреса",
-        "benutzername": "Ім'я користувача",
-        "firmenname": "Назва компанії",
-        "name": "Прізвище",
-        "vorname": "Ім'я",
-        "hausnummer": "Вулиця та номер будинку",
-        "postleitzahl": "Поштовий індекс",
-        "ort": "Країна",
-        "speichern": "Зберегти"
-      },
-  
-      "Customer": {
-        "profile": "Профіль",
-        "benutzername": "Ім'я користувача",
-        "benutzer": "* Користувачі:",
-        "rechungsadresse": "+ Платіжна адреса",
-        "firmenname": "Назва компанії",
-         "name": "Прізвище",
-         "vorname": "Ім'я",
-         "street": "Вулиця і номер будинку",
-         "postalcode": "Поштовий індекс",
-         "city": "Місто",
-         "region": "Область",
-         "land": "Країна",
-         "addressAdditional": "Додаткова адреса",
-         "licenseValidity": "Термін дії ліцензії",
-         "group": "Група",
-         "firmenname2": "+ Назва компанії:",
-         "licenseValidity2": "- Термін дії ліцензії",
-         "group2": "- Група",
-         "save": "Зберегти"
 
-      }
 
-    }
-  
-  
+    "einstellungen": {
+      "admin": "Адміністратор",
+      "email-anpassen": "Налаштування E-Mail",
+      "dms-anpassen": "Налаштування DMS",
+      "accounting-software": "Бухгалтерське програмне забезпечення",
+      "profile-anpassen": "Налаштування профілю"
+    },
+    "Smtp": {
+      "smtp-server": "SMTP-сервер не може бути порожнім.",
+      "smtp-port": "Порт SMTP має бути дійсним номером.",
+      "versch": "Потрібне шифрування.",
+      "benutzername": "Ім'я користувача не може бути порожнім.",
+      "bitte-geben": "Будь ласка, введіть дійсну електронну адресу.",
+      "passwort": "Пароль не може бути порожнім.",
+      "bitte-aktiv": "Будь ласка, активуйте опцію «Зберегти пароль»",
+      "smtp-einstel": "Налаштування SMTP успішно збережено!",
+      "fehler": "Помилка збереження налаштувань.",
+      "unbekannter": "Сталася невідома помилка.",
+      "test-email": "Тестовий лист надіслано:",
+      "fehler-beim": "Помилка при перевірці електронної пошти.",
+      "smtp-email": "Адміністратор: налаштування електронної пошти SMTP",
+      "art-der": "Тип шифрування (наприклад, SSL, TLS)",
+      "smtp-port2": "SMTP-порт",
+      "benutzername2": "Ім'я користувача",
+      "email-adresse": "Електронна адреса",
+      "passwort2": "Пароль",
+      "passwort-umschalten": "Переключення пароля",
+      "passwort-speichern": "Зберегти пароль",
+      "authentificationLabel": "Автоматична аутентифікація",
+      "abbrechen": "Скасувати",
+      "test-email-senden": "Надіслати тестовий лист",
+      "fertigstellen": "Завершити"
+    },
+    "Accounting-Software": {
+      "details": "Деталі",
+      "feld": "Поле",
+      "wert": "Значення",
+      "back": "назад",
+      "bearbeiten": "Редагувати",
+      "loschen": "Видалити",
+      "accountingsoftware": "Програмне забезпечення для бухгалтерського обліку",
+      "type": "Тип",
+      "url": "Посилання",
+      "organization_id": "Ідентифікатор організації",
+      "event-type": "Тип події",
+      "description": "Опис",
+      "region": "Область",
+      "cancel": "Скасувати",
+      "ok": "OK",
+      "name": "Ім'я",
+      "active": "Активний",
+      "yes": "Так",
+      "no": "Ні",
+      "endpoint-url": "Посилання кінцевої точки",
+      "username": "Ім'я користувача",
+      "repository": "Репозиторій",
+      "dms-config": "DMS-конфіг",
+      "api_key": "API ключ",
+      "extra_settings": "Додаткові налаштування (JSON)"
+    },
+    "Tenant": {
+      "alle-felder": "Усі поля повинні бути заповнені.",
+      "keine-gultige": "Не надано дійсне посвідчення особи.",
+      "fehler-beim": "Помилка збереження",
+      "details": "Деталі",
+      "feld": "Поле",
+      "wert": "Значення",
+      "id": "ID",
+      "firmenname": "Назва компанії",
+      "adresse": "Адреса",
+      "rechnungsadresse": "Платіжна адреса",
+      "lizenzgultigbis": "Ліцензія дійсна до",
+      "kontakt-email": "Контактний email",
+      "rechungs-email": "Email для рахунків",
+      "kontakt-telefon": "Контактний телефон",
+      "bearbeiten": "Редагувати",
+      "loschen": "Видалити",
+      "back": "Назад",
+      "benutzerdaten": "Редагувати дані користувача",
+      "cancel": "Скасувати",
+      "ok": "OK"
+    },
+    "login": "Увійти в систему",
+    "username": "Ім'я користувача",
+    "password": "Пароль",
+    "loginError": "Невірне ім'я користувача або пароль",
+    "registrierung": "Реєстрація",
+    "passwort-vergessen": "Ви забули свій пароль?"
+  },
+  "LocaleSwitcher": {
+    "en": "English",
+    "de": "Deutsch",
+    "ua": "Українська",
+    "ru": "Русский",
+    "zh-CN": "简体中文",
+    "label": "Change Language"
+  },
+  "Document-Table": {
+    "document-table": "Таблиця документів",
+    "id": "Ідентифікатор",
+    "ExtantanionType": "Тип розширення",
+    "Size": "Розмір",
+    "mimeType": "Тип mime",
+    "docName": "Назва документа",
+    "docType": "Тип документа",
+    "docDescription": "Опис документа",
+    "docVersion": "Версія документа",
+    "docParentID": "Батьківський ідентифікатор документа",
+    "docLAstChangeAt": "Останні зміни документа",
+    "syncDms": "Синхронізація DMS",
+    "syncAcaunting": "Синхронізація обліку",
+    "Actions": "Дії"
+  },
+  "Dashboard": {
+    "dashboard": "Приладова панель",
+    "welcome-message": "Привіт і ласкаво просимо! Дякуємо за приєднання до Linkify"
+  },
+  "Panel-sidebar": {
+    "DOCS-LIst": "Список документів",
+    "admin": "Адміністратор",
+    "accounting-software": "Бухгалтерське програмне забезпечення",
+    "dms-config": "Конфігурація DMS",
+    "user-list": "Список користувачів",
+    "smtp-email": "SMTP пошта",
+    "tenant": "Орендар",
+    "superadmin": "Суперадміністратор",
+    "profile": "Профіль",
+    "logout": "Вийти",
+    "logout-message": "Вихід із системи!",
+    "fehler-message": "Помилка виходу із системи. Будь ласка, повторіть спробу пізніше.",
+    "kein-token": "Токена не знайдено. Автоматичне перенаправлення на сторінку входу."
+  },
+  "User-list": {
+    "user-list": "Список користувачів"
+  },
+  "Admin-profile": {
+    "profile": "Профіль",
+    "benutzer": "* Користувачі:",
+    "rechnungsadresse": "+ Платіжна адреса",
+    "benutzername": "Ім'я користувача",
+    "firmenname": "Назва компанії",
+    "name": "Прізвище",
+    "vorname": "Ім'я",
+    "hausnummer": "Вулиця та номер будинку",
+    "postleitzahl": "Поштовий індекс",
+    "ort": "Країна",
+    "speichern": "Зберегти"
+  },
+  "Customer": {
+    "profile": "Профіль",
+    "benutzername": "Ім'я користувача",
+    "benutzer": "* Користувачі:",
+    "rechungsadresse": "+ Платіжна адреса",
+    "firmenname": "Назва компанії",
+    "name": "Прізвище",
+    "vorname": "Ім'я",
+    "street": "Вулиця і номер будинку",
+    "postalcode": "Поштовий індекс",
+    "city": "Місто",
+    "region": "Область",
+    "land": "Країна",
+    "addressAdditional": "Додаткова адреса",
+    "licenseValidity": "Термін дії ліцензії",
+    "group": "Група",
+    "firmenname2": "+ Назва компанії:",
+    "licenseValidity2": "- Термін дії ліцензії",
+    "group2": "- Група",
+    "save": "Зберегти"
+  }
+}

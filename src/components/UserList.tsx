@@ -125,56 +125,56 @@ export default function TableHelperUserList({ title }: TableHelperType) {
             id: "first_name",
             numeric: false,
             disablePadding: true,
-            label: "first_name",
+            label: t('Userlist.first_name'),
         },
         {
             id: "last_name",
             numeric: false, // Text, daher numeric: false
             disablePadding: false,
-            label: "last_name",
+            label: t('Userlist.last_name'),
         },
         {
             id: "role",
             numeric: false,
             disablePadding: false,
-            label: "role",
+            label: t('Userlist.role'),
         },
         {
             id: "language",
             numeric: false, // Text, daher numeric: false
             disablePadding: false,
-            label: "language",
+            label: t('Userlist.language'),
         },
         {
             id: "username",
             numeric: false, // Text, daher numeric: false
             disablePadding: false,
-            label: "username",
+            label: t('Userlist.username'),
         },
         {
             id: "contact_phone",
             numeric: false, // Text, daher numeric: false
             disablePadding: false,
-            label: "contact_phone",
+            label: t('Userlist.contact_phone'),
         },
         {
             id: "email",
             numeric: false,
             disablePadding: false,
-            label: "email",
+            label: t('Userlist.email'),
         },
         {
             id: "is_active",
             numeric: false,
             disablePadding: false,
-            label: "is_active",
+            label: t('Userlist.is_active'),
         },
 
         {
             id: "actions",
             numeric: false,
             disablePadding: false,
-            label: "Actions",
+            label: t('Userlist.actions'),
         },
     ];
 
@@ -213,7 +213,7 @@ export default function TableHelperUserList({ title }: TableHelperType) {
                             checked={rowCount > 0 && numSelected === rowCount}
                             onChange={onSelectAllClick}
                             inputProps={{
-                                "aria-label": "select all desserts",
+                                "aria-label": t('Userlist.desserts'),
                             }}
                             className="TableCell"
                         />
@@ -296,7 +296,7 @@ export default function TableHelperUserList({ title }: TableHelperType) {
                         </IconButton>
                     </Tooltip>
                 ) : (
-                    <Tooltip className="FilterList" title="Filter list">
+                    <Tooltip className="FilterList" title={t('Userlist.filterlist')}>
                         <IconButton>
                             <FilterListIcon />
                         </IconButton>
@@ -519,6 +519,7 @@ export default function TableHelperUserList({ title }: TableHelperType) {
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
                     className="TableFooter"
+                    labelRowsPerPage={t('Userlist.rowsPerPage')}
                 />
             </Paper>
             <FormControlLabel
@@ -527,7 +528,7 @@ export default function TableHelperUserList({ title }: TableHelperType) {
                     width: "fit-content",
                 }}
                 control={<Switch checked={dense} onChange={handleChangeDense} />}
-                label="Dense padding"
+                label= {t('Userlist.densepadding')}
             />
         </Box>
     );
