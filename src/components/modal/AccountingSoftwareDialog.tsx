@@ -169,7 +169,7 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
                                     fullWidth
                                     label="name"
                                     name="name"
-                                    value={updatedTenant.name}
+                                    value={updatedTenant.name || ""}
                                     onChange={handleInputChange}
                                   
                                     required
@@ -181,7 +181,7 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
                                     fullWidth
                                     label="URL"
                                     name="url"
-                                    value={updatedTenant.url}
+                                    value={updatedTenant.url || ""}
                                     onChange={handleInputChange}
                                  
                                     required
@@ -193,7 +193,7 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
                                     fullWidth
                                     label="Organisation ID"
                                     name="organization_id"
-                                    value={updatedTenant.organization_id}
+                                    value={updatedTenant.organization_id || ""}
                                     onChange={handleInputChange}
                                     placeholder={tenantDetails?.organization_id}
                                     required
@@ -205,7 +205,7 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
                                     fullWidth
                                     label="Event Type"
                                     name="event_type"
-                                    value={updatedTenant.event_type}
+                                    value={updatedTenant.event_type || ""}
                                     onChange={handleInputChange}
                                   
                                 />
@@ -216,7 +216,7 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
                                     fullWidth
                                     label="Description"
                                     name="description"
-                                    value={updatedTenant.description}
+                                    value={updatedTenant.description || ""}
                                     onChange={handleInputChange}
                                
                                 />
@@ -227,7 +227,7 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
                                     fullWidth
                                     label="Region"
                                     name="additional_settings.region"
-                                    value={updatedTenant.additional_settings?.region}
+                                    value={updatedTenant.additional_settings?.region || ""}
                                     onChange={handleInputChange}
                                 
                                 />
