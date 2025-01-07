@@ -266,7 +266,7 @@ const Administrator: React.FC = () => {
           />
         </Grid>
 
-        {/* Optionen */}
+        {/* Optionen
         <Grid item xs={12} >
           <FormControlLabel
             control={
@@ -296,7 +296,7 @@ const Administrator: React.FC = () => {
             label={t("authentificationLabel")}
             id="AuthentificationLabel"
           />
-        </Grid>
+        </Grid> */}
 
         {/* Aktionen */}
         <Grid item xs={12}>

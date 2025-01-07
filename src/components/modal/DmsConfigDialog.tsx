@@ -44,7 +44,7 @@ type AccountingType = {
     tenantDetails: TenantDetails | null
 }
 
-const AccountingDialog = ({ tenantDetails }: AccountingType) => {
+const DMSDialog = ({ tenantDetails }: AccountingType) => {
     const [isEditing, setIsEditing] = useState(false);
     const [updatedTenant, setUpdatedTenant] = useState<any>({
         type: "",
@@ -132,7 +132,7 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
                     onClick={handleClickOpenUpdate}
                     title="Add new accounting-software"
                 >
-                    Add New Accounting Software
+                    Add New DMS config
                 </Button>
             </Box>
             <Dialog
@@ -226,4 +226,4 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
     )
 }
 
-export default AccountingDialog;
+export default DMSDialog;

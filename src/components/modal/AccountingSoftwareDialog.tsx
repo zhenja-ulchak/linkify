@@ -227,7 +227,7 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
                                     fullWidth
                                     label="Region"
                                     name="additional_settings.region"
-                                    value={updatedTenant.additional_settings?.region || ""}
+                                    value={updatedTenant?.additional_settings?.region }
                                     onChange={handleInputChange}
                                 
                                 />
