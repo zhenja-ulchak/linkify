@@ -28,6 +28,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useTranslations } from 'next-intl';
 import ApiService from "../app/services/apiService";
 import { enqueueSnackbar } from "notistack";
+import { Grid } from "@mui/material";
 type Order = "asc" | "desc";
 
 type TableHelperType = {
@@ -217,6 +218,7 @@ export default function TableHelperUserList({ title }: TableHelperType) {
                             }}
                             className="TableCell"
                         />
+                        
                     </TableCell>
                     {headCells.map((headCell: any) => (
                         <TableCell
@@ -391,6 +393,21 @@ export default function TableHelperUserList({ title }: TableHelperType) {
                 flexDirection: "column",
             }}
         >
+    <div
+        id="UserDetailContainer2"
+        style={{
+            display: 'flex',
+            justifyContent: 'center',
+            maxWidth: '800px',
+            margin: '0 auto',
+        }}
+    >
+        <Grid container spacing={2} style={{ width: '100%' }}>
+            <Grid item xs={12} style={{ textAlign: "center" }}>
+                <h3>{t('Accounting-Software.details')}</h3>
+            </Grid>
+        </Grid>
+    </div>
             <Paper sx={{ mb: 1 }} className="TablePaper">
                 <EnhancedTableToolbar numSelected={selected.length} />
                 <TableContainer
