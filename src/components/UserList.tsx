@@ -519,7 +519,6 @@ export default function TableHelperUserList({ title }: TableHelperType) {
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
                     className="TableFooter"
-                    labelRowsPerPage={t('Userlist.rowsPerPage')}
                 />
             </Paper>
             <FormControlLabel
