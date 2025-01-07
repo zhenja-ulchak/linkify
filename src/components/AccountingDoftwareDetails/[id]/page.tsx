@@ -13,7 +13,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import { enqueueSnackbar } from "notistack";
 import { useTranslations } from 'next-intl';
 import AccountingDialog from "@/components/modal/AccountingSoftwareDialog";
-
+import { SelectChangeEvent } from '@mui/material';
 
 
 
@@ -83,12 +83,10 @@ const DetailsTable: React.FC = () => {
         setOpen(false);
     };
 
-    const handleChange = (event: { target: { value: string }; }) => {
-        const newValue = event.target.value;
+    const handleSelectChange = (event: SelectChangeEvent<string>) => {
+        const newValue = event.target.value
         setSelectedOption(newValue);
-
-
-        setUpdatedTenant((prevTenant) => ({
+        setUpdatedTenant((prevTenant: any) => ({
             ...prevTenant,
             type: newValue,
         }));
@@ -143,27 +141,32 @@ const DetailsTable: React.FC = () => {
 
 
 
-    const handleSaveChanges = async () => {
+    const handleSaveChanges = async (e: React.FormEvent) => {
+        e.preventDefault();
+
         const cleanedObject = removeEmptyValues(updatedTenant);
-        console.log(cleanedObject);
-        if (validateInputs(cleanedObject)) {
+        // if (!validateInputs(cleanedObject)) {
+        //     enqueueSnackbar("Please fill all required fields.", { variant: "error" });
+        //     return;
+        // }
 
-            console.log(cleanedObject);
-
-            const Auth: any = sessionStorage.getItem('AuthToken');
-            const response: any = await ApiService.put(`accounting-software/${tenantDetails?.tenant_id}`, cleanedObject, Auth);
-            if (response.status === 200) {
-                console.log("Дані оновлено:", cleanedObject);
-                setIsEditing(false);
-            }
-            if (response instanceof Error) {
-                const { status, variant, message } = ApiService.CheckAndShow(response, t);
-                console.log(message);
-                // @ts-ignore
-                enqueueSnackbar(message, { variant: variant });
-            }
-
+        const Auth: any = sessionStorage.getItem('AuthToken');
+        const response: any = await ApiService.put(`accounting-software`, cleanedObject, Auth);
+        if (response instanceof Error) {
+            const { status, variant, message } = ApiService.CheckAndShow(response, t);
+            console.log(message);
+            // @ts-ignore
+            enqueueSnackbar(message, { variant: variant });
         }
+
+        if(response.status === 200){
+            enqueueSnackbar(" Accounting software details updated successfully.", { variant: "success" });
+            setOpen(false);
+        }
+              // @ts-ignore
+        setTenantDetails(cleanedObject);
+        setIsEditing(false);
+       
     };
 
     // Валідація полів
@@ -288,7 +291,7 @@ const DetailsTable: React.FC = () => {
                         )}
                     </Grid>
 
-                    <Grid item xs={12} sx={{textAlign: addNewDetails ? "center" : 'left'}}>
+                    <Grid item xs={12} sx={{ textAlign: addNewDetails ? "center" : 'left' }}>
                         <Button
                             variant="outlined"
                             startIcon={<KeyboardBackspaceIcon />}
@@ -306,92 +309,92 @@ const DetailsTable: React.FC = () => {
                     aria-describedby="alert-dialog-description"
                 >
                     <DialogTitle id="alert-dialog-title">
-                        {"Use Google's location service?"}
+                        {"Сhange Accounting Software"}
                     </DialogTitle>
-                    <DialogContent>
-                        <Typography variant="body1" component="span" id="alert-dialog-description">
-                            <Box sx={{ marginBottom: 2 }}>
-                                <FormControl fullWidth>
-                                    <InputLabel id="dms-select-label">Type</InputLabel>
-                                    <Select
-                                        labelId="dms-select-label"
-                                        value={selectedOption}
-                                        onChange={handleClose}
-                                        label="DMS"
-                                    >
-                                        {dmsOptions.map((option, index) => (
-                                            <MenuItem key={index} value={option}>
-                                                {option}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                            </Box>
+                    <form onSubmit={handleSaveChanges}>
+                        <DialogContent>
+                            <Typography variant="body1" component="span" id="alert-dialog-description">
+                                <Box sx={{ marginBottom: 2 }}>
+                                    <FormControl fullWidth>
+                                        <InputLabel id="dms-select-label">Type</InputLabel>
+                                        <Select
+                                            labelId="dms-select-label"
+                                            value={selectedOption}
+                                            onChange={handleSelectChange}
+                                            label="DMS"
+                                        >
+                                            {dmsOptions.map((option, index) => (
+                                                <MenuItem key={index} value={option}>
+                                                    {option}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
+                                </Box>
 
-                            <Box sx={{ marginBottom: 2 }}>
-                                <TextField
-                                    fullWidth
-                                    label="URL"
-                                    name="url"
-                                    value={updatedTenant.url}
-                                    onChange={handleEditChange}
-                                    placeholder={tenantDetails?.url}
-                                />
-                            </Box>
+                                <Box sx={{ marginBottom: 2 }}>
+                                    <TextField
+                                        fullWidth
+                                        label="URL"
+                                        name="url"
+                                        value={updatedTenant.url || ""}
+                                        onChange={handleEditChange}
+                                        placeholder={tenantDetails?.url || ""}
+                                    />
+                                </Box>
 
-                            <Box sx={{ marginBottom: 2 }}>
-                                <TextField
-                                    fullWidth
-                                    label="Organisation ID"
-                                    name="organization_id"
-                                    value={updatedTenant.organization_id}
-                                    onChange={handleEditChange}
-                                    placeholder={tenantDetails?.organization_id}
-                                />
-                            </Box>
+                                <Box sx={{ marginBottom: 2 }}>
+                                    <TextField
+                                        fullWidth
+                                        label="Organisation ID"
+                                        name="organization_id"
+                                        value={updatedTenant.organization_id || ""}
+                                        onChange={handleEditChange}
+                                        placeholder={tenantDetails?.organization_id || ""}
+                                    />
+                                </Box>
 
-                            <Box sx={{ marginBottom: 2 }}>
-                                <TextField
-                                    fullWidth
-                                    label="Event Type"
-                                    name="event_type"
-                                    value={updatedTenant.event_type}
-                                    onChange={handleEditChange}
-                                    placeholder={tenantDetails?.event_type ?? "N/A"}
-                                />
-                            </Box>
+                                <Box sx={{ marginBottom: 2 }}>
+                                    <TextField
+                                        fullWidth
+                                        label="Event Type"
+                                        name="event_type"
+                                        value={updatedTenant.event_type || ""}
+                                        onChange={handleEditChange}
+                                        placeholder={tenantDetails?.event_type ?? "N/A"}
+                                    />
+                                </Box>
 
-                            <Box sx={{ marginBottom: 2 }}>
-                                <TextField
-                                    fullWidth
-                                    label="Description"
-                                    name="description"
-                                    value={updatedTenant.description}
-                                    onChange={handleEditChange}
-                                    placeholder={tenantDetails?.description}
-                                />
-                            </Box>
+                                <Box sx={{ marginBottom: 2 }}>
+                                    <TextField
+                                        fullWidth
+                                        label="Description"
+                                        name="description"
+                                        value={updatedTenant.description || ""}
+                                        onChange={handleEditChange}
+                                        placeholder={tenantDetails?.description || ""}
+                                    />
+                                </Box>
 
-                            <Box sx={{ marginBottom: 2 }}>
-                                <TextField
-                                    fullWidth
-                                    label="Region"
-                                    name="additional_settings.region"
-                                    value={updatedTenant.additional_settings?.region}
-                                    onChange={handleEditChange}
-                                    placeholder={tenantDetails?.additional_settings?.region}
-                                />
-                            </Box>
-                        </Typography>
-                    </DialogContent>
+                                <Box sx={{ marginBottom: 2 }}>
+                                    <TextField
+                                        fullWidth
+                                        label="Region"
+                                        name="additional_settings.region"
+                                        value={updatedTenant.additional_settings?.region || ""}
+                                        onChange={handleEditChange}
+                                        placeholder={tenantDetails?.additional_settings?.region || ""}
+                                    />
+                                </Box>
+                            </Typography>
+                        </DialogContent>
 
-                    <DialogActions>
+                        <DialogActions>
 
-                        <Button onClick={handleClose}>Cancel</Button>
-                        <Button onClick={() => handleSaveChanges()} autoFocus>
-                            OK
-                        </Button>
-                    </DialogActions>
+                            <Button onClick={handleClose}>Cancel</Button>
+                            <Button type="submit" color="primary">Save</Button>
+                        </DialogActions>
+                    </form>
                 </Dialog>
             </Grid>
         </div>
