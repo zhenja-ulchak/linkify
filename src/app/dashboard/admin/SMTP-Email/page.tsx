@@ -92,6 +92,8 @@ const Administrator: React.FC = () => {
     };
 
     try {
+
+      // to-do fix email/config
       setServerError(null); // Vorherige Fehler zurücksetzen
       await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}email/config`, payload);
       alert("SMTP-Einstellungen erfolgreich gespeichert!");
@@ -117,6 +119,9 @@ const Administrator: React.FC = () => {
       setErrors(newErrors);
       return;
     }
+
+   // to-do fix 
+
 
     try {
       setServerError(null);
@@ -261,7 +266,7 @@ const Administrator: React.FC = () => {
           />
         </Grid>
 
-        {/* Optionen */}
+        {/* Optionen
         <Grid item xs={12} >
           <FormControlLabel
             control={
@@ -291,7 +296,7 @@ const Administrator: React.FC = () => {
             label={t("authentificationLabel")}
             id="AuthentificationLabel"
           />
-        </Grid>
+        </Grid> */}
 
         {/* Aktionen */}
         <Grid item xs={12}>
@@ -317,7 +322,7 @@ const Administrator: React.FC = () => {
               {t("test-email-senden")}
             </Button>
             {isFormValid() && (
-              <Button variant="contained" color="success" onClick={handleSave}>
+              <Button variant="contained" color="success" onClick={()=> handleSave()}>
                 {t("fertigstellen")}
               </Button>
             )}
