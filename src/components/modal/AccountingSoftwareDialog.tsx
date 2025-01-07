@@ -105,7 +105,7 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
         const cleanedObject = removeEmptyValues(updatedTenant);
 
         const Auth: any = sessionStorage.getItem('AuthToken');
-        const response: any = await ApiService.post(`accounting-software/${tenantDetails?.tenant_id}`, cleanedObject, Auth);
+        const response: any = await ApiService.post(`accounting-software`, cleanedObject, Auth);
         if (response instanceof Error) {
             const { status, variant, message } = ApiService.CheckAndShow(response, t);
             console.log(message);
