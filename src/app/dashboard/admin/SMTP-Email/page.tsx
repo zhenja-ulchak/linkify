@@ -17,6 +17,8 @@ import axios from "axios";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useTranslations } from 'next-intl';
+import apiService from "@/app/services/apiService";
+import { enqueueSnackbar } from "notistack";
 
 const Administrator: React.FC = () => {
   // Zustände für Eingaben
@@ -30,11 +32,11 @@ const Administrator: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [autoAuth, setAutoAuth] = useState(false);
   const t = useTranslations('Smtp-Email');
-
+ const tAPI = useTranslations('API');
   // Zustände für Fehlermeldungen
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [serverError, setServerError] = useState<string | null>(null);
-
+  const getToken: any = sessionStorage.getItem('AuthToken');
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
@@ -52,10 +54,7 @@ const Administrator: React.FC = () => {
       newErrors.email = "Bitte geben Sie eine gültige E-Mail-Adresse ein.";
     }
     if (!password) newErrors.password = "Passwort darf nicht leer sein.";
-    if (!savePassword) {
-      newErrors.savePassword =
-        "Bitte aktivieren Sie die Option 'Passwort speichern'.";
-    }
+   
     return newErrors;
   };
 
@@ -69,8 +68,7 @@ const Administrator: React.FC = () => {
       username &&
       email &&
       /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) &&
-      password &&
-      savePassword
+      password 
     );
   };
 
@@ -91,59 +89,65 @@ const Administrator: React.FC = () => {
       autoAuth,
     };
 
-    try {
 
-      // to-do fix email/config
-      setServerError(null); // Vorherige Fehler zurücksetzen
-      await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}email/config`, payload);
-      alert("SMTP-Einstellungen erfolgreich gespeichert!");
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        // Axios-spezifischer Fehler
-        setServerError(
-          error.response?.data?.message || "Fehler beim Speichern der Einstellungen."
-        );
-      } else if (error instanceof Error) {
-        // Allgemeiner JavaScript-Fehler
-        setServerError(error.message);
-      } else {
-        // Fallback für unbekannte Fehler
-        setServerError("Ein unbekannter Fehler ist aufgetreten.");
-      }
+
+    // to-do fix email/config
+    setServerError(null); // Vorherige Fehler zurücksetzen
+
+   console.log(getToken);
+   
+    const response: any = await apiService.post("tenant/email-setting", payload, getToken)
+    if (response instanceof Error) {
+      const { status, variant, message } = apiService.CheckAndShow(response, tAPI);
+      console.log(message);
+      // @ts-ignore
+      enqueueSnackbar(message, { variant: variant });
+    }
+
+    if (response.status === 200) {
+      enqueueSnackbar('Data saved successfully!', { variant: 'success' });
+
+
     }
   };
 
   const handleTestEmail = async () => {
+
+
+    
     const newErrors = validateInputs();
+    console.log(newErrors);
+    
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
-    }
+    }else{
 
-   // to-do fix 
-
-
-    try {
-      setServerError(null);
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}email/test`,
-        { email }
-      );
-      alert(`Test-E-Mail gesendet: ${response.data.message}`);
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        // Axios-spezifischer Fehler
-        setServerError(
-          error.response?.data?.message || "Fehler beim Testen der E-Mail."
-        );
-      } else if (error instanceof Error) {
-        // Allgemeiner JavaScript-Fehler
-        setServerError(error.message);
-      } else {
-        // Fallback für unbekannte Fehler
-        setServerError("Ein unbekannter Fehler ist aufgetreten.");
+      console.log('work');
+      const response: any = await apiService.post("service/test-email",{ email }
+        , getToken)
+   
+   
+      if (response instanceof Error) {
+        const { status, variant, message } = apiService.CheckAndShow(response, tAPI);
+        console.log(message);
+        // @ts-ignore
+        enqueueSnackbar(message, { variant: variant });
       }
+      console.log(response.status);
+      if (response.status === 200) {
+        enqueueSnackbar('Data saved successfully!', { variant: 'success' });
+      }
+
     }
+
+    // to-do fix 
+
+
+    
+      // setServerError(null);
+
+     
   };
 
 
@@ -317,12 +321,12 @@ const Administrator: React.FC = () => {
             <Button
               variant="contained"
               color="primary"
-              onClick={handleTestEmail}
+              onClick={()=>handleTestEmail()}
             >
               {t("test-email-senden")}
             </Button>
             {isFormValid() && (
-              <Button variant="contained" color="success" onClick={()=> handleSave()}>
+              <Button variant="contained" color="success" onClick={() => handleSave()}>
                 {t("fertigstellen")}
               </Button>
             )}
