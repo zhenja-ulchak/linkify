@@ -106,8 +106,13 @@ const DMSDialog = ({ tenantDetails }: AccountingType) => {
         const cleanedObject = removeEmptyValues(updatedTenant);
 
         const Auth: any = sessionStorage.getItem('AuthToken');
-        const response: any = await ApiService.post(`accounting-software/${tenantDetails?.tenant_id}`, cleanedObject, Auth);
-
+        const response: any = await ApiService.post(`dms-config`, cleanedObject, Auth);
+        if (response instanceof Error) {
+            const { status, variant, message } = ApiService.CheckAndShow(response, t);
+            console.log(message);
+            // @ts-ignore
+            enqueueSnackbar(message, { variant: variant });
+        }
         if (response.status === 200) {
             enqueueSnackbar('Data saved successfully!', { variant: 'success' });
             setOpen(false);
@@ -172,7 +177,7 @@ const DMSDialog = ({ tenantDetails }: AccountingType) => {
                                     name="username"
                                     value={updatedTenant.username || ""}
                                     onChange={handleInputChange}
-                             
+
                                 />
                             </Box>
 
@@ -183,7 +188,7 @@ const DMSDialog = ({ tenantDetails }: AccountingType) => {
                                     name="repository"
                                     value={updatedTenant.repository || ""}
                                     onChange={handleInputChange}
-                          
+
                                 />
                             </Box>
 
@@ -194,7 +199,7 @@ const DMSDialog = ({ tenantDetails }: AccountingType) => {
                                     name="api_key"
                                     value={updatedTenant.api_key || ""}
                                     onChange={handleInputChange}
-                               
+
                                 />
                             </Box>
 
@@ -205,7 +210,7 @@ const DMSDialog = ({ tenantDetails }: AccountingType) => {
                                     name="extra_settings"
                                     value={updatedTenant.extra_settings || ""}
                                     onChange={handleInputChange}
-                                
+
                                     multiline
                                     rows={4}
                                 />
@@ -216,7 +221,7 @@ const DMSDialog = ({ tenantDetails }: AccountingType) => {
                     <DialogActions>
                         <Button onClick={handleClose}>Cancel</Button>
                         <Button type="submit" autoFocus>
-                            Update
+                            Create
                         </Button>
                     </DialogActions>
                 </form>

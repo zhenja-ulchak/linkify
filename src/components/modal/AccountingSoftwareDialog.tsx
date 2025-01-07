@@ -77,18 +77,18 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
         const newValue = event.target.value
         setSelectedOption(newValue);
         setUpdatedTenant((prevTenant: any) => ({
-          ...prevTenant,
-          type: newValue,
+            ...prevTenant,
+            type: newValue,
         }));
-      };
+    };
 
-      const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setUpdatedTenant((prevTenant: any) => ({
-          ...prevTenant,
-          [name]: value,
+            ...prevTenant,
+            [name]: value,
         }));
-      };
+    };
 
     const handleCloseUpdate = (event: { target: { value: string }; }) => {
         const newValue = event.target.value;
@@ -104,14 +104,19 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
         e.preventDefault();
         const cleanedObject = removeEmptyValues(updatedTenant);
 
-            const Auth: any = sessionStorage.getItem('AuthToken');
-            const response: any = await ApiService.post(`accounting-software/${tenantDetails?.tenant_id}`, cleanedObject, Auth);
+        const Auth: any = sessionStorage.getItem('AuthToken');
+        const response: any = await ApiService.post(`accounting-software`, cleanedObject, Auth);
+        if (response instanceof Error) {
+            const { status, variant, message } = ApiService.CheckAndShow(response, t);
+            console.log(message);
+            // @ts-ignore
+            enqueueSnackbar(message, { variant: variant });
+        }
+        if (response.status === 200) {
+            enqueueSnackbar('Data saved successfully!', { variant: 'success' });
+            setOpen(false);
+        }
 
-            if (response.status === 200) {
-                enqueueSnackbar('Data saved successfully!', { variant: 'success' });
-                setOpen(false);
-            }
-        
     };
 
 
@@ -171,7 +176,7 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
                                     name="name"
                                     value={updatedTenant.name || ""}
                                     onChange={handleInputChange}
-                                  
+
                                     required
                                 />
                             </Box>
@@ -183,7 +188,7 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
                                     name="url"
                                     value={updatedTenant.url || ""}
                                     onChange={handleInputChange}
-                                 
+
                                     required
                                 />
                             </Box>
@@ -196,7 +201,7 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
                                     value={updatedTenant.organization_id || ""}
                                     onChange={handleInputChange}
                                     placeholder={tenantDetails?.organization_id}
-                                    required
+
                                 />
                             </Box>
 
@@ -207,7 +212,7 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
                                     name="event_type"
                                     value={updatedTenant.event_type || ""}
                                     onChange={handleInputChange}
-                                  
+
                                 />
                             </Box>
 
@@ -218,7 +223,7 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
                                     name="description"
                                     value={updatedTenant.description || ""}
                                     onChange={handleInputChange}
-                               
+
                                 />
                             </Box>
 
@@ -227,9 +232,9 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
                                     fullWidth
                                     label="Region"
                                     name="additional_settings.region"
-                                    value={updatedTenant?.additional_settings?.region }
+                                    value={updatedTenant?.additional_settings?.region}
                                     onChange={handleInputChange}
-                                
+
                                 />
                             </Box>
                         </Typography>
@@ -238,7 +243,7 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
                     <DialogActions>
                         <Button onClick={handleClose}>Cancel</Button>
                         <Button type="submit" autoFocus>
-                            Update
+                            Create
                         </Button>
                     </DialogActions>
                 </form>
