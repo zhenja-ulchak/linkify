@@ -9,6 +9,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import AddIcon from "@mui/icons-material/Add";
 import CancelIcon from "@mui/icons-material/Cancel";
+import ApiService from "../../../../src/app/services/apiService";
+import { useTranslations } from 'next-intl';
 
 type User = {
   id: number;
@@ -23,9 +25,10 @@ type User = {
 };
 
 const UserDetail: React.FC = () => {
+  const Auth: any = sessionStorage.getItem('AuthToken')
   const { id } = useParams();
   const router = useRouter();
-
+  const t = useTranslations('API');
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState<string>("");
   const [updatedUser, setUpdatedUser] = useState<User>({
@@ -48,15 +51,18 @@ const UserDetail: React.FC = () => {
         return;
       }
 
-      try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}user/${id}`);
-        if (response.status === 200) {
-          setUser([response.data]);
-        }
-      } catch (error) {
-        console.error("Fehler beim Abrufen der Daten:", error);
-        setError("Fehler beim Abrufen der Daten.");
+
+      const response: any = await ApiService.get(`/user/${id}`, Auth);
+      if (response.status === 200) {
+        setUser([response.data]);
       }
+      if (response instanceof Error) {
+        const { status, variant, message } = ApiService.CheckAndShow(response, t);
+        console.log(message);
+        // @ts-ignore
+        enqueueSnackbar(message, { variant: variant });
+      }
+
     };
 
     fetchElements();
@@ -89,9 +95,9 @@ const UserDetail: React.FC = () => {
   const handleSaveChanges = async () => {
     if (validateInputs()) {
       try {
-        const response = await axios.put(
-          `${process.env.NEXT_PUBLIC_BASE_URL}user/${updatedUser?.id}`,
-          updatedUser
+        const response: any = await ApiService.put(
+          `user/${updatedUser?.id}`,
+          updatedUser, Auth
         );
         if (response.status === 200) {
           console.log("Benutzerdaten gespeichert:", updatedUser);
@@ -104,19 +110,21 @@ const UserDetail: React.FC = () => {
   };
 
   const handleDelete = async () => {
-    try {
-      const response = await axios.delete(
-        `${process.env.NEXT_PUBLIC_BASE_URL}user/${updatedUser?.id}`
-      );
-      if (response.status === 200) {
-        console.log("Benutzer gelöscht:", updatedUser);
-        router.push("/users");
-      }
-    } catch (error) {
-      console.error("Fehler beim Löschen:", error);
-    }
-  };
 
+    const response: any = await ApiService.delete(
+      `user/${updatedUser?.id}`, Auth
+    );
+    if (response.status === 200) {
+      console.log("Benutzer gelöscht:", updatedUser);
+      router.push("/users");
+    }
+    if (response instanceof Error) {
+      const { status, variant, message } = ApiService.CheckAndShow(response, t);
+      console.log(message);
+      // @ts-ignore
+      enqueueSnackbar(message, { variant: variant });
+    };
+  }
   const handleGoingBack = () => {
     router.back();
   };

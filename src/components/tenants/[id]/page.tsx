@@ -8,7 +8,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import AddIcon from "@mui/icons-material/Add";
-import CancelIcon from "@mui/icons-material/Cancel";
+import { useTranslations } from 'next-intl';
 import {
   Box,
   Button,
@@ -59,7 +59,7 @@ const TenantDetails: React.FC = () => {
   const [modalTextColor, setModalTextColor] = useState("black"); // Declare state outside of conditionals
   const [tenants, setTenants] = useState<Tenant[]>([]);
   console.log(tenants);
-
+  const t = useTranslations('API');
 
   useEffect(() => {
     const bodyBackgroundColor = window.getComputedStyle(
@@ -106,20 +106,20 @@ const TenantDetails: React.FC = () => {
         return;
       }
 
-      try {
-        // const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}tenant/${id}`);
         const Auth: any = sessionStorage.getItem('AuthToken')
         const response: any = await ApiService.get(`tenant/${id}`, Auth)
-        console.log(response?.data[0]);
+        if (response instanceof Error) {
+          const { status, variant, message } = ApiService.CheckAndShow(response, t);
+          console.log(message);
+          // @ts-ignore
+          enqueueSnackbar(message, { variant: variant });
+        }
 
 
 
         setTenants(response?.data[0]);
 
-      } catch (error) {
-        console.error("Fehler beim Abrufen der Daten:", error);
-        setError("Fehler beim Abrufen der Daten.");
-      }
+      
     };
 
     fetchElements();
@@ -231,27 +231,27 @@ const TenantDetails: React.FC = () => {
           </TableContainer>
         </Grid>
 
-        
+
         <Grid item xs={12} display="flex" justifyContent="space-evenly">
-                    <IconButton color="primary" onClick={() => setIsEditing(true)} title="Bearbeiten">
-                        <EditIcon />
-                    </IconButton>
+          <IconButton color="primary" onClick={() => setIsEditing(true)} title="Bearbeiten">
+            <EditIcon />
+          </IconButton>
 
-                    <IconButton color="error" onClick={handleDelete} title="Löschen">
-                        <DeleteIcon />
-                    </IconButton>
-                </Grid>
+          <IconButton color="error" onClick={handleDelete} title="Löschen">
+            <DeleteIcon />
+          </IconButton>
+        </Grid>
 
-                <Grid item xs={12}>
-                    <Button
-                        variant="outlined"
-                        startIcon={<KeyboardBackspaceIcon />}
-                        onClick={handleGoingBack}
-                        title="  back"
-                    >
-                          back
-                    </Button>
-                </Grid>
+        <Grid item xs={12}>
+          <Button
+            variant="outlined"
+            startIcon={<KeyboardBackspaceIcon />}
+            onClick={handleGoingBack}
+            title="  back"
+          >
+            back
+          </Button>
+        </Grid>
 
         <Modal open={isEditing} onClose={() => setIsEditing(false)}>
           <Box
@@ -337,8 +337,8 @@ const TenantDetails: React.FC = () => {
 
             <Box sx={{ display: "flex", justifyContent: "space-evenly", mt: 2 }}>
 
-              
-             
+
+
               <Button
                 onClick={() => setIsEditing(false)}
               >

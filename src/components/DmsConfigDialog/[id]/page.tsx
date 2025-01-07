@@ -41,7 +41,9 @@ const dmsOptions = [
 const DetailsTableDms: React.FC = () => {
     const { id } = useParams();
     console.log(id);
-    const t = useTranslations('API');
+
+  const t = useTranslations('API');
+
     const router = useRouter();
 
     const [isEditing, setIsEditing] = useState(false);

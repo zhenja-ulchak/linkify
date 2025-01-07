@@ -83,7 +83,7 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
 
   React.useEffect(() => {
     const fetchData = async () => {
-      try {
+
         const getToken: any = sessionStorage.getItem('AuthToken');
         const response: any = await apiService.get("tenant", getToken);
 
@@ -100,10 +100,7 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
         }
         setRows(tenantData);  // Зберігаємо дані в стан
         enqueueSnackbar('Дані успішно завантажено!', { variant: 'success' });
-      } catch (error) {
-        console.error('Помилка при отриманні даних:', error);
-        enqueueSnackbar('Помилка при завантаженні даних', { variant: 'error' });
-      }
+      
     
     };
 
