@@ -12,6 +12,13 @@ import ApiService from "../../../../src/app/services/apiService";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, TextField, Button, IconButton, FormControl, InputLabel, Select, MenuItem, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid } from '@mui/material';
 import { enqueueSnackbar } from "notistack";
 import { useTranslations } from 'next-intl';
+import AccountingDialog from "@/components/modal/AccountingSoftwareDialog";
+import { SelectChangeEvent } from '@mui/material';
+
+
+
+
+
 type TenantDetails = {
     id?: number;
     tenant_id?: number;
@@ -45,11 +52,11 @@ const DetailsTable: React.FC = () => {
     const [error, setError] = useState<string>("");
     const [modalTextColor, setModalTextColor] = useState("black");
     const [tenantDetails, setTenantDetails] = useState<TenantDetails | null>(null);
+    const [addNewDetails, setAddNewDetails] = useState<any>(false);
     const [open, setOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState('');
     const t = useTranslations('API');
-    console.log(id);
-    
+
     const [updatedTenant, setUpdatedTenant] = useState<TenantDetails>({
 
         name: "",
@@ -76,12 +83,10 @@ const DetailsTable: React.FC = () => {
         setOpen(false);
     };
 
-    const handleChange = (event: { target: { value: string }; }) => {
-        const newValue = event.target.value;
+    const handleSelectChange = (event: SelectChangeEvent<string>) => {
+        const newValue = event.target.value
         setSelectedOption(newValue);
-
-
-        setUpdatedTenant((prevTenant) => ({
+        setUpdatedTenant((prevTenant: any) => ({
             ...prevTenant,
             type: newValue,
         }));
@@ -110,7 +115,13 @@ const DetailsTable: React.FC = () => {
                 // @ts-ignore
                 enqueueSnackbar(message, { variant: variant });
             }
-            setTenantDetails(response?.data[0][0]);
+
+            if (response?.data && Array.isArray(response.data) && response.data[0] && Array.isArray(response.data[0]) && response.data[0][0]) {
+                setTenantDetails(response.data[0][0]);
+            } else {
+                setAddNewDetails(true)
+            }
+
 
         };
 
@@ -130,36 +141,38 @@ const DetailsTable: React.FC = () => {
 
 
 
-    const handleSaveChanges = async () => {
-
-
+    const handleSaveChanges = async (e: React.FormEvent) => {
+        e.preventDefault();
 
         const cleanedObject = removeEmptyValues(updatedTenant);
-        console.log(cleanedObject);
-        if (validateInputs(cleanedObject)) {
-        
-                console.log(cleanedObject);
+        // if (!validateInputs(cleanedObject)) {
+        //     enqueueSnackbar("Please fill all required fields.", { variant: "error" });
+        //     return;
+        // }
 
-                const Auth: any = sessionStorage.getItem('AuthToken');
-                const response: any = await ApiService.put(`accounting-software/${tenantDetails?.id}`, cleanedObject, Auth);
-                if (response.status === 200) {
-                    console.log("Дані оновлено:", cleanedObject);
-                    setIsEditing(false);
-                }
-                if (response instanceof Error) {
-                    const { status, variant, message } = ApiService.CheckAndShow(response, t);
-                            console.log(message);
-                            // @ts-ignore
-                            enqueueSnackbar(message, { variant: variant });
-                }
-           
+        const Auth: any = sessionStorage.getItem('AuthToken');
+        const response: any = await ApiService.put(`accounting-software`, cleanedObject, Auth);
+        if (response instanceof Error) {
+            const { status, variant, message } = ApiService.CheckAndShow(response, t);
+            console.log(message);
+            // @ts-ignore
+            enqueueSnackbar(message, { variant: variant });
         }
+
+        if(response.status === 200){
+            enqueueSnackbar(" Accounting software details updated successfully.", { variant: "success" });
+            setOpen(false);
+        }
+              // @ts-ignore
+        setTenantDetails(cleanedObject);
+        setIsEditing(false);
+       
     };
 
     // Валідація полів
     const validateInputs = (data: any) => {
         if (!data.contact_email || !data.invoice_email) {
-           
+
             return false;
         }
         setError("");
@@ -171,20 +184,20 @@ const DetailsTable: React.FC = () => {
         return Object.fromEntries(Object.entries(obj).filter(([key, value]) => value != null && value !== ""));
     };
     const handleDelete = async () => {
-       
-            const Auth: any = sessionStorage.getItem('AuthToken');
-            const response: any = await ApiService.delete(`accounting-software/${id}`, Auth);
-            if (response.status === 200) {
-                console.log("Benutzer gelöscht:", updatedTenant);
-                router.push("/users");
-            }
-            if (response instanceof Error) {
-                const { status, variant, message } = ApiService.CheckAndShow(response, t);
-                console.log(message);
-                // @ts-ignore
-                enqueueSnackbar(message, { variant: variant });
-            }
-        
+
+        const Auth: any = sessionStorage.getItem('AuthToken');
+        const response: any = await ApiService.delete(`accounting-software/${id}`, Auth);
+        if (response.status === 200) {
+            console.log("Benutzer gelöscht:", updatedTenant);
+            router.push("/users");
+        }
+        if (response instanceof Error) {
+            const { status, variant, message } = ApiService.CheckAndShow(response, t);
+            console.log(message);
+            // @ts-ignore
+            enqueueSnackbar(message, { variant: variant });
+        }
+
     };
 
     function handleGoingBack() {
@@ -197,182 +210,193 @@ const DetailsTable: React.FC = () => {
 
             <Grid container spacing={2} style={{ width: '100%' }}>
                 <Grid item xs={12} style={{ textAlign: "center" }}>
-                    <h3>{t('Accounting-Software.details')}</h3>
+                    <h3>Details</h3>
+                    <Grid container spacing={2}>
+
+                        {addNewDetails ? (
+                            <AccountingDialog tenantDetails={tenantDetails} />
+                        ) : (
+                            <>
+                                <Grid item xs={12}>
+                                    <TableContainer component={Paper}>
+                                        <Table>
+                                            <TableHead>
+                                                <TableRow>
+                                                    <TableCell style={{ fontWeight: "bold" }}>Feld</TableCell>
+                                                    <TableCell style={{ fontWeight: "bold" }}>Wert</TableCell>
+                                                </TableRow>
+                                            </TableHead>
+                                            <TableBody>
+                                                {tenantDetails ? (
+                                                    <>
+                                                        <TableRow>
+                                                            <TableCell>Name</TableCell>
+                                                            <TableCell>{tenantDetails.name}</TableCell>
+                                                        </TableRow>
+                                                        <TableRow>
+                                                            <TableCell>Type</TableCell>
+                                                            <TableCell>{tenantDetails.type}</TableCell>
+                                                        </TableRow>
+                                                        <TableRow>
+                                                            <TableCell>URL</TableCell>
+                                                            <TableCell>{tenantDetails.url}</TableCell>
+                                                        </TableRow>
+                                                        <TableRow>
+                                                            <TableCell>Organization ID</TableCell>
+                                                            <TableCell>{tenantDetails.organization_id}</TableCell>
+                                                        </TableRow>
+                                                        <TableRow>
+                                                            <TableCell>Event Type</TableCell>
+                                                            <TableCell>{tenantDetails.event_type ?? "N/A"}</TableCell>
+                                                        </TableRow>
+                                                        <TableRow>
+                                                            <TableCell>Description</TableCell>
+                                                            <TableCell>{tenantDetails.description}</TableCell>
+                                                        </TableRow>
+                                                        <TableRow>
+                                                            <TableCell>Region</TableCell>
+                                                            <TableCell>{tenantDetails.additional_settings?.region ?? "N/A"}</TableCell>
+                                                        </TableRow>
+                                                        <TableRow>
+                                                            <TableCell>Active</TableCell>
+                                                            <TableCell>{tenantDetails.is_active ? "Yes" : "No"}</TableCell>
+                                                        </TableRow>
+                                                    </>
+                                                ) : (
+                                                    <TableRow>
+                                                        <TableCell colSpan={2} style={{ textAlign: "center" }}>
+                                                            No tenant details available.
+                                                        </TableCell>
+                                                    </TableRow>
+                                                )}
+                                            </TableBody>
+                                        </Table>
+                                    </TableContainer>
+                                </Grid>
+
+                                <Grid item xs={12} display="flex" justifyContent="space-evenly">
+                                    <IconButton
+                                        color="primary"
+                                        onClick={handleClickOpen}
+                                        title="Bearbeiten"
+                                    >
+                                        <EditIcon />
+                                    </IconButton>
+
+                                    <IconButton color="error" onClick={handleDelete} title="Löschen">
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </Grid>
+                            </>
+                        )}
+                    </Grid>
+
+                    <Grid item xs={12} sx={{ textAlign: addNewDetails ? "center" : 'left' }}>
+                        <Button
+                            variant="outlined"
+                            startIcon={<KeyboardBackspaceIcon />}
+                            onClick={handleGoingBack}
+                            title="  back"
+                        >
+                            back
+                        </Button>
+                    </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                    <TableContainer component={Paper}>
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>{t('Accounting-Software.feld')}</TableCell>
-                                    <TableCell>{t('Accounting-Software.wert')}</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {tenantDetails && (
-                                    <>
+                <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">
+                        {"Сhange Accounting Software"}
+                    </DialogTitle>
+                    <form onSubmit={handleSaveChanges}>
+                        <DialogContent>
+                            <Typography variant="body1" component="span" id="alert-dialog-description">
+                                <Box sx={{ marginBottom: 2 }}>
+                                    <FormControl fullWidth>
+                                        <InputLabel id="dms-select-label">Type</InputLabel>
+                                        <Select
+                                            labelId="dms-select-label"
+                                            value={selectedOption}
+                                            onChange={handleSelectChange}
+                                            label="DMS"
+                                        >
+                                            {dmsOptions.map((option, index) => (
+                                                <MenuItem key={index} value={option}>
+                                                    {option}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
+                                </Box>
 
-                                        <TableRow>
-                                            <TableCell style={{ fontWeight: 'bold' }}>{t('Accounting-Software.name')}</TableCell>
-                                            <TableCell>{tenantDetails.name}</TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell style={{ fontWeight: 'bold' }}>{t('Accounting-Software.type')}</TableCell>
-                                            <TableCell>{tenantDetails.type}</TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell style={{ fontWeight: 'bold' }}>{t('Accounting-Software.url')}</TableCell>
-                                            <TableCell>{tenantDetails.url}</TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell style={{ fontWeight: 'bold' }}>{t('Accounting-Software.organization_id')}</TableCell>
-                                            <TableCell>{tenantDetails.organization_id}</TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell style={{ fontWeight: 'bold' }}>{t('Accounting-Software.event-type')}</TableCell>
-                                            <TableCell>{tenantDetails.event_type ?? "N/A"}</TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell style={{ fontWeight: 'bold' }}>{t('Accounting-Software.description')}</TableCell>
-                                            <TableCell>{tenantDetails.description}</TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell style={{ fontWeight: 'bold' }}>{t('Accounting-Software.region')}</TableCell>
-                                            <TableCell>{tenantDetails.additional_settings?.region}</TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell style={{ fontWeight: 'bold' }}>{t('Accounting-Software.active')}</TableCell>
-                                            <TableCell>{tenantDetails.is_active ? t('Accounting-Software.yes') : t('Accounting-Software.no')}</TableCell>
-                                        </TableRow>
+                                <Box sx={{ marginBottom: 2 }}>
+                                    <TextField
+                                        fullWidth
+                                        label="URL"
+                                        name="url"
+                                        value={updatedTenant.url || ""}
+                                        onChange={handleEditChange}
+                                        placeholder={tenantDetails?.url || ""}
+                                    />
+                                </Box>
 
-                                    </>
-                                )}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </Grid>
+                                <Box sx={{ marginBottom: 2 }}>
+                                    <TextField
+                                        fullWidth
+                                        label="Organisation ID"
+                                        name="organization_id"
+                                        value={updatedTenant.organization_id || ""}
+                                        onChange={handleEditChange}
+                                        placeholder={tenantDetails?.organization_id || ""}
+                                    />
+                                </Box>
 
-                <Grid item xs={12} display="flex" justifyContent="space-evenly">
-                    <IconButton color="primary" onClick={handleClickOpen} title={t('Accounting-Software.bearbeiten')}>
-                        <EditIcon />
-                    </IconButton>
+                                <Box sx={{ marginBottom: 2 }}>
+                                    <TextField
+                                        fullWidth
+                                        label="Event Type"
+                                        name="event_type"
+                                        value={updatedTenant.event_type || ""}
+                                        onChange={handleEditChange}
+                                        placeholder={tenantDetails?.event_type ?? "N/A"}
+                                    />
+                                </Box>
 
-                    <IconButton color="error" onClick={handleDelete} title={t('Accounting-Software.loschen')}>
-                        <DeleteIcon />
-                    </IconButton>
-                </Grid>
+                                <Box sx={{ marginBottom: 2 }}>
+                                    <TextField
+                                        fullWidth
+                                        label="Description"
+                                        name="description"
+                                        value={updatedTenant.description || ""}
+                                        onChange={handleEditChange}
+                                        placeholder={tenantDetails?.description || ""}
+                                    />
+                                </Box>
 
-                <Grid item xs={12}>
-                    <Button
-                        variant="outlined"
-                        startIcon={<KeyboardBackspaceIcon />}
-                        onClick={handleGoingBack}
-                        title={t('Accounting-Software.back')}
-                    >
-                        {t('Accounting-Software.back')}
-                    </Button>
-                </Grid>
+                                <Box sx={{ marginBottom: 2 }}>
+                                    <TextField
+                                        fullWidth
+                                        label="Region"
+                                        name="additional_settings.region"
+                                        value={updatedTenant.additional_settings?.region || ""}
+                                        onChange={handleEditChange}
+                                        placeholder={tenantDetails?.additional_settings?.region || ""}
+                                    />
+                                </Box>
+                            </Typography>
+                        </DialogContent>
+
+                        <DialogActions>
+
+                            <Button onClick={handleClose}>Cancel</Button>
+                            <Button type="submit" color="primary">Save</Button>
+                        </DialogActions>
+                    </form>
+                </Dialog>
             </Grid>
-            <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">
-                {t('Accounting-Software.accountingsoftware')}
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-
-                        <Box sx={{ marginBottom: 2 }}>
-                            <FormControl fullWidth>
-                                <InputLabel id="dms-select-label">{t('Accounting-Software.type')}</InputLabel>
-                                <Select
-                                    labelId="dms-select-label"
-                                    value={selectedOption}
-                                    onChange={handleChange}
-                                    label="DMS"
-                                >
-                                    {dmsOptions.map((option, index) => (
-                                        <MenuItem key={index} value={option}>
-                                            {option}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                        </Box>
-
-
-                        <Box sx={{ marginBottom: 2 }}>
-                            <TextField
-                                fullWidth
-                                label={t('Accounting-Software.url')}
-                                name="url"
-                                value={updatedTenant.url}
-                                onChange={handleEditChange}
-                                placeholder={tenantDetails?.url}
-                            />
-                        </Box>
-
-                        <Box sx={{ marginBottom: 2 }}>
-                            <TextField
-                                fullWidth
-                                label={t('Accounting-Software.organization_id')}
-                                name="organization_id"
-                                value={updatedTenant.organization_id}
-                                onChange={handleEditChange}
-                                placeholder={tenantDetails?.organization_id}
-                            />
-                        </Box>
-
-                        <Box sx={{ marginBottom: 2 }}>
-                            <TextField
-                                fullWidth
-                                label={t('Accounting-Software.event-type')}
-                                name="event_type"
-                                value={updatedTenant.event_type}
-                                onChange={handleEditChange}
-                                placeholder={tenantDetails?.event_type ?? "N/A"}
-                            />
-                        </Box>
-
-                        <Box sx={{ marginBottom: 2 }}>
-                            <TextField
-                                fullWidth
-                                label={t('Accounting-Software.description')}
-                                name="description"
-                                value={updatedTenant.description}
-                                onChange={handleEditChange}
-                                placeholder={tenantDetails?.description}
-                            />
-                        </Box>
-
-                        <Box sx={{ marginBottom: 2 }}>
-                            <TextField
-                                fullWidth
-                                label={t('Accounting-Software.region')}
-                                name="additional_settings.region"
-                                value={updatedTenant.additional_settings?.region}
-                                onChange={handleEditChange}
-                                placeholder={tenantDetails?.additional_settings?.region}
-                            />
-                        </Box>
-
-
-
-
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-
-                    <Button onClick={handleClose}>{t('Accounting-Software.cancel')}</Button>
-                    <Button onClick={() => handleSaveChanges()} autoFocus>
-                    {t('Accounting-Software.ok')}
-                    </Button>
-                </DialogActions>
-            </Dialog>
-
         </div>
     );
 };

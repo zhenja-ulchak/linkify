@@ -191,7 +191,7 @@ const TenantDetails: React.FC = () => {
               </TableHead>
               <TableBody>
                 {tenants.map((tenant) => (
-                  <>
+                  <React.Fragment key={tenant.id}>
                     <TableRow key={`${tenant.id}-id`}>
                       <TableCell style={{ fontWeight: 'bold' }}>{t('Tenant.id')}</TableCell>
                       <TableCell>{tenant.id}</TableCell>
@@ -224,7 +224,7 @@ const TenantDetails: React.FC = () => {
                       <TableCell style={{ fontWeight: 'bold' }}>{t('Tenant.kontakt-telefon')}</TableCell>
                       <TableCell>{tenant.contact_phone}</TableCell>
                     </TableRow>
-                  </>
+                  </React.Fragment>
                 ))}
               </TableBody>
             </Table>

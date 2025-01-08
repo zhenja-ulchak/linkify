@@ -12,7 +12,7 @@ import ApiService from "../../../../src/app/services/apiService";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, TextField, Button, IconButton, FormControl, InputLabel, Select, MenuItem, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid } from '@mui/material';
 import { enqueueSnackbar } from "notistack";
 import { useTranslations } from 'next-intl';
-
+import DMSDialog from "@/components/modal/DmsConfigDialog";
 
 
 type TenantDetails = {
@@ -41,14 +41,13 @@ const dmsOptions = [
 const DetailsTableDms: React.FC = () => {
     const { id } = useParams();
     console.log(id);
+
   const t = useTranslations('API');
+
     const router = useRouter();
 
     const [isEditing, setIsEditing] = useState(false);
     // const [open, setOpen] = React.useState(false);
-
-
-
     const [updatedTenant, setUpdatedTenant] = useState<TenantDetails>({
 
         type: "",
@@ -63,6 +62,7 @@ const DetailsTableDms: React.FC = () => {
     const [error, setError] = useState<string>("");
     const [modalTextColor, setModalTextColor] = useState("black");
     const [tenantDetails, setTenantDetails] = useState<TenantDetails | null>(null);
+    const [addNewDetails, setAddNewDetails] = useState<any>(false);
     const [open, setOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState('');
     const handleClickOpen = () => {
@@ -98,17 +98,21 @@ const DetailsTableDms: React.FC = () => {
                 return;
             }
 
-          
-                const Auth: any = sessionStorage.getItem('AuthToken');
-                const response: any = await ApiService.get(`dms-config`, Auth); //${id}
-                if (response instanceof Error) {
-                    const { status, variant, message } = ApiService.CheckAndShow(response, t);
-                    console.log(message);
-                    // @ts-ignore
-                    enqueueSnackbar(message, { variant: variant });
-                }
-                setTenantDetails(response?.data[0][0]);
-           
+
+            const Auth: any = sessionStorage.getItem('AuthToken');
+            const response: any = await ApiService.get(`dms-config`, Auth); //${id}
+            if (response instanceof Error) {
+                const { status, variant, message } = ApiService.CheckAndShow(response, t);
+                console.log(message);
+                // @ts-ignore
+                enqueueSnackbar(message, { variant: variant });
+            }
+            if (response?.data && Array.isArray(response.data) && response.data[0] && Array.isArray(response.data[0]) && response.data[0][0]) {
+                setTenantDetails(response.data[0][0]);
+            } else {
+                setAddNewDetails(true)
+            }
+
         };
 
         fetchTenantDetails();
@@ -132,20 +136,20 @@ const DetailsTableDms: React.FC = () => {
         const cleanedObject = removeEmptyValues(updatedTenant);  // Функція для очищення порожніх значень
 
         if (validateInputs(cleanedObject)) {
-    
-                const Auth: any = sessionStorage.getItem('AuthToken');
-                const response: any = await ApiService.put(`dms-config/${tenantDetails?.id}`, cleanedObject, Auth);
-                if (response instanceof Error) {
-                    const { status, variant, message } = ApiService.CheckAndShow(response, t);
-                    console.log(message);
-                    // @ts-ignore
-                    enqueueSnackbar(message, { variant: variant });
-                }
-                if (response.status === 200) {
-                   
-                    setOpen(false);
-                }
-            
+
+            const Auth: any = sessionStorage.getItem('AuthToken');
+            const response: any = await ApiService.put(`dms-config/${tenantDetails?.id}`, cleanedObject, Auth);
+            if (response instanceof Error) {
+                const { status, variant, message } = ApiService.CheckAndShow(response, t);
+                console.log(message);
+                // @ts-ignore
+                enqueueSnackbar(message, { variant: variant });
+            }
+            if (response.status === 200) {
+
+                setOpen(false);
+            }
+
         }
     };
 
@@ -164,20 +168,20 @@ const DetailsTableDms: React.FC = () => {
         return Object.fromEntries(Object.entries(obj).filter(([key, value]) => value != null && value !== ""));
     };
     const handleDelete = async () => {
-      
-            const Auth: any = sessionStorage.getItem('AuthToken');
-            const response: any = await ApiService.delete(`dms-config/${id}`, Auth);
-            if (response instanceof Error) {
-                const { status, variant, message } = ApiService.CheckAndShow(response, t);
-                console.log(message);
-                // @ts-ignore
-                enqueueSnackbar(message, { variant: variant });
-            }
-            if (response.status === 200) {
-         
-                router.push("/users");
-            }
-        
+
+        const Auth: any = sessionStorage.getItem('AuthToken');
+        const response: any = await ApiService.delete(`dms-config/${id}`, Auth);
+        if (response instanceof Error) {
+            const { status, variant, message } = ApiService.CheckAndShow(response, t);
+            console.log(message);
+            // @ts-ignore
+            enqueueSnackbar(message, { variant: variant });
+        }
+        if (response.status === 200) {
+
+            router.push("/users");
+        }
+
     };
 
     function handleGoingBack() {
@@ -191,53 +195,70 @@ const DetailsTableDms: React.FC = () => {
                 <Grid item xs={12} style={{ textAlign: "center" }}>
                     <h3>{t('Accounting-Software.details')}</h3>
                 </Grid>
-                <Grid item xs={12}>
-                    <TableContainer component={Paper} style={{ width: '100%' }}>
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>{t('Accounting-Software.feld')}</TableCell>
-                                    <TableCell>{t('Accounting-Software.wert')}</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {tenantDetails && (
-                                    <>
 
-                                        <TableRow>
-                                            <TableCell style={{ fontWeight: 'bold' }}>{t('Accounting-Software.type')}</TableCell>
-                                            <TableCell>{tenantDetails?.type}</TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell style={{ fontWeight: 'bold' }}>{t('Accounting-Software.endpoint-url')}</TableCell>
-                                            <TableCell>{tenantDetails?.endpoint_url}</TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell style={{ fontWeight: 'bold' }}>{t('Accounting-Software.username')}</TableCell>
-                                            <TableCell>{tenantDetails?.username}</TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell style={{ fontWeight: 'bold' }}>{t('Accounting-Software.repository')}</TableCell>
-                                            <TableCell>{tenantDetails?.repository}</TableCell>
-                                        </TableRow>
+                {addNewDetails ?
+                    (
+                        <>
+                            <DMSDialog tenantDetails={null} />
+                        </>
+                    ) :
 
-                                    </>
-                                )}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </Grid>
-                <Grid item xs={12} display="flex" justifyContent="space-evenly">
-                    <IconButton color="primary" onClick={handleClickOpen} title={t('Accounting-Software.bearbeiten')}>
-                        <EditIcon />
-                    </IconButton>
+                    (
 
-                    <IconButton color="error" onClick={handleDelete} title={t('Accounting-Software.loschen')}>
-                        <DeleteIcon />
-                    </IconButton>
-                </Grid>
+                        <>
+                            <Grid item xs={12}>
+                                <TableContainer component={Paper} style={{ width: '100%' }}>
+                                    <Table>
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell>Feld</TableCell>
+                                                <TableCell>Wert</TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {tenantDetails && (
+                                                <>
 
-                <Grid item xs={12}>
+                                                    <TableRow>
+                                                        <TableCell style={{ fontWeight: 'bold' }}>Type</TableCell>
+                                                        <TableCell>{tenantDetails?.type}</TableCell>
+                                                    </TableRow>
+                                                    <TableRow>
+                                                        <TableCell style={{ fontWeight: 'bold' }}>Endpoint URL</TableCell>
+                                                        <TableCell>{tenantDetails?.endpoint_url}</TableCell>
+                                                    </TableRow>
+                                                    <TableRow>
+                                                        <TableCell style={{ fontWeight: 'bold' }}>Username</TableCell>
+                                                        <TableCell>{tenantDetails?.username}</TableCell>
+                                                    </TableRow>
+                                                    <TableRow>
+                                                        <TableCell style={{ fontWeight: 'bold' }}>Repository</TableCell>
+                                                        <TableCell>{tenantDetails?.repository}</TableCell>
+                                                    </TableRow>
+
+                                                </>
+                                            )}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                            </Grid>
+                            <Grid item xs={12} display="flex" justifyContent="space-evenly">
+                                <IconButton color="primary" onClick={handleClickOpen} title="Bearbeiten">
+                                    <EditIcon />
+                                </IconButton>
+
+                                <IconButton color="error" onClick={handleDelete} title="Löschen">
+                                    <DeleteIcon />
+                                </IconButton>
+                            </Grid>
+
+                        </>
+                    )
+
+                }
+
+
+                <Grid item xs={12} sx={{textAlign: addNewDetails ? "center" : 'left'}}>
                     <Button
                         variant="outlined"
                         startIcon={<KeyboardBackspaceIcon />}
@@ -255,7 +276,7 @@ const DetailsTableDms: React.FC = () => {
                 aria-describedby="alert-dialog-description"
             >
                 <DialogTitle id="alert-dialog-title">
-                {t('Accounting-Software.dms-config')}
+                    {"DMS"}
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">

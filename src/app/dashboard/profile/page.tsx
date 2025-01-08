@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { AnyActionArg, useEffect, useState } from "react";
 import axios from "axios";
 import {
   TextField,
@@ -13,6 +13,8 @@ import {
   InputAdornment,
 } from "@mui/material";
 import { useTranslations } from 'next-intl';
+import apiService from "@/app/services/apiService";
+import { enqueueSnackbar } from "notistack";
 
 interface FormData {
   username: string;
@@ -46,22 +48,31 @@ export default function Profile() {
     group: "",
     id: "",
   });
-
+  const getToken: any = sessionStorage.getItem('AuthToken');
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const t = useTranslations('Customer');
-  
+  const tAPI = useTranslations('API');
+
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}user/profile`, {
-          headers: { "Content-Type": "application/json" },
-        });
-        setFormData(response.data);
-        setSuccessMessage(response.data.message);
-      } catch (error: unknown) {
-        setErrorMessage(error instanceof Error ? error.message : "Ein unbekannter Fehler ist aufgetreten.");
+
+      const getToken: any = sessionStorage.getItem('AuthToken');
+      const response: any = await apiService.get("user/profile", getToken)
+      console.log(response?.data);
+      setFormData(response?.data);
+      if (response instanceof Error) {
+        const { status, variant, message } = apiService.CheckAndShow(response, tAPI);
+   
+        // @ts-ignore
+        enqueueSnackbar(message, { variant: variant });
       }
+      if (response.status === 200) {
+        enqueueSnackbar('Data saved successfully!', { variant: 'success' });
+        setFormData(response?.data);
+      }
+
+
     };
 
     fetchData();
@@ -69,7 +80,7 @@ export default function Profile() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
+    setFormData((prevData: any) => ({
       ...prevData,
       [name]: value,
     }));
@@ -77,35 +88,45 @@ export default function Profile() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      const response = await axios.put(
-        `${process.env.NEXT_PUBLIC_BASE_URL}user/profile`,
-        formData
-      );
-      setSuccessMessage(response.data.message);
-    } catch (error: unknown) {
-      setErrorMessage(error instanceof Error ? error.message : "Ein unbekannter Fehler ist aufgetreten.");
+
+    const response: any = await apiService.put(
+      `user/profile`,
+      formData, getToken
+    );
+ 
+    if (response instanceof Error) {
+      const { status, variant, message } = apiService.CheckAndShow(response, tAPI);
+      console.log(message);
+      // @ts-ignore
+      enqueueSnackbar(message, { variant: variant });
+    }
+
+    if (response.status === 200) {
+      enqueueSnackbar('Data saved successfully!', { variant: 'success' });
+
+   
     }
   };
+console.log(formData?.username);
 
   return (
     <Paper elevation={0} sx={{ padding: 4, maxWidth: 600, margin: "auto" }}>
       <Typography variant="h4" gutterBottom textAlign="center">
-        {t("profile")} 
+        {t("profile")}
       </Typography>
 
       <Grid item xs={12}>
-            <Typography variant="h6">{t("benutzer")}</Typography>
-          </Grid>
+        <Typography variant="h6">{t("benutzer")}</Typography>
+      </Grid>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
               fullWidth
-              label={t("benutzername")} 
+              label={t("benutzername")}
               name="username"
               required
-              value={formData.username}
+              value={formData?.username ?? ""}
               onChange={handleInputChange}
             />
           </Grid>
@@ -119,7 +140,7 @@ export default function Profile() {
               fullWidth
               label={t("firmenname")}
               name="companyName"
-              value={formData.companyName}
+              value={formData?.companyName ?? ""}
               onChange={handleInputChange}
             />
           </Grid>
@@ -129,7 +150,7 @@ export default function Profile() {
               fullWidth
               label={t("name")}
               name="name"
-              value={formData.name}
+              value={formData?.name ?? ""}
               onChange={handleInputChange}
               inputProps={{ pattern: "^[A-Za-z]+$" }}
             />
@@ -140,7 +161,7 @@ export default function Profile() {
               fullWidth
               label={t("vorname")}
               name="firstName"
-              value={formData.firstName}
+              value={formData?.firstName ?? ""}
               onChange={handleInputChange}
               inputProps={{ pattern: "^[A-Za-z]+$" }}
             />
@@ -151,7 +172,7 @@ export default function Profile() {
               fullWidth
               label={t("street")}
               name="street"
-              value={formData.street}
+              value={formData?.street ?? ""}
               onChange={handleInputChange}
             />
           </Grid>
@@ -161,7 +182,7 @@ export default function Profile() {
               fullWidth
               label={t("postalcode")}
               name="postalCode"
-              value={formData.postalCode}
+              value={formData?.postalCode ?? ""}
               onChange={handleInputChange}
               inputProps={{ pattern: "^[0-9]+$" }}
             />
@@ -172,7 +193,7 @@ export default function Profile() {
               fullWidth
               label={t("city")}
               name="city"
-              value={formData.city}
+              value={formData?.city ?? ""}
               onChange={handleInputChange}
             />
           </Grid>
@@ -182,7 +203,7 @@ export default function Profile() {
               fullWidth
               label={t("region")}
               name="region"
-              value={formData.region}
+              value={formData?.region ?? ""}
               onChange={handleInputChange}
             />
           </Grid>
@@ -192,7 +213,7 @@ export default function Profile() {
               fullWidth
               label={t("land")}
               name="country"
-              value={formData.country}
+              value={formData?.country ?? ""}
               onChange={handleInputChange}
             />
           </Grid>
@@ -202,7 +223,7 @@ export default function Profile() {
               fullWidth
               label={t("addressAdditional")}
               name="addressAdditional"
-              value={formData.addressAdditional}
+              value={formData?.addressAdditional ?? ""}
               onChange={handleInputChange}
             />
           </Grid>
@@ -215,7 +236,7 @@ export default function Profile() {
               fullWidth
               label={t("firmenname")}
               name="companyName"
-              value={formData.companyName}
+              value={formData?.companyName ?? ""}
               onChange={handleInputChange}
             />
           </Grid>
@@ -227,7 +248,7 @@ export default function Profile() {
               fullWidth
               label={t("licenseValidity")}
               name="licenseValidity"
-              value={formData.licenseValidity}
+              value={formData?.licenseValidity ?? ""}
               onChange={handleInputChange}
             />
           </Grid>
@@ -239,7 +260,7 @@ export default function Profile() {
               fullWidth
               label={t("group")}
               name="group"
-              value={formData.group}
+              value={formData?.group ?? ""}
               onChange={handleInputChange}
             />
           </Grid>
@@ -251,7 +272,7 @@ export default function Profile() {
               variant="contained"
               color="primary"
             >
-             {t("save")}
+              {t("save")}
             </Button>
           </Grid>
         </Grid>

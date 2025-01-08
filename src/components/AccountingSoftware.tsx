@@ -95,6 +95,9 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
           enqueueSnackbar(message, { variant: variant });
         }
      
+         if (response.status === 200) {
+           enqueueSnackbar('Data saved successfully!', { variant: 'success' });
+         }
     };
 
     fetchData();
