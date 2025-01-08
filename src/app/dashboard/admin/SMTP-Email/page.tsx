@@ -31,8 +31,9 @@ const Administrator: React.FC = () => {
   const [savePassword, setSavePassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [autoAuth, setAutoAuth] = useState(false);
+  const tAPI = useTranslations('API');
   const t = useTranslations('Smtp-Email');
- const tAPI = useTranslations('API');
+
   // Zustände für Fehlermeldungen
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [serverError, setServerError] = useState<string | null>(null);
@@ -105,9 +106,7 @@ const Administrator: React.FC = () => {
     }
 
     if (response.status === 200) {
-      enqueueSnackbar('Data saved successfully!', { variant: 'success' });
-
-
+      enqueueSnackbar('The email has been saved successfully!', { variant: 'success' });
     }
   };
 
@@ -136,16 +135,10 @@ const Administrator: React.FC = () => {
       }
       console.log(response.status);
       if (response.status === 200) {
-        enqueueSnackbar('Data saved successfully!', { variant: 'success' });
+        enqueueSnackbar('The test email has been saved successfully!', { variant: 'success' });
       }
 
     }
-
-    // to-do fix 
-
-
-    
-      // setServerError(null);
 
      
   };

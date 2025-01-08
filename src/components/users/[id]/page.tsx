@@ -11,6 +11,7 @@ import AddIcon from "@mui/icons-material/Add";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ApiService from "../../../../src/app/services/apiService";
 import { useTranslations } from 'next-intl';
+import { enqueueSnackbar } from "notistack";
 
 type User = {
   id: number;
@@ -54,6 +55,7 @@ const UserDetail: React.FC = () => {
 
       const response: any = await ApiService.get(`/user/${id}`, Auth);
       if (response.status === 200) {
+        enqueueSnackbar(`Details for user ID ${id} fetched successfully!`, { variant: 'success' });
         setUser([response.data]);
       }
       if (response instanceof Error) {
@@ -94,17 +96,21 @@ const UserDetail: React.FC = () => {
 
   const handleSaveChanges = async () => {
     if (validateInputs()) {
-      try {
-        const response: any = await ApiService.put(
-          `user/${updatedUser?.id}`,
-          updatedUser, Auth
-        );
-        if (response.status === 200) {
-          console.log("Benutzerdaten gespeichert:", updatedUser);
-          setIsEditing(false);
-        }
-      } catch (error) {
-        setError("Fehler beim Speichern:" + error);
+
+      const response: any = await ApiService.put(
+        `user/${updatedUser?.id}`,
+        updatedUser, Auth
+      );
+      if (response.status === 200) {
+        enqueueSnackbar('New user created successfully!', { variant: 'success' });
+        setIsEditing(false);
+      }
+
+      if (response instanceof Error) {
+        const { status, variant, message } = ApiService.CheckAndShow(response, t);
+        console.log(message);
+        // @ts-ignore
+        enqueueSnackbar(message, { variant: variant });
       }
     }
   };
@@ -115,7 +121,7 @@ const UserDetail: React.FC = () => {
       `user/${updatedUser?.id}`, Auth
     );
     if (response.status === 200) {
-      console.log("Benutzer gelöscht:", updatedUser);
+      enqueueSnackbar(`User ID ${id} deleted successfully!`, { variant: 'success' });
       router.push("/users");
     }
     if (response instanceof Error) {

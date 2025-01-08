@@ -113,7 +113,7 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
             enqueueSnackbar(message, { variant: variant });
         }
         if (response.status === 200) {
-            enqueueSnackbar('Data saved successfully!', { variant: 'success' });
+            enqueueSnackbar('Accounting software details updated successfully!', { variant: 'success' });
             setOpen(false);
         }
 

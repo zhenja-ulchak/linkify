@@ -25,14 +25,14 @@ import { enqueueSnackbar } from "notistack";
 const Login: React.FC = () => {
   const router = useRouter();
 
-  const [username, setUsername] = useState("super-zhenja@ukr.net"); // super.admin@tenant2.com superadmin          alice.smith@example.com user   john.doe@example.com
+  const [username, setUsername] = useState("john.doe@example.com"); // super.admin@tenant2.com superadmin          alice.smith@example.com user   john.doe@example.com
   const [password, setPassword] = useState("password123");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // Track login status
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null); // State to track the remaining time
   const t = useTranslations('API'); // Переводы для компонента логина
-
+ 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
@@ -128,16 +128,22 @@ const Login: React.FC = () => {
   const loginRefresh = useCallback(async () => {
     if (isLoggedIn) {
       const getToken: any = sessionStorage.getItem('AuthToken');
-      try {
-        await ApiService.get(
+    
+      const response: any =  await ApiService.get(
           `user/login-refresh`,
           getToken
         );
         console.log("Login Refresh erfolgreich!");
-      } catch (error) {
-       
-        enqueueSnackbar("Fehler beim Refresh:", { variant: 'info' });
-      }
+     if (response instanceof Error) {
+          const { status, variant, message } = ApiService.CheckAndShow(response, t);
+          console.log(message);
+          // @ts-ignore
+          enqueueSnackbar(message, { variant: variant });
+        }
+    
+        if (response.status === 200) {
+          enqueueSnackbar('Session refreshed successfully!', { variant: 'success' });
+        }
     }
   }, [isLoggedIn]);
 

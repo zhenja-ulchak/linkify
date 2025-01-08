@@ -114,7 +114,7 @@ const DMSDialog = ({ tenantDetails }: AccountingType) => {
             enqueueSnackbar(message, { variant: variant });
         }
         if (response.status === 200) {
-            enqueueSnackbar('Data saved successfully!', { variant: 'success' });
+            enqueueSnackbar('DMS Config details updated successfully!', { variant: 'success' });
             setOpen(false);
         }
 

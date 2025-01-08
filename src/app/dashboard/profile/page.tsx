@@ -68,7 +68,7 @@ export default function Profile() {
         enqueueSnackbar(message, { variant: variant });
       }
       if (response.status === 200) {
-        enqueueSnackbar('Data saved successfully!', { variant: 'success' });
+        enqueueSnackbar('Profile data fetched successfully!', { variant: 'success' });
         setFormData(response?.data);
       }
 
@@ -102,9 +102,9 @@ export default function Profile() {
     }
 
     if (response.status === 200) {
-      enqueueSnackbar('Data saved successfully!', { variant: 'success' });
+      enqueueSnackbar('Profile updated successfully!', { variant: 'success' });
 
-   
+  
     }
   };
 console.log(formData?.username);

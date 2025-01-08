@@ -25,6 +25,7 @@ import {
   Paper,
   IconButton,
 } from "@mui/material";
+import { enqueueSnackbar } from "notistack";
 
 type Tenant = {
   id: number;
@@ -106,20 +107,23 @@ const TenantDetails: React.FC = () => {
         return;
       }
 
-        const Auth: any = sessionStorage.getItem('AuthToken')
-        const response: any = await ApiService.get(`tenant/${id}`, Auth)
-        if (response instanceof Error) {
-          const { status, variant, message } = ApiService.CheckAndShow(response, t);
-          console.log(message);
-          // @ts-ignore
-          enqueueSnackbar(message, { variant: variant });
-        }
+      const Auth: any = sessionStorage.getItem('AuthToken')
+      const response: any = await ApiService.get(`tenant/${id}`, Auth)
+      if (response instanceof Error) {
+        const { status, variant, message } = ApiService.CheckAndShow(response, t);
+        console.log(message);
+        // @ts-ignore
+        enqueueSnackbar(message, { variant: variant });
+      }
 
 
+      if (response.status === 200) {
+        enqueueSnackbar(`Details for tenant ID ${id} fetched successfully!`, { variant: 'success' });
 
-        setTenants(response?.data[0]);
+      }
+      setTenants(response?.data[0]);
 
-      
+
     };
 
     fetchElements();
@@ -139,33 +143,43 @@ const TenantDetails: React.FC = () => {
   const handleSaveChanges = async () => {
     if (validateInputs()) {
 
-      try {
-        const response = await ApiService.put(
-          `tenant/${id}`,
-          cleanedObject, Auth
-        );
-        if (!response) {
-          console.log("Benutzerdaten gespeichert:", cleanedObject);
-          setIsEditing(false);
-        }
-      } catch (error) {
-        setError("Fehler beim Speichern:" + error)
+
+      const response: any = await ApiService.put(
+        `tenant/${id}`,
+        cleanedObject, Auth
+      );
+      if (response instanceof Error) {
+        const { status, variant, message } = ApiService.CheckAndShow(response, t);
+        console.log(message);
+        // @ts-ignore
+        enqueueSnackbar(message, { variant: variant });
       }
+
+
+      if (response.status === 200) {
+        enqueueSnackbar('New tenant created successfully!', { variant: 'success' });
+      }
+
     }
   };
 
   const handleDelete = async () => {
-    try {
-      const response: any = await ApiService.delete(
-        `tenant/${id}`, Auth
-      );
-      if (response.status === 200) {
-        console.log("Benutzer gelöscht:", updatedTenant);
-        router.push("/users");
-      }
-    } catch (error) {
-      console.error("Fehler beim Löschen:", error);
+
+    const response: any = await ApiService.delete(
+      `tenant/${id}`, Auth
+    );
+    if (response instanceof Error) {
+      const { status, variant, message } = ApiService.CheckAndShow(response, t);
+      console.log(message);
+      // @ts-ignore
+      enqueueSnackbar(message, { variant: variant });
     }
+
+
+    if (response.status === 200) {
+      enqueueSnackbar(`Tenant ID ${id} deleted successfully!`, { variant: 'success' });
+    }
+
   };
 
   function handleGoingBack() {

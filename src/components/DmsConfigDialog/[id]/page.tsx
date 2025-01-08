@@ -42,7 +42,7 @@ const DetailsTableDms: React.FC = () => {
     const { id } = useParams();
     console.log(id);
 
-  const t = useTranslations('API');
+    const t = useTranslations('API');
 
     const router = useRouter();
 
@@ -107,6 +107,9 @@ const DetailsTableDms: React.FC = () => {
                 // @ts-ignore
                 enqueueSnackbar(message, { variant: variant });
             }
+            if (response.status === 200) {
+                enqueueSnackbar('DMS configuration fetched successfully!', { variant: 'success' });
+            }
             if (response?.data && Array.isArray(response.data) && response.data[0] && Array.isArray(response.data[0]) && response.data[0][0]) {
                 setTenantDetails(response.data[0][0]);
             } else {
@@ -146,7 +149,7 @@ const DetailsTableDms: React.FC = () => {
                 enqueueSnackbar(message, { variant: variant });
             }
             if (response.status === 200) {
-
+                enqueueSnackbar('DMS configuration updated successfully!', { variant: 'success' });
                 setOpen(false);
             }
 
@@ -178,7 +181,7 @@ const DetailsTableDms: React.FC = () => {
             enqueueSnackbar(message, { variant: variant });
         }
         if (response.status === 200) {
-
+            enqueueSnackbar('DMS configuration deleted successfully!', { variant: 'success' });
             router.push("/users");
         }
 
@@ -193,7 +196,7 @@ const DetailsTableDms: React.FC = () => {
         <div id="UserDetailContainer" style={{ display: 'flex', justifyContent: 'center', maxWidth: '800px', margin: '0 auto' }}>
             <Grid container spacing={2} style={{ width: '100%' }}>
                 <Grid item xs={12} style={{ textAlign: "center" }}>
-                    <h3>Details</h3>
+                    <h3>DMS Config Details</h3>
                 </Grid>
 
                 {addNewDetails ?
@@ -258,7 +261,7 @@ const DetailsTableDms: React.FC = () => {
                 }
 
 
-                <Grid item xs={12} sx={{textAlign: addNewDetails ? "center" : 'left'}}>
+                <Grid item xs={12} sx={{ textAlign: addNewDetails ? "center" : 'left' }}>
                     <Button
                         variant="outlined"
                         startIcon={<KeyboardBackspaceIcon />}

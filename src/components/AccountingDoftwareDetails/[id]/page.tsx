@@ -116,6 +116,9 @@ const DetailsTable: React.FC = () => {
                 enqueueSnackbar(message, { variant: variant });
             }
 
+            if (response.status === 200) {
+                enqueueSnackbar('Accounting data fetched successfully!', { variant: 'success' });            }
+
             if (response?.data && Array.isArray(response.data) && response.data[0] && Array.isArray(response.data[0]) && response.data[0][0]) {
                 setTenantDetails(response.data[0][0]);
             } else {
@@ -159,14 +162,14 @@ const DetailsTable: React.FC = () => {
             enqueueSnackbar(message, { variant: variant });
         }
 
-        if(response.status === 200){
-            enqueueSnackbar(" Accounting software details updated successfully.", { variant: "success" });
-            setOpen(false);
+        if (response.status === 200) {
+            enqueueSnackbar('Accounting entry updated successfully!', { variant: 'success' });     
+                   setOpen(false);
         }
-              // @ts-ignore
+        // @ts-ignore
         setTenantDetails(cleanedObject);
         setIsEditing(false);
-       
+
     };
 
     // Валідація полів
@@ -188,7 +191,7 @@ const DetailsTable: React.FC = () => {
         const Auth: any = sessionStorage.getItem('AuthToken');
         const response: any = await ApiService.delete(`accounting-software/${id}`, Auth);
         if (response.status === 200) {
-            console.log("Benutzer gelöscht:", updatedTenant);
+            enqueueSnackbar('Accounting entry deleted successfully!', { variant: 'success' });
             router.push("/users");
         }
         if (response instanceof Error) {
@@ -210,7 +213,7 @@ const DetailsTable: React.FC = () => {
 
             <Grid container spacing={2} style={{ width: '100%' }}>
                 <Grid item xs={12} style={{ textAlign: "center" }}>
-                    <h3>Details</h3>
+                    <h3>Accounting Software Details</h3>
                     <Grid container spacing={2}>
 
                         {addNewDetails ? (

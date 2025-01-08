@@ -51,7 +51,7 @@ export default function TableHelperDmsConfig({ title }: TableHelperType) {
     const [rows, setRows] = React.useState<Data[]>([]);  // Zustand für die Zeilen
     const [role, setRoles] = React.useState('');
     console.log(rows);
-  const t = useTranslations('API');
+    const t = useTranslations('API');
 
     // Data und TenantData Typen
     type Data = {
@@ -80,10 +80,9 @@ export default function TableHelperDmsConfig({ title }: TableHelperType) {
             }
 
             setRows(response.data[0]);
-
-
-            enqueueSnackbar("Дані успішно завантажені!", { variant: "success" }); // Додано сповіщення
-
+            if (response.status === 200) {
+                enqueueSnackbar('DMS Config data fetched successfully!', { variant: 'success' });
+            }
 
         }
 
