@@ -160,11 +160,12 @@ const DetailsTable: React.FC = () => {
             console.log(message);
             // @ts-ignore
             enqueueSnackbar(message, { variant: variant });
+            setOpen(false);
         }
 
         if (response.status === 200) {
             enqueueSnackbar('Accounting entry updated successfully!', { variant: 'success' });     
-                   setOpen(false);
+            setOpen(false);
         }
         // @ts-ignore
         setTenantDetails(cleanedObject);

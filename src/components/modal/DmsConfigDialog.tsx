@@ -112,6 +112,7 @@ const DMSDialog = ({ tenantDetails }: AccountingType) => {
             console.log(message);
             // @ts-ignore
             enqueueSnackbar(message, { variant: variant });
+            setOpen(false);
         }
         if (response.status === 200) {
             enqueueSnackbar('DMS Config details updated successfully!', { variant: 'success' });

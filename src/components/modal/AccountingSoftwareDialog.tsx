@@ -111,6 +111,7 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
             console.log(message);
             // @ts-ignore
             enqueueSnackbar(message, { variant: variant });
+            setOpen(false);
         }
         if (response.status === 200) {
             enqueueSnackbar('Accounting software details updated successfully!', { variant: 'success' });

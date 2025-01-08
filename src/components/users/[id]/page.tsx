@@ -111,6 +111,7 @@ const UserDetail: React.FC = () => {
         console.log(message);
         // @ts-ignore
         enqueueSnackbar(message, { variant: variant });
+        setIsEditing(false)
       }
     }
   };
@@ -123,6 +124,7 @@ const UserDetail: React.FC = () => {
     if (response.status === 200) {
       enqueueSnackbar(`User ID ${id} deleted successfully!`, { variant: 'success' });
       router.push("/users");
+
     }
     if (response instanceof Error) {
       const { status, variant, message } = ApiService.CheckAndShow(response, t);

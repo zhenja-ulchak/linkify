@@ -147,6 +147,7 @@ const DetailsTableDms: React.FC = () => {
                 console.log(message);
                 // @ts-ignore
                 enqueueSnackbar(message, { variant: variant });
+                setOpen(false);
             }
             if (response.status === 200) {
                 enqueueSnackbar('DMS configuration updated successfully!', { variant: 'success' });
