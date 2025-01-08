@@ -30,7 +30,7 @@ type TenantDetails = {
 
 const dmsOptions = [
     "SharePoint",
-    "Eco-dms",
+    "ecodms",
     "DocuWare",
     "M-Files",
     "OpenText",
@@ -64,7 +64,10 @@ const DetailsTableDms: React.FC = () => {
     const [tenantDetails, setTenantDetails] = useState<TenantDetails | null>(null);
     const [addNewDetails, setAddNewDetails] = useState<any>(false);
     const [open, setOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState('');
+    const [selectedOption, setSelectedOption] = useState(tenantDetails?.type);
+console.log(tenantDetails?.type);
+
+
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -191,7 +194,22 @@ const DetailsTableDms: React.FC = () => {
     function handleGoingBack() {
         router.back();
     }
-
+    useEffect(() => {
+        if (tenantDetails) {
+            setUpdatedTenant((prevTenant) => ({
+                ...prevTenant,
+                endpoint_url: tenantDetails.endpoint_url || "",
+                type: tenantDetails.type || "",
+                username: tenantDetails.username || "",
+                repository: tenantDetails.repository || "",
+                api_key: tenantDetails.api_key || "",
+                extra_settings: tenantDetails.extra_settings || "",
+            }));
+            if (tenantDetails && tenantDetails.type) {
+                setSelectedOption(tenantDetails.type); // Встановлюємо значення по умолчанию, якщо є
+            } // Оновлення вибору в Select
+        }
+    }, [tenantDetails]);
 
     return (
         <div id="UserDetailContainer" style={{ display: 'flex', justifyContent: 'center', maxWidth: '800px', margin: '0 auto' }}>
@@ -200,10 +218,10 @@ const DetailsTableDms: React.FC = () => {
                     <h3>DMS Config Details</h3>
                 </Grid>
 
-                {addNewDetails ?
+                {!addNewDetails ?
                     (
                         <>
-                            <DMSDialog tenantDetails={null} />
+                            <DMSDialog tenantDetails={tenantDetails} />
                         </>
                     ) :
 
@@ -283,7 +301,7 @@ const DetailsTableDms: React.FC = () => {
                     {"DMS"}
                 </DialogTitle>
                 <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
+                    <Typography variant="body1" component="span" id="alert-dialog-description">
                         <Box sx={{ marginBottom: 2 }}>
                             <TextField
                                 fullWidth
@@ -291,7 +309,7 @@ const DetailsTableDms: React.FC = () => {
                                 name="endpoint_url"
                                 value={updatedTenant.endpoint_url}
                                 onChange={handleEditChange}
-                                placeholder={tenantDetails?.endpoint_url}
+                          
                             />
                         </Box>
                         <Box sx={{ marginBottom: 2 }}>
@@ -299,7 +317,7 @@ const DetailsTableDms: React.FC = () => {
                                 <InputLabel id="dms-select-label">DMS</InputLabel>
                                 <Select
                                     labelId="dms-select-label"
-                                    value={selectedOption}
+                                    value={selectedOption || 'fgedfdhg'}
                                     onChange={handleChange}
                                     label="DMS"
                                 >
@@ -321,7 +339,7 @@ const DetailsTableDms: React.FC = () => {
                                 name="username"
                                 value={updatedTenant.username}
                                 onChange={handleEditChange}
-                                placeholder={tenantDetails?.username}
+                            
                             />
                         </Box>
 
@@ -332,7 +350,7 @@ const DetailsTableDms: React.FC = () => {
                                 name="repository"
                                 value={updatedTenant.repository}
                                 onChange={handleEditChange}
-                                placeholder={tenantDetails?.repository}
+                           
                             />
                         </Box>
 
@@ -343,7 +361,7 @@ const DetailsTableDms: React.FC = () => {
                                 name="api_key"
                                 value={updatedTenant.api_key || ""}
                                 onChange={handleEditChange}
-                                placeholder={tenantDetails?.api_key ?? "Optional"}
+                            
                             />
                         </Box>
 
@@ -354,12 +372,12 @@ const DetailsTableDms: React.FC = () => {
                                 name="extra_settings"
                                 value={updatedTenant.extra_settings}
                                 onChange={handleEditChange}
-                                placeholder={tenantDetails?.extra_settings}
+                           
                                 multiline
                                 rows={4}
                             />
                         </Box>
-                    </DialogContentText>
+                    </Typography>
                 </DialogContent>
                 <DialogActions>
 

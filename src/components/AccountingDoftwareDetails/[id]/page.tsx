@@ -117,7 +117,8 @@ const DetailsTable: React.FC = () => {
             }
 
             if (response.status === 200) {
-                enqueueSnackbar('Accounting data fetched successfully!', { variant: 'success' });            }
+                enqueueSnackbar('Accounting data fetched successfully!', { variant: 'success' });
+            }
 
             if (response?.data && Array.isArray(response.data) && response.data[0] && Array.isArray(response.data[0]) && response.data[0][0]) {
                 setTenantDetails(response.data[0][0]);
@@ -164,7 +165,7 @@ const DetailsTable: React.FC = () => {
         }
 
         if (response.status === 200) {
-            enqueueSnackbar('Accounting entry updated successfully!', { variant: 'success' });     
+            enqueueSnackbar('Accounting entry updated successfully!', { variant: 'success' });
             setOpen(false);
         }
         // @ts-ignore
@@ -207,6 +208,23 @@ const DetailsTable: React.FC = () => {
     function handleGoingBack() {
         router.back();
     }
+
+    useEffect(() => {
+        if (tenantDetails) {
+            setUpdatedTenant((prevTenant) => ({
+                ...prevTenant,
+                name: tenantDetails.name || "",
+                type: tenantDetails.type || "",
+                url: tenantDetails.url || "",
+                organization_id: tenantDetails.organization_id || "0",
+                event_type: tenantDetails.event_type || "",
+                description: tenantDetails.description || "",
+                is_active: tenantDetails.is_active,
+
+            }));
+            setSelectedOption(tenantDetails.type || ''); // Оновлення вибору в Select
+        }
+    }, [tenantDetails]); // Виконується при зміні tenantDetails
 
     return (
 
@@ -323,10 +341,11 @@ const DetailsTable: React.FC = () => {
                                         <InputLabel id="dms-select-label">Type</InputLabel>
                                         <Select
                                             labelId="dms-select-label"
-                                            value={selectedOption || tenantDetails?.type}
+                                            value={selectedOption}
                                             onChange={handleSelectChange}
                                             label="DMS"
                                         >
+
                                             {dmsOptions.map((option, index) => (
                                                 <MenuItem key={index} value={option}>
                                                     {option}
@@ -339,22 +358,30 @@ const DetailsTable: React.FC = () => {
                                 <Box sx={{ marginBottom: 2 }}>
                                     <TextField
                                         fullWidth
-                                        label="URL"
-                                        name="url"
-                                        value={tenantDetails?.url || ""}
+                                        label="Name"
+                                        name="name"
+                                        value={updatedTenant.name || ""}  // Заповнення значення
                                         onChange={handleEditChange}
-                               
                                     />
                                 </Box>
 
                                 <Box sx={{ marginBottom: 2 }}>
                                     <TextField
                                         fullWidth
-                                        label="Organisation ID"
-                                        name="organization_id"
-                                        value={tenantDetails?.organization_id || "0"}
+                                        label="URL"
+                                        name="url"
+                                        value={updatedTenant.url || ""}
                                         onChange={handleEditChange}
-                                      
+                                    />
+                                </Box>
+
+                                <Box sx={{ marginBottom: 2 }}>
+                                    <TextField
+                                        fullWidth
+                                        label="Organization ID"
+                                        name="organization_id"
+                                        value={updatedTenant.organization_id || ""}
+                                        onChange={handleEditChange}
                                     />
                                 </Box>
 
@@ -363,9 +390,8 @@ const DetailsTable: React.FC = () => {
                                         fullWidth
                                         label="Event Type"
                                         name="event_type"
-                                        value={tenantDetails?.event_type || "N/A"}
+                                        value={updatedTenant.event_type || ""}
                                         onChange={handleEditChange}
-                                     
                                     />
                                 </Box>
 
@@ -374,9 +400,8 @@ const DetailsTable: React.FC = () => {
                                         fullWidth
                                         label="Description"
                                         name="description"
-                                        value={tenantDetails?.description || ""}
+                                        value={updatedTenant.description || ""}
                                         onChange={handleEditChange}
-                                  
                                     />
                                 </Box>
 
@@ -385,9 +410,8 @@ const DetailsTable: React.FC = () => {
                                         fullWidth
                                         label="Region"
                                         name="additional_settings.region"
-                                        value={tenantDetails?.additional_settings?.region || ""}
+                                        value={updatedTenant.additional_settings?.region || ""}
                                         onChange={handleEditChange}
-                                    
                                     />
                                 </Box>
                             </Typography>

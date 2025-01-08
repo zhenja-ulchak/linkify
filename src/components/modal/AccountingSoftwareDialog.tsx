@@ -19,11 +19,7 @@ type TenantDetails = {
         region: string;
     };
     is_active: number;
-    created_by: string | null;
-    updated_by: string | null;
-    created_at: string;
-    updated_at: string;
-    deleted_at: string | null;
+
 };
 
 
@@ -49,11 +45,7 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
         event_type: null,
         description: "",
         is_active: 0,
-        created_by: null,
-        updated_by: null,
-        created_at: "",
-        updated_at: "",
-        deleted_at: null,
+
     });
 
     const [addNewDetails, setAddNewDetails] = useState<any>(false);
@@ -126,7 +118,22 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
     const removeEmptyValues = (obj: any) => {
         return Object.fromEntries(Object.entries(obj).filter(([key, value]) => value != null && value !== ""));
     };
+    useEffect(() => {
+        if (tenantDetails) {
+            setUpdatedTenant((prevTenant: any) => ({
+                ...prevTenant,
+                name: tenantDetails.name || "",
+                type: tenantDetails.type || "",
+                url: tenantDetails.url || "",
+                organization_id: tenantDetails.organization_id || "0",
+                event_type: tenantDetails.event_type || "",
+                description: tenantDetails.description || "",
+                is_active: tenantDetails.is_active,
 
+            }));
+            setSelectedOption(tenantDetails.type || ''); // Оновлення вибору в Select
+        }
+    }, [tenantDetails]); // Викон
 
     return (
         <>
