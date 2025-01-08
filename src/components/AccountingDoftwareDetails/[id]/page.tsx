@@ -54,7 +54,7 @@ const DetailsTable: React.FC = () => {
     const [tenantDetails, setTenantDetails] = useState<TenantDetails | null>(null);
     const [addNewDetails, setAddNewDetails] = useState<any>(false);
     const [open, setOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState('');
+    const [selectedOption, setSelectedOption] = useState(tenantDetails?.type);
     const t = useTranslations('API');
 
     const [updatedTenant, setUpdatedTenant] = useState<TenantDetails>({
@@ -72,7 +72,7 @@ const DetailsTable: React.FC = () => {
         updated_at: "",
         deleted_at: null,
     });
-    console.log(selectedOption);
+    console.log(tenantDetails);
 
 
     const handleClickOpen = () => {
@@ -323,7 +323,7 @@ const DetailsTable: React.FC = () => {
                                         <InputLabel id="dms-select-label">Type</InputLabel>
                                         <Select
                                             labelId="dms-select-label"
-                                            value={selectedOption}
+                                            value={selectedOption || tenantDetails?.type}
                                             onChange={handleSelectChange}
                                             label="DMS"
                                         >
@@ -341,9 +341,9 @@ const DetailsTable: React.FC = () => {
                                         fullWidth
                                         label="URL"
                                         name="url"
-                                        value={updatedTenant.url || ""}
+                                        value={tenantDetails?.url || ""}
                                         onChange={handleEditChange}
-                                        placeholder={tenantDetails?.url || ""}
+                               
                                     />
                                 </Box>
 
@@ -352,9 +352,9 @@ const DetailsTable: React.FC = () => {
                                         fullWidth
                                         label="Organisation ID"
                                         name="organization_id"
-                                        value={updatedTenant.organization_id || ""}
+                                        value={tenantDetails?.organization_id || "0"}
                                         onChange={handleEditChange}
-                                        placeholder={tenantDetails?.organization_id || ""}
+                                      
                                     />
                                 </Box>
 
@@ -363,9 +363,9 @@ const DetailsTable: React.FC = () => {
                                         fullWidth
                                         label="Event Type"
                                         name="event_type"
-                                        value={updatedTenant.event_type || ""}
+                                        value={tenantDetails?.event_type || "N/A"}
                                         onChange={handleEditChange}
-                                        placeholder={tenantDetails?.event_type ?? "N/A"}
+                                     
                                     />
                                 </Box>
 
@@ -374,9 +374,9 @@ const DetailsTable: React.FC = () => {
                                         fullWidth
                                         label="Description"
                                         name="description"
-                                        value={updatedTenant.description || ""}
+                                        value={tenantDetails?.description || ""}
                                         onChange={handleEditChange}
-                                        placeholder={tenantDetails?.description || ""}
+                                  
                                     />
                                 </Box>
 
@@ -385,9 +385,9 @@ const DetailsTable: React.FC = () => {
                                         fullWidth
                                         label="Region"
                                         name="additional_settings.region"
-                                        value={updatedTenant.additional_settings?.region || ""}
+                                        value={tenantDetails?.additional_settings?.region || ""}
                                         onChange={handleEditChange}
-                                        placeholder={tenantDetails?.additional_settings?.region || ""}
+                                    
                                     />
                                 </Box>
                             </Typography>
