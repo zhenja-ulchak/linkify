@@ -106,9 +106,15 @@ const DetailsTableDms: React.FC = () => {
             const response: any = await ApiService.get(`dms-config`, Auth); //${id}
             if (response instanceof Error) {
                 const { status, variant, message } = ApiService.CheckAndShow(response, t);
-                console.log(message);
-                // @ts-ignore
-                enqueueSnackbar(message, { variant: variant });
+
+                if (status === 404) {
+                    console.log(404);
+                    
+                }else{
+                    console.log(message);
+                    // @ts-ignore
+                    enqueueSnackbar(message, { variant: variant });
+                }
             }
             if (response.status === 200) {
                 enqueueSnackbar('DMS configuration fetched successfully!', { variant: 'success' });
@@ -184,9 +190,10 @@ const DetailsTableDms: React.FC = () => {
             // @ts-ignore
             enqueueSnackbar(message, { variant: variant });
         }
-        if (response.status === 200) {
+        if (response.success === true) {
             enqueueSnackbar('DMS configuration deleted successfully!', { variant: 'success' });
-            router.push("/users");
+            setOpenModal(false);
+            router.push("/dashboard/admin");
         }
 
     };
@@ -230,10 +237,10 @@ const DetailsTableDms: React.FC = () => {
                     <h3>DMS Config Details</h3>
                 </Grid>
 
-                {!addNewDetails ?
+                {addNewDetails ?
                     (
                         <>
-                            <DMSDialog tenantDetails={tenantDetails} />
+                            <DMSDialog/>
                         </>
                     ) :
 

@@ -111,9 +111,16 @@ const DetailsTable: React.FC = () => {
             const response: any = await ApiService.get(`accounting-software`, Auth); //${id}
             if (response instanceof Error) {
                 const { status, variant, message } = ApiService.CheckAndShow(response, t);
-                console.log(message);
-                // @ts-ignore
-                enqueueSnackbar(message, { variant: variant });
+
+                if (status === 404) {
+                    console.log(404);
+                    
+                }else{
+                    console.log(message);
+                    // @ts-ignore
+                    enqueueSnackbar(message, { variant: variant });
+                }
+              
             }
 
             if (response.status === 200) {
@@ -184,9 +191,11 @@ const DetailsTable: React.FC = () => {
 
         const Auth: any = sessionStorage.getItem('AuthToken');
         const response: any = await ApiService.delete(`accounting-software/${id}`, Auth);
-        if (response.status === 200) {
+        console.log(response);
+        
+        if (response.success === true) {
             enqueueSnackbar('Accounting entry deleted successfully!', { variant: 'success' });
-            router.push("/users");
+            router.push("/dashboard/admin");
             setOpenModal(false);
         }
         if (response instanceof Error) {

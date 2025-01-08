@@ -112,24 +112,24 @@ const UserUpdateDialog = ({ tenantDetails }: AccountingType) => {
         return Object.fromEntries(Object.entries(obj).filter(([key, value]) => value != null && value !== ""));
     };
 
-    useEffect(() => {
-        if (tenantDetails) {
-            setUpdatedTenant((prevUser) => ({
-                ...prevUser,
-                first_name: tenantDetails.first_name || "",
-                last_name: tenantDetails.last_name || "",
-                language: tenantDetails.language || "",
-                username: tenantDetails.username || "",
-                contact_phone: tenantDetails.contact_phone || 0,
-                email: tenantDetails.email || "",
-                role: tenantDetails.role || "",
-                is_active: tenantDetails.is_active || false,
-            }));
-            if (tenantDetails && tenantDetails.role) {
-                setSelectedOption(tenantDetails.role); // Set default value if role is available
-            }
-        }
-    }, [tenantDetails]);
+    // useEffect(() => {
+    //     if (tenantDetails) {
+    //         setUpdatedTenant((prevUser) => ({
+    //             ...prevUser,
+    //             first_name: tenantDetails.first_name || "",
+    //             last_name: tenantDetails.last_name || "",
+    //             language: tenantDetails.language || "",
+    //             username: tenantDetails.username || "",
+    //             contact_phone: tenantDetails.contact_phone || 0,
+    //             email: tenantDetails.email || "",
+    //             role: tenantDetails.role || "",
+    //             is_active: tenantDetails.is_active || false,
+    //         }));
+    //         if (tenantDetails && tenantDetails.role) {
+    //             setSelectedOption(tenantDetails.role); // Set default value if role is available
+    //         }
+    //     }
+    // }, [tenantDetails]);
 
     return (
         <>

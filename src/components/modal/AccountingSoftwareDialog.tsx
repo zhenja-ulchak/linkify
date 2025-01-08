@@ -118,22 +118,22 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
     const removeEmptyValues = (obj: any) => {
         return Object.fromEntries(Object.entries(obj).filter(([key, value]) => value != null && value !== ""));
     };
-    useEffect(() => {
-        if (tenantDetails) {
-            setUpdatedTenant((prevTenant: any) => ({
-                ...prevTenant,
-                name: tenantDetails.name || "",
-                type: tenantDetails.type || "",
-                url: tenantDetails.url || "",
-                organization_id: tenantDetails.organization_id || "0",
-                event_type: tenantDetails.event_type || "",
-                description: tenantDetails.description || "",
-                is_active: tenantDetails.is_active,
+    // useEffect(() => {
+    //     if (tenantDetails) {
+    //         setUpdatedTenant((prevTenant: any) => ({
+    //             ...prevTenant,
+    //             name: tenantDetails.name || "",
+    //             type: tenantDetails.type || "",
+    //             url: tenantDetails.url || "",
+    //             organization_id: tenantDetails.organization_id || "0",
+    //             event_type: tenantDetails.event_type || "",
+    //             description: tenantDetails.description || "",
+    //             is_active: tenantDetails.is_active,
 
-            }));
-            setSelectedOption(tenantDetails.type || ''); // Оновлення вибору в Select
-        }
-    }, [tenantDetails]); // Викон
+    //         }));
+    //         setSelectedOption(tenantDetails.type || ''); // Оновлення вибору в Select
+    //     }
+    // }, [tenantDetails]); // Викон
 
     return (
         <>
@@ -152,6 +152,7 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
                 onClose={handleCloseUpdate}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
+                fullWidth
             >
                 <form onSubmit={handleSubmit}>
                     <DialogTitle id="alert-dialog-title">

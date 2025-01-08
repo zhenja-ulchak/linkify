@@ -33,11 +33,8 @@ const dmsOptions = [
 ];
 
 
-type AccountingType = {
-    tenantDetails: TenantDetails | null
-}
 
-const DMSDialog = ({ tenantDetails }: AccountingType) => {
+const DMSDialog = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [updatedTenant, setUpdatedTenant] = useState<any>({
         type: "",
@@ -108,7 +105,7 @@ const DMSDialog = ({ tenantDetails }: AccountingType) => {
             setOpen(false);
         }
         if (response.status === 200) {
-            enqueueSnackbar('DMS Config details updated successfully!', { variant: 'success' });
+            enqueueSnackbar('DMS Config details create successfully!', { variant: 'success' });
             setOpen(false);
         }
 
@@ -120,22 +117,22 @@ const DMSDialog = ({ tenantDetails }: AccountingType) => {
     const removeEmptyValues = (obj: any) => {
         return Object.fromEntries(Object.entries(obj).filter(([key, value]) => value != null && value !== ""));
     };
- useEffect(() => {
-        if (tenantDetails) {
-            setUpdatedTenant((prevTenant: any) => ({
-                ...prevTenant,
-                endpoint_url: tenantDetails.endpoint_url || "",
-                type: tenantDetails.type || "",
-                username: tenantDetails.username || "",
-                repository: tenantDetails.repository || "",
-                api_key: tenantDetails.api_key || "",
-                extra_settings: tenantDetails.extra_settings || "",
-            }));
-            if (tenantDetails && tenantDetails.type) {
-                setSelectedOption(tenantDetails.type); // Встановлюємо значення по умолчанию, якщо є
-            } // Оновлення вибору в Select
-        }
-    }, [tenantDetails]);
+//  useEffect(() => {
+//         if (tenantDetails) {
+//             setUpdatedTenant((prevTenant: any) => ({
+//                 ...prevTenant,
+//                 endpoint_url: tenantDetails.endpoint_url || "",
+//                 type: tenantDetails.type || "",
+//                 username: tenantDetails.username || "",
+//                 repository: tenantDetails.repository || "",
+//                 api_key: tenantDetails.api_key || "",
+//                 extra_settings: tenantDetails.extra_settings || "",
+//             }));
+//             if (tenantDetails && tenantDetails.type) {
+//                 setSelectedOption(tenantDetails.type); // Встановлюємо значення по умолчанию, якщо є
+//             } // Оновлення вибору в Select
+//         }
+//     }, [tenantDetails]);
 
     return (
         <>
@@ -154,6 +151,7 @@ const DMSDialog = ({ tenantDetails }: AccountingType) => {
                 onClose={handleCloseUpdate}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
+                fullWidth
             >
                 <form onSubmit={handleSubmit}>
                     <DialogTitle id="alert-dialog-title">
