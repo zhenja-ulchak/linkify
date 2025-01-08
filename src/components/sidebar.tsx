@@ -23,7 +23,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import WysiwygIcon from '@mui/icons-material/Wysiwyg';
 import EngineeringIcon from '@mui/icons-material/Engineering';
 import RecentActorsIcon from '@mui/icons-material/RecentActors';
-
+import EmailIcon from '@mui/icons-material/Email';
 import { Url } from "next/dist/shared/lib/router/router";
 import Logout from "./Logout";
 import { useRouter } from "next/navigation";
@@ -293,7 +293,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
               { path: `/dashboard/admin/accounting-software/${authUser?.tenant_id || ""}`, icon: <WysiwygIcon style={{ color: "black" }} />, text: t("accounting-software") },
               { path: `/dashboard/admin/dms-config/${authUser?.tenant_id || ""}`, icon: <EngineeringIcon style={{ color: "black" }} />, text: t("dms-config") },
               { path: "/dashboard/admin/user-list", icon: <RecentActorsIcon style={{ color: "black" }} />, text: t("user-list") },
-              { path: "/dashboard/admin/SMTP-Email", icon: <SupervisorAccountIcon style={{ color: "black" }} />, text: t("smtp-email") },
+              { path: "/dashboard/admin/SMTP-Email", icon: <EmailIcon style={{ color: "black" }} />, text: t("smtp-email") },
               { path: `/dashboard/admin/tenant/${authUser?.tenant_id || ""}`, icon: <FormatListBulletedIcon style={{ color: "black" }} />, text: t("tenant") },
             ];
 
