@@ -13,6 +13,7 @@ import ApiService from "../../../../src/app/services/apiService";
 import { useTranslations } from 'next-intl';
 import { enqueueSnackbar } from "notistack";
 import ConfirmDeleteModal from '@/components/modal/ConfirmDeleteModal';
+import UserUpdateDialog from "@/components/modal/UserUpdateDialog";
 
 type User = {
   id?: number;
@@ -36,6 +37,7 @@ const UserDetail: React.FC = () => {
   const [openModalConfirm, setOpenModalConfirm] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState<string>("");
+  const [addNewDetails, setAddNewDetails] = useState<any>(false);
   const [updatedUser, setUpdatedUser] = useState<User>({
 
     first_name: "",
@@ -58,13 +60,13 @@ const UserDetail: React.FC = () => {
 
 
       const response: any = await ApiService.get(`/user/${id}`, Auth);
-      console.log(response.data[0]);
-      setUser(response.data[0][0]);
+      if (response?.data && Array.isArray(response.data) && response.data[0] && Array.isArray(response.data[0]) && response.data[0][0]) {
+        setUser(response.data[0][0]);
+      } else {
+        setAddNewDetails(true)
+      }
       if (response.status === 200) {
         enqueueSnackbar(`Details for user ID ${id} fetched successfully!`, { variant: 'success' });
-
-
-
       }
       if (response instanceof Error) {
         const { status, variant, message } = ApiService.CheckAndShow(response, t);
@@ -77,13 +79,6 @@ const UserDetail: React.FC = () => {
 
     fetchElements();
   }, [id]);
-
-
-
-
-
-
-
 
 
   const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -103,7 +98,7 @@ const UserDetail: React.FC = () => {
       !updatedUser.contact_phone ||
       !updatedUser.email
     ) {
-      setError("Alle Felder müssen ausgefüllt werden.");
+
       return false;
     }
     setError("");
@@ -111,27 +106,29 @@ const UserDetail: React.FC = () => {
   };
 
   const handleSaveChanges = async () => {
-    if (validateInputs()) {
+    const cleanedObject = removeEmptyValues(updatedUser);
 
-      const response: any = await ApiService.put(
-        `user/${updatedUser?.id}`,
-        updatedUser, Auth
-      );
-      if (response.status === 200) {
-        enqueueSnackbar('New user created successfully!', { variant: 'success' });
-        setIsEditing(false);
-      }
-
-      if (response instanceof Error) {
-        const { status, variant, message } = ApiService.CheckAndShow(response, t);
-        console.log(message);
-        // @ts-ignore
-        enqueueSnackbar(message, { variant: variant });
-        setIsEditing(false)
-      }
+    const response: any = await ApiService.put(
+      `user/${users?.id}`,
+      cleanedObject, Auth
+    );
+    if (response.status === 200) {
+      enqueueSnackbar('New user created successfully!', { variant: 'success' });
+      setIsEditing(false);
     }
-  };
 
+    if (response instanceof Error) {
+      const { status, variant, message } = ApiService.CheckAndShow(response, t);
+      console.log(message);
+      // @ts-ignore
+      enqueueSnackbar(message, { variant: variant });
+      setIsEditing(false)
+    }
+
+  };
+  const removeEmptyValues = (obj: any) => {
+    return Object.fromEntries(Object.entries(obj).filter(([key, value]) => value != null && value !== ""));
+  };
   const handleDelete = async () => {
 
     const response: any = await ApiService.delete(
@@ -159,7 +156,7 @@ const UserDetail: React.FC = () => {
   };
 
   const handleCloseModal = () => {
-    setOpenModal(false);
+    setOpenModalConfirm(false);
 
   };
 
@@ -167,6 +164,25 @@ const UserDetail: React.FC = () => {
 
     setOpenModalConfirm(true);
   };
+
+  useEffect(() => {
+    if (users) {
+      setUpdatedUser((prevUser) => ({
+        ...prevUser,
+        first_name: users.first_name || "",
+        last_name: users.last_name || "",
+        language: users.language || "",
+        username: users.username || "",
+        contact_phone: users.contact_phone || 0,
+        email: users.email || "",
+        role: users.role || "",
+        is_active: users.is_active || false,
+      }));
+    }
+  }, [users]);
+
+
+
 
   return (
     <>
@@ -176,68 +192,71 @@ const UserDetail: React.FC = () => {
 
         <Grid container spacing={2} style={{ width: '100%' }}>
           <Grid item xs={12} style={{ textAlign: "center" }}>
-            <h3>DMS Config Details</h3>
+            <h3>User Config Details</h3>
           </Grid>
 
+          {!addNewDetails ? (
+            <UserUpdateDialog tenantDetails={users} />
 
+          ) : (
+            <>
 
-          <Grid item xs={12}>
-            <TableContainer>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell className="UserDetailTableHeader">Feld</TableCell>
-                    <TableCell className="UserDetailTableHeader">Wert</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {users && (
-                    <>
+              <Grid item xs={12}>
+                <TableContainer>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell className="UserDetailTableHeader">Feld</TableCell>
+                        <TableCell className="UserDetailTableHeader">Wert</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {users && (
+                        <>
 
-                      <TableRow>
-                        <TableCell style={{ fontWeight: 'bold' }}>ID</TableCell>
-                        <TableCell>{users.id}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell style={{ fontWeight: 'bold' }}>Vorname</TableCell>
-                        <TableCell>{users.first_name}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell style={{ fontWeight: 'bold' }}>Nachname</TableCell>
-                        <TableCell>{users.last_name}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell style={{ fontWeight: 'bold' }}>Sprache</TableCell>
-                        <TableCell>{users.language}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell style={{ fontWeight: 'bold' }}>Benutzername</TableCell>
-                        <TableCell>{users.username}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell style={{ fontWeight: 'bold' }}>Telefon</TableCell>
-                        <TableCell>{users.contact_phone}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell style={{ fontWeight: 'bold' }}>E-Mail</TableCell>
-                        <TableCell>{users.email}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell style={{ fontWeight: 'bold' }}>Rolle</TableCell>
-                        <TableCell>{users.role}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell style={{ fontWeight: 'bold' }}>Aktiv</TableCell>
-                        <TableCell>{users.is_active ? 'Ja' : 'Nein'}</TableCell>
-                      </TableRow>
-                    </>
-                  )}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Grid>
-
-          <Grid item xs={12} display="flex" justifyContent="space-evenly">
+                          <TableRow>
+                            <TableCell style={{ fontWeight: 'bold' }}>ID</TableCell>
+                            <TableCell>{users.id}</TableCell>
+                          </TableRow>
+                          <TableRow>
+                            <TableCell style={{ fontWeight: 'bold' }}>Vorname</TableCell>
+                            <TableCell>{users.first_name}</TableCell>
+                          </TableRow>
+                          <TableRow>
+                            <TableCell style={{ fontWeight: 'bold' }}>Nachname</TableCell>
+                            <TableCell>{users.last_name}</TableCell>
+                          </TableRow>
+                          <TableRow>
+                            <TableCell style={{ fontWeight: 'bold' }}>Sprache</TableCell>
+                            <TableCell>{users.language}</TableCell>
+                          </TableRow>
+                          <TableRow>
+                            <TableCell style={{ fontWeight: 'bold' }}>Benutzername</TableCell>
+                            <TableCell>{users.username}</TableCell>
+                          </TableRow>
+                          <TableRow>
+                            <TableCell style={{ fontWeight: 'bold' }}>Telefon</TableCell>
+                            <TableCell>{users.contact_phone}</TableCell>
+                          </TableRow>
+                          <TableRow>
+                            <TableCell style={{ fontWeight: 'bold' }}>E-Mail</TableCell>
+                            <TableCell>{users.email}</TableCell>
+                          </TableRow>
+                          <TableRow>
+                            <TableCell style={{ fontWeight: 'bold' }}>Rolle</TableCell>
+                            <TableCell>{users.role}</TableCell>
+                          </TableRow>
+                          <TableRow>
+                            <TableCell style={{ fontWeight: 'bold' }}>Aktiv</TableCell>
+                            <TableCell>{users.is_active ? 'Ja' : 'Nein'}</TableCell>
+                          </TableRow>
+                        </>
+                      )}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Grid>
+              <Grid item xs={12} display="flex" justifyContent="space-evenly">
             <IconButton color="primary" onClick={handleOpenModalUpdate} title="Bearbeiten">
               <EditIcon />
             </IconButton>
@@ -246,19 +265,23 @@ const UserDetail: React.FC = () => {
               <DeleteIcon />
             </IconButton>
           </Grid>
+            </>
+
+          )}
+        
 
 
 
           <ConfirmDeleteModal
             open={openModalConfirm}
-            title="Delete"
+            title="Delete User"
             handleDelete={handleDelete}
             onClose={handleCloseModal}
-            description={"Are you sure you want to delete DMS config?"}
+            description={"Are you sure you want to delete User?"}
 
           />
 
-          <Grid item xs={12} sx={{ textAlign: 'left' }}>
+          <Grid item xs={12} sx={{ textAlign: addNewDetails ? "center" : 'left' }}>
             <Button
               variant="outlined"
               startIcon={<KeyboardBackspaceIcon />}
@@ -275,103 +298,97 @@ const UserDetail: React.FC = () => {
       {
         isEditing && (
           <Dialog open={isEditing} onClose={() => setIsEditing(false)} fullWidth>
-            <DialogTitle>Benutzerdaten bearbeiten</DialogTitle>
+            <DialogTitle>User Update</DialogTitle>
             <DialogContent>
               {error && <Typography color="error">{error}</Typography>}
-              <Box sx={{ marginBottom: 2 }}>
-                <TextField
-                  fullWidth
-                  label="Username *"
-                  name="username"
-                  value={updatedUser?.username}  
-                  onChange={handleEditChange}
-                  InputProps={{
-                    readOnly: true,
-                  }}
-                />
-              </Box>
+              <Typography variant="body1" component="span" id="alert-dialog-description">
+                <Box sx={{ marginBottom: 2 }}>
+                  <TextField
+                    fullWidth
+                    label="Username *"
+                    name="username"
+                    value={updatedUser?.username}
+                    onChange={handleEditChange}
+                    InputProps={{
+                      readOnly: true,
+                    }}
+                  />
+                </Box>
 
-              {/* First Name */}
-              <Box sx={{ marginBottom: 2 }}>
-                <TextField
-                  fullWidth
-                  label="Vorname"
-                  name="first_name"
-                  value={updatedUser?.first_name}  
-                  onChange={handleEditChange}
-                />
-              </Box>
+                {/* First Name */}
+                <Box sx={{ marginBottom: 2 }}>
+                  <TextField
+                    fullWidth
+                    label="Vorname"
+                    name="first_name"
+                    value={updatedUser?.first_name}
+                    onChange={handleEditChange}
+                  />
+                </Box>
 
-              {/* Last Name */}
-              <Box sx={{ marginBottom: 2 }}>
-                <TextField
-                  fullWidth
-                  label="Nachname"
-                  name="last_name"
-                  value={updatedUser?.last_name} 
-                  onChange={handleEditChange}
-                />
-              </Box>
+                {/* Last Name */}
+                <Box sx={{ marginBottom: 2 }}>
+                  <TextField
+                    fullWidth
+                    label="Nachname"
+                    name="last_name"
+                    value={updatedUser?.last_name}
+                    onChange={handleEditChange}
+                  />
+                </Box>
 
-              {/* Language */}
-              <Box sx={{ marginBottom: 2 }}>
-                <TextField
-                  fullWidth
-                  label="Sprache"
-                  name="language"
-                  value={updatedUser?.language}  
-                  onChange={handleEditChange}
-                />
-              </Box>
+                {/* Language */}
+                <Box sx={{ marginBottom: 2 }}>
+                  <TextField
+                    fullWidth
+                    label="Sprache"
+                    name="language"
+                    value={updatedUser?.language}
+                    onChange={handleEditChange}
+                  />
+                </Box>
 
-              {/* Contact Phone */}
-              <Box sx={{ marginBottom: 2 }}>
-                <TextField
-                  fullWidth
-                  label="Kontaktnummer *"
-                  name="contact_phone"
-                  value={updatedUser?.contact_phone}
-                  onChange={handleEditChange}
-                />
-              </Box>
+                {/* Contact Phone */}
+                <Box sx={{ marginBottom: 2 }}>
+                  <TextField
+                    fullWidth
+                    label="Kontaktnummer *"
+                    name="contact_phone"
+                    value={updatedUser?.contact_phone}
+                    onChange={handleEditChange}
+                  />
+                </Box>
 
-              {/* Email */}
-              <Box sx={{ marginBottom: 2 }}>
-                <TextField
-                  fullWidth
-                  label="Email *"
-                  name="email"
-                  value={updatedUser?.email} 
-                  onChange={handleEditChange}
-                />
-              </Box>
+                {/* Email */}
+                <Box sx={{ marginBottom: 2 }}>
+                  <TextField
+                    fullWidth
+                    label="Email *"
+                    name="email"
+                    value={updatedUser?.email}
+                    onChange={handleEditChange}
+                  />
+                </Box>
 
-              {/* Role */}
-              <Box sx={{ marginBottom: 2 }}>
-                <TextField
-                  fullWidth
-                  label="Role"
-                  name="role"
-                  value={updatedUser?.role}  
-                  onChange={handleEditChange}
-                />
-              </Box>
-
-
-
+                {/* Role */}
+                <Box sx={{ marginBottom: 2 }}>
+                  <TextField
+                    fullWidth
+                    label="Role"
+                    name="role"
+                    value={updatedUser?.role}
+                    onChange={handleEditChange}
+                  />
+                </Box>
+              </Typography>
             </DialogContent>
             <DialogActions>
 
               <Button onClick={() => setIsEditing(false)}>Cancel</Button>
               <Button onClick={() => handleSaveChanges()} autoFocus>
-               Update
+                Update
               </Button>
-              {/* <Button onClick={handleSaveChanges} color="primary" startIcon={<AddIcon />}>
-                Speichern
-              </Button>
-              <Button onClick={() => setIsEditing(false)} color="secondary" startIcon={<CancelIcon />}>
-                Abbrechen
-              </Button> */}
+
             </DialogActions>
           </Dialog>
         )

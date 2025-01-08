@@ -8,46 +8,37 @@ import { enqueueSnackbar } from "notistack";
 import { useTranslations } from 'next-intl';
 
 
-type TenantDetails = {
+type User = {
     id?: number;
-    tenant_id?: number;
-    type: string;
-    endpoint_url: string;
+    first_name: string;
+    last_name: string;
+    language: string;
     username: string;
-    api_key: string | null;
-    repository: string;
-    extra_settings: string;  // Передбачається, що це JSON-рядок
-    created_at: string;
-    updated_at: string;
-};
+    contact_phone: number;
+    email: string;
+    role: string;
+    is_active: boolean;
+  };
 
 
-const dmsOptions = [
-    "SharePoint",
-    "ecodms",,
-    "DocuWare",
-    "M-Files",
-    "OpenText",
-    "Alfresco",
-    "Laserfiche",
-];
+
 
 
 type AccountingType = {
-    tenantDetails: TenantDetails | null
+    tenantDetails: User | null
 }
 
-const DMSDialog = ({ tenantDetails }: AccountingType) => {
+const UserUpdateDialog = ({ tenantDetails }: AccountingType) => {
     const [isEditing, setIsEditing] = useState(false);
-    const [updatedTenant, setUpdatedTenant] = useState<any>({
-        type: "",
-        endpoint_url: "",
+    const [updatedTenant, setUpdatedTenant] = useState<User>({
+        first_name: "",
+        last_name: "",
+        language: "",
         username: "",
-        api_key: null,
-        repository: "",
-        extra_settings: "",
-        created_at: "",
-        updated_at: "",
+        contact_phone: 0,
+        email: "",
+        role: "",
+        is_active: false
     });
 
     const [addNewDetails, setAddNewDetails] = useState<any>(false);
@@ -120,20 +111,23 @@ const DMSDialog = ({ tenantDetails }: AccountingType) => {
     const removeEmptyValues = (obj: any) => {
         return Object.fromEntries(Object.entries(obj).filter(([key, value]) => value != null && value !== ""));
     };
- useEffect(() => {
+
+    useEffect(() => {
         if (tenantDetails) {
-            setUpdatedTenant((prevTenant: any) => ({
-                ...prevTenant,
-                endpoint_url: tenantDetails.endpoint_url || "",
-                type: tenantDetails.type || "",
+            setUpdatedTenant((prevUser) => ({
+                ...prevUser,
+                first_name: tenantDetails.first_name || "",
+                last_name: tenantDetails.last_name || "",
+                language: tenantDetails.language || "",
                 username: tenantDetails.username || "",
-                repository: tenantDetails.repository || "",
-                api_key: tenantDetails.api_key || "",
-                extra_settings: tenantDetails.extra_settings || "",
+                contact_phone: tenantDetails.contact_phone || 0,
+                email: tenantDetails.email || "",
+                role: tenantDetails.role || "",
+                is_active: tenantDetails.is_active || false,
             }));
-            if (tenantDetails && tenantDetails.type) {
-                setSelectedOption(tenantDetails.type); // Встановлюємо значення по умолчанию, якщо є
-            } // Оновлення вибору в Select
+            if (tenantDetails && tenantDetails.role) {
+                setSelectedOption(tenantDetails.role); // Set default value if role is available
+            }
         }
     }, [tenantDetails]);
 
@@ -144,84 +138,109 @@ const DMSDialog = ({ tenantDetails }: AccountingType) => {
                     color="primary"
                     variant="contained"
                     onClick={handleClickOpenUpdate}
-                    title="Add new accounting-software"
+                    title="Add new user"
                 >
-                    Add New DMS config
+                    Add New User
                 </Button>
             </Box>
             <Dialog
                 open={open}
-                onClose={handleCloseUpdate}
+                onClose={handleClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
+                fullWidth
             >
                 <form onSubmit={handleSubmit}>
                     <DialogTitle id="alert-dialog-title">
-                        {"Add New DMS config"}
+                        {"Add New User"}
                     </DialogTitle>
-                    <DialogContent>
+                    <DialogContent  sx={{ marginTop: "15px" }}>
                         <Typography variant="body1" component="span" id="alert-dialog-description">
-                            <Box sx={{ marginBottom: 2  , marginTop: "15px"}}>
+                            {/* <Box sx={{ marginBottom: 2 }}>
                                 <FormControl fullWidth>
-                                    <InputLabel id="dms-select-label">Type</InputLabel>
+                                    <InputLabel id="role-select-label">Role</InputLabel>
                                     <Select
-                                        labelId="dms-select-label"
+                                        labelId="role-select-label"
                                         value={selectedOption}
                                         onChange={handleSelectChange}
-                                        label="DMS"
+                                        label="Role"
                                     >
-                                        {dmsOptions.map((option, index) => (
-                                            <MenuItem key={index} value={option}>
-                                                {option}
+                                        {['Admin', 'User', 'Manager'].map((role, index) => (
+                                            <MenuItem key={index} value={role}>
+                                                {role}
                                             </MenuItem>
                                         ))}
                                     </Select>
                                 </FormControl>
-                            </Box>
+                            </Box> */}
 
-                            <Box sx={{ marginBottom: 2 }}>
+                            <Box sx={{ marginBottom: 2, marginTop: "15px" }}>
                                 <TextField
                                     fullWidth
                                     label="Username"
                                     name="username"
                                     value={updatedTenant.username || ""}
                                     onChange={handleInputChange}
-
                                 />
                             </Box>
 
                             <Box sx={{ marginBottom: 2 }}>
                                 <TextField
                                     fullWidth
-                                    label="Repository"
-                                    name="repository"
-                                    value={updatedTenant.repository || ""}
+                                    label="First Name"
+                                    name="first_name"
+                                    value={updatedTenant.first_name || ""}
                                     onChange={handleInputChange}
-
                                 />
                             </Box>
 
                             <Box sx={{ marginBottom: 2 }}>
                                 <TextField
                                     fullWidth
-                                    label="API Key"
-                                    name="api_key"
-                                    value={updatedTenant.api_key || ""}
+                                    label="Last Name"
+                                    name="last_name"
+                                    value={updatedTenant.last_name || ""}
                                     onChange={handleInputChange}
-
                                 />
                             </Box>
 
                             <Box sx={{ marginBottom: 2 }}>
                                 <TextField
                                     fullWidth
-                                    label="Extra Settings (JSON)"
-                                    name="extra_settings"
-                                    value={updatedTenant.extra_settings || ""}
+                                    label="Language"
+                                    name="language"
+                                    value={updatedTenant.language || ""}
                                     onChange={handleInputChange}
+                                />
+                            </Box>
 
-                                    multiline
-                                    rows={4}
+                            <Box sx={{ marginBottom: 2 }}>
+                                <TextField
+                                    fullWidth
+                                    label="Contact Phone"
+                                    name="contact_phone"
+                                    value={updatedTenant.contact_phone || ""}
+                                    onChange={handleInputChange}
+                                />
+                            </Box>
+
+                            <Box sx={{ marginBottom: 2 }}>
+                                <TextField
+                                    fullWidth
+                                    label="Email"
+                                    name="email"
+                                    value={updatedTenant.email || ""}
+                                    onChange={handleInputChange}
+                                />
+                            </Box>
+
+                            <Box sx={{ marginBottom: 2 }}>
+                                <TextField
+                                    fullWidth
+                                    label="Is Active"
+                                    name="is_active"
+                                    value={updatedTenant.is_active ? 'Yes' : 'No'}
+                                    onChange={handleInputChange}
                                 />
                             </Box>
                         </Typography>
@@ -236,8 +255,7 @@ const DMSDialog = ({ tenantDetails }: AccountingType) => {
                 </form>
             </Dialog>
         </>
-
-    )
+    );
 }
 
-export default DMSDialog;
+export default UserUpdateDialog;

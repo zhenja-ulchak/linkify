@@ -322,7 +322,7 @@ const DetailsTableDms: React.FC = () => {
                 </DialogTitle>
                 <DialogContent>
                     <Typography variant="body1" component="span" id="alert-dialog-description">
-                        <Box sx={{ marginBottom: 2 }}>
+                        <Box sx={{ marginBottom: 2 , marginTop: "15px"  }}>
                             <TextField
                                 fullWidth
                                 label="Endpoint URL"

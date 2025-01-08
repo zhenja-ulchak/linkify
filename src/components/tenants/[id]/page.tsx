@@ -314,14 +314,14 @@ const TenantDetails: React.FC = () => {
           </Button>
         </Grid>
 
-        <Modal open={isEditing} onClose={() => setIsEditing(false)}>
+        <Modal open={isEditing} onClose={() => setIsEditing(false)} >
           <Box
             sx={{
               position: "absolute",
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              width: 400,
+              width: 800,
               bgcolor: "background.paper",
               boxShadow: 24,
               p: 4,
@@ -408,7 +408,7 @@ const TenantDetails: React.FC = () => {
               <Button
                 onClick={handleSaveChanges}
               >
-                OK
+                Update
               </Button>
             </Box>
           </Box>
