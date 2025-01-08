@@ -314,7 +314,7 @@ export default function TableHelperUserList({ title }: TableHelperType) {
             variant: 'info',  // You can change the variant to success, error, warning, or info
             autoHideDuration: 3000, // Auto hide after 3 seconds
         });
-        router.push(`/dashboard/superadmin/tenant/${id}`);
+        router.push(`/dashboard/admin/user-list/${id}`);
     };
 
     const handleRequestSort = (

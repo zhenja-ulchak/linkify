@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
-import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Grid, IconButton, Box } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
@@ -33,6 +33,7 @@ const UserDetail: React.FC = () => {
   const router = useRouter();
   const t = useTranslations('API');
   const [openModal, setOpenModal] = useState(false);
+  const [openModalConfirm, setOpenModalConfirm] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState<string>("");
   const [updatedUser, setUpdatedUser] = useState<User>({
@@ -46,7 +47,7 @@ const UserDetail: React.FC = () => {
     role: "",
     is_active: false
   });
-  const [users, setUser] = useState<User[]>([]);
+  const [users, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const fetchElements = async () => {
@@ -57,9 +58,13 @@ const UserDetail: React.FC = () => {
 
 
       const response: any = await ApiService.get(`/user/${id}`, Auth);
+      console.log(response.data[0]);
+      setUser(response.data[0][0]);
       if (response.status === 200) {
         enqueueSnackbar(`Details for user ID ${id} fetched successfully!`, { variant: 'success' });
-        setUser([response.data]);
+
+
+
       }
       if (response instanceof Error) {
         const { status, variant, message } = ApiService.CheckAndShow(response, t);
@@ -72,6 +77,14 @@ const UserDetail: React.FC = () => {
 
     fetchElements();
   }, [id]);
+
+
+
+
+
+
+
+
 
   const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -140,9 +153,9 @@ const UserDetail: React.FC = () => {
     router.back();
   };
 
-  const handleOpenModal = () => {
+  const handleOpenModalUpdate = () => {
 
-    setOpenModal(true);
+    setIsEditing(true);
   };
 
   const handleCloseModal = () => {
@@ -150,160 +163,221 @@ const UserDetail: React.FC = () => {
 
   };
 
+  const handleOpenModal = () => {
+
+    setOpenModalConfirm(true);
+  };
+
   return (
-    <div id="UserDetailContainer">
-      <Typography variant="h3" gutterBottom>
-        Benutzer Details
-      </Typography>
+    <>
 
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell className="UserDetailTableHeader">Feld</TableCell>
-              <TableCell className="UserDetailTableHeader">Wert</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {users.map((user) => (
-              <TableRow key={user.id}>
-                <TableCell>{user.id}</TableCell>
-                <TableCell>{user.first_name}</TableCell>
-                <TableCell>{user.last_name}</TableCell>
-                <TableCell>{user.language}</TableCell>
-                <TableCell>{user.username}</TableCell>
-                <TableCell>{user.contact_phone}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>{user.role}</TableCell>
-                <TableCell>{user.is_active ? 'Ja' : 'Nein'}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <div id="UserDetailContainer" style={{ display: 'flex', justifyContent: 'center', maxWidth: '800px', margin: '0 auto' }}>
 
-      <div style={{ display: "flex", justifyContent: "space-evenly", marginTop: "10px" }}>
-        <Button
-          variant="contained"
-          color="primary"
-          title="Bearbeiten"
-          onClick={() => setIsEditing(true)}
-          startIcon={<EditIcon />}
-        >
-          Bearbeiten
-        </Button>
-        <Button
-          variant="contained"
-          color="secondary"
-          title="Löschen"
-          onClick={handleOpenModal}
-          startIcon={<DeleteIcon />}
-        >
-          Löschen
-        </Button>
-      </div>
-      <ConfirmDeleteModal
-        open={openModal}
-        title="Delete"
-        handleDelete={handleDelete}
-        onClose={handleCloseModal}
-        description={"Are you sure you want to delete User?"}
 
-      />
-      <div id="UserDetailModalContainer">
-        <Button
-          variant="outlined"
-          onClick={handleGoingBack}
-          startIcon={<KeyboardBackspaceIcon />}
-        >
-          Zurück
-        </Button>
-      </div>
+        <Grid container spacing={2} style={{ width: '100%' }}>
+          <Grid item xs={12} style={{ textAlign: "center" }}>
+            <h3>DMS Config Details</h3>
+          </Grid>
 
-      {/* Edit Modal */}
-      {isEditing && (
-        <Dialog open={isEditing} onClose={() => setIsEditing(false)}>
-          <DialogTitle>Benutzerdaten bearbeiten</DialogTitle>
-          <DialogContent>
-            {error && <Typography color="error">{error}</Typography>}
 
-            <TextField
-              label="Username *"
-              name="username"
-              value={updatedUser?.username}
-              onChange={handleEditChange}
-              fullWidth
-              margin="normal"
-              InputProps={{
-                readOnly: true,
-              }}
-            />
 
-            <TextField
-              label="Vorname:"
-              name="first_name"
-              value={updatedUser?.first_name}
-              onChange={handleEditChange}
-              fullWidth
-              margin="normal"
-            />
+          <Grid item xs={12}>
+            <TableContainer>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell className="UserDetailTableHeader">Feld</TableCell>
+                    <TableCell className="UserDetailTableHeader">Wert</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {users && (
+                    <>
 
-            <TextField
-              label="Nachname:"
-              name="last_name"
-              value={updatedUser?.last_name}
-              onChange={handleEditChange}
-              fullWidth
-              margin="normal"
-            />
+                      <TableRow>
+                        <TableCell style={{ fontWeight: 'bold' }}>ID</TableCell>
+                        <TableCell>{users.id}</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell style={{ fontWeight: 'bold' }}>Vorname</TableCell>
+                        <TableCell>{users.first_name}</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell style={{ fontWeight: 'bold' }}>Nachname</TableCell>
+                        <TableCell>{users.last_name}</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell style={{ fontWeight: 'bold' }}>Sprache</TableCell>
+                        <TableCell>{users.language}</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell style={{ fontWeight: 'bold' }}>Benutzername</TableCell>
+                        <TableCell>{users.username}</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell style={{ fontWeight: 'bold' }}>Telefon</TableCell>
+                        <TableCell>{users.contact_phone}</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell style={{ fontWeight: 'bold' }}>E-Mail</TableCell>
+                        <TableCell>{users.email}</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell style={{ fontWeight: 'bold' }}>Rolle</TableCell>
+                        <TableCell>{users.role}</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell style={{ fontWeight: 'bold' }}>Aktiv</TableCell>
+                        <TableCell>{users.is_active ? 'Ja' : 'Nein'}</TableCell>
+                      </TableRow>
+                    </>
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Grid>
 
-            <TextField
-              label="Sprache:"
-              name="language"
-              value={updatedUser?.language}
-              onChange={handleEditChange}
-              fullWidth
-              margin="normal"
-            />
+          <Grid item xs={12} display="flex" justifyContent="space-evenly">
+            <IconButton color="primary" onClick={handleOpenModalUpdate} title="Bearbeiten">
+              <EditIcon />
+            </IconButton>
 
-            <TextField
-              label="Kontaktnummer *"
-              name="contact_phone"
-              value={updatedUser?.contact_phone}
-              onChange={handleEditChange}
-              fullWidth
-              margin="normal"
-            />
+            <IconButton color="error" onClick={handleOpenModal} title="Löschen">
+              <DeleteIcon />
+            </IconButton>
+          </Grid>
 
-            <TextField
-              label="Email *"
-              name="email"
-              value={updatedUser?.email}
-              onChange={handleEditChange}
-              fullWidth
-              margin="normal"
-            />
 
-            <TextField
-              label="Role:"
-              name="role"
-              value={updatedUser?.role}
-              onChange={handleEditChange}
-              fullWidth
-              margin="normal"
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleSaveChanges} color="primary" startIcon={<AddIcon />}>
-              Speichern
+
+          <ConfirmDeleteModal
+            open={openModalConfirm}
+            title="Delete"
+            handleDelete={handleDelete}
+            onClose={handleCloseModal}
+            description={"Are you sure you want to delete DMS config?"}
+
+          />
+
+          <Grid item xs={12} sx={{ textAlign: 'left' }}>
+            <Button
+              variant="outlined"
+              startIcon={<KeyboardBackspaceIcon />}
+              onClick={handleGoingBack}
+              title="back"
+            >
+              back
             </Button>
-            <Button onClick={() => setIsEditing(false)} color="secondary" startIcon={<CancelIcon />}>
-              Abbrechen
-            </Button>
-          </DialogActions>
-        </Dialog>
-      )}
-    </div>
+          </Grid>
+
+        </Grid>
+
+      </div >
+      {
+        isEditing && (
+          <Dialog open={isEditing} onClose={() => setIsEditing(false)} fullWidth>
+            <DialogTitle>Benutzerdaten bearbeiten</DialogTitle>
+            <DialogContent>
+              {error && <Typography color="error">{error}</Typography>}
+              <Box sx={{ marginBottom: 2 }}>
+                <TextField
+                  fullWidth
+                  label="Username *"
+                  name="username"
+                  value={updatedUser?.username}  
+                  onChange={handleEditChange}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+              </Box>
+
+              {/* First Name */}
+              <Box sx={{ marginBottom: 2 }}>
+                <TextField
+                  fullWidth
+                  label="Vorname"
+                  name="first_name"
+                  value={updatedUser?.first_name}  
+                  onChange={handleEditChange}
+                />
+              </Box>
+
+              {/* Last Name */}
+              <Box sx={{ marginBottom: 2 }}>
+                <TextField
+                  fullWidth
+                  label="Nachname"
+                  name="last_name"
+                  value={updatedUser?.last_name} 
+                  onChange={handleEditChange}
+                />
+              </Box>
+
+              {/* Language */}
+              <Box sx={{ marginBottom: 2 }}>
+                <TextField
+                  fullWidth
+                  label="Sprache"
+                  name="language"
+                  value={updatedUser?.language}  
+                  onChange={handleEditChange}
+                />
+              </Box>
+
+              {/* Contact Phone */}
+              <Box sx={{ marginBottom: 2 }}>
+                <TextField
+                  fullWidth
+                  label="Kontaktnummer *"
+                  name="contact_phone"
+                  value={updatedUser?.contact_phone}
+                  onChange={handleEditChange}
+                />
+              </Box>
+
+              {/* Email */}
+              <Box sx={{ marginBottom: 2 }}>
+                <TextField
+                  fullWidth
+                  label="Email *"
+                  name="email"
+                  value={updatedUser?.email} 
+                  onChange={handleEditChange}
+                />
+              </Box>
+
+              {/* Role */}
+              <Box sx={{ marginBottom: 2 }}>
+                <TextField
+                  fullWidth
+                  label="Role"
+                  name="role"
+                  value={updatedUser?.role}  
+                  onChange={handleEditChange}
+                />
+              </Box>
+
+
+
+            </DialogContent>
+            <DialogActions>
+
+              <Button onClick={() => setIsEditing(false)}>Cancel</Button>
+              <Button onClick={() => handleSaveChanges()} autoFocus>
+               Update
+              </Button>
+              {/* <Button onClick={handleSaveChanges} color="primary" startIcon={<AddIcon />}>
+                Speichern
+              </Button>
+              <Button onClick={() => setIsEditing(false)} color="secondary" startIcon={<CancelIcon />}>
+                Abbrechen
+              </Button> */}
+            </DialogActions>
+          </Dialog>
+        )
+      }
+    </>
+
   );
 };
 

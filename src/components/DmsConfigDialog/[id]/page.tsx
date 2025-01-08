@@ -315,6 +315,7 @@ const DetailsTableDms: React.FC = () => {
                 onClose={handleClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
+                fullWidth
             >
                 <DialogTitle id="alert-dialog-title">
                     {"DMS"}

@@ -342,6 +342,7 @@ const DetailsTable: React.FC = () => {
                     onClose={handleClose}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
+                    fullWidth
                 >
                     <DialogTitle id="alert-dialog-title">
                         {"Сhange Accounting Software"}
