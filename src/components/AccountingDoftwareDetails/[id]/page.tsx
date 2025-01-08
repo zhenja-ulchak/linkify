@@ -14,7 +14,7 @@ import { enqueueSnackbar } from "notistack";
 import { useTranslations } from 'next-intl';
 import AccountingDialog from "@/components/modal/AccountingSoftwareDialog";
 import { SelectChangeEvent } from '@mui/material';
-
+import ConfirmDeleteModal from '@/components/modal/ConfirmDeleteModal';
 
 
 
@@ -56,7 +56,7 @@ const DetailsTable: React.FC = () => {
     const [open, setOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState(tenantDetails?.type);
     const t = useTranslations('API');
-
+  
     const [updatedTenant, setUpdatedTenant] = useState<TenantDetails>({
 
         name: "",
@@ -72,7 +72,22 @@ const DetailsTable: React.FC = () => {
         updated_at: "",
         deleted_at: null,
     });
-    console.log(tenantDetails);
+
+    const [openModal, setOpenModal] = useState(false);
+    const handleOpenModal = () => {
+
+        setOpenModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setOpenModal(false);
+     
+    };
+
+
+
+
+
 
 
     const handleClickOpen = () => {
@@ -195,15 +210,19 @@ const DetailsTable: React.FC = () => {
         if (response.status === 200) {
             enqueueSnackbar('Accounting entry deleted successfully!', { variant: 'success' });
             router.push("/users");
+            setOpenModal(false);
         }
         if (response instanceof Error) {
             const { status, variant, message } = ApiService.CheckAndShow(response, t);
             console.log(message);
             // @ts-ignore
             enqueueSnackbar(message, { variant: variant });
+            setOpenModal(false);
         }
 
     };
+
+
 
     function handleGoingBack() {
         router.back();
@@ -305,14 +324,21 @@ const DetailsTable: React.FC = () => {
                                         <EditIcon />
                                     </IconButton>
 
-                                    <IconButton color="error" onClick={handleDelete} title="Löschen">
+                                    <IconButton color="error" onClick={handleOpenModal} title="Löschen">
                                         <DeleteIcon />
                                     </IconButton>
+
+
                                 </Grid>
                             </>
                         )}
                     </Grid>
-
+                    <ConfirmDeleteModal
+                        open={openModal}
+                        title="Delete Item"
+                        handleDelete={handleDelete}
+                        onClose={handleCloseModal}
+                    />
                     <Grid item xs={12} sx={{ textAlign: addNewDetails ? "center" : 'left' }}>
                         <Button
                             variant="outlined"
