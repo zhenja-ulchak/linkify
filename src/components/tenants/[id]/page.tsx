@@ -26,6 +26,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { enqueueSnackbar } from "notistack";
+import ConfirmDeleteModal from '@/components/modal/ConfirmDeleteModal';
 
 type Tenant = {
   id?: number;
@@ -44,10 +45,10 @@ const TenantDetails: React.FC = () => {
 
   const router = useRouter();
 
-
+  const [openModal, setOpenModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [updatedTenant, setUpdatedTenant] = useState<Tenant>({
-   
+
     company_name: "",
     address: "",
     invoice_address: "",
@@ -111,7 +112,7 @@ const TenantDetails: React.FC = () => {
       const response: any = await ApiService.get(`tenant/${id}`, Auth)
       if (response instanceof Error) {
         const { status, variant, message } = ApiService.CheckAndShow(response, t);
-    
+
         // @ts-ignore
         enqueueSnackbar(message, { variant: variant });
       }
@@ -123,7 +124,7 @@ const TenantDetails: React.FC = () => {
       }
       setTenants(response?.data[0]);
       console.log(response?.data[0]);
-      
+
 
     };
 
@@ -189,26 +190,40 @@ const TenantDetails: React.FC = () => {
     router.back();
   }
 
+
+  const handleOpenModal = () => {
+
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+
+  };
+
   useEffect(() => {
 
     if (tenants[0]) {
-        setUpdatedTenant((prevTenant) => ({
-            ...prevTenant,
-            company_name: tenants[0].company_name || "",
-            address: tenants[0].address || "",
-            invoice_address: tenants[0].invoice_address || "",
-            license_valid_until: tenants[0].license_valid_until || 0,
-            contact_email: tenants[0].contact_email || "",
-            invoice_email: tenants[0].invoice_email || "",
-            contact_phone: tenants[0].contact_phone || 0,
-        }));
-        
-        // Якщо необхідно, оновлюємо додаткові поля для select
-        // if (tenants[0] && tenants[0].type) {
-        //     setSelectedOption(tenants[0].type); // Встановлюємо значення по умолчанию
-        // }
+      setUpdatedTenant((prevTenant) => ({
+        ...prevTenant,
+        company_name: tenants[0].company_name || "",
+        address: tenants[0].address || "",
+        invoice_address: tenants[0].invoice_address || "",
+        license_valid_until: tenants[0].license_valid_until || 0,
+        contact_email: tenants[0].contact_email || "",
+        invoice_email: tenants[0].invoice_email || "",
+        contact_phone: tenants[0].contact_phone || 0,
+      }));
+
+      // Якщо необхідно, оновлюємо додаткові поля для select
+      // if (tenants[0] && tenants[0].type) {
+      //     setSelectedOption(tenants[0].type); // Встановлюємо значення по умолчанию
+      // }
     }
-}, [tenants[0]]);
+  }, [tenants[0]]);
+
+
+
 
   return (
     <Box sx={{ p: 3 }} style={{ display: 'flex', justifyContent: 'center', maxWidth: '800px', margin: '0 auto' }}>
@@ -276,11 +291,18 @@ const TenantDetails: React.FC = () => {
             <EditIcon />
           </IconButton>
 
-          <IconButton color="error" onClick={handleDelete} title="Löschen">
+          <IconButton color="error" onClick={handleOpenModal} title="Löschen">
             <DeleteIcon />
           </IconButton>
         </Grid>
+        <ConfirmDeleteModal
+          open={openModal}
+          title="Delete"
+          handleDelete={handleDelete}
+          onClose={handleCloseModal}
+          description={"Are you sure you want to delete Tenants?"}
 
+        />
         <Grid item xs={12}>
           <Button
             variant="outlined"

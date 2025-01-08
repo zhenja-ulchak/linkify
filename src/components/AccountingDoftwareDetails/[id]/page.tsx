@@ -56,7 +56,7 @@ const DetailsTable: React.FC = () => {
     const [open, setOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState(tenantDetails?.type);
     const t = useTranslations('API');
-  
+    const [openModal, setOpenModal] = useState(false);
     const [updatedTenant, setUpdatedTenant] = useState<TenantDetails>({
 
         name: "",
@@ -72,22 +72,7 @@ const DetailsTable: React.FC = () => {
         updated_at: "",
         deleted_at: null,
     });
-
-    const [openModal, setOpenModal] = useState(false);
-    const handleOpenModal = () => {
-
-        setOpenModal(true);
-    };
-
-    const handleCloseModal = () => {
-        setOpenModal(false);
-     
-    };
-
-
-
-
-
+    console.log(tenantDetails);
 
 
     const handleClickOpen = () => {
@@ -189,15 +174,7 @@ const DetailsTable: React.FC = () => {
 
     };
 
-    // Валідація полів
-    const validateInputs = (data: any) => {
-        if (!data.contact_email || !data.invoice_email) {
 
-            return false;
-        }
-        setError("");
-        return true;
-    };
 
     // Очищення об'єкта від порожніх значень
     const removeEmptyValues = (obj: any) => {
@@ -222,7 +199,15 @@ const DetailsTable: React.FC = () => {
 
     };
 
+    const handleOpenModal = () => {
 
+        setOpenModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setOpenModal(false);
+     
+    };
 
     function handleGoingBack() {
         router.back();
@@ -236,7 +221,8 @@ const DetailsTable: React.FC = () => {
                 type: tenantDetails.type || "",
                 url: tenantDetails.url || "",
                 organization_id: tenantDetails.organization_id || "0",
-                event_type: tenantDetails.event_type || "",
+                // @ts-ignore
+                event_type: tenantDetails.event_type.document || "",
                 description: tenantDetails.description || "",
                 is_active: tenantDetails.is_active,
 
@@ -256,6 +242,7 @@ const DetailsTable: React.FC = () => {
 
                         {addNewDetails ? (
                             <AccountingDialog tenantDetails={tenantDetails} />
+                
                         ) : (
                             <>
                                 <Grid item xs={12}>
@@ -268,47 +255,45 @@ const DetailsTable: React.FC = () => {
                                                 </TableRow>
                                             </TableHead>
                                             <TableBody>
-                                                {tenantDetails ? (
+                                                {tenantDetails && (
                                                     <>
-                                                        <TableRow>
+                                                         <TableRow>
                                                             <TableCell>Name</TableCell>
-                                                            <TableCell>{tenantDetails.name}</TableCell>
+                                                            <TableCell>{tenantDetails?.name || ''}</TableCell>
                                                         </TableRow>
-                                                        <TableRow>
+                                                       <TableRow>
                                                             <TableCell>Type</TableCell>
-                                                            <TableCell>{tenantDetails.type}</TableCell>
+                                                            <TableCell>{tenantDetails?.type || ''}</TableCell>
                                                         </TableRow>
-                                                        <TableRow>
+                                                       <TableRow>
                                                             <TableCell>URL</TableCell>
-                                                            <TableCell>{tenantDetails.url}</TableCell>
+                                                            <TableCell>{tenantDetails?.url || ''}</TableCell>
                                                         </TableRow>
-                                                        <TableRow>
+                                                          <TableRow>
                                                             <TableCell>Organization ID</TableCell>
-                                                            <TableCell>{tenantDetails.organization_id}</TableCell>
+                                                            <TableCell>{tenantDetails?.organization_id || ''}</TableCell>
                                                         </TableRow>
                                                         <TableRow>
                                                             <TableCell>Event Type</TableCell>
-                                                            <TableCell>{tenantDetails.event_type ?? "N/A"}</TableCell>
-                                                        </TableRow>
-                                                        <TableRow>
+
+                                                            <TableCell>{
+                                                                 // @ts-ignore
+                                                            tenantDetails?.event_type.document || "N/A"}</TableCell>
+                                                        </TableRow> 
+
+                                                       <TableRow>
                                                             <TableCell>Description</TableCell>
-                                                            <TableCell>{tenantDetails.description}</TableCell>
+                                                            <TableCell>{tenantDetails?.description || ''}</TableCell>
                                                         </TableRow>
                                                         <TableRow>
                                                             <TableCell>Region</TableCell>
-                                                            <TableCell>{tenantDetails.additional_settings?.region ?? "N/A"}</TableCell>
+                                                            <TableCell>{tenantDetails?.additional_settings?.region ?? "N/A"}</TableCell>
                                                         </TableRow>
-                                                        <TableRow>
+                                                         <TableRow>
                                                             <TableCell>Active</TableCell>
-                                                            <TableCell>{tenantDetails.is_active ? "Yes" : "No"}</TableCell>
-                                                        </TableRow>
+                                                            <TableCell>{tenantDetails?.is_active ? "Yes" : "No"}</TableCell> 
+                                                         </TableRow> 
                                                     </>
-                                                ) : (
-                                                    <TableRow>
-                                                        <TableCell colSpan={2} style={{ textAlign: "center" }}>
-                                                            No tenant details available.
-                                                        </TableCell>
-                                                    </TableRow>
                                                 )}
                                             </TableBody>
                                         </Table>
@@ -335,9 +320,11 @@ const DetailsTable: React.FC = () => {
                     </Grid>
                     <ConfirmDeleteModal
                         open={openModal}
-                        title="Delete Item"
+                        title="Delete"
                         handleDelete={handleDelete}
                         onClose={handleCloseModal}
+                        description={"Are you sure you want to delete Accounting Software?"}
+                        
                     />
                     <Grid item xs={12} sx={{ textAlign: addNewDetails ? "center" : 'left' }}>
                         <Button
@@ -386,7 +373,7 @@ const DetailsTable: React.FC = () => {
                                         fullWidth
                                         label="Name"
                                         name="name"
-                                        value={updatedTenant.name || ""}  // Заповнення значення
+                                        value={updatedTenant?.name || ""}  // Заповнення значення
                                         onChange={handleEditChange}
                                     />
                                 </Box>
@@ -396,7 +383,7 @@ const DetailsTable: React.FC = () => {
                                         fullWidth
                                         label="URL"
                                         name="url"
-                                        value={updatedTenant.url || ""}
+                                        value={updatedTenant?.url || ""}
                                         onChange={handleEditChange}
                                     />
                                 </Box>
@@ -406,7 +393,7 @@ const DetailsTable: React.FC = () => {
                                         fullWidth
                                         label="Organization ID"
                                         name="organization_id"
-                                        value={updatedTenant.organization_id || ""}
+                                        value={updatedTenant?.organization_id || ""}
                                         onChange={handleEditChange}
                                     />
                                 </Box>
@@ -416,7 +403,7 @@ const DetailsTable: React.FC = () => {
                                         fullWidth
                                         label="Event Type"
                                         name="event_type"
-                                        value={updatedTenant.event_type || ""}
+                                        value={updatedTenant?.event_type || ""}
                                         onChange={handleEditChange}
                                     />
                                 </Box>
@@ -426,7 +413,7 @@ const DetailsTable: React.FC = () => {
                                         fullWidth
                                         label="Description"
                                         name="description"
-                                        value={updatedTenant.description || ""}
+                                        value={updatedTenant?.description || ""}
                                         onChange={handleEditChange}
                                     />
                                 </Box>
@@ -436,7 +423,7 @@ const DetailsTable: React.FC = () => {
                                         fullWidth
                                         label="Region"
                                         name="additional_settings.region"
-                                        value={updatedTenant.additional_settings?.region || ""}
+                                        value={updatedTenant?.additional_settings?.region || ""}
                                         onChange={handleEditChange}
                                     />
                                 </Box>

@@ -13,7 +13,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import { enqueueSnackbar } from "notistack";
 import { useTranslations } from 'next-intl';
 import DMSDialog from "@/components/modal/DmsConfigDialog";
-
+import ConfirmDeleteModal from '@/components/modal/ConfirmDeleteModal';
 
 type TenantDetails = {
     id?: number;
@@ -45,7 +45,7 @@ const DetailsTableDms: React.FC = () => {
     const t = useTranslations('API');
 
     const router = useRouter();
-
+    const [openModal, setOpenModal] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     // const [open, setOpen] = React.useState(false);
     const [updatedTenant, setUpdatedTenant] = useState<TenantDetails>({
@@ -65,7 +65,7 @@ const DetailsTableDms: React.FC = () => {
     const [addNewDetails, setAddNewDetails] = useState<any>(false);
     const [open, setOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState(tenantDetails?.type);
-console.log(tenantDetails?.type);
+    console.log(tenantDetails?.type);
 
 
     const handleClickOpen = () => {
@@ -211,6 +211,18 @@ console.log(tenantDetails?.type);
         }
     }, [tenantDetails]);
 
+
+    const handleOpenModal = () => {
+
+        setOpenModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setOpenModal(false);
+
+    };
+
+
     return (
         <div id="UserDetailContainer" style={{ display: 'flex', justifyContent: 'center', maxWidth: '800px', margin: '0 auto' }}>
             <Grid container spacing={2} style={{ width: '100%' }}>
@@ -218,7 +230,7 @@ console.log(tenantDetails?.type);
                     <h3>DMS Config Details</h3>
                 </Grid>
 
-                {addNewDetails ?
+                {!addNewDetails ?
                     (
                         <>
                             <DMSDialog tenantDetails={tenantDetails} />
@@ -269,7 +281,7 @@ console.log(tenantDetails?.type);
                                     <EditIcon />
                                 </IconButton>
 
-                                <IconButton color="error" onClick={handleDelete} title="Löschen">
+                                <IconButton color="error" onClick={handleOpenModal} title="Löschen">
                                     <DeleteIcon />
                                 </IconButton>
                             </Grid>
@@ -278,7 +290,14 @@ console.log(tenantDetails?.type);
                     )
 
                 }
+                <ConfirmDeleteModal
+                    open={openModal}
+                    title="Delete"
+                    handleDelete={handleDelete}
+                    onClose={handleCloseModal}
+                    description={"Are you sure you want to delete DMS config?"}
 
+                />
 
                 <Grid item xs={12} sx={{ textAlign: addNewDetails ? "center" : 'left' }}>
                     <Button
@@ -309,7 +328,7 @@ console.log(tenantDetails?.type);
                                 name="endpoint_url"
                                 value={updatedTenant.endpoint_url}
                                 onChange={handleEditChange}
-                          
+
                             />
                         </Box>
                         <Box sx={{ marginBottom: 2 }}>
@@ -339,7 +358,7 @@ console.log(tenantDetails?.type);
                                 name="username"
                                 value={updatedTenant.username}
                                 onChange={handleEditChange}
-                            
+
                             />
                         </Box>
 
@@ -350,7 +369,7 @@ console.log(tenantDetails?.type);
                                 name="repository"
                                 value={updatedTenant.repository}
                                 onChange={handleEditChange}
-                           
+
                             />
                         </Box>
 
@@ -361,7 +380,7 @@ console.log(tenantDetails?.type);
                                 name="api_key"
                                 value={updatedTenant.api_key || ""}
                                 onChange={handleEditChange}
-                            
+
                             />
                         </Box>
 
@@ -372,7 +391,7 @@ console.log(tenantDetails?.type);
                                 name="extra_settings"
                                 value={updatedTenant.extra_settings}
                                 onChange={handleEditChange}
-                           
+
                                 multiline
                                 rows={4}
                             />

@@ -12,6 +12,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import ApiService from "../../../../src/app/services/apiService";
 import { useTranslations } from 'next-intl';
 import { enqueueSnackbar } from "notistack";
+import ConfirmDeleteModal from '@/components/modal/ConfirmDeleteModal';
 
 type User = {
   id?: number;
@@ -27,13 +28,15 @@ type User = {
 
 const UserDetail: React.FC = () => {
   const Auth: any = sessionStorage.getItem('AuthToken')
+
   const { id } = useParams();
   const router = useRouter();
   const t = useTranslations('API');
+  const [openModal, setOpenModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState<string>("");
   const [updatedUser, setUpdatedUser] = useState<User>({
-  
+
     first_name: "",
     last_name: "",
     language: "",
@@ -137,6 +140,16 @@ const UserDetail: React.FC = () => {
     router.back();
   };
 
+  const handleOpenModal = () => {
+
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+
+  };
+
   return (
     <div id="UserDetailContainer">
       <Typography variant="h3" gutterBottom>
@@ -183,13 +196,20 @@ const UserDetail: React.FC = () => {
           variant="contained"
           color="secondary"
           title="Löschen"
-          onClick={handleDelete}
+          onClick={handleOpenModal}
           startIcon={<DeleteIcon />}
         >
           Löschen
         </Button>
       </div>
+      <ConfirmDeleteModal
+        open={openModal}
+        title="Delete"
+        handleDelete={handleDelete}
+        onClose={handleCloseModal}
+        description={"Are you sure you want to delete User?"}
 
+      />
       <div id="UserDetailModalContainer">
         <Button
           variant="outlined"

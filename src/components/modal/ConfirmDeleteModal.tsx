@@ -4,11 +4,12 @@ import { Modal, Box, Button, Typography } from '@mui/material';
 interface ConfirmDeleteModalProps {
   open: boolean;
   title: string;
+  description: string;
   handleDelete: () => void;
   onClose: () => void;
 }
 
-const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({ open, title, handleDelete, onClose }) => {
+const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({ open, title,description, handleDelete, onClose }) => {
   const [counter, setCounter] = useState(3);
 
   useEffect(() => {
@@ -27,7 +28,7 @@ const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({ open, title, ha
   };
 
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open} onClose={onClose} >
       <Box
         sx={{
           position: 'absolute',
@@ -41,13 +42,14 @@ const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({ open, title, ha
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          textAlign: 'center'
         }}
       >
-        <Typography variant="h6" gutterBottom>
+        <Typography variant="h4" gutterBottom>
           {title}
         </Typography>
         <Typography variant="body1" gutterBottom>
-          Are you sure you want to delete this item?
+          {description}
         </Typography>
         <Typography variant="body2" color="textSecondary" gutterBottom>
           You can delete after {counter} seconds.
