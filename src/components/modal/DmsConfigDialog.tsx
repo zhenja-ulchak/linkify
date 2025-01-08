@@ -52,7 +52,7 @@ const DMSDialog = ({ tenantDetails }: AccountingType) => {
 
     const [addNewDetails, setAddNewDetails] = useState<any>(false);
 // @ts-ignore
-    const [selectedOption, setSelectedOption] = useState<string>(tenantDetails.type);
+    const [selectedOption, setSelectedOption] = useState<string>("");
     const t = useTranslations('API');
     const [open, setOpen] = useState(false);
 

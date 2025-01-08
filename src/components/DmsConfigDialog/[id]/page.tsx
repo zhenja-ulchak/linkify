@@ -218,7 +218,7 @@ console.log(tenantDetails?.type);
                     <h3>DMS Config Details</h3>
                 </Grid>
 
-                {!addNewDetails ?
+                {addNewDetails ?
                     (
                         <>
                             <DMSDialog tenantDetails={tenantDetails} />

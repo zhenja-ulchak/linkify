@@ -14,7 +14,7 @@ import { useTranslations } from 'next-intl';
 import { enqueueSnackbar } from "notistack";
 
 type User = {
-  id: number;
+  id?: number;
   first_name: string;
   last_name: string;
   language: string;
@@ -33,7 +33,7 @@ const UserDetail: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState<string>("");
   const [updatedUser, setUpdatedUser] = useState<User>({
-    id: 0,
+  
     first_name: "",
     last_name: "",
     language: "",

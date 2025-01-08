@@ -28,7 +28,7 @@ import {
 import { enqueueSnackbar } from "notistack";
 
 type Tenant = {
-  id: number;
+  id?: number;
   company_name: string;
   address: string;
   invoice_address: string;
@@ -47,7 +47,7 @@ const TenantDetails: React.FC = () => {
 
   const [isEditing, setIsEditing] = useState(false);
   const [updatedTenant, setUpdatedTenant] = useState<Tenant>({
-    id: 1,
+   
     company_name: "",
     address: "",
     invoice_address: "",
@@ -111,7 +111,7 @@ const TenantDetails: React.FC = () => {
       const response: any = await ApiService.get(`tenant/${id}`, Auth)
       if (response instanceof Error) {
         const { status, variant, message } = ApiService.CheckAndShow(response, t);
-        console.log(message);
+    
         // @ts-ignore
         enqueueSnackbar(message, { variant: variant });
       }
@@ -122,7 +122,8 @@ const TenantDetails: React.FC = () => {
 
       }
       setTenants(response?.data[0]);
-
+      console.log(response?.data[0]);
+      
 
     };
 
@@ -153,11 +154,13 @@ const TenantDetails: React.FC = () => {
         console.log(message);
         // @ts-ignore
         enqueueSnackbar(message, { variant: variant });
+        setIsEditing(false)
       }
 
 
       if (response.status === 200) {
         enqueueSnackbar('New tenant created successfully!', { variant: 'success' });
+        setIsEditing(false)
       }
 
     }
@@ -185,6 +188,28 @@ const TenantDetails: React.FC = () => {
   function handleGoingBack() {
     router.back();
   }
+
+  useEffect(() => {
+
+    if (tenants[0]) {
+        setUpdatedTenant((prevTenant) => ({
+            ...prevTenant,
+            company_name: tenants[0].company_name || "",
+            address: tenants[0].address || "",
+            invoice_address: tenants[0].invoice_address || "",
+            license_valid_until: tenants[0].license_valid_until || 0,
+            contact_email: tenants[0].contact_email || "",
+            invoice_email: tenants[0].invoice_email || "",
+            contact_phone: tenants[0].contact_phone || 0,
+        }));
+        
+        // Якщо необхідно, оновлюємо додаткові поля для select
+        // if (tenants[0] && tenants[0].type) {
+        //     setSelectedOption(tenants[0].type); // Встановлюємо значення по умолчанию
+        // }
+    }
+}, [tenants[0]]);
+
   return (
     <Box sx={{ p: 3 }} style={{ display: 'flex', justifyContent: 'center', maxWidth: '800px', margin: '0 auto' }}>
 
