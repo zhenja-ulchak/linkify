@@ -160,7 +160,7 @@ const Login: React.FC = () => {
         setTimeRemaining(sessionRemaining); // Update the time remaining
 
         if (sessionRemaining <= refreshThreshold) {
-          loginRefresh(); // Login-Refresh ausführen, wenn 90% erreicht sind
+          // loginRefresh(); // Login-Refresh ausführen, wenn 90% erreicht sind
         }
       }, 1000); // Alle 1 Sekunde den verbleibenden Zeitraum prüfen
 

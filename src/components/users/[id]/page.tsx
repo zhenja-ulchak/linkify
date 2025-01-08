@@ -195,7 +195,7 @@ const UserDetail: React.FC = () => {
             <h3>User Config Details</h3>
           </Grid>
 
-          {!addNewDetails ? (
+          {addNewDetails ? (
             <UserUpdateDialog tenantDetails={users} />
 
           ) : (
@@ -302,7 +302,7 @@ const UserDetail: React.FC = () => {
             <DialogContent>
               {error && <Typography color="error">{error}</Typography>}
               <Typography variant="body1" component="span" id="alert-dialog-description">
-                <Box sx={{ marginBottom: 2 }}>
+                <Box sx={{ marginBottom: 2, marginTop: '15px' }}>
                   <TextField
                     fullWidth
                     label="Username *"

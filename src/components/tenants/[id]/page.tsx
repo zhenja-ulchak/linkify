@@ -231,7 +231,7 @@ const TenantDetails: React.FC = () => {
 
       <Grid container spacing={2} style={{ width: '100%' }}>
         <Grid item xs={12} style={{ textAlign: "center" }}>
-          <h3>Details</h3>
+          <h3>Tenant Details</h3>
         </Grid>
 
         <Grid item xs={12}>
