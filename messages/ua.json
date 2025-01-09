@@ -18,7 +18,21 @@
     "passwort-vergessen": "Ви забули свій пароль?",
     "invalidEmail": "Будь ласка, введіть правильну електронну пошту",
     "passwordResetSuccess": "Ми надіслали вам лист для скидання пароля",
-    "serverError": "Сталася проблема з сервером"
+    "serverError": "Сталася проблема з сервером",
+    "id": "Ідентифікатор",
+    "ExtantanionType": "Тип розширення",
+    "Size": "Розмір",
+    "mimeType": "Тип MIME",
+    "docName": "Назва документа",
+    "docType": "Тип документа",
+    "docDescription": "Опис документа",
+    "docVersion": "Версія документа",
+    "docParentID": "ID батьківського документа",
+    "docLastChangeAt": "Дата останньої зміни",
+    "syncDms": "Синхронізація з DMS",
+    "syncAccounting": "Синхронізація з бухгалтерією",
+   
+    "Actions": "Дії"
   },
   "LocaleSwitcher": {
     "en": "English",

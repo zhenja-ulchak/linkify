@@ -18,7 +18,21 @@
     "passwort-vergessen": "Forgot your password?",
     "invalidEmail": "Please enter a valid email address",
     "passwordResetSuccess": "We have sent you an email to reset your password",
-    "serverError": "There was an issue with the server"
+    "serverError": "There was an issue with the server",
+    "id": "ID",
+    "ExtantanionType": "Extension Type",
+    "Size": "Size",
+    "mimeType": "MIME Type",
+    "docName": "Document Name",
+    "docType": "Document Type",
+    "docDescription": "Document Description",
+    "docVersion": "Document Version",
+    "docParentID": "Parent ID",
+    "docLastChangeAt": "Last Change Date",
+    "syncDms": "Sync DMS",
+    "syncAccounting": "Sync Accounting",
+    "document-table": "Document-Table",
+    "Actions": "Actions"
   },
   "LocaleSwitcher": {
     "en": "English",
@@ -45,7 +59,7 @@
     "logout": "Logout"
   },
   "Document-Table": {
-    "document-table": "Document-Table",
+   
     "id": "id",
     "ExtantanionType": "ExtantanionType",
     "Size": "Size",

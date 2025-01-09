@@ -32,7 +32,8 @@ const DocumentTable: React.FC = () => {
     const [documentsList, setDocumentsList] = useState(documents);
     const [updatedTenant, setUpdatedTenant] = useState<any>(null);
      const [openModal, setOpenModal] = useState(false);
-    const t = useTranslations('Document-Table');
+ 
+    const t = useTranslations('API');
 
     const handleEdit = (id: number) => {
         console.log(`Editing document with ID: ${id}`);
