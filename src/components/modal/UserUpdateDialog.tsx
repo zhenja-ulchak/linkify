@@ -249,7 +249,7 @@ const UserUpdateDialog = ({ tenantDetails }: AccountingType) => {
                     <DialogActions>
                         <Button onClick={handleClose}>Cancel</Button>
                         <Button type="submit" autoFocus>
-                            Create
+                        Create
                         </Button>
                     </DialogActions>
                 </form>

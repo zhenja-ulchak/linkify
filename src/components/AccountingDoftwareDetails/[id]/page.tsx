@@ -443,7 +443,7 @@ const DetailsTable: React.FC = () => {
                         <DialogActions>
 
                             <Button onClick={handleClose}>Cancel</Button>
-                            <Button type="submit" color="primary">Save</Button>
+                            <Button type="submit" color="primary">Update</Button>
                         </DialogActions>
                     </form>
                 </Dialog>
