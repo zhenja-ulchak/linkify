@@ -203,25 +203,25 @@
     "firma": "Компания",
     "benutzername": "Имя пользователя"
   },
-  "Customer": {
-    "profile": "Профиль",
-    "benutzername": "Имя пользователя",
-    "benutzer": "* Пользователи:",
-    "rechungsadresse": "+ Платежный адрес",
-    "firmenname": "Название компании",
-    "name": "Фамилия",
-    "vorname": "Имя",
-    "street": "Улица и номер дома",
-    "postalcode": "Почтовый индекс",
-    "city": "Город",
-    "region": "Регион",
-    "land": "Страна",
-    "addressAdditional": "Дополнительный адресс",
-    "licenseValidity": "Срок действия лицензии",
-    "group": "Группа",
-    "firmenname2": "+ Название компании:",
-    "licenseValidity2": "- Срок действия лицензии",
-    "group2": "- Группа",
-    "save": "Сохранить"
+    "Customer": {
+      "profile": "Профиль",
+      "benutzername": "Имя пользователя",
+      "benutzer": "* Пользователи:",
+      "rechungsadresse": "+ Платежный адрес",
+      "firmenname": "Название компании",
+      "name": "Фамилия",
+      "vorname": "Имя",
+      "street": "Улица и номер дома",
+      "postalcode": "Почтовый индекс",
+      "city": "Город",
+      "region": "Регион",
+      "land": "Страна",
+      "addressAdditional": "Дополнительный адресс",
+      "licenseValidity": "Срок действия лицензии",
+      "group": "Группа",
+      "firmenname2": "+ Название компании:",
+      "licenseValidity2": "- Срок действия лицензии",
+      "group2": "- Группа",
+      "save": "Сохранить"
+    }
   }
-}

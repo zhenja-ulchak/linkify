@@ -1,5 +1,12 @@
 {
   "API": {
+       "login": "Увійти в систему",
+    "username": "Ім'я користувача",
+    "password": "Пароль",
+    "loginError": "Невірне ім'я користувача або пароль",
+    "registrierung": "Реєстрація",
+    "passwort-vergessen": "Ви забули свій пароль?"
+  },
     "errors": {
       "serverError": "Помилка сервера. Спробуйте пізніше.",
       "unauthorized": "Невірні облікові дані!",
@@ -117,13 +124,7 @@
       "cancel": "Скасувати",
       "ok": "OK"
     },
-    "login": "Увійти в систему",
-    "username": "Ім'я користувача",
-    "password": "Пароль",
-    "loginError": "Невірне ім'я користувача або пароль",
-    "registrierung": "Реєстрація",
-    "passwort-vergessen": "Ви забули свій пароль?"
-  },
+ 
   "LocaleSwitcher": {
     "en": "English",
     "de": "Deutsch",
