@@ -392,22 +392,13 @@ export default function TableHelperUserList({ title }: TableHelperType) {
                 width: "95%",
                 flexDirection: "column",
             }}
+
         >
-    <div
-        id="UserDetailContainer2"
-        style={{
-            display: 'flex',
-            justifyContent: 'center',
-            maxWidth: '800px',
-            margin: '0 auto',
-        }}
-    >
-        <Grid container spacing={2} style={{ width: '100%' }}>
-            <Grid item xs={12} style={{ textAlign: "center" }}>
-                <h3>{t('Accounting-Software.details')}</h3>
-            </Grid>
-        </Grid>
-    </div>
+       {/* Контейнер UserDetailContainer2 */}
+<div style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
+<h3>{t('Userlist.user-list')}</h3>
+</div>
+
             <Paper sx={{ mb: 1 }} className="TablePaper">
                 <EnhancedTableToolbar numSelected={selected.length} />
                 <TableContainer
@@ -536,6 +527,7 @@ export default function TableHelperUserList({ title }: TableHelperType) {
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
                     className="TableFooter"
+                    labelRowsPerPage={t('Userlist.rowsPerPage')}
                 />
             </Paper>
             <FormControlLabel

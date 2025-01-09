@@ -18,7 +18,81 @@
       "serverfehler": "Server error. Please try again later.",
       "ein-unbekannter": "An unknown error occurred.",
       "netzwerkfehler": "Network error. Please check your connection.",
-      "fehler-beim": "Error during refresh:"
+      "fehler-beim": "Error during refresh:",
+      "dataSavedSuccessfully": "Data saved successfully!",
+      "verblei": "Remaining time:",
+      "sekunden": "Seconds"
+    },
+
+    "Registrierung": {
+      "benutzername-muss": "Username must contain at least 4 characters.",
+      "darf": "Username must not contain special characters.",
+      "passworter": "Passwords do not match.",
+      "pass-muss": "The password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number and one special character (!@#$%^&*?).",
+      "erfolgreich": "Successfully registered, you will be redirected.",
+      "email-ist": "Email is already taken:",
+      "serverfehler": "Server error, please try again later:",
+      "unbekannter": "An unknown error has occurred.",
+      "zuruck": "back to login",
+      "registrierung": "Registration",
+      "vorname": "First Name",
+      "nachname": "Last Name",
+      "adresse": "Address",
+      "hausnummer": "House number",
+      "postleitzahl": "Postal code",
+      "ort": "Location",
+      "region": "Region",
+      "land": "Country",
+      "adresszusatz": "Additional address",
+      "firma": "Company",
+      "benutzername": "Username",
+      "email": "E-Mail",
+      "passwort": "Password",
+      "passwort-bestatigen": "Confirm password"
+    },
+
+    "footer": {
+      "hi": "hi - ",
+      "email": "email:",
+      "first_name": "first_name:",
+      "role": "role:",
+      "user": "User",
+      "logout": "Logout:",
+      "refresh": "refresh:",
+      "time": "TIME",
+      "created_at": "created_at:",
+      "is_active": "is_active:",
+      "language": "language:",
+      "tenant_id": "tenant_id:",
+      "id": "id:",
+      "username": "username:",
+      "object_page": "OBJECT PAGE",
+      "noEmail": "No email",
+      "noName": "No name",
+      "noRole": "No role"
+    },
+
+    "Tenant": {
+      "alle-felder": "All fields must be filled in.",
+      "keine-gultige": "Valid ID was not presented.",
+      "fehler-beim": "Error saving",
+      "details": "Details",
+      "feld": "Field",
+      "wert": "Value",
+      "id": "ID",
+      "firmenname": "Company name",
+      "adresse": "Address",
+      "rechnungsadresse": "Billing Address",
+      "lizenzgultigbis": "License valid until",
+      "kontakt-email": "Contact Email",
+      "rechungs-email": "Billing Email",
+      "kontakt-telefon": "Contact Phone",
+      "bearbeiten": "Edit",
+      "loschen": "Delete",
+      "back": "Back",
+      "benutzerdaten": "Edit User Data",
+      "cancel": "Cancel",
+      "ok": "OK"
     },
     "Accounting-Software": {
       "details": "Details",
@@ -45,7 +119,13 @@
       "repository": "Repository",
       "dms-config": "DMS-config",
       "api_key": "Api Key",
-      "extra_settings": "Extra Settings (JSON)"
+      "extra_settings": "Extra Settings (JSON)",
+      "addNewAccountingSoftware": "Add New Accounting Software",
+      "create": "Create",
+      "notenant": " No tenant details available.",
+      "changeaccounting": "Change Accounting Software",
+      "save": "Save",
+      "addnewdmsconfig": "Add New DMS Config"
     },
     "Userlist": {
       "first_name": "First name",
@@ -60,7 +140,8 @@
       "desserts": "select all desserts",
       "filterlist": "Filter List",
       "densepadding": "Dense Padding",
-      "rowsPerPage": "Rows per page:"
+      "rowsPerPage": "Rows per page:",
+      "user-list": "User List"
     },
     "einstellungen": {
       "admin": "Administrator",
@@ -127,7 +208,11 @@
     "logout": "Logout",
     "logout-message": "Logout successful!",
     "fehler-message": "Error logging out. Please try again later.",
-    "kein-token": "No token found. Automatically redirect to the login page."
+    "kein-token": "No token found. Automatically redirect to the login page.",
+    "accounting": "Accounting",
+    "software": "Software",
+    "user": "User",
+    "list": "List"
   },
   "Document-Table": {
     "document-table": "Document-Table",
@@ -175,32 +260,6 @@
     "abbrechen": "Cancel",
     "test-email-senden": "Send test email",
     "fertigstellen": "Finish"
-  },
-  "Registrierung": {
-    "benutzername-muss": "Username must contain at least 4 characters.",
-    "darf": "Username must not contain special characters.",
-    "passworter": "Passwords do not match.",
-    "pass-muss": "The password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number and one special character (!@#$%^&*?).",
-    "erfolgreich": "Successfully registered, you will be redirected.",
-    "email-ist": "Email is already taken:",
-    "serverfehler": "Server error, please try again later:",
-    "unbekannter": "An unknown error has occurred.",
-    "zuruck": "back to login",
-    "registrierung": "Registration",
-    "vorname": "First Name",
-    "nachname": "Last Name",
-    "adresse": "Address",
-    "hausnummer": "House number",
-    "postleitzahl": "Postal code",
-    "ort": "Location",
-    "region": "Region",
-    "land": "Country",
-    "adresszusatz": "Additional address",
-    "firma": "Company",
-    "benutzername": "Username",
-    "email": "E-Mail",
-    "passwort": "Password",
-    "passwort-bestatigen": "Confirm password"
   },
   "Customer": {
     "profile": "Profile",

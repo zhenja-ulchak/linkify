@@ -260,7 +260,7 @@ const Login: React.FC = () => {
 
           {isLoggedIn && timeRemaining !== null && (
             <Typography variant="body1" style={{ marginTop: "20px" }}>
-              Verbleibende Zeit: {Math.floor(timeRemaining / 1000)} Sekunden
+              {t('messages.verblei')} {Math.floor(timeRemaining / 1000)} {t('messages.sekunden')}
             </Typography>
           )}
         </Box>

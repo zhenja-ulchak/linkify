@@ -35,7 +35,7 @@ const Register: React.FC = () => {
   const [company, setCompany] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>(""); // Fehlernachricht
   const [successMessage, setSuccessMessage] = useState<string>("");
-  const t = useTranslations('Registrierung'); 
+  const t = useTranslations('API'); 
   // Erfolgsnachricht
   const router = useRouter();
 
@@ -56,24 +56,24 @@ const Register: React.FC = () => {
     setSuccessMessage(""); // Erfolgsnachricht zurücksetzen
 
     if (username.length < 4) {
-      setErrorMessage(t('benutzername-muss'));
+      setErrorMessage(t('Registrierung.benutzername-muss'));
       return;
     }
 
     // Erlaubt nur alphanumerische Zeichen
     const usernameRegex = /^[a-zA-Z0-9]+$/;
     if (!usernameRegex.test(username)) {
-      setErrorMessage(t('darf'));
+      setErrorMessage(t('Registrierung.darf'));
       return;
     }
 
     if (password !== confirmPassword) {
-      setErrorMessage(t('passworter'));
+      setErrorMessage(t('Registrierung.passworter'));
       return;
     }
 
     if (!validatePassword(password)) {
-      setErrorMessage(t('pass-muss'));
+      setErrorMessage(t('Registrierung.pass-muss'));
       return;
     }
 
@@ -99,13 +99,13 @@ const Register: React.FC = () => {
 
       // Erfolgreiche Registrierung
       if (response.status === 200) {
-        setErrorMessage(t('erfolgreich'));
+        setErrorMessage(t('Registrierung.erfolgreich'));
         setTimeout(() => {
           router.push("/customer");
         }, 3000);
       } else {
         // Fehler, wenn Status nicht 200 ist
-        setErrorMessage(t('email-ist', {message: response.data.message}));
+        setErrorMessage(t('Registrierung.email-ist', {message: response.data.message}));
       }
     } catch (error: unknown) {
       console.error(
@@ -117,7 +117,7 @@ const Register: React.FC = () => {
       if (error instanceof Error) {
         setErrorMessage(error.message); // Nur, wenn `error` vom Typ `Error` ist
       } else {
-        setErrorMessage(t('unbekannter'));
+        setErrorMessage(t('Registrierung.unbekannter'));
       }
     }
   };
@@ -137,7 +137,7 @@ const Register: React.FC = () => {
         variant="outlined"
         onClick={handleLogin}
       >
-        {t('zuruck')}
+        {t('Registrierung.zuruck')}
       </Button>
 
       <Container maxWidth="sm">
@@ -164,12 +164,12 @@ const Register: React.FC = () => {
               component="h2"
               gutterBottom
             >
-              {t('registrierung')}
+              {t('Registrierung.registrierung')}
             </Typography>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label={t('vorname')}
+                  label={t('Registrierung.vorname')}
                   type="text"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
@@ -180,7 +180,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label={t('nachname')}
+                  label={t('Registrierung.nachname')}
                   type="text"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
@@ -191,7 +191,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label={t('adresse')}
+                  label={t('Registrierung.adresse')}
                   type="text"
                   value={street}
                   onChange={(e) => setStreet(e.target.value)}
@@ -202,7 +202,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label={t('hausnummer')}
+                  label={t('Registrierung.hausnummer')}
                   type="text"
                   value={houseNumber}
                   onChange={(e) => setHouseNumber(e.target.value)}
@@ -213,7 +213,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label={t('postleitzahl')}
+                  label={t('Registrierung.postleitzahl')}
                   type="text"
                   value={postalCode}
                   onChange={(e) => setPostalCode(e.target.value)}
@@ -224,7 +224,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label={t('ort')}
+                  label={t('Registrierung.ort')}
                   type="text"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
@@ -235,7 +235,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label={t('region')}
+                  label={t('Registrierung.region')}
                   type="text"
                   value={region}
                   onChange={(e) => setRegion(e.target.value)}
@@ -246,7 +246,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label={t('land')}
+                  label={t('Registrierung.land')}
                   type="text"
                   value={country}
                   onChange={(e) => setCountry(e.target.value)}
@@ -257,7 +257,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label={t('adresszusatz')}
+                  label={t('Registrierung.adresszusatz')}
                   type="text"
                   value={addressSupplement}
                   onChange={(e) => setAddressSupplement(e.target.value)}
@@ -268,7 +268,7 @@ const Register: React.FC = () => {
 
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label={t('firma')}
+                  label={t('Registrierung.firma')}
                   type="text"
                   value={company}
                   onChange={(e) => setCompany(e.target.value)}
@@ -278,7 +278,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  label={t('benutzername')}
+                  label={t('Registrierung.benutzername')}
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
@@ -289,7 +289,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  label={t('email')}
+                  label={t('Registrierung.email')}
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -300,7 +300,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  label={t('passwort')}
+                  label={t('Registrierung.passwort')}
                   type={showPasswords ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -327,7 +327,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  label={t('passwort-bestatigen')}
+                  label={t('Registrierung.passwort-bestatigen')}
                   type={showPasswords ? "text" : "password"}
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
@@ -368,7 +368,7 @@ const Register: React.FC = () => {
 
               <Grid item xs={12}>
                 <Button type="submit" fullWidth variant="contained">
-                  {t('registrierung')}
+                  {t('Registrierung.registrierung')}
                 </Button>
               </Grid>
             </Grid>

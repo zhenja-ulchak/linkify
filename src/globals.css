@@ -15,6 +15,10 @@ body {
   color: var(--font-color);
 }
 
+.text-wrap {
+  white-space: normal;
+  word-wrap: break-word;
+}
 
 
 .dark-mode header,
@@ -353,6 +357,20 @@ body {
 
 }
 
+
+
+#Userlist-Container {
+  text-align: center;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: var(--flex-direction-column);
+  width: 100%;
+  height: 700px;
+  margin-bottom: 50px;
+
+}
+
 #UserDetailTable {
   margin: 0;
   border-collapse: collapse;
@@ -520,6 +538,9 @@ body {
     margin-left: 30px;
   }
 
+
+
+
   .UserDetailTableHeader {
     width: 126px;
   }
@@ -573,7 +594,11 @@ body {
     margin-left: 52px;
   }
 
+
+
   #UserDetailModalContainer {
     left: 60px;
   }
 }
+
+

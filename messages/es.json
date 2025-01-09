@@ -1,0 +1,30 @@
+{
+    "API": {
+      "Registrierung": {
+        "benutzername-muss": "El nombre de usuario debe contener al menos 4 caracteres.",
+        "darf": "El nombre de usuario no debe contener caracteres especiales.",
+        "passworter": "Las contraseñas no coinciden.",
+        "pass-muss": "La contraseña debe tener al menos 8 caracteres y contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial (!@#$%^&*?).",
+        "erfolgreich": "Registrado con éxito, serás redirigido.",
+        "email-ist": "El correo electrónico ya está en uso:",
+        "serverfehler": "Error en el servidor, por favor intente más tarde:",
+        "unbekannter": "Ha ocurrido un error desconocido.",
+        "zuruck": "volver al inicio de sesión",
+        "registrierung": "Registro",
+        "vorname": "Nombre",
+        "nachname": "Apellido",
+        "adresse": "Dirección",
+        "hausnummer": "Número de casa",
+        "postleitzahl": "Código postal",
+        "ort": "Ubicación",
+        "region": "Región",
+        "land": "País",
+        "adresszusatz": "Dirección adicional",
+        "firma": "Empresa",
+        "benutzername": "Nombre de usuario",
+        "email": "Correo electrónico",
+        "passwort": "Contraseña",
+        "passwort-bestatigen": "Confirmar contraseña"
+      }
+  } 
+}

@@ -114,7 +114,7 @@ const DMSDialog = ({ tenantDetails }: AccountingType) => {
             enqueueSnackbar(message, { variant: variant });
         }
         if (response.status === 200) {
-            enqueueSnackbar('Data saved successfully!', { variant: 'success' });
+            enqueueSnackbar(t('messages.dataSavedSuccessfully'), { variant: 'success' });
             setOpen(false);
         }
 
@@ -135,9 +135,10 @@ const DMSDialog = ({ tenantDetails }: AccountingType) => {
                     color="primary"
                     variant="contained"
                     onClick={handleClickOpenUpdate}
-                    title="Add new accounting-software"
+                    title= {t('Accounting-Software.addNewAccountingSoftware')}
+                    
                 >
-                    Add New DMS config
+                    {t('Accounting-Software.addnewdmsconfig')}
                 </Button>
             </Box>
             <Dialog
@@ -148,13 +149,13 @@ const DMSDialog = ({ tenantDetails }: AccountingType) => {
             >
                 <form onSubmit={handleSubmit}>
                     <DialogTitle id="alert-dialog-title">
-                        {"Add New DMS config"}
+                    {t('Accounting-Software.addnewdmsconfig')}
                     </DialogTitle>
                     <DialogContent>
                         <Typography variant="body1" component="span" id="alert-dialog-description">
                             <Box sx={{ marginBottom: 2 }}>
                                 <FormControl fullWidth>
-                                    <InputLabel id="dms-select-label">Type</InputLabel>
+                                    <InputLabel id="dms-select-label">{t('Accounting-Software.type')}</InputLabel>
                                     <Select
                                         labelId="dms-select-label"
                                         value={selectedOption}
@@ -173,7 +174,7 @@ const DMSDialog = ({ tenantDetails }: AccountingType) => {
                             <Box sx={{ marginBottom: 2 }}>
                                 <TextField
                                     fullWidth
-                                    label="Username"
+                                    label={t('Accounting-Software.username')}
                                     name="username"
                                     value={updatedTenant.username || ""}
                                     onChange={handleInputChange}
@@ -184,7 +185,7 @@ const DMSDialog = ({ tenantDetails }: AccountingType) => {
                             <Box sx={{ marginBottom: 2 }}>
                                 <TextField
                                     fullWidth
-                                    label="Repository"
+                                    label={t('Accounting-Software.repository')}
                                     name="repository"
                                     value={updatedTenant.repository || ""}
                                     onChange={handleInputChange}
@@ -195,7 +196,7 @@ const DMSDialog = ({ tenantDetails }: AccountingType) => {
                             <Box sx={{ marginBottom: 2 }}>
                                 <TextField
                                     fullWidth
-                                    label="API Key"
+                                    label={t('Accounting-Software.api_key')}
                                     name="api_key"
                                     value={updatedTenant.api_key || ""}
                                     onChange={handleInputChange}
@@ -206,7 +207,7 @@ const DMSDialog = ({ tenantDetails }: AccountingType) => {
                             <Box sx={{ marginBottom: 2 }}>
                                 <TextField
                                     fullWidth
-                                    label="Extra Settings (JSON)"
+                                    label={t('Accounting-Software.extra_settings')}
                                     name="extra_settings"
                                     value={updatedTenant.extra_settings || ""}
                                     onChange={handleInputChange}
@@ -219,9 +220,9 @@ const DMSDialog = ({ tenantDetails }: AccountingType) => {
                     </DialogContent>
 
                     <DialogActions>
-                        <Button onClick={handleClose}>Cancel</Button>
+                        <Button onClick={handleClose}>{t('Accounting-Software.cancel')}</Button>
                         <Button type="submit" autoFocus>
-                            Create
+                        {t('Accounting-Software.create')}
                         </Button>
                     </DialogActions>
                 </form>

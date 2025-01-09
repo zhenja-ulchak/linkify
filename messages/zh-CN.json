@@ -23,9 +23,57 @@
       "desserts": "選擇所有甜點",
       "filterlist": "過濾器列表",
       "densepadding": "密集的縮進",
-      "rowsPerPage": "每頁行數："
+      "rowsPerPage": "每頁行數：",
+      "Userlist": "使用者列表"
     },
 
+    "Registrierung": {
+      "benutzername-muss": "用户名必须至少包含4个字符。",
+      "darf": "用户名不能包含特殊字符。",
+      "passworter": "密码不匹配。",
+      "pass-muss": "密码必须至少包含8个字符，并且包含至少一个大写字母、一个小写字母、一个数字和一个特殊字符（如！@#$%^&*？）。",
+      "erfolgreich": "注册成功，您将被重定向。",
+      "email-ist": "电子邮件已被占用：",
+      "serverfehler": "服务器错误，请稍后再试：",
+      "unbekannter": "发生了未知错误。",
+      "zuruck": "返回登录",
+      "registrierung": "注册",
+      "vorname": "名字",
+      "nachname": "姓氏",
+      "adresse": "地址",
+      "hausnummer": "门牌号",
+      "postleitzahl": "邮政编码",
+      "ort": "地点",
+      "region": "地区",
+      "land": "国家",
+      "adresszusatz": "附加地址",
+      "firma": "公司",
+      "benutzername": "用户名",
+      "email": "电子邮件",
+      "passwort": "密码",
+      "passwort-bestatigen": "确认密码"
+    },
+    
+    "footer": {
+      "hi": "你好 - ",
+      "email": "电子邮件:",
+      "first_name": "名字:",
+      "role": "角色:",
+      "user": "用户",
+      "logout": "登出:",
+      "refresh": "刷新:",
+      "time": "时间",
+      "created_at": "创建于:",
+      "is_active": "是否激活:",
+      "language": "语言:",
+      "tenant_id": "租户ID:",
+      "id": "id:",
+      "username": "用户名:",
+      "object_page": "对象页面",
+      "noEmail": "沒有電子郵件",
+      "noName": "無名字",
+      "noRole": "無角色"
+    },
     "messages": {
       "login": "登录成功！",
       "willkommen": "欢迎！",
@@ -34,9 +82,11 @@
       "serverfehler": "服务器错误。请稍后再试。",
       "ein-unbekannter": "发生未知错误。",
       "netzwerkfehler": "网络错误。请检查您的连接。",
-      "fehler-beim": "刷新时出错："
+      "fehler-beim": "刷新时出错：",
+      "dataSavedSuccessfully": "資料保存成功!",
+      "verblei": "剩餘時間：",
+      "sekunden": "秒"
     },
-
     "einstellungen": {
       "admin": "管理员",
       "email-anpassen": "电子邮件设置",
@@ -44,7 +94,6 @@
       "accounting-software": "会计软件",
       "profile-anpassen": "个人资料设置"
     },
-
     "Smtp": {
       "smtp-server": "SMTP服务器不能为空。",
       "smtp-port": "SMTP端口必须是有效数字。",
@@ -93,10 +142,7 @@
       "cancel": "取消",
       "ok": "确定"
     },
-
-
-
-      "Accounting-Software": {
+    "Accounting-Software": {
       "details": "詳細資料",
       "feld": "菲爾德",
       "wert": "沃特",
@@ -121,7 +167,13 @@
       "repository": "儲存庫",
       "dms-config": "DMS 配置",
       "api_key": "API金鑰",
-      "extra_settings": "額外設定 (JSON)"
+      "extra_settings": "額外設定 (JSON)",
+      "addNewAccountingSoftware": "新增新的會計軟體",
+      "create": "創造",
+      "notenant": "沒有可用的租戶詳細資料",
+      "changeaccounting": "更換會計軟體",
+      "save": "節省",
+      "addnewdmsconfig": "新增新的 DMS 配置"
     },
     "login": "登入",
     "username": "用户名",
@@ -155,10 +207,12 @@
     "logout": "登出",
     "logout-message": "退出！",
     "fehler-message": "請原諒您退出系統，請稍後重試",
-    "kein-token": "未找到令牌。自動重新導向至登入端"
+    "kein-token": "未找到令牌。自動重新導向至登入端",
+    "accounting": "會計",
+    "software": "軟體",
+    "user": " 用户",
+    "list": "列表"
   },
-
-
   "Document-Table": {
     "document-table": "文档表格",
     "id": "ID",
@@ -205,32 +259,6 @@
     "abbrechen": "取消",
     "test-email-senden": "发送测试邮件",
     "fertigstellen": "完成"
-  },
-  "Registrierung": {
-    "benutzername-muss": "用户名必须至少包含4个字符。",
-    "darf": "用户名不能包含特殊字符。",
-    "passworter": "密码不匹配。",
-    "pass-muss": "密码必须至少包含8个字符，并且包含至少一个大写字母、一个小写字母、一个数字和一个特殊字符（如！@#$%^&*？）。",
-    "erfolgreich": "注册成功，您将被重定向。",
-    "email-ist": "电子邮件已被占用：",
-    "serverfehler": "服务器错误，请稍后再试：",
-    "unbekannter": "发生了未知错误。",
-    "zuruck": "返回登录",
-    "registrierung": "注册",
-    "vorname": "名字",
-    "nachname": "姓氏",
-    "adresse": "地址",
-    "hausnummer": "门牌号",
-    "postleitzahl": "邮政编码",
-    "ort": "地点",
-    "region": "地区",
-    "land": "国家",
-    "adresszusatz": "附加地址",
-    "firma": "公司",
-    "benutzername": "用户名",
-    "email": "电子邮件",
-    "passwort": "密码",
-    "passwort-bestatigen": "确认密码"
   },
   "Customer": {
     "profile": "个人资料",

@@ -9,7 +9,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { enqueueSnackbar } from "notistack";
 import apiService from "@/app/services/apiService";
-
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 
 
@@ -45,6 +45,7 @@ const LogoutViewTimer = parseInt(process.env.NEXT_PUBLIC_APP_LOGOUT_VIEW_TIMER |
 
 const Footer: React.FC = () => {
   const router = useRouter();
+  const t = useTranslations('API');
   const [User, setUser] = useState<UserType>();
   const [footerVisible, setFooterVisible] = useState(false);
   const [tooltipVisible, setTooltipVisible] = useState({
@@ -68,11 +69,19 @@ const Footer: React.FC = () => {
   const [refresh, setRefresh] = useState<number>(Number(page_refresh_time));
 
   const handleTooltipToggle = (key: keyof typeof tooltipVisible) => {
-    setTooltipVisible((prevState) => ({
-      ...prevState,
-      [key]: !prevState[key],
-    }));
+    setTooltipVisible((prevState) => {
+      const newState = {
+        user: false,
+        time: false,
+        licInfo: false,
+        objectPage: false,
+      };
+      // Only toggle the selected tooltip on
+      newState[key] = !prevState[key];
+      return newState;
+    });
   };
+
 
   const handleArrowToggle = (key: keyof typeof arrowDirection) => {
     setArrowDirection((prevState) => ({
@@ -253,7 +262,7 @@ const Footer: React.FC = () => {
           alignItems={"center"}
         >
           <Typography variant="body2" sx={{ color: "#fff", }} className="FooterLorem">
-            hi - {sharedObject.name}  {sharedObject.last_name}
+          {t('footer.hi')} {sharedObject.name}  {sharedObject.last_name}
           </Typography>
         </Box>
       </Container>
@@ -325,9 +334,9 @@ const Footer: React.FC = () => {
           <Box sx={{ display: 'flex', justifyContent: 'center', gap: 3 }}>
             {/* Tooltip Buttons */}
             <Tooltip title={<div>
-              <p>email: {User?.email || 'Немає email'}</p>
-              <p>first_name: {User?.first_name || 'Немає імені'}</p>
-              <p>role: {User?.role || 'Немає ролі'}</p>
+              <p>{t('footer.email')} {User?.email || t('footer.noEmail')}</p>
+              <p>{t('footer.first_name')} {User?.first_name || t('footer.noName')}</p>
+              <p>{t('footer.role')} {User?.role || t('footer.noRole')}</p>
             </div>} placement="top" open={tooltipVisible.user}>
               <Button
                 variant="text"
@@ -344,15 +353,15 @@ const Footer: React.FC = () => {
                   },
                 }}
               >
-                USER
+                {t('footer.user')}
                 {arrowDirection.user === 'up' ? <ArrowUpwardIcon sx={{ color: 'white', marginLeft: 1 }} /> : <ArrowDownwardIcon sx={{ color: 'white', marginLeft: 1 }} />}
               </Button>
             </Tooltip>
 
             <Tooltip title=
             {<div>
-              <p>Logout: {count || '0'}</p>
-              <p>refresh: {refresh || '0'}</p>
+              <p>{t('footer.logout')} {count || '0'}</p>
+              <p>{t('footer.refresh')} {refresh || '0'}</p>
              
             </div>} placement="top" open={tooltipVisible.time}>
               <Button
@@ -370,7 +379,7 @@ const Footer: React.FC = () => {
                   },
                 }}
               >
-                TIME
+                {t('footer.time')}
                 {arrowDirection.time === 'up' ? <ArrowUpwardIcon sx={{ color: 'white', marginLeft: 1 }} /> : <ArrowDownwardIcon sx={{ color: 'white', marginLeft: 1 }} />}
               </Button>
             </Tooltip>
@@ -398,14 +407,14 @@ const Footer: React.FC = () => {
 
             <Tooltip title={
               <div>
-                <p>email: {User?.email || 'Немає email'}</p>
-                <p>first_name: {User?.first_name || 'Немає імені'}</p>
-                <p>created_at: {User?.created_at || 'Немає ролі'}</p>
-                <p>is_active: {User?.is_active || 'Немає ролі'}</p>
-                <p>language: {User?.language || 'Немає ролі'}</p>
-                <p>tenant_id: {User?.tenant_id || 'Немає ролі'}</p>
-                <p>id: {User?.id || 'Немає ролі'}</p>
-                <p>username: {User?.username || 'Немає ролі'}</p>
+                <p>{t('footer.email')}: {User?.email || t('footer.noEmail')}</p>
+                <p>{t('footer.first_name')} {User?.first_name || t('footer.noName')}</p>
+                <p>{t('footer.created_at')} {User?.created_at || t('footer.noRole')}</p>
+                <p>{t('footer.is_active')} {User?.is_active || t('footer.noRole')}</p>
+                <p>{t('footer.language')} {User?.language || t('footer.noRole')}</p>
+                <p>{t('footer.tenant_id')} {User?.tenant_id || t('footer.noRole')}</p>
+                <p>{t('footer.id')} {User?.id || t('footer.noRole')}</p>
+                <p>{t('footer.username')} {User?.username || t('footer.noRole')}</p>
 
               </div>
             } placement="top" open={tooltipVisible.objectPage}>
@@ -424,7 +433,7 @@ const Footer: React.FC = () => {
                   },
                 }}
               >
-                OBJECT PAGE
+                {t('footer.object_page')}
                 {arrowDirection.objectPage === 'up' ? <ArrowUpwardIcon sx={{ color: 'white', marginLeft: 1 }} /> : <ArrowDownwardIcon sx={{ color: 'white', marginLeft: 1 }} />}
               </Button>
             </Tooltip>
