@@ -71,6 +71,8 @@ const DocumentTable: React.FC = () => {
                             <TableCell>{document.name}</TableCell>
                             <TableCell>{document.type}</TableCell>
                             <TableCell>{document.size}</TableCell>
+                            <TableCell>{document.type}</TableCell>
+                            <TableCell>{document.size}</TableCell>
                             <TableCell>{document.createdAt}</TableCell>
                             <TableCell>
                                 <IconButton onClick={() => handleEdit(document.id)}>
