@@ -167,31 +167,31 @@ const Footer: React.FC = () => {
   }, [refresh]);
 
 
-  // const handleLogout = async () => {
-  //   const getToken: any = sessionStorage.getItem('AuthToken');
-  //   if (!getToken) {
-  //     enqueueSnackbar("Kein Token gefunden. Automatisches Weiterleiten zur Login-Seite.", {
-  //       variant: "warning"
-  //     });
-  //     router.push("/login");
-  //     sessionStorage.clear();
-  //     return;
-  //   }
-  //   try {
-  //     await apiService.get(`user/logout`, getToken);
-  //     enqueueSnackbar("Logout erfolgreich!", {
-  //       variant: "success"
-  //     });
+  const handleLogout = async () => {
+    const getToken: any = sessionStorage.getItem('AuthToken');
+    if (!getToken) {
+      enqueueSnackbar("Kein Token gefunden. Automatisches Weiterleiten zur Login-Seite.", {
+        variant: "warning"
+      });
+      router.push("/login");
+      sessionStorage.clear();
+      return;
+    }
+    try {
+      await apiService.get(`user/logout`, getToken);
+      enqueueSnackbar("Logout erfolgreich!", {
+        variant: "success"
+      });
 
-  //   } catch (error) {
-  //     enqueueSnackbar("Fehler beim Logout. Bitte versuchen Sie es später erneut.", {
-  //       variant: "error"
-  //     });
-  //   }
+    } catch (error) {
+      enqueueSnackbar("Fehler beim Logout. Bitte versuchen Sie es später erneut.", {
+        variant: "error"
+      });
+    }
 
-  //   router.push("/login");
-  //   sessionStorage.clear()
-  // };
+    router.push("/login");
+    sessionStorage.clear()
+  };
 
 
   useEffect(() => {

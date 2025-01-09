@@ -23,7 +23,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import WysiwygIcon from '@mui/icons-material/Wysiwyg';
 import EngineeringIcon from '@mui/icons-material/Engineering';
 import RecentActorsIcon from '@mui/icons-material/RecentActors';
-
+import EmailIcon from '@mui/icons-material/Email';
 import { Url } from "next/dist/shared/lib/router/router";
 import Logout from "./Logout";
 import { useRouter } from "next/navigation";
@@ -134,6 +134,7 @@ type MiniDrawerProps = {
 
 export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
   const t = useTranslations('Panel-sidebar');
+      const tAPI = useTranslations('API');
   const theme = useTheme();
 
   // @ts-ignore
@@ -174,18 +175,20 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
       sessionStorage.clear();
       return;
     }
-    try {
-      const response = await apiService.get(`user/logout`, getToken);
-      enqueueSnackbar(t('logout-message'), {
-        variant: 'success',
-      });
-      if (response instanceof Error) {
-        enqueueSnackbar(response.message, { variant: 'error' });
-      }
-    } catch (error) {
-      enqueueSnackbar(t('fehler-message'), {
-        variant: "error"
-      });
+    const response: any = await apiService.get(`user/logout`, getToken);
+    enqueueSnackbar("Logout erfolgreich!", {
+      variant: "success"
+    });
+
+    if (response instanceof Error) {
+      const { status, variant, message } = apiService.CheckAndShow(response, tAPI);
+      console.log(message);
+      // @ts-ignore
+      enqueueSnackbar(message, { variant: variant });
+    }
+
+    if (response.status === 200) {
+      enqueueSnackbar('Logout successful!', { variant: 'success' });
     }
 
     router.push("/login");
@@ -378,7 +381,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
               onClick={() => handleNavigation("/dashboard/profile")}
             >
               <AccountCircleIcon />
-              <ListItemText primary={t("profile")}  style={{ marginLeft: "31px" }} />
+              <ListItemText primary={t("profile")} style={{ marginLeft: "31px" }} />
             </ListItemButton>
           </ListItem>
 
@@ -386,7 +389,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
           <ListItem disablePadding>
             <ListItemButton onClick={() => handleLogout()}>
               <Logout />
-              <ListItemText primary={t("logout")}  style={{ marginLeft: "31px" }} />
+              <ListItemText primary={t("logout")} style={{ marginLeft: "31px" }} />
             </ListItemButton>
           </ListItem>
 
