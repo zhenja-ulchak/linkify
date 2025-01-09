@@ -15,7 +15,10 @@
     "password": "Password",
     "loginError": "Incorrect username or password",
     "registrierung": "Registration",
-    "passwort-vergessen": "Forgot your password?"
+    "passwort-vergessen": "Forgot your password?",
+    "invalidEmail": "Please enter a valid email address",
+    "passwordResetSuccess": "We have sent you an email to reset your password",
+    "serverError": "There was an issue with the server"
   },
   "LocaleSwitcher": {
     "en": "English",

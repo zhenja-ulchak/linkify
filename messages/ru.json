@@ -15,7 +15,10 @@
       "password": "Пароль",
       "loginError": "Неверное имя пользователя или пароль",
       "registrierung": "Регистрация",
-      "passwort-vergessen": "Вы забыли свой пароль?"
+      "passwort-vergessen": "Вы забыли свой пароль?",
+      "invalidEmail": "Пожалуйста, введите правильный адрес электронной почты",
+      "passwordResetSuccess": "Мы отправили вам письмо для сброса пароля",
+      "serverError": "Произошла ошибка на сервере"
     },
     "LocaleSwitcher": {
       "en": "English",
