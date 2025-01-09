@@ -11,11 +11,12 @@ import ChangeMode from '@/components/DarkLightMode';
 import { SnackbarProvider } from 'notistack';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const [locale, setLocale] = useState<string>('es');
+  const savedLocale = localStorage.getItem('locale') || 'en';
+  const [locale, setLocale] = useState<string>(savedLocale);
   const [messages, setMessages] = useState<any>(enMessages);
 
   useEffect(() => {
-    const savedLocale = localStorage.getItem('locale') || 'es';
+    
     setLocale(savedLocale);
 
     // Логика для загрузки сообщений в зависимости от локали
@@ -32,13 +33,26 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       case 'ru':
         setMessages(ruMessages);
         break;
-        case 'zh-CN':
-          setMessages(zhcnMessages);
-          break;
+      case 'zh-CN':
+        setMessages(zhcnMessages);
+        break;
       default:
-        setMessages(ukMessages);
+        setMessages(enMessages);
         break;
     }
+
+
+
+   
+ 
+
+  
+  const timer = setTimeout(() => {
+     localStorage.removeItem('locale');// Очищаємо sessionStorage після завершення сесії
+  }, 3600000);
+
+  // Очищуємо таймер при розмонтуванні компонента
+  return () => clearTimeout(timer);
   }, []);
 
   // Detect browser's time zone or use a default like UTC
