@@ -111,7 +111,7 @@ const Administrator: React.FC = () => {
     setServerError(null); // Vorherige Fehler zurücksetzen
 
 
-
+    const getToken: any = sessionStorage.getItem('AuthToken');
     const response: any = await apiService.post("tenant/email-setting", payload, getToken)
     if (response instanceof Error) {
       const { status, variant, message } = apiService.CheckAndShow(response, tAPI);
@@ -135,6 +135,7 @@ const Administrator: React.FC = () => {
     } else {
 
       console.log('work');
+      const getToken: any = sessionStorage.getItem('AuthToken');
       const response: any = await apiService.post("service/test-email", { email }
         , getToken)
 
