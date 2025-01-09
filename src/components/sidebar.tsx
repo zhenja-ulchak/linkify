@@ -133,7 +133,7 @@ type MiniDrawerProps = {
 
 export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
   const t = useTranslations('Panel-sidebar');
-      const tAPI = useTranslations('API');
+  const tAPI = useTranslations('API');
   const theme = useTheme();
 
   // @ts-ignore
