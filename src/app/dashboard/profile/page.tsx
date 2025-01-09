@@ -29,10 +29,20 @@ interface FormData {
   addressAdditional: string;
   licenseValidity: string;
   group: string;
-  id: string;
+  id?: string;
 }
 
 export default function Profile() {
+
+  const [profileData, setProfileData] = useState<FormData | null>(null)
+  const [profileUser, setProfileUser] = useState<any>(null)
+
+  const getToken: any = sessionStorage.getItem('AuthToken');
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const t = useTranslations('Customer');
+  const tAPI = useTranslations('API');
+
   const [formData, setFormData] = useState<FormData>({
     username: "",
     companyName: "",
@@ -46,37 +56,9 @@ export default function Profile() {
     addressAdditional: "",
     licenseValidity: "",
     group: "",
-    id: "",
+
   });
-  const getToken: any = sessionStorage.getItem('AuthToken');
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
-  const t = useTranslations('Customer');
-  const tAPI = useTranslations('API');
 
-  useEffect(() => {
-    const fetchData = async () => {
-
-      const getToken: any = sessionStorage.getItem('AuthToken');
-      const response: any = await apiService.get("user/profile", getToken)
-      console.log(response?.data);
-      setFormData(response?.data);
-      if (response instanceof Error) {
-        const { status, variant, message } = apiService.CheckAndShow(response, tAPI);
-   
-        // @ts-ignore
-        enqueueSnackbar(message, { variant: variant });
-      }
-      if (response.status === 200) {
-        enqueueSnackbar('Profile data fetched successfully!', { variant: 'success' });
-        setFormData(response?.data);
-      }
-
-
-    };
-
-    fetchData();
-  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -93,7 +75,7 @@ export default function Profile() {
       `user/profile`,
       formData, getToken
     );
- 
+
     if (response instanceof Error) {
       const { status, variant, message } = apiService.CheckAndShow(response, tAPI);
       console.log(message);
@@ -104,11 +86,69 @@ export default function Profile() {
     if (response.status === 200) {
       enqueueSnackbar('Profile updated successfully!', { variant: 'success' });
 
-  
+
     }
   };
-console.log(formData?.username);
+ 
 
+
+  useEffect(() => {
+    const fetchData = async () => {
+
+      const getToken: any = sessionStorage.getItem('AuthToken');
+      const response: any = await apiService.get("user/profile", getToken)
+      setProfileUser(response.data[0]?.user)
+      if (response?.data && response.data.length > 0 && response.data[0]?.tanant) {
+        setProfileData(response.data[0].tanant);
+    } else {
+        console.error("Tenant data not found in API response:", response?.data);
+    }
+      
+
+      if (response instanceof Error) {
+        const { status, variant, message } = apiService.CheckAndShow(response, tAPI);
+
+        // @ts-ignore
+        enqueueSnackbar(message, { variant: variant });
+      }
+      if (response.status === 200) {
+        enqueueSnackbar('Profile data fetched successfully!', { variant: 'success' });
+
+      }
+
+
+    };
+
+    fetchData();
+
+
+  
+  }, []);
+
+  useEffect(() => {
+    if (profileData && profileUser) {
+      setFormData({
+        username: profileUser.first_name ,
+        companyName: profileData.company_name,
+        name: profileUser.first_name || "",
+        firstName: profileUser.last_name || "",
+        street: profileData.address || "",
+        postalCode: profileData.postalCode || "",
+        city: profileData.city || "",
+        region: profileData.region || "",
+        country: profileData.country || "",
+        addressAdditional: profileData.address || "",
+        licenseValidity: profileData.license_valid_until || "",
+        group: profileData.group || "",
+      });
+    }
+  }, [profileData, profileUser]);
+
+
+
+
+  console.log('Profile data updated:', profileData);
+    console.log(profileUser);
   return (
     <Paper elevation={0} sx={{ padding: 4, maxWidth: 600, margin: "auto" }}>
       <Typography variant="h4" gutterBottom textAlign="center">
@@ -278,7 +318,7 @@ console.log(formData?.username);
         </Grid>
       </form>
 
-      {errorMessage && (
+      {/* {errorMessage && (
         <Alert severity="error" sx={{ marginTop: 2 }}>
           {errorMessage}
         </Alert>
@@ -288,7 +328,7 @@ console.log(formData?.username);
         <Alert severity="success" sx={{ marginTop: 2 }}>
           {successMessage}
         </Alert>
-      )}
+      )} */}
     </Paper>
   );
 }

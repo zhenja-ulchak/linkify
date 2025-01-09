@@ -231,7 +231,7 @@ const DetailsTable: React.FC = () => {
                 url: tenantDetails.url || "",
                 organization_id: tenantDetails.organization_id || "0",
                 // @ts-ignore
-                event_type: tenantDetails.event_type.document || "",
+                event_type: tenantDetails.event_type || "",
                 description: tenantDetails.description || "",
                 is_active: tenantDetails.is_active,
 
@@ -287,7 +287,7 @@ const DetailsTable: React.FC = () => {
 
                                                             <TableCell>{
                                                                  // @ts-ignore
-                                                            tenantDetails?.event_type.document || "N/A"}</TableCell>
+                                                            tenantDetails?.event_type || "N/A"}</TableCell>
                                                         </TableRow> 
 
                                                        <TableRow>
