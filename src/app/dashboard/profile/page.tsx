@@ -129,15 +129,19 @@ export default function Profile() {
     if (profileData && profileUser) {
       setFormData({
         username: profileUser.first_name ,
+        //@ts-ignore
         companyName: profileData.company_name,
         name: profileUser.first_name || "",
         firstName: profileUser.last_name || "",
+        //@ts-ignore
         street: profileData.address || "",
         postalCode: profileData.postalCode || "",
         city: profileData.city || "",
         region: profileData.region || "",
         country: profileData.country || "",
+        //@ts-ignore
         addressAdditional: profileData.address || "",
+        //@ts-ignore
         licenseValidity: profileData.license_valid_until || "",
         group: profileData.group || "",
       });
