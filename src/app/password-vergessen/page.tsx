@@ -5,69 +5,66 @@ import axios from "axios";
 import { NextPage } from "next";
 import { Button, TextField, Typography, Box, Container } from "@mui/material";
 import { useRouter } from "next/navigation";
+import apiService from "../services/apiService";
+import { enqueueSnackbar } from "notistack";
+import { useTranslations } from 'next-intl';
 
 const ForgotPassword: NextPage = () => {
   const [email, setEmail] = useState<string>("");
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [emailError, setEmailError] = useState<string>("");
+  const t = useTranslations("API");
+  const router = useRouter();
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ): Promise<void> => {
-    e.preventDefault();
-    setSuccessMessage(null);
-    setErrorMessage(null);
+  // Функція для валідації email
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  };
 
-    try {
-      const response = await axios.put(
-        `${process.env.NEXT_PUBLIC_BASE_URL}user/passforgot`,
-        {
-          email,
-        }
-      );
-
-      if (response.status === 200) {
-        setSuccessMessage(
-          "Eine E-Mail mit Anweisungen zum Zurücksetzen Ihres Passworts wurde gesendet."
-        );
-      } else if (response.status === 404) {
-        setErrorMessage("Die eingegebene E-Mail-Adresse wurde nicht gefunden.");
-      }
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        // Check if response contains the expected structure
-        const errorResponse = error.response?.data;
-        let errorMessageString = "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.";
-
-        // Check if the message is an object and extract the relevant information
-        if (errorResponse) {
-          if (typeof errorResponse.message === "object") {
-            // Extract the error message from the object structure
-            const guiMessage = errorResponse.message["gui-message"];
-            const errorMessageContent = errorResponse.message["error-message"];
-            errorMessageString = guiMessage || errorMessageContent || errorMessageString;
-          } else {
-            // Use the simple message if it's a string
-            errorMessageString = errorResponse.message || errorMessageString;
-          }
-        }
-
-        setErrorMessage(errorMessageString);
-      } else if (error instanceof Error) {
-        // Handle general JavaScript errors (non-Axios)
-        setErrorMessage(error.message || "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.");
-      } else {
-        // Fallback error message if the error type is unknown
-        setErrorMessage("Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.");
-      }
+  // Обробка зміни email
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setEmail(value);
+    if (!validateEmail(value)) {
+      setEmailError(t("invalidEmail")); // Локалізоване повідомлення про помилку
+    } else {
+      setEmailError("");
     }
   };
 
-  const router = useRouter();
+  // Обробка сабміту форми
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!validateEmail(email)) {
+      setEmailError(t("invalidEmail"));
+      return;
+    }
 
-  function handleLoginLinkClick() {
+    const getToken: any = sessionStorage.getItem("AuthToken");
+    try {
+      const response: any = await apiService.put(
+        "user/passforgot",
+        { email },
+        getToken
+      );
+
+      if (response instanceof Error) {
+        const { status, variant, message } = apiService.CheckAndShow(response, t);
+        //@ts-ignore
+        enqueueSnackbar(message, { variant });
+      }
+
+      if (response.status === 200) {
+        enqueueSnackbar(t("passwordResetSuccess"), { variant: "success" });
+      }
+    } catch (error) {
+      enqueueSnackbar(t("serverError"), { variant: "error" });
+    }
+  };
+
+  const handleLoginLinkClick = () => {
     router.push("/login");
-  }
+  };
 
   return (
     <Box
@@ -76,7 +73,7 @@ const ForgotPassword: NextPage = () => {
         justifyContent: "center",
         alignItems: "center",
         minHeight: "100vh",
-        backgroundColor: "#f5f5f5", // Light background for contrast
+        backgroundColor: "#f5f5f5",
       }}
     >
       <Container component="main" maxWidth="xs">
@@ -88,24 +85,12 @@ const ForgotPassword: NextPage = () => {
             padding: 3,
             boxShadow: 3,
             borderRadius: 2,
-            backgroundColor: "white", // White background for the form
+            backgroundColor: "white",
           }}
         >
           <Typography variant="h5" gutterBottom>
             Passwort vergessen
           </Typography>
-
-          {successMessage && (
-            <Box sx={{ color: "green", marginBottom: 2 }}>
-              <Typography variant="body2">{successMessage}</Typography>
-            </Box>
-          )}
-
-          {errorMessage && (
-            <Box sx={{ color: "red", marginBottom: 2 }}>
-              <Typography variant="body2">{errorMessage}</Typography>
-            </Box>
-          )}
 
           <form onSubmit={handleSubmit} style={{ width: "100%" }}>
             <TextField
@@ -119,8 +104,10 @@ const ForgotPassword: NextPage = () => {
               autoComplete="email"
               autoFocus
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleEmailChange}
               placeholder="Geben Sie Ihre E-Mail-Adresse ein"
+              error={!!emailError}
+              helperText={emailError}
             />
 
             <Button

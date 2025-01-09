@@ -13,7 +13,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import { enqueueSnackbar } from "notistack";
 import { useTranslations } from 'next-intl';
 import DMSDialog from "@/components/modal/DmsConfigDialog";
-
+import ConfirmDeleteModal from '@/components/modal/ConfirmDeleteModal';
 
 type TenantDetails = {
     id?: number;
@@ -30,7 +30,7 @@ type TenantDetails = {
 
 const dmsOptions = [
     "SharePoint",
-    "Eco-dms",
+    "ecodms",
     "DocuWare",
     "M-Files",
     "OpenText",
@@ -42,10 +42,10 @@ const DetailsTableDms: React.FC = () => {
     const { id } = useParams();
     console.log(id);
 
-  const t = useTranslations('API');
+    const t = useTranslations('API');
 
     const router = useRouter();
-
+    const [openModal, setOpenModal] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     // const [open, setOpen] = React.useState(false);
     const [updatedTenant, setUpdatedTenant] = useState<TenantDetails>({
@@ -64,7 +64,10 @@ const DetailsTableDms: React.FC = () => {
     const [tenantDetails, setTenantDetails] = useState<TenantDetails | null>(null);
     const [addNewDetails, setAddNewDetails] = useState<any>(false);
     const [open, setOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState('');
+    const [selectedOption, setSelectedOption] = useState(tenantDetails?.type);
+    console.log(tenantDetails?.type);
+
+
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -103,9 +106,18 @@ const DetailsTableDms: React.FC = () => {
             const response: any = await ApiService.get(`dms-config`, Auth); //${id}
             if (response instanceof Error) {
                 const { status, variant, message } = ApiService.CheckAndShow(response, t);
-                console.log(message);
-                // @ts-ignore
-                enqueueSnackbar(message, { variant: variant });
+
+                if (status === 404) {
+                    console.log(404);
+                    
+                }else{
+                    console.log(message);
+                    // @ts-ignore
+                    enqueueSnackbar(message, { variant: variant });
+                }
+            }
+            if (response.status === 200) {
+                enqueueSnackbar('DMS configuration fetched successfully!', { variant: 'success' });
             }
             if (response?.data && Array.isArray(response.data) && response.data[0] && Array.isArray(response.data[0]) && response.data[0][0]) {
                 setTenantDetails(response.data[0][0]);
@@ -144,9 +156,10 @@ const DetailsTableDms: React.FC = () => {
                 console.log(message);
                 // @ts-ignore
                 enqueueSnackbar(message, { variant: variant });
+                setOpen(false);
             }
             if (response.status === 200) {
-
+                enqueueSnackbar('DMS configuration updated successfully!', { variant: 'success' });
                 setOpen(false);
             }
 
@@ -177,9 +190,10 @@ const DetailsTableDms: React.FC = () => {
             // @ts-ignore
             enqueueSnackbar(message, { variant: variant });
         }
-        if (response.status === 200) {
-
-            router.push("/users");
+        if (response.success === true) {
+            enqueueSnackbar('DMS configuration deleted successfully!', { variant: 'success' });
+            setOpenModal(false);
+            router.push("/dashboard/admin");
         }
 
     };
@@ -187,6 +201,33 @@ const DetailsTableDms: React.FC = () => {
     function handleGoingBack() {
         router.back();
     }
+    useEffect(() => {
+        if (tenantDetails) {
+            setUpdatedTenant((prevTenant) => ({
+                ...prevTenant,
+                endpoint_url: tenantDetails.endpoint_url || "",
+                type: tenantDetails.type || "",
+                username: tenantDetails.username || "",
+                repository: tenantDetails.repository || "",
+                api_key: tenantDetails.api_key || "",
+                extra_settings: tenantDetails.extra_settings || "",
+            }));
+            if (tenantDetails && tenantDetails.type) {
+                setSelectedOption(tenantDetails.type); // Встановлюємо значення по умолчанию, якщо є
+            } // Оновлення вибору в Select
+        }
+    }, [tenantDetails]);
+
+
+    const handleOpenModal = () => {
+
+        setOpenModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setOpenModal(false);
+
+    };
 
 
     return (
@@ -199,7 +240,7 @@ const DetailsTableDms: React.FC = () => {
                 {addNewDetails ?
                     (
                         <>
-                            <DMSDialog tenantDetails={null} />
+                            <DMSDialog/>
                         </>
                     ) :
 
@@ -247,7 +288,7 @@ const DetailsTableDms: React.FC = () => {
                                     <EditIcon />
                                 </IconButton>
 
-                                <IconButton color="error" onClick={handleDelete} title="Löschen">
+                                <IconButton color="error" onClick={handleOpenModal} title="Löschen">
                                     <DeleteIcon />
                                 </IconButton>
                             </Grid>
@@ -256,9 +297,16 @@ const DetailsTableDms: React.FC = () => {
                     )
 
                 }
+                <ConfirmDeleteModal
+                    open={openModal}
+                    title="Delete"
+                    handleDelete={handleDelete}
+                    onClose={handleCloseModal}
+                    description={"Are you sure you want to delete DMS config?"}
 
+                />
 
-                <Grid item xs={12} sx={{textAlign: addNewDetails ? "center" : 'left'}}>
+                <Grid item xs={12} sx={{ textAlign: addNewDetails ? "center" : 'left' }}>
                     <Button
                         variant="outlined"
                         startIcon={<KeyboardBackspaceIcon />}
@@ -274,20 +322,21 @@ const DetailsTableDms: React.FC = () => {
                 onClose={handleClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
+                fullWidth
             >
                 <DialogTitle id="alert-dialog-title">
                     {"DMS"}
                 </DialogTitle>
                 <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        <Box sx={{ marginBottom: 2 }}>
+                    <Typography variant="body1" component="span" id="alert-dialog-description">
+                        <Box sx={{ marginBottom: 2 , marginTop: "15px"  }}>
                             <TextField
                                 fullWidth
                                 label={t('Accounting-Software.endpoint-url')}
                                 name="endpoint_url"
                                 value={updatedTenant.endpoint_url}
                                 onChange={handleEditChange}
-                                placeholder={tenantDetails?.endpoint_url}
+
                             />
                         </Box>
                         <Box sx={{ marginBottom: 2 }}>
@@ -295,7 +344,7 @@ const DetailsTableDms: React.FC = () => {
                                 <InputLabel id="dms-select-label">DMS</InputLabel>
                                 <Select
                                     labelId="dms-select-label"
-                                    value={selectedOption}
+                                    value={selectedOption || 'fgedfdhg'}
                                     onChange={handleChange}
                                     label="DMS"
                                 >
@@ -317,7 +366,7 @@ const DetailsTableDms: React.FC = () => {
                                 name="username"
                                 value={updatedTenant.username}
                                 onChange={handleEditChange}
-                                placeholder={tenantDetails?.username}
+
                             />
                         </Box>
 
@@ -328,7 +377,7 @@ const DetailsTableDms: React.FC = () => {
                                 name="repository"
                                 value={updatedTenant.repository}
                                 onChange={handleEditChange}
-                                placeholder={tenantDetails?.repository}
+
                             />
                         </Box>
 
@@ -339,7 +388,7 @@ const DetailsTableDms: React.FC = () => {
                                 name="api_key"
                                 value={updatedTenant.api_key || ""}
                                 onChange={handleEditChange}
-                                placeholder={tenantDetails?.api_key ?? "Optional"}
+
                             />
                         </Box>
 
@@ -350,12 +399,12 @@ const DetailsTableDms: React.FC = () => {
                                 name="extra_settings"
                                 value={updatedTenant.extra_settings}
                                 onChange={handleEditChange}
-                                placeholder={tenantDetails?.extra_settings}
+
                                 multiline
                                 rows={4}
                             />
                         </Box>
-                    </DialogContentText>
+                    </Typography>
                 </DialogContent>
                 <DialogActions>
 

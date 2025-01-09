@@ -94,6 +94,9 @@ export default function AdminProfile() {
     }
   };
 
+  console.log(formData);
+  
+
   return (
     <Paper elevation={3} sx={{ padding: 4, maxWidth: 600, margin: "auto" }}>
       <Typography variant="h4" align="center" gutterBottom>

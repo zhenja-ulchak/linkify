@@ -25,9 +25,11 @@ import {
   Paper,
   IconButton,
 } from "@mui/material";
+import { enqueueSnackbar } from "notistack";
+import ConfirmDeleteModal from '@/components/modal/ConfirmDeleteModal';
 
 type Tenant = {
-  id: number;
+  id?: number;
   company_name: string;
   address: string;
   invoice_address: string;
@@ -43,10 +45,10 @@ const TenantDetails: React.FC = () => {
 
   const router = useRouter();
 
-
+  const [openModal, setOpenModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [updatedTenant, setUpdatedTenant] = useState<Tenant>({
-    id: 1,
+
     company_name: "",
     address: "",
     invoice_address: "",
@@ -106,20 +108,24 @@ const TenantDetails: React.FC = () => {
         return;
       }
 
-        const Auth: any = sessionStorage.getItem('AuthToken')
-        const response: any = await ApiService.get(`tenant/${id}`, Auth)
-        if (response instanceof Error) {
-          const { status, variant, message } = ApiService.CheckAndShow(response, t);
-          console.log(message);
-          // @ts-ignore
-          enqueueSnackbar(message, { variant: variant });
-        }
+      const Auth: any = sessionStorage.getItem('AuthToken')
+      const response: any = await ApiService.get(`tenant/${id}`, Auth)
+      if (response instanceof Error) {
+        const { status, variant, message } = ApiService.CheckAndShow(response, t);
+
+        // @ts-ignore
+        enqueueSnackbar(message, { variant: variant });
+      }
 
 
+      if (response.status === 200) {
+        enqueueSnackbar(`Details for tenant ID ${id} fetched successfully!`, { variant: 'success' });
 
-        setTenants(response?.data[0]);
+      }
+      setTenants(response?.data[0]);
+      console.log(response?.data[0]);
 
-      
+
     };
 
     fetchElements();
@@ -139,38 +145,86 @@ const TenantDetails: React.FC = () => {
   const handleSaveChanges = async () => {
     if (validateInputs()) {
 
-      try {
-        const response = await ApiService.put(
-          `tenant/${id}`,
-          cleanedObject, Auth
-        );
-        if (!response) {
-          console.log("Benutzerdaten gespeichert:", cleanedObject);
-          setIsEditing(false);
-        }
-      } catch (error) {
-        setError(t('Tenant.fehler-beim:') + error)
+
+      const response: any = await ApiService.put(
+        `tenant/${id}`,
+        cleanedObject, Auth
+      );
+      if (response instanceof Error) {
+        const { status, variant, message } = ApiService.CheckAndShow(response, t);
+        console.log(message);
+        // @ts-ignore
+        enqueueSnackbar(message, { variant: variant });
+        setIsEditing(false)
       }
+
+
+      if (response.status === 200) {
+        enqueueSnackbar('New tenant created successfully!', { variant: 'success' });
+        setIsEditing(false)
+      }
+
     }
   };
 
   const handleDelete = async () => {
-    try {
-      const response: any = await ApiService.delete(
-        `tenant/${id}`, Auth
-      );
-      if (response.status === 200) {
-        console.log("Benutzer gelöscht:", updatedTenant);
-        router.push("/users");
-      }
-    } catch (error) {
-      console.error("Fehler beim Löschen:", error);
+
+    const response: any = await ApiService.delete(
+      `tenant/${id}`, Auth
+    );
+    if (response instanceof Error) {
+      const { status, variant, message } = ApiService.CheckAndShow(response, t);
+      console.log(message);
+      // @ts-ignore
+      enqueueSnackbar(message, { variant: variant });
     }
+
+
+    if (response.status === 200) {
+      enqueueSnackbar(`Tenant ID ${id} deleted successfully!`, { variant: 'success' });
+    }
+
   };
 
   function handleGoingBack() {
     router.back();
   }
+
+
+  const handleOpenModal = () => {
+
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+
+  };
+
+  useEffect(() => {
+
+    if (tenants[0]) {
+      setUpdatedTenant((prevTenant) => ({
+        ...prevTenant,
+        company_name: tenants[0].company_name || "",
+        address: tenants[0].address || "",
+        invoice_address: tenants[0].invoice_address || "",
+        license_valid_until: tenants[0].license_valid_until || 0,
+        contact_email: tenants[0].contact_email || "",
+        invoice_email: tenants[0].invoice_email || "",
+        contact_phone: tenants[0].contact_phone || 0,
+      }));
+
+      // Якщо необхідно, оновлюємо додаткові поля для select
+      // if (tenants[0] && tenants[0].type) {
+      //     setSelectedOption(tenants[0].type); // Встановлюємо значення по умолчанию
+      // }
+    }
+  }, [tenants[0]]);
+
+
+
+
   return (
     <Box sx={{ p: 3 }} style={{ display: 'flex', justifyContent: 'center', maxWidth: '800px', margin: '0 auto' }}>
 
@@ -237,11 +291,18 @@ const TenantDetails: React.FC = () => {
             <EditIcon />
           </IconButton>
 
-          <IconButton color="error" onClick={handleDelete} title={t('Tenant.loschen')}>
+          <IconButton color="error" onClick={handleOpenModal} title={t('Tenant.loschen')}>
             <DeleteIcon />
           </IconButton>
         </Grid>
+        <ConfirmDeleteModal
+          open={openModal}
+          title="Delete"
+          handleDelete={handleDelete}
+          onClose={handleCloseModal}
+          description={"Are you sure you want to delete Tenants?"}
 
+        />
         <Grid item xs={12}>
           <Button
             variant="outlined"
@@ -253,14 +314,14 @@ const TenantDetails: React.FC = () => {
           </Button>
         </Grid>
 
-        <Modal open={isEditing} onClose={() => setIsEditing(false)}>
+        <Modal open={isEditing} onClose={() => setIsEditing(false)} >
           <Box
             sx={{
               position: "absolute",
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              width: 400,
+              width: 600,
               bgcolor: "background.paper",
               boxShadow: 24,
               p: 4,
