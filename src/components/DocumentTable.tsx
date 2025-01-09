@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Typography, Dialog, DialogTitle, DialogContent, Box, TextField, DialogActions, Button } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material';
 import { useTranslations } from 'next-intl';
+import ConfirmDeleteModal from './modal/ConfirmDeleteModal';
 
 interface Document {
     id: number;
@@ -30,6 +31,7 @@ const DocumentTable: React.FC = () => {
     const [open, setOpen] = useState(false);
     const [documentsList, setDocumentsList] = useState(documents);
     const [updatedTenant, setUpdatedTenant] = useState<any>(null);
+     const [openModal, setOpenModal] = useState(false);
     const t = useTranslations('Document-Table');
 
     const handleEdit = (id: number) => {
@@ -59,6 +61,14 @@ const DocumentTable: React.FC = () => {
         setOpen(false);
     };
 
+    const handleCloseModal = () => {
+        setOpenModal(false);
+
+    };
+
+   const handleDeleteModal = ()=>{
+
+   }
     return (
         <>
             <TableContainer component={Paper} sx={{ width: '95%', marginLeft: '86px' }}>
@@ -105,7 +115,10 @@ const DocumentTable: React.FC = () => {
                                     }}>
                                         <Edit />
                                     </IconButton>
-                                    <IconButton color="error" onClick={() => handleDelete(document.id)}>
+                                    <IconButton color="error" onClick={() =>{
+                                        setOpenModal(true)
+                                        handleDelete(document.id)
+                                    } }>
                                         <Delete />
                                     </IconButton>
                                 </TableCell>
@@ -114,6 +127,14 @@ const DocumentTable: React.FC = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <ConfirmDeleteModal
+                    open={openModal}
+                    title="Delete Document"
+                    handleDelete={handleDeleteModal}
+                    onClose={handleCloseModal}
+                    description={"Are you sure you want to delete Document?"}
+
+                />
             <Dialog open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description" fullWidth>
                 <DialogTitle id="alert-dialog-title">{"Update Document"}</DialogTitle>
                 <DialogContent>
