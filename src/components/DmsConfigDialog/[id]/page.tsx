@@ -410,7 +410,7 @@ const DetailsTableDms: React.FC = () => {
 
                     <Button onClick={handleClose}>Cancel</Button>
                     <Button onClick={() => handleSaveChanges()} autoFocus>
-                        OK
+                    Update
                     </Button>
                 </DialogActions>
             </Dialog>
