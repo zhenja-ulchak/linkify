@@ -16,6 +16,9 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import axios from "axios";
 import LocaleSwitcher from '../../components/LocaleSwitcher';
 import { useTranslations } from 'next-intl';
+import apiService from "@/app/services/apiService";
+import { enqueueSnackbar } from "notistack";
+
 
 const Register: React.FC = () => {
   const [firstName, setFirstName] = useState<string>("");
@@ -35,12 +38,12 @@ const Register: React.FC = () => {
   const [company, setCompany] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>(""); // Fehlernachricht
   const [successMessage, setSuccessMessage] = useState<string>("");
-  const t = useTranslations('Registrierung'); 
+  const t = useTranslations('Registrierung');
   // Erfolgsnachricht
   const router = useRouter();
 
   const border = {
-    border: "2px solid #ccc",
+
     borderRadius: "5px",
   };
 
@@ -76,10 +79,10 @@ const Register: React.FC = () => {
       setErrorMessage(t('pass-muss'));
       return;
     }
-
-    try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}user/register`,
+    const getToken: any = sessionStorage.getItem('AuthToken');
+ 
+      const response: any = await apiService.post(
+        `user/register`,
         {
           firstName,
           lastName,
@@ -94,32 +97,22 @@ const Register: React.FC = () => {
           password,
           username,
           company,
-        }
+        },
+        getToken
       );
 
       // Erfolgreiche Registrierung
-      if (response.status === 200) {
-        setErrorMessage(t('erfolgreich'));
-        setTimeout(() => {
-          router.push("/customer");
-        }, 3000);
-      } else {
-        // Fehler, wenn Status nicht 200 ist
-        setErrorMessage(t('email-ist', {message: response.data.message}));
+      if (response instanceof Error) {
+        const { status, variant, message } = apiService.CheckAndShow(response, t);
+        console.log(message);
+        // @ts-ignore
+        enqueueSnackbar(message, { variant: variant });
       }
-    } catch (error: unknown) {
-      console.error(
-        (t('serverfehler')),
-        error
-      );
 
-      // Fehlerbehandlung
-      if (error instanceof Error) {
-        setErrorMessage(error.message); // Nur, wenn `error` vom Typ `Error` ist
-      } else {
-        setErrorMessage(t('unbekannter'));
+      if (response.status === 200) {
+        enqueueSnackbar('Accounting data fetched successfully!', { variant: 'success' });
       }
-    }
+   
   };
 
   const handleLogin = () => {
@@ -128,9 +121,9 @@ const Register: React.FC = () => {
 
   return (
     <>
-    <div className="locale-switcher-container" style={{ position: 'absolute', top: '13px', left: '66px' }}>
-      <LocaleSwitcher />
-    </div>
+      <div className="locale-switcher-container" style={{ position: 'absolute', top: '13px', left: '66px' }}>
+        <LocaleSwitcher />
+      </div>
       <Button
         id="LoginBtnOnRegisterPage"
         sx={{ float: "right", marginRight: "10px", marginTop: "10px" }}

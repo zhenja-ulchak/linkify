@@ -1,86 +1,98 @@
 {
-    "API": {
-      "errors": {
-        "serverError": "Помилка сервера. Спробуйте пізніше.",
-        "unauthorized": "Невірні облікові дані!",
-        "notFound": "Не знайдено",
-        "forbidden": "Доступ заборонено",
-        "internalServerError": "Внутрішня помилка сервера. Спробуйте пізніше.",
-        "badGateway": "Поганий шлюз. Спробуйте пізніше.",
-        "serviceUnavailable": "Служба недоступна. Спробуйте пізніше.",
-        "gatewayTimeout": "Часовий ліміт шлюзу. Спробуйте пізніше."
-      },
-      "login": "Увійти в систему",
-      "username": "Ім'я користувача",
-      "password": "Пароль",
-      "loginError": "Невірне ім'я користувача або пароль",
-      "registrierung": "Реєстрація",
-      "passwort-vergessen": "Ви забули свій пароль?"
+  "API": {
+    "errors": {
+      "serverError": "Помилка сервера. Спробуйте пізніше.",
+      "unauthorized": "Невірні облікові дані!",
+      "notFound": "Не знайдено",
+      "forbidden": "Доступ заборонено",
+      "internalServerError": "Внутрішня помилка сервера. Спробуйте пізніше.",
+      "badGateway": "Поганий шлюз. Спробуйте пізніше.",
+      "serviceUnavailable": "Служба недоступна. Спробуйте пізніше.",
+      "gatewayTimeout": "Часовий ліміт шлюзу. Спробуйте пізніше."
     },
-    "LocaleSwitcher": {
-      "en": "English",
-      "de": "Deutsch",
-      "ua": "Українська",
-      "ru": "Русский",
-      "zh-CN": "简体中文",
-      "label": "Change Language"
-    },
-    "Dashboard": {
-        "dashboard": "Приладова панель",
-        "welcome-message": "Привіт і ласкаво просимо! Дякуємо за приєднання до Linkify"
-      },
-      "Panel-sidebar": {
-        "dashboard": "Приладова панель",
-        "user": "Користувач",
-        "admin": "Адміністратор",
-        "admin-profile": "Профіль адміністратора",
-        "profile": "Профіль",
-        "logout": "Вийти",
-        "smtp-email": "SMTP-Пошта",
-        "admin-liste": "Список адміністраторів",
-        "Einstellungen": "Налаштування",
-        "Superadmin": "Суперадміністратор"
-      },
-      "User-list": {
-        "user-list": "Список користувачів"
-      },
-      "Admin-profile": {
-        "profile": "Профіль",
-        "benutzer": "* Користувачі:",
-        "rechnungsadresse": "+ Платіжна адреса",
-        "benutzername": "Ім'я користувача",
-        "firmenname": "Назва компанії",
-        "name": "Прізвище",
-        "vorname": "Ім'я",
-        "hausnummer": "Вулиця та номер будинку",
-        "postleitzahl": "Поштовий індекс",
-        "ort": "Країна",
-        "speichern": "Зберегти"
-      },
-  
-      "Customer": {
-        "profile": "Профіль",
-        "benutzername": "Ім'я користувача",
-        "benutzer": "* Користувачі:",
-        "rechungsadresse": "+ Платіжна адреса",
-        "firmenname": "Назва компанії",
-         "name": "Прізвище",
-         "vorname": "Ім'я",
-         "street": "Вулиця і номер будинку",
-         "postalcode": "Поштовий індекс",
-         "city": "Місто",
-         "region": "Область",
-         "land": "Країна",
-         "addressAdditional": "Додаткова адреса",
-         "licenseValidity": "Термін дії ліцензії",
-         "group": "Група",
-         "firmenname2": "+ Назва компанії:",
-         "licenseValidity2": "- Термін дії ліцензії",
-         "group2": "- Група",
-         "save": "Зберегти"
-
-      }
-
-    }
-  
-  
+    "login": "Увійти в систему",
+    "username": "Ім'я користувача",
+    "password": "Пароль",
+    "loginError": "Невірне ім'я користувача або пароль",
+    "registrierung": "Реєстрація",
+    "passwort-vergessen": "Ви забули свій пароль?",
+    "invalidEmail": "Будь ласка, введіть правильну електронну пошту",
+    "passwordResetSuccess": "Ми надіслали вам лист для скидання пароля",
+    "serverError": "Сталася проблема з сервером",
+    "id": "Ідентифікатор",
+    "ExtantanionType": "Тип розширення",
+    "Size": "Розмір",
+    "mimeType": "Тип MIME",
+    "docName": "Назва документа",
+    "docType": "Тип документа",
+    "docDescription": "Опис документа",
+    "docVersion": "Версія документа",
+    "docParentID": "ID батьківського документа",
+    "docLastChangeAt": "Дата останньої зміни",
+    "syncDms": "Синхронізація з DMS",
+    "syncAccounting": "Синхронізація з бухгалтерією",
+   
+    "Actions": "Дії"
+  },
+  "LocaleSwitcher": {
+    "en": "English",
+    "de": "Deutsch",
+    "ua": "Українська",
+    "ru": "Русский",
+    "zh-CN": "简体中文",
+    "label": "Change Language"
+  },
+  "Dashboard": {
+    "dashboard": "Приладова панель",
+    "welcome-message": "Привіт і ласкаво просимо! Дякуємо за приєднання до Linkify"
+  },
+  "Panel-sidebar": {
+    "dashboard": "Приладова панель",
+    "user": "Користувач",
+    "admin": "Адміністратор",
+    "admin-profile": "Профіль адміністратора",
+    "profile": "Профіль",
+    "logout": "Вийти",
+    "smtp-email": "SMTP-Пошта",
+    "admin-liste": "Список адміністраторів",
+    "Einstellungen": "Налаштування",
+    "Superadmin": "Суперадміністратор"
+  },
+  "User-list": {
+    "user-list": "Список користувачів"
+  },
+  "Admin-profile": {
+    "profile": "Профіль",
+    "benutzer": "* Користувачі:",
+    "rechnungsadresse": "+ Платіжна адреса",
+    "benutzername": "Ім'я користувача",
+    "firmenname": "Назва компанії",
+    "name": "Прізвище",
+    "vorname": "Ім'я",
+    "hausnummer": "Вулиця та номер будинку",
+    "postleitzahl": "Поштовий індекс",
+    "ort": "Країна",
+    "speichern": "Зберегти"
+  },
+  "Customer": {
+    "profile": "Профіль",
+    "benutzername": "Ім'я користувача",
+    "benutzer": "* Користувачі:",
+    "rechungsadresse": "+ Платіжна адреса",
+    "firmenname": "Назва компанії",
+    "name": "Прізвище",
+    "vorname": "Ім'я",
+    "street": "Вулиця і номер будинку",
+    "postalcode": "Поштовий індекс",
+    "city": "Місто",
+    "region": "Область",
+    "land": "Країна",
+    "addressAdditional": "Додаткова адреса",
+    "licenseValidity": "Термін дії ліцензії",
+    "group": "Група",
+    "firmenname2": "+ Назва компанії:",
+    "licenseValidity2": "- Термін дії ліцензії",
+    "group2": "- Група",
+    "save": "Зберегти"
+  }
+}

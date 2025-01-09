@@ -66,20 +66,21 @@ export default function TableHelperUserList({ title }: TableHelperType) {
 
     React.useEffect(() => {
         const fetchData = async () => {
-           
-                const getToken: any = sessionStorage.getItem('AuthToken');
-                const response: any = await ApiService.get("user", getToken);
-                if (response instanceof Error) {
-                    enqueueSnackbar(response.message, { variant: 'error' });
-                }
-                setRows(response.data[0]);
-                if (response instanceof Error) {
-                    const { status, variant, message } = ApiService.CheckAndShow(response, t);
-                    console.log(message);
-                    // @ts-ignore
-                    enqueueSnackbar(message, { variant: variant });
-                }
-            
+
+            const getToken: any = sessionStorage.getItem('AuthToken');
+            const response: any = await ApiService.get("user", getToken);
+            setRows(response.data[0]);
+            if (response instanceof Error) {
+                const { status, variant, message } = ApiService.CheckAndShow(response, t);
+                console.log(message);
+                // @ts-ignore
+                enqueueSnackbar(message, { variant: variant });
+            }
+
+            if (response.status === 200) {
+                enqueueSnackbar('User list fetched successfully!', { variant: 'success' });
+            }
+
         };
         fetchData();
     }, []);
@@ -313,7 +314,7 @@ export default function TableHelperUserList({ title }: TableHelperType) {
             variant: 'info',  // You can change the variant to success, error, warning, or info
             autoHideDuration: 3000, // Auto hide after 3 seconds
         });
-        router.push(`/dashboard/superadmin/tenant/${id}`);
+        router.push(`/dashboard/admin/user-list/${id}`);
     };
 
     const handleRequestSort = (

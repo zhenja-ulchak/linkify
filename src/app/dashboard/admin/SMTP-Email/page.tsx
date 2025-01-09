@@ -20,6 +20,19 @@ import { useTranslations } from 'next-intl';
 import apiService from "@/app/services/apiService";
 import { enqueueSnackbar } from "notistack";
 
+type EmailConfig = {
+  id?: number;
+  host: string;
+  port: number;
+  username: string;
+  encryption: string;
+  from_address: string;
+  from_name: string;
+  is_active: boolean;
+
+};
+
+
 const Administrator: React.FC = () => {
   // Zustände für Eingaben
   const [smtpServer, setSmtpServer] = useState("");
@@ -31,8 +44,10 @@ const Administrator: React.FC = () => {
   const [savePassword, setSavePassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [autoAuth, setAutoAuth] = useState(false);
+  const [emailConfig, setEmailConfig] = React.useState<EmailConfig | null>(null);
+  const tAPI = useTranslations('API');
   const t = useTranslations('Smtp-Email');
- const tAPI = useTranslations('API');
+
   // Zustände für Fehlermeldungen
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [serverError, setServerError] = useState<string | null>(null);
@@ -54,7 +69,7 @@ const Administrator: React.FC = () => {
       newErrors.email = "Bitte geben Sie eine gültige E-Mail-Adresse ein.";
     }
     if (!password) newErrors.password = "Passwort darf nicht leer sein.";
-   
+
     return newErrors;
   };
 
@@ -68,7 +83,7 @@ const Administrator: React.FC = () => {
       username &&
       email &&
       /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) &&
-      password 
+      password
     );
   };
 
@@ -91,11 +106,12 @@ const Administrator: React.FC = () => {
 
 
 
+
     // to-do fix email/config
     setServerError(null); // Vorherige Fehler zurücksetzen
 
-   console.log(getToken);
-   
+
+
     const response: any = await apiService.post("tenant/email-setting", payload, getToken)
     if (response instanceof Error) {
       const { status, variant, message } = apiService.CheckAndShow(response, tAPI);
@@ -105,29 +121,24 @@ const Administrator: React.FC = () => {
     }
 
     if (response.status === 200) {
-      enqueueSnackbar('Data saved successfully!', { variant: 'success' });
-
-
+      enqueueSnackbar('The email has been saved successfully!', { variant: 'success' });
     }
   };
 
   const handleTestEmail = async () => {
-
-
-    
     const newErrors = validateInputs();
     console.log(newErrors);
-    
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
-    }else{
+    } else {
 
       console.log('work');
-      const response: any = await apiService.post("service/test-email",{ email }
+      const response: any = await apiService.post("service/test-email", { email }
         , getToken)
-   
-   
+
+
       if (response instanceof Error) {
         const { status, variant, message } = apiService.CheckAndShow(response, tAPI);
         console.log(message);
@@ -136,19 +147,50 @@ const Administrator: React.FC = () => {
       }
       console.log(response.status);
       if (response.status === 200) {
-        enqueueSnackbar('Data saved successfully!', { variant: 'success' });
+        enqueueSnackbar('The test email has been saved successfully!', { variant: 'success' });
       }
 
     }
 
-    // to-do fix 
 
-
-    
-      // setServerError(null);
-
-     
   };
+
+
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+
+      const getToken: any = sessionStorage.getItem('AuthToken');
+      const response: any = await apiService.get("tenant/email-setting", getToken);
+
+      const data = response.data[0][0]; // Ваші дані з сервера
+      setEmailConfig(data);
+
+      // Синхронізація станів
+      setSmtpServer(data.username || "");
+      setSmtpPort(data.port || 0);
+      setEncryption(data.encryption || "");
+      setUsername(data.username || "");
+      setEmail(data.from_address || "");
+
+      if (response instanceof Error) {
+        const { status, variant, message } = apiService.CheckAndShow(response, t);
+        console.log(message);
+        // @ts-ignore
+        enqueueSnackbar(message, { variant: variant });
+      }
+
+
+      if (response.status === 200) {
+        enqueueSnackbar('DMS Config data fetched successfully!', { variant: 'success' });
+
+      }
+
+    }
+
+    fetchData();
+  }, []);
+  console.log(smtpServer);
 
 
   return (
@@ -321,7 +363,7 @@ const Administrator: React.FC = () => {
             <Button
               variant="contained"
               color="primary"
-              onClick={()=>handleTestEmail()}
+              onClick={() => handleTestEmail()}
             >
               {t("test-email-senden")}
             </Button>

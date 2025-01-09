@@ -47,7 +47,7 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const router = useRouter();
   const [rows, setRows] = React.useState<Data[]>([]);  // Zustand für die Zeilen
-  const t = useTranslations('');
+  const t = useTranslations('API');
   console.log(rows);
 
 
@@ -87,8 +87,8 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
         const getToken: any = sessionStorage.getItem('AuthToken');
         const response: any = await apiService.get("tenant", getToken);
 
-        if (response.data[0]) {
-          enqueueSnackbar('Дані успішно завантажено!', { variant: 'success' });
+        if (response.status === 200) {
+          enqueueSnackbar('Tenant information fetched successfully!', { variant: 'success' });
         }
 
         const tenantData: any = response?.data[0];
@@ -99,7 +99,7 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
           enqueueSnackbar(message, { variant: variant });
         }
         setRows(tenantData);  // Зберігаємо дані в стан
-        enqueueSnackbar('Дані успішно завантажено!', { variant: 'success' });
+
       
     
     };

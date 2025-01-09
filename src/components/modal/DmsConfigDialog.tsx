@@ -11,27 +11,20 @@ import { useTranslations } from 'next-intl';
 type TenantDetails = {
     id?: number;
     tenant_id?: number;
-    name: string;
     type: string;
-    url: string;
-    organization_id: string;
-    event_type: string | null;
-    description: string;
-    additional_settings?: {
-        region: string;
-    };
-    is_active: number;
-    created_by: string | null;
-    updated_by: string | null;
+    endpoint_url: string;
+    username: string;
+    api_key: string | null;
+    repository: string;
+    extra_settings: string;  // Передбачається, що це JSON-рядок
     created_at: string;
     updated_at: string;
-    deleted_at: string | null;
 };
 
 
 const dmsOptions = [
     "SharePoint",
-    "Eco-dms",
+    "ecodms",,
     "DocuWare",
     "M-Files",
     "OpenText",
@@ -40,11 +33,8 @@ const dmsOptions = [
 ];
 
 
-type AccountingType = {
-    tenantDetails: TenantDetails | null
-}
 
-const DMSDialog = ({ tenantDetails }: AccountingType) => {
+const DMSDialog = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [updatedTenant, setUpdatedTenant] = useState<any>({
         type: "",
@@ -58,8 +48,8 @@ const DMSDialog = ({ tenantDetails }: AccountingType) => {
     });
 
     const [addNewDetails, setAddNewDetails] = useState<any>(false);
-
-    const [selectedOption, setSelectedOption] = useState<string>('');
+// @ts-ignore
+    const [selectedOption, setSelectedOption] = useState<string>("");
     const t = useTranslations('API');
     const [open, setOpen] = useState(false);
 
@@ -112,9 +102,10 @@ const DMSDialog = ({ tenantDetails }: AccountingType) => {
             console.log(message);
             // @ts-ignore
             enqueueSnackbar(message, { variant: variant });
+            setOpen(false);
         }
         if (response.status === 200) {
-            enqueueSnackbar('Data saved successfully!', { variant: 'success' });
+            enqueueSnackbar('DMS Config details create successfully!', { variant: 'success' });
             setOpen(false);
         }
 
@@ -126,7 +117,22 @@ const DMSDialog = ({ tenantDetails }: AccountingType) => {
     const removeEmptyValues = (obj: any) => {
         return Object.fromEntries(Object.entries(obj).filter(([key, value]) => value != null && value !== ""));
     };
-
+//  useEffect(() => {
+//         if (tenantDetails) {
+//             setUpdatedTenant((prevTenant: any) => ({
+//                 ...prevTenant,
+//                 endpoint_url: tenantDetails.endpoint_url || "",
+//                 type: tenantDetails.type || "",
+//                 username: tenantDetails.username || "",
+//                 repository: tenantDetails.repository || "",
+//                 api_key: tenantDetails.api_key || "",
+//                 extra_settings: tenantDetails.extra_settings || "",
+//             }));
+//             if (tenantDetails && tenantDetails.type) {
+//                 setSelectedOption(tenantDetails.type); // Встановлюємо значення по умолчанию, якщо є
+//             } // Оновлення вибору в Select
+//         }
+//     }, [tenantDetails]);
 
     return (
         <>
@@ -145,6 +151,7 @@ const DMSDialog = ({ tenantDetails }: AccountingType) => {
                 onClose={handleCloseUpdate}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
+                fullWidth
             >
                 <form onSubmit={handleSubmit}>
                     <DialogTitle id="alert-dialog-title">
@@ -152,7 +159,7 @@ const DMSDialog = ({ tenantDetails }: AccountingType) => {
                     </DialogTitle>
                     <DialogContent>
                         <Typography variant="body1" component="span" id="alert-dialog-description">
-                            <Box sx={{ marginBottom: 2 }}>
+                            <Box sx={{ marginBottom: 2  , marginTop: "15px"}}>
                                 <FormControl fullWidth>
                                     <InputLabel id="dms-select-label">Type</InputLabel>
                                     <Select
