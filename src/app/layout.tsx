@@ -11,12 +11,14 @@ import ChangeMode from '@/components/DarkLightMode';
 import { SnackbarProvider } from 'notistack';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const savedLocale = localStorage.getItem('locale') || 'en';
-  const [locale, setLocale] = useState<string>(savedLocale);
+
+  const [locale, setLocale] = useState<string | undefined>();
   const [messages, setMessages] = useState<any>(enMessages);
+  
 
   useEffect(() => {
-    
+    const savedLocale = localStorage.getItem('locale') || 'en';
+  
     setLocale(savedLocale);
 
     // Логика для загрузки сообщений в зависимости от локали
@@ -59,12 +61,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Europe/Berlin';
 
   return (
-    <html lang={locale}>
+    <html lang={locale || "en"}>
       <body style={{ margin: '0', padding: '0', minHeight: '100vh' }}>
         <div style={{ position: 'absolute', left: '0', marginLeft: '60px', marginTop: '10px' }}>
           <ChangeMode />
         </div>
-        <NextIntlClientProvider locale={locale} messages={messages} timeZone={timeZone}>
+        <NextIntlClientProvider locale={locale || "en"} messages={messages} timeZone={timeZone}>
           <SnackbarProvider
             maxSnack={3}
             autoHideDuration={3000}
