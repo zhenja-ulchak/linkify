@@ -270,7 +270,8 @@
     "tenant-deleted-successfully": "Орендар з ID ${id} успішно видалений!",
     "user-details-fetched-successfully": "Деталі користувача з ID ${id} успішно отримано!",
     "new-user-created-successfully": "Новий користувач успішно створений!",
-    "user-deleted-successfully": "Користувач з ID ${id} успішно видалений!"
+    "user-deleted-successfully": "Користувач з ID ${id} успішно видалений!",
+    "accounting-data-update-successfully": "Дані бухгалтерського обліку успішно оновлено!"
   },
   "LocaleSwitcher": {
     "en": "English",

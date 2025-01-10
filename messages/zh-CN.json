@@ -268,7 +268,8 @@
     "tenant-deleted-successfully": "租户ID ${id} 已成功删除！",
     "user-details-fetched-successfully": "用户ID ${id} 的详情已成功获取！",
     "new-user-created-successfully": "新用户已成功创建！",
-    "user-deleted-successfully": "用户ID ${id} 已成功删除！"
+    "user-deleted-successfully": "用户ID ${id} 已成功删除！",
+    "accounting-data-update-successfully": "会计数据已成功更新！"
   },
   "LocaleSwitcher": {
     "en": "English",

@@ -270,7 +270,8 @@
     "tenant-deleted-successfully": "Der Mieter mit der ID ${id} wurde erfolgreich gelöscht!",
     "user-details-fetched-successfully": "Die Details des Benutzers mit der ID ${id} wurden erfolgreich abgerufen!",
     "new-user-created-successfully": "Der neue Benutzer wurde erfolgreich erstellt!",
-    "user-deleted-successfully": "Der Benutzer mit der ID ${id} wurde erfolgreich gelöscht!"
+    "user-deleted-successfully": "Der Benutzer mit der ID ${id} wurde erfolgreich gelöscht!",
+    "accounting-data-update-successfully": "Buchhaltungsdaten erfolgreich aktualisiert!"
   },
   "LocaleSwitcher": {
     "en": "English",
