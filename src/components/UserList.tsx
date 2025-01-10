@@ -219,7 +219,7 @@ export default function TableHelperUserList({ title }: TableHelperType) {
                             }}
                             className="TableCell"
                         />
-                        
+
                     </TableCell>
                     {headCells.map((headCell: any) => (
                         <TableCell
@@ -395,10 +395,10 @@ export default function TableHelperUserList({ title }: TableHelperType) {
             }}
 
         >
-       {/* Контейнер UserDetailContainer2 */}
-<div style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
-<h3>{t('Userlist.user-list')}</h3>
-</div>
+            {/* Контейнер UserDetailContainer2 */}
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <h3>{t('Userlist.user-list')}</h3>
+            </div>
 
             <Paper sx={{ mb: 1 }} className="TablePaper">
                 <EnhancedTableToolbar numSelected={selected.length} />
@@ -537,7 +537,7 @@ export default function TableHelperUserList({ title }: TableHelperType) {
                     width: "fit-content",
                 }}
                 control={<Switch checked={dense} onChange={handleChangeDense} />}
-                label= {t('Userlist.densepadding')}
+                label={t('Userlist.densepadding')}
             />
         </Box>
     );

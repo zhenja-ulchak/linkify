@@ -46,7 +46,7 @@ const Administrator: React.FC = () => {
   const [autoAuth, setAutoAuth] = useState(false);
   const [emailConfig, setEmailConfig] = React.useState<EmailConfig | null>(null);
   const tAPI = useTranslations('API');
-  const t = useTranslations('Smtp-Email');
+  const t = useTranslations('API');
 
   // Zustände für Fehlermeldungen
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -314,7 +314,7 @@ const Administrator: React.FC = () => {
         </Grid>
 
         {/* Optionen */}
-        <Grid item xs={12} >
+        {/* <Grid item xs={12} >
           <FormControlLabel
             control={
               <Switch
@@ -343,7 +343,7 @@ const Administrator: React.FC = () => {
             label={t("Smtp.authentificationLabel")}
             id="AuthentificationLabel"
           />
-        </Grid>
+        </Grid> */}
 
         {/* Aktionen */}
         <Grid item xs={12}>

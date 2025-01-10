@@ -141,54 +141,55 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
 
   const headCells: any = [
     {
-      id: "name",
-      numeric: false,
-      disablePadding: true,
-      label: "name",
+        id: "name",
+        numeric: false,
+        disablePadding: true,
+        label: t('Accounting-Software.name'),
     },
     {
-      id: "type",
-      numeric: false, // Text, daher numeric: false
-      disablePadding: false,
-      label: "type",
+        id: "type",
+        numeric: false, // Text, daher numeric: false
+        disablePadding: false,
+        label: t('Accounting-Software.type'),
     },
     {
-      id: "url",
-      numeric: false, // Text, daher numeric: false
-      disablePadding: false,
-      label: "url",
+        id: "url",
+        numeric: false, // Text, daher numeric: false
+        disablePadding: false,
+        label: t('Accounting-Software.url'),
     },
     {
-      id: "organization_id",
-      numeric: false, // Text, daher numeric: false
-      disablePadding: false,
-      label: "organization_id",
+        id: "organization_id",
+        numeric: false, // Text, daher numeric: false
+        disablePadding: false,
+        label: t('Accounting-Software.organization_id'),
     },
     {
-      id: "event_type",
-      numeric: false, // Text, daher numeric: false
-      disablePadding: false,
-      label: "event_type",
+        id: "event_type",
+        numeric: false, // Text, daher numeric: false
+        disablePadding: false,
+        label: t('Accounting-Software.event-type'),
     },
     {
-      id: "description",
-      numeric: false,
-      disablePadding: false,
-      label: "description",
+        id: "description",
+        numeric: false,
+        disablePadding: false,
+        label: t('Accounting-Software.description'),
     },
     {
-      id: "is_active",
-      numeric: false,
-      disablePadding: false,
-      label: "is_active",
+        id: "is_active",
+        numeric: false,
+        disablePadding: false,
+        label: t('Accounting-Software.active'),
     },
     {
-      id: "actions",
-      numeric: false,
-      disablePadding: false,
-      label: "Actions",
+        id: "actions",
+        numeric: false,
+        disablePadding: false,
+        label: t('Accounting-Software.actions'),
     },
-  ];
+];
+
 
   interface EnhancedTableProps {
     numSelected: number;
@@ -308,7 +309,7 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
             </IconButton>
           </Tooltip>
         ) : (
-          <Tooltip className="FilterList" title="Filter list">
+          <Tooltip className="FilterList" title={t('Userlist.filterlist')}>
             <IconButton>
               <FilterListIcon />
             </IconButton>
@@ -553,7 +554,7 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
           width: "fit-content",
         }}
         control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
+        label={t('Userlist.densepadding')}
       />
     </Box>
 

@@ -33,7 +33,8 @@ const DocumentTable: React.FC = () => {
     const [updatedTenant, setUpdatedTenant] = useState<any>(null);
      const [openModal, setOpenModal] = useState(false);
  
-    const t = useTranslations('API');
+    const t = useTranslations('Document-Table');
+    const c = useTranslations('API');
 
     const handleEdit = (id: number) => {
         console.log(`Editing document with ID: ${id}`);
@@ -42,7 +43,6 @@ const DocumentTable: React.FC = () => {
 
     const handleDelete = (id: number) => {
         setDocumentsList(documentsList.filter(doc => doc.id !== id));
-        console.log(`Deleted document with ID: ${id}`);
     };
 
     const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {

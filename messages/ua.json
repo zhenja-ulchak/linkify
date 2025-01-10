@@ -178,7 +178,10 @@
     "password": "Пароль",
     "loginError": "Невірне ім'я користувача або пароль",
     "registrierung": "Реєстрація",
-    "passwort-vergessen": "Ви забули свій пароль?"
+    "passwort-vergessen": "Ви забули свій пароль?",
+    "timerMessage": "Ви можете видалити через 3 секунд.",
+    "delete": "Видалити",
+    "cancel": "Скасувати"
   },
   "LocaleSwitcher": {
     "en": "English",

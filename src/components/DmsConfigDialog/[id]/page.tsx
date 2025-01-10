@@ -247,53 +247,50 @@ const DetailsTableDms: React.FC = () => {
                     (
 
                         <>
-                            <Grid item xs={12}>
-                                <TableContainer component={Paper} style={{ width: '100%' }}>
-                                    <Table>
-                                        <TableHead>
-                                            <TableRow>
-                                                <TableCell>Feld</TableCell>
-                                                <TableCell>Wert</TableCell>
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            {tenantDetails && (
-                                                <>
-
-                                                    <TableRow>
-                                                        <TableCell style={{ fontWeight: 'bold' }}>Type</TableCell>
-                                                        <TableCell>{tenantDetails?.type}</TableCell>
-                                                    </TableRow>
-                                                    <TableRow>
-                                                        <TableCell style={{ fontWeight: 'bold' }}>Endpoint URL</TableCell>
-                                                        <TableCell>{tenantDetails?.endpoint_url}</TableCell>
-                                                    </TableRow>
-                                                    <TableRow>
-                                                        <TableCell style={{ fontWeight: 'bold' }}>Username</TableCell>
-                                                        <TableCell>{tenantDetails?.username}</TableCell>
-                                                    </TableRow>
-                                                    <TableRow>
-                                                        <TableCell style={{ fontWeight: 'bold' }}>Repository</TableCell>
-                                                        <TableCell>{tenantDetails?.repository}</TableCell>
-                                                    </TableRow>
-
-                                                </>
-                                            )}
-                                        </TableBody>
-                                    </Table>
-                                </TableContainer>
-                            </Grid>
-                            <Grid item xs={12} display="flex" justifyContent="space-evenly">
-                                <IconButton color="primary" onClick={handleClickOpen} title="Bearbeiten">
-                                    <EditIcon />
-                                </IconButton>
-
-                                <IconButton color="error" onClick={handleOpenModal} title="Löschen">
-                                    <DeleteIcon />
-                                </IconButton>
-                            </Grid>
-
-                        </>
+                        <Grid item xs={12}>
+                            <TableContainer component={Paper} style={{ width: '100%' }}>
+                                <Table>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>{t('Accounting-Software.feld')}</TableCell>
+                                            <TableCell>{t('Accounting-Software.wert')}</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {tenantDetails && (
+                                            <>
+                                                <TableRow>
+                                                    <TableCell style={{ fontWeight: 'bold' }}>{t('Accounting-Software.type')}</TableCell>
+                                                    <TableCell>{tenantDetails?.type}</TableCell>
+                                                </TableRow>
+                                                <TableRow>
+                                                    <TableCell style={{ fontWeight: 'bold' }}>{t('Accounting-Software.endpoint-url')}</TableCell>
+                                                    <TableCell>{tenantDetails?.endpoint_url}</TableCell>
+                                                </TableRow>
+                                                <TableRow>
+                                                    <TableCell style={{ fontWeight: 'bold' }}>{t('Accounting-Software.username')}</TableCell>
+                                                    <TableCell>{tenantDetails?.username}</TableCell>
+                                                </TableRow>
+                                                <TableRow>
+                                                    <TableCell style={{ fontWeight: 'bold' }}>{t('Accounting-Software.repository')}</TableCell>
+                                                    <TableCell>{tenantDetails?.repository}</TableCell>
+                                                </TableRow>
+                                            </>
+                                        )}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </Grid>
+                        <Grid item xs={12} display="flex" justifyContent="space-evenly">
+                            <IconButton color="primary" onClick={handleClickOpen} title={t('Accounting-Software.bearbeiten')}>
+                                <EditIcon />
+                            </IconButton>
+                    
+                            <IconButton color="error" onClick={handleOpenModal} title={t('Accounting-Software.loschen')}>
+                                <DeleteIcon />
+                            </IconButton>
+                        </Grid>
+                    </>
                     )
 
                 }

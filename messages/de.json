@@ -10,7 +10,6 @@
       "serviceUnavailable": "Dienst nicht verfügbar. Bitte später erneut versuchen.",
       "gatewayTimeout": "Gateway Timeout. Bitte später erneut versuchen."
     },
-
     "Registrierung": {
       "benutzername-muss": "Benutzername muss mindestens 4 Zeichen beinhalten.",
       "darf": "Benutzername darf keine Sonderzeichen enthalten.",
@@ -37,7 +36,6 @@
       "passwort": "Passwort",
       "passwort-bestatigen": "Passwort bestätigen"
     },
-    
     "Accounting-Software": {
       "details": "Details",
       "feld": "Feld",
@@ -181,22 +179,25 @@
     "loginError": "Ungültiger Benutzername oder Passwort",
     "registrierung": "Registrierung",
     "passwort-vergessen": "Passwort vergessen?",
-      "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
-      "passwordResetSuccess": "Wir haben Ihnen eine E-Mail zum Zurücksetzen Ihres Passworts gesendet",
-      "serverError": "Es gab ein Problem mit dem Server",
-      "id": "ID",
-      "ExtantanionType": "Erweiterungstyp",
-      "Size": "Größe",
-      "mimeType": "MIME-Typ",
-      "docName": "Dokumentenname",
-      "docType": "Dokumententyp",
-      "docDescription": "Dokumentenbeschreibung",
-      "docVersion": "Dokumenten Version",
-      "docParentID": "Eltern-ID",
-      "docLastChangeAt": "Letztes Änderungsdatum",
-      "syncDms": "DMS synchronisieren",
-      "syncAccounting": "Buchhaltung synchronisieren",
-      "Actions": "Aktionen"
+    "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+    "passwordResetSuccess": "Wir haben Ihnen eine E-Mail zum Zurücksetzen Ihres Passworts gesendet",
+    "serverError": "Es gab ein Problem mit dem Server",
+    "id": "ID",
+    "ExtantanionType": "Erweiterungstyp",
+    "Size": "Größe",
+    "mimeType": "MIME-Typ",
+    "docName": "Dokumentenname",
+    "docType": "Dokumententyp",
+    "docDescription": "Dokumentenbeschreibung",
+    "docVersion": "Dokumenten Version",
+    "docParentID": "Eltern-ID",
+    "docLastChangeAt": "Letztes Änderungsdatum",
+    "syncDms": "DMS synchronisieren",
+    "syncAccounting": "Buchhaltung synchronisieren",
+    "Actions": "Aktionen",
+    "timerMessage": "Sie können nach 3 Sekunden löschen.",
+    "delete": "Löschen",
+    "cancel": "Abbrechen"
   },
   "LocaleSwitcher": {
     "en": "English",

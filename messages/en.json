@@ -198,7 +198,10 @@
     "syncDms": "Sync DMS",
     "syncAccounting": "Sync Accounting",
     "document-table": "Document-Table",
-    "Actions": "Actions"
+    "Actions": "Actions",
+    "timerMessage": "You can delete after 3 seconds.",
+    "delete": "Delete",
+    "cancel": "Cancel"
   },
   "LocaleSwitcher": {
     "en": "English",
