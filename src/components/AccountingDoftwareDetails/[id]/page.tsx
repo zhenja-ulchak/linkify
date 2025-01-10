@@ -429,7 +429,7 @@ const DetailsTable: React.FC = () => {
                         <DialogActions>
 
                             <Button onClick={handleClose}>{t('Accounting-Software.cancel')}</Button>
-                            <Button type="submit" color="primary">{t('Accounting-Software.save')}</Button>
+                            <Button type="submit" color="primary">{t('Accounting-Software.ok')}</Button>
                         </DialogActions>
                     </form>
                 </Dialog>

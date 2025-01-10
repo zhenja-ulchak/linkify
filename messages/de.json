@@ -158,7 +158,8 @@
       "contact_email": "Kontakt-E-Mail des Mieters",
       "invoice_email": "Rechnungs-E-Mail des Mieters",
       "contact_phone": "Kontakttelefon des Mieters",
-      "actions": "Aktionen"
+      "actions": "Aktionen",
+      "Tenant-details": "Mieterdetails"
     },
     "Smtp-Email": {
       "smtp-email": "Administrator: SMTP-E-Mail-Einstellungen",
@@ -176,7 +177,7 @@
       "fertigstellen": "Abschließen"
     },
     "Accounting-Software": {
-      "details": "Details",
+      "details": "Buchhaltungssoftware Details",
       "feld": "Feld",
       "wert": "Wert",
       "back": "Zurück",
@@ -278,7 +279,8 @@
     "email-error": "Ungültige E-Mail-Adresse",
     "send-email": "E-Mail senden",
     "back-to-login": "Zurück zum Login?",
-    "invalidEmail":"Ungültige E-Mail-Adresse"
+    "invalidEmail":"Ungültige E-Mail-Adresse",
+    "dms-details": "Details DMS"
   },
   "LocaleSwitcher": {
     "en": "English",

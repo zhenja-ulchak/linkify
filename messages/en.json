@@ -158,7 +158,8 @@
     "contact_email": "Contact email",
     "invoice_email": "Invoice email",
     "contact_phone": "Contact phone",
-    "actions": "Actions"
+    "actions": "Actions",
+    "Tenant-details": "Tenant details"
   },
   "Smtp-Email": {
     "smtp-email": "Admin: Configure SMTP email",
@@ -176,7 +177,7 @@
     "fertigstellen": "Finish"
   },
   "Accounting-Software": {
-    "details": "Details",
+    "details": "Accounting Software Details",
     "feld": "Field",
     "wert": "Value",
     "back": "Back",
@@ -279,7 +280,8 @@
   "email-error": "Invalid email address",
   "send-email": "Send email",
   "back-to-login": "Back to login?",
-  "invalidEmail":"Invalid email address"
+  "invalidEmail":"Invalid email address",
+  "dms-details":"DMS details"
 }
 ,
   "LocaleSwitcher": {

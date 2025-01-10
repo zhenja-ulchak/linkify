@@ -234,7 +234,7 @@ const DetailsTableDms: React.FC = () => {
         <div id="UserDetailContainer" style={{ display: 'flex', justifyContent: 'center', maxWidth: '800px', margin: '0 auto' }}>
             <Grid container spacing={2} style={{ width: '100%' }}>
                 <Grid item xs={12} style={{ textAlign: "center" }}>
-                    <h3>{t('Accounting-Software.details')}</h3>
+                    <h3>{t('dms-details')}</h3>
                 </Grid>
 
                 {addNewDetails ?

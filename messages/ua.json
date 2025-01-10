@@ -158,7 +158,8 @@
       "contact_email": "Контактна електронна пошта",
       "invoice_email": "Електронна пошта для рахунку",
       "contact_phone": "Контактний телефон",
-      "actions": "Дії"
+      "actions": "Дії",
+      "Tenant-details": "Деталі орендаря"
     },
     "Smtp-Email": {
       "smtp-email": "Адміністратор: налаштування SMTP пошти",
@@ -176,7 +177,7 @@
       "fertigstellen": "Завершити"
     },
     "Accounting-Software": {
-      "details": "Деталі",
+      "details": "Бухгалтерське програмне забезпечення Деталі",
       "feld": "Поле",
       "wert": "Значення",
       "back": "Назад",
@@ -278,7 +279,8 @@
     "email-error": "Неправильна електронна адреса",
     "send-email": "Надіслати лист",
     "back-to-login": "Повернутися до входу?",
-    "invalidEmail":"Неправильна електронна адреса"
+    "invalidEmail":"Неправильна електронна адреса",
+    "dms-details":"Деталі DMS"
   },
   "LocaleSwitcher": {
     "en": "English",

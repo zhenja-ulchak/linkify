@@ -158,7 +158,8 @@
       "contact_email": "联系邮箱",
       "invoice_email": "发票邮箱",
       "contact_phone": "联系电话",
-      "actions": "操作"
+      "actions": "操作",
+      "Tenant-details": "租户详情"
     },
     "Smtp-Email": {
       "smtp-email": "管理员：配置SMTP邮件",
@@ -176,7 +177,7 @@
       "fertigstellen": "完成"
     },
     "Accounting-Software": {
-      "details": "详情",
+      "details": "会计软件 详情",
       "feld": "字段",
       "wert": "值",
       "back": "返回",
@@ -276,7 +277,8 @@
     "email-error": "无效的电子邮件地址",
     "send-email": "发送电子邮件",
     "back-to-login": "返回登录页?",
-    "invalidEmail": "无效的电子邮件地址"
+    "invalidEmail": "无效的电子邮件地址",
+    "dms-details":"DMS 详情"
   },
   "LocaleSwitcher": {
     "en": "English",

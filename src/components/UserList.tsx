@@ -312,10 +312,10 @@ export default function TableHelperUserList({ title }: TableHelperType) {
 
     const handleRowClick = (id: number) => {
         console.log(id);
-        enqueueSnackbar(`You clicked on row with ID: ${id}`, {
-            variant: 'info',  // You can change the variant to success, error, warning, or info
-            autoHideDuration: 3000, // Auto hide after 3 seconds
-        });
+        // enqueueSnackbar(`You clicked on row with ID: ${id}`, {
+        //     variant: 'info',  // You can change the variant to success, error, warning, or info
+        //     autoHideDuration: 3000, // Auto hide after 3 seconds
+        // });
         router.push(`/dashboard/admin/user-list/${id}`);
     };
 

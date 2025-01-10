@@ -337,7 +337,7 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
 
 
   const handleRowClick = (id: number) => {
-    enqueueSnackbar(`Ви обрали рядок з ID: ${id}`, { variant: 'info' });
+    // enqueueSnackbar(`Ви обрали рядок з ID: ${id}`, { variant: 'info' });
     if (role === "admin") {
       router.push(`/dashboard/admin/accounting-software/${id}`);
     } else if (role === "superadmin") {

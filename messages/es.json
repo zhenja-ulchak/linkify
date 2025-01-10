@@ -158,7 +158,8 @@
       "contact_email": "Correo electrónico de contacto",
       "invoice_email": "Correo electrónico de la factura",
       "contact_phone": "Teléfono de contacto",
-      "actions": "Acciones"
+      "actions": "Acciones",
+      "Tenant-details": "Detalles del inquilino"
     },
     "Smtp-Email": {
       "smtp-email": "Administrador: Configuración de correo SMTP",
@@ -176,7 +177,7 @@
       "fertigstellen": "Finalizar"
     },
     "Accounting-Software": {
-      "details": "Detalles",
+      "details": "Software de contabilidad Detalles",
       "feld": "Campo",
       "wert": "Valor",
       "back": "Volver",
@@ -278,7 +279,8 @@
     "email-error": "Dirección de correo electrónico inválida",
     "send-email": "Enviar correo",
     "back-to-login": "¿Volver al inicio de sesión?",
-    "invalidEmail":"Correo electrónico inválido"
+    "invalidEmail":"Correo electrónico inválido",
+    "dms-details":"DMS details"
   },
   "LocaleSwitcher": {
     "en": "Inglés",
