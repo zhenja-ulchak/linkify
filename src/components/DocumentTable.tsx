@@ -34,7 +34,7 @@ const DocumentTable: React.FC = () => {
      const [openModal, setOpenModal] = useState(false);
  
     const t = useTranslations('Document-Table');
-    const c = useTranslations('API');
+    const tAPI = useTranslations('API');
 
     const handleEdit = (id: number) => {
         console.log(`Editing document with ID: ${id}`);
@@ -130,10 +130,10 @@ const DocumentTable: React.FC = () => {
             </TableContainer>
             <ConfirmDeleteModal
                     open={openModal}
-                    title={t('Delete-Document')}
+                    title={tAPI('Delete-Document')}
                     handleDelete={handleDeleteModal}
                     onClose={handleCloseModal}
-                    description={t('delete-Document')}
+                    description={tAPI('delete-Document')}
 
                 />
             <Dialog open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description" fullWidth>

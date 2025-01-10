@@ -158,7 +158,8 @@
       "contact_email": "Контактный email",
       "invoice_email": "Email для счета",
       "contact_phone": "Контактный телефон",
-      "actions": "Действия"
+      "actions": "Действия",
+      "Tenant-details": "Детали арендатора"
     },
     "Smtp-Email": {
       "smtp-email": "Администратор: настройка SMTP почты",
@@ -176,7 +177,7 @@
       "fertigstellen": "Завершить"
     },
     "Accounting-Software": {
-      "details": "Подробности",
+      "details": "Бухгалтерское программное обеспечение Подробности",
       "feld": "Поле",
       "wert": "Значение",
       "back": "Назад",
@@ -278,7 +279,8 @@
     "email-error": "Неверный адрес электронной почты",
     "send-email": "Отправить письмо",
     "back-to-login": "Вернуться к входу?",
-    "invalidEmail":"Неверный адрес электронной почты"
+    "invalidEmail":"Неверный адрес электронной почты",
+    "dms-details":"Детали DMS"
   },
   "LocaleSwitcher": {
     "en": "English",
