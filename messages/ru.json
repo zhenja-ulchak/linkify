@@ -271,7 +271,14 @@
     "user-details-fetched-successfully": "Детали пользователя с ID ${id} успешно получены!",
     "new-user-created-successfully": "Новый пользователь успешно создан!",
     "user-deleted-successfully": "Пользователь с ID ${id} успешно удален!",
-    "accounting-data-update-successfully":"Данные бухгалтерского учета успешно обновлены!"
+    "accounting-data-update-successfully":"Данные бухгалтерского учета успешно обновлены!",
+    "forgot-password": "Забыли пароль",
+    "email-address": "Электронная почта",
+    "enter-your-email": "Введите ваш адрес электронной почты",
+    "email-error": "Неверный адрес электронной почты",
+    "send-email": "Отправить письмо",
+    "back-to-login": "Вернуться к входу?",
+    "invalidEmail":"Неверный адрес электронной почты"
   },
   "LocaleSwitcher": {
     "en": "English",

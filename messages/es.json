@@ -271,7 +271,14 @@
     "user-details-fetched-successfully": "¡Los detalles del usuario con ID ${id} se han obtenido con éxito!",
     "new-user-created-successfully": "¡El nuevo usuario se ha creado con éxito!",
     "user-deleted-successfully": "¡El usuario con ID ${id} se ha eliminado con éxito!",
-    "accounting-data-update-successfully":"¡Los datos contables se actualizaron con éxito!"
+    "accounting-data-update-successfully": "¡Los datos contables se actualizaron con éxito!",
+    "forgot-password": "¿Olvidaste tu contraseña?",
+    "email-address": "Dirección de correo electrónico",
+    "enter-your-email": "Introduce tu dirección de correo electrónico",
+    "email-error": "Dirección de correo electrónico inválida",
+    "send-email": "Enviar correo",
+    "back-to-login": "¿Volver al inicio de sesión?",
+    "invalidEmail":"Correo electrónico inválido"
   },
   "LocaleSwitcher": {
     "en": "Inglés",

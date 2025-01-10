@@ -269,7 +269,14 @@
     "user-details-fetched-successfully": "用户ID ${id} 的详情已成功获取！",
     "new-user-created-successfully": "新用户已成功创建！",
     "user-deleted-successfully": "用户ID ${id} 已成功删除！",
-    "accounting-data-update-successfully": "会计数据已成功更新！"
+    "accounting-data-update-successfully": "会计数据已成功更新！",
+    "forgot-password": "忘记密码",
+    "email-address": "电子邮件地址",
+    "enter-your-email": "请输入您的电子邮件地址",
+    "email-error": "无效的电子邮件地址",
+    "send-email": "发送电子邮件",
+    "back-to-login": "返回登录页?",
+    "invalidEmail": "无效的电子邮件地址"
   },
   "LocaleSwitcher": {
     "en": "English",

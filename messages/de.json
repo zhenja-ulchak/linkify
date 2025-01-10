@@ -271,7 +271,14 @@
     "user-details-fetched-successfully": "Die Details des Benutzers mit der ID ${id} wurden erfolgreich abgerufen!",
     "new-user-created-successfully": "Der neue Benutzer wurde erfolgreich erstellt!",
     "user-deleted-successfully": "Der Benutzer mit der ID ${id} wurde erfolgreich gelöscht!",
-    "accounting-data-update-successfully": "Buchhaltungsdaten erfolgreich aktualisiert!"
+    "accounting-data-update-successfully": "Buchhaltungsdaten erfolgreich aktualisiert!",
+    "forgot-password": "Passwort vergessen",
+    "email-address": "E-Mail-Adresse",
+    "enter-your-email": "Geben Sie Ihre E-Mail-Adresse ein",
+    "email-error": "Ungültige E-Mail-Adresse",
+    "send-email": "E-Mail senden",
+    "back-to-login": "Zurück zum Login?",
+    "invalidEmail":"Ungültige E-Mail-Adresse"
   },
   "LocaleSwitcher": {
     "en": "English",

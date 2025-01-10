@@ -272,7 +272,14 @@
   "user-details-fetched-successfully": "Details for user ID ${id} fetched successfully!",
   "new-user-created-successfully": "New user created successfully!",
   "user-deleted-successfully": "User ID ${id} deleted successfully!",
-  "accounting-data-update-successfully": "Accounting data update successfully!"
+  "accounting-data-update-successfully": "Accounting data update successfully!",
+  "forgot-password": "Forgot password",
+  "email-address": "Email address",
+  "enter-your-email": "Enter your email address",
+  "email-error": "Invalid email address",
+  "send-email": "Send email",
+  "back-to-login": "Back to login?",
+  "invalidEmail":"Invalid email address"
 }
 ,
   "LocaleSwitcher": {
