@@ -32,7 +32,7 @@ const UserDetail: React.FC = () => {
 
   const { id } = useParams();
   const router = useRouter();
-  const t = useTranslations('API');
+
   const [openModal, setOpenModal] = useState(false);
   const [openModalConfirm, setOpenModalConfirm] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -50,6 +50,7 @@ const UserDetail: React.FC = () => {
     is_active: false
   });
   const [users, setUser] = useState<User | null>(null);
+  const t = useTranslations('API');
 
   useEffect(() => {
     const fetchElements = async () => {
@@ -192,7 +193,7 @@ const UserDetail: React.FC = () => {
 
         <Grid container spacing={2} style={{ width: '100%' }}>
           <Grid item xs={12} style={{ textAlign: "center" }}>
-            <h3>User Config Details</h3>
+            <h3>{t('User-deteling.User-Config-Details')}</h3>
           </Grid>
 
           {addNewDetails ? (
@@ -206,27 +207,27 @@ const UserDetail: React.FC = () => {
                   <Table>
                     <TableHead>
                       <TableRow>
-                        <TableCell className="UserDetailTableHeader">{t('feld')}</TableCell>
-                        <TableCell className="UserDetailTableHeader">{t('wert')}</TableCell>
+                        <TableCell className="UserDetailTableHeader">{t('User-deteling.feld')}</TableCell>
+                        <TableCell className="UserDetailTableHeader">{t('User-deteling.wert')}</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
                       {users && (
                        <>
                        <TableRow>
-                         <TableCell style={{ fontWeight: 'bold' }}>{t('id')}</TableCell>
+                         <TableCell style={{ fontWeight: 'bold' }}>{'id'}</TableCell>
                          <TableCell>{users.id}</TableCell>
                        </TableRow>
                        <TableRow>
-                         <TableCell style={{ fontWeight: 'bold' }}>{t('first-name')}</TableCell>
+                         <TableCell style={{ fontWeight: 'bold' }}>{t('User-deteling.first-name')}</TableCell>
                          <TableCell>{users.first_name}</TableCell>
                        </TableRow>
                        <TableRow>
-                         <TableCell style={{ fontWeight: 'bold' }}>{t('last-name')}</TableCell>
+                         <TableCell style={{ fontWeight: 'bold' }}>{t('User-deteling.last-name')}</TableCell>
                          <TableCell>{users.last_name}</TableCell>
                        </TableRow>
                        <TableRow>
-                         <TableCell style={{ fontWeight: 'bold' }}>{t('language')}</TableCell>
+                         <TableCell style={{ fontWeight: 'bold' }}>{t('User-deteling.language')}</TableCell>
                          <TableCell>{users.language}</TableCell>
                        </TableRow>
                        <TableRow>
@@ -234,20 +235,20 @@ const UserDetail: React.FC = () => {
                          <TableCell>{users.username}</TableCell>
                        </TableRow>
                        <TableRow>
-                         <TableCell style={{ fontWeight: 'bold' }}>{t('phone')}</TableCell>
+                         <TableCell style={{ fontWeight: 'bold' }}>{t('User-deteling.phone')}</TableCell>
                          <TableCell>{users.contact_phone}</TableCell>
                        </TableRow>
                        <TableRow>
-                         <TableCell style={{ fontWeight: 'bold' }}>{t('email')}</TableCell>
+                         <TableCell style={{ fontWeight: 'bold' }}>{t('User-deteling.email')}</TableCell>
                          <TableCell>{users.email}</TableCell>
                        </TableRow>
                        <TableRow>
-                         <TableCell style={{ fontWeight: 'bold' }}>{t('role')}</TableCell>
+                         <TableCell style={{ fontWeight: 'bold' }}>{t('User-deteling.role')}</TableCell>
                          <TableCell>{users.role}</TableCell>
                        </TableRow>
                        <TableRow>
-                         <TableCell style={{ fontWeight: 'bold' }}>{t('active')}</TableCell>
-                         <TableCell>{users.is_active ? t('yes') : t('no')}</TableCell>
+                         <TableCell style={{ fontWeight: 'bold' }}>{t('User-deteling.active')}</TableCell>
+                         <TableCell>{users.is_active ? t('User-deteling.yes') : t('User-deteling.no')}</TableCell>
                        </TableRow>
                      </>
                       )}
@@ -297,14 +298,14 @@ const UserDetail: React.FC = () => {
       {
         isEditing && (
           <Dialog open={isEditing} onClose={() => setIsEditing(false)} fullWidth>
-            <DialogTitle>User Update</DialogTitle>
+            <DialogTitle>{t('User-Update')}</DialogTitle>
             <DialogContent>
               {error && <Typography color="error">{error}</Typography>}
               <Typography variant="body1" component="span" id="alert-dialog-description">
               <Box sx={{ marginBottom: 2, marginTop: '15px' }}>
                 <TextField
                   fullWidth
-                  label={t('username') + ' *'}
+                  label={t('username')}
                   name="username"
                   value={updatedUser?.username}
                   onChange={handleEditChange}
@@ -318,7 +319,7 @@ const UserDetail: React.FC = () => {
               <Box sx={{ marginBottom: 2 }}>
                 <TextField
                   fullWidth
-                  label={t('first-name')}
+                  label={t('User-deteling.first-name')}
                   name="first_name"
                   value={updatedUser?.first_name}
                   onChange={handleEditChange}
@@ -329,7 +330,7 @@ const UserDetail: React.FC = () => {
               <Box sx={{ marginBottom: 2 }}>
                 <TextField
                   fullWidth
-                  label={t('last-name')}
+                  label={t('User-deteling.last-name')}
                   name="last_name"
                   value={updatedUser?.last_name}
                   onChange={handleEditChange}
@@ -340,7 +341,7 @@ const UserDetail: React.FC = () => {
               <Box sx={{ marginBottom: 2 }}>
                 <TextField
                   fullWidth
-                  label={t('language')}
+                  label={t('User-deteling.language')}
                   name="language"
                   value={updatedUser?.language}
                   onChange={handleEditChange}
@@ -351,7 +352,7 @@ const UserDetail: React.FC = () => {
               <Box sx={{ marginBottom: 2 }}>
                 <TextField
                   fullWidth
-                  label={t('contact-phone') + ' *'}
+                  label={t('User-deteling.phone') + ' *'}
                   name="contact_phone"
                   value={updatedUser?.contact_phone}
                   onChange={handleEditChange}
@@ -362,7 +363,7 @@ const UserDetail: React.FC = () => {
               <Box sx={{ marginBottom: 2 }}>
                 <TextField
                   fullWidth
-                  label={t('email') + ' *'}
+                  label={t('User-deteling.email') + ' *'}
                   name="email"
                   value={updatedUser?.email}
                   onChange={handleEditChange}
@@ -373,7 +374,7 @@ const UserDetail: React.FC = () => {
               <Box sx={{ marginBottom: 2 }}>
                 <TextField
                   fullWidth
-                  label={t('role')}
+                  label={t('User-deteling.role')}
                   name="role"
                   value={updatedUser?.role}
                   onChange={handleEditChange}
@@ -385,7 +386,7 @@ const UserDetail: React.FC = () => {
 
               <Button onClick={() => setIsEditing(false)}>{t('cancel')}</Button>
               <Button onClick={() => handleSaveChanges()} autoFocus>
-                {t('ok')}
+                {t('User-deteling.ok')}
               </Button>
 
             </DialogActions>
