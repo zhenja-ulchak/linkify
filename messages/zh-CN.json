@@ -54,7 +54,16 @@
       "passwort": "密码",
       "passwort-bestatigen": "确认密码"
     },
-    
+    "Dms": {
+      "username": "用户名",
+      "tenant_id": "租户ID",
+      "type": "类型",
+      "endpoint_url": "端点URL",
+      "api_key": "API密钥",
+      "repository": "仓库",
+      "actions": "操作",
+      "dms-config": "DMS配置"
+    },
     "footer": {
       "hi": "你好 - ",
       "email": "电子邮件:",
@@ -141,7 +150,16 @@
       "back": "返回",
       "benutzerdaten": "编辑用户数据",
       "cancel": "取消",
-      "ok": "确定"
+      "ok": "确定",
+      "Tenant-Liste": "租户名单",
+      "company_name": "租户公司名称",
+      "address": "租户地址",
+      "invoice_address": "发票地址",
+      "license_valid_until": "许可证有效期至",
+      "contact_email": "联系邮箱",
+      "invoice_email": "发票邮箱",
+      "contact_phone": "联系电话",
+      "actions": "操作"
     },
     "Smtp-Email": {
       "smtp-email": "管理员：配置SMTP邮件",

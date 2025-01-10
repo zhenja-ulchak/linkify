@@ -92,6 +92,16 @@
       "test-email-senden": "Надіслати тестовий лист",
       "fertigstellen": "Завершити"
     },
+    "Dms": {
+      "username": "Ім'я користувача",
+      "tenant_id": "ID орендаря",
+      "type": "Тип",
+      "endpoint_url": "URL кінцевої точки",
+      "api_key": "API ключ",
+      "repository": "Репозиторій",
+      "actions": "Дії",
+      "dms-config": "Конфігурація DMS"
+    },
     "Registrierung": {
       "benutzername-muss": "Ім'я користувача повинно містити не менше 4 символів.",
       "darf": "Ім'я користувача не повинно містити спеціальних символів.",
@@ -152,7 +162,7 @@
       "addnewdmsconfig": "Додати нову конфігурацію DMS"
     },
     "Tenant": {
-      "alle-felder": "Усі поля повинні бути заповнені.",
+      "alle-felder": "Всі поля повинні бути заповнені.",
       "keine-gultige": "Не надано дійсне посвідчення особи.",
       "fehler-beim": "Помилка збереження",
       "details": "Деталі",
@@ -161,17 +171,26 @@
       "id": "ID",
       "firmenname": "Назва компанії",
       "adresse": "Адреса",
-      "rechnungsadresse": "Платіжна адреса",
+      "rechnungsadresse": "Білінгова адреса",
       "lizenzgultigbis": "Ліцензія дійсна до",
-      "kontakt-email": "Контактний email",
-      "rechungs-email": "Email для рахунків",
+      "kontakt-email": "Контактна електронна пошта",
+      "rechungs-email": "Електронна пошта для рахунків",
       "kontakt-telefon": "Контактний телефон",
       "bearbeiten": "Редагувати",
       "loschen": "Видалити",
       "back": "Назад",
       "benutzerdaten": "Редагувати дані користувача",
       "cancel": "Скасувати",
-      "ok": "OK"
+      "ok": "ОК",
+      "Tenant-Liste": "Список орендарів",
+      "company_name": "Назва компанії орендаря",
+      "address": "Адреса орендаря",
+      "invoice_address": "Адреса для рахунків",
+      "license_valid_until": "Ліцензія дійсна до",
+      "contact_email": "Контактна електронна пошта",
+      "invoice_email": "Електронна пошта для рахунків",
+      "contact_phone": "Контактний телефон",
+      "actions": "Дії"
     },
     "login": "Увійти в систему",
     "username": "Ім'я користувача",

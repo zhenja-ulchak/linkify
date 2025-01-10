@@ -130,44 +130,44 @@ export default function TableHelperDmsConfig({ title }: TableHelperType) {
             id: "username",
             numeric: false,
             disablePadding: true,
-            label: "username",
+            label:t('Dms.username'),
         },
         {
             id: "tenant_id",
             numeric: false, // Text, daher numeric: false
             disablePadding: false,
-            label: "tenant_id",
+            label: t('Dms.tenant_id'),
         },
         {
             id: "type",
             numeric: false, // Text, daher numeric: false
             disablePadding: false,
-            label: "type",
+            label: t('Dms.type'),
         },
         {
             id: "endpoint_url",
             numeric: false, // Text, daher numeric: false
             disablePadding: false,
-            label: "endpoint_url",
+            label: t('Dms.endpoint_url'),
         },
         {
             id: "api_key",
             numeric: false, // Text, daher numeric: false
             disablePadding: false,
-            label: "api_key",
+            label: t('Dms.api_key'),
         },
         {
             id: "repository",
             numeric: false,
             disablePadding: false,
-            label: "repository",
+            label: t('Dms.repository'),
         },
 
         {
             id: "actions",
             numeric: false,
             disablePadding: false,
-            label: "Actions",
+            label: t('Dms.actions'),
         },
     ];
 
@@ -289,7 +289,7 @@ export default function TableHelperDmsConfig({ title }: TableHelperType) {
                         </IconButton>
                     </Tooltip>
                 ) : (
-                    <Tooltip className="FilterList" title="Filter list">
+                    <Tooltip className="FilterList"  title={t('Userlist.filterlist')}>
                         <IconButton>
                             <FilterListIcon />
                         </IconButton>
@@ -533,7 +533,7 @@ export default function TableHelperDmsConfig({ title }: TableHelperType) {
                     width: "fit-content",
                 }}
                 control={<Switch checked={dense} onChange={handleChangeDense} />}
-                label="Dense padding"
+                label={t('Userlist.densepadding')}
             />
         </Box>
     );
