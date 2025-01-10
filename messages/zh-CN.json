@@ -25,9 +25,8 @@
       "densepadding": "密集的縮進",
       "rowsPerPage": "每頁行數：",
       "Userlist": "使用者列表",
-       "user-list": "用户列表"
+      "user-list": "用户列表"
     },
-
     "Registrierung": {
       "benutzername-muss": "用户名必须至少包含4个字符。",
       "darf": "用户名不能包含特殊字符。",
@@ -219,8 +218,13 @@
     "passwort-vergessen": "忘记密码？",
     "timerMessage": "您可以在 3 秒后删除",
     "delete": "删除",
-    "cancel": "取消"
-  
+    "cancel": "取消",
+    "deleteDMSconfig": "您确定要删除DMS配置吗？",
+    "Delete-Document": "删除文档",
+    "delete-Document": "您确定要删除文档吗？",
+    "delete-Accounting-Software": "您确定要删除会计软件吗？",
+    "delete-Tenants": "您确定要删除租户吗？",
+    "delete-User": "您确定要删除用户吗？"
   },
   "LocaleSwitcher": {
     "en": "English",
@@ -267,7 +271,8 @@
     "docLAstChangeAt": "最后更改时间",
     "syncDms": "同步DMS",
     "syncAcaunting": "同步会计",
-    "Actions": "操作"
+    "Actions": "操作",
+    "syncAccounting": "同步会计"
   },
   "User-list": {
     "user-list": "用户列表"
@@ -285,7 +290,6 @@
     "ort": "国家",
     "speichern": "保存"
   },
- 
   "Customer": {
     "profile": "个人资料",
     "benutzername": "用户名",

@@ -291,10 +291,10 @@ const TenantDetails: React.FC = () => {
         </Grid>
         <ConfirmDeleteModal
           open={openModal}
-          title="Delete"
+          title={t('delete')}
           handleDelete={handleDelete}
           onClose={handleCloseModal}
-          description={"Are you sure you want to delete Tenants?"}
+          description={t('delete-Tenants')}
 
         />
         <Grid item xs={12}>

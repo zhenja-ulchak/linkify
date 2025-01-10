@@ -218,7 +218,16 @@
   "passwort-vergessen": "Forgot password?",
   "timerMessage": "You can delete in 3 seconds",
   "delete": "Delete",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "deleteDMSconfig": "Are you sure you want to delete DMS config?",
+  "Delete-Document": "Delete Document",
+  "delete-Document": "Are you sure you want to delete Document?",
+  "delete-Accounting-Software": "Are you sure you want to delete Accounting Software?",
+  "delete-Tenants": "Are you sure you want to delete Tenants?",
+  "delete-User": "Are you sure you want to delete User?",
+  "ok": "OK",
+  "feld": "Field",
+  "wert": "Value"
 }
 ,
   "LocaleSwitcher": {
@@ -253,6 +262,7 @@
     "list": "List"
   },
   "Document-Table": {
+    "document-table": "Document Table.",
     "id": "id",
     "ExtantanionType": "ExtantanionType",
     "Size": "Size",
@@ -265,7 +275,8 @@
     "docLAstChangeAt": "docLAstChangeAt",
     "syncDms": "syncDms",
     "syncAcaunting": "syncAcaunting",
-    "Actions": "Actions"
+    "Actions": "Actions",
+    "syncAccounting":"syncAccounting"
   },
   "User-list": {
     "user-list": "User List"

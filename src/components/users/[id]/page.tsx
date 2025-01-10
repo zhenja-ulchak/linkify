@@ -206,51 +206,50 @@ const UserDetail: React.FC = () => {
                   <Table>
                     <TableHead>
                       <TableRow>
-                        <TableCell className="UserDetailTableHeader">Feld</TableCell>
-                        <TableCell className="UserDetailTableHeader">Wert</TableCell>
+                        <TableCell className="UserDetailTableHeader">{t('feld')}</TableCell>
+                        <TableCell className="UserDetailTableHeader">{t('wert')}</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
                       {users && (
-                        <>
-
-                          <TableRow>
-                            <TableCell style={{ fontWeight: 'bold' }}>ID</TableCell>
-                            <TableCell>{users.id}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell style={{ fontWeight: 'bold' }}>Vorname</TableCell>
-                            <TableCell>{users.first_name}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell style={{ fontWeight: 'bold' }}>Nachname</TableCell>
-                            <TableCell>{users.last_name}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell style={{ fontWeight: 'bold' }}>Sprache</TableCell>
-                            <TableCell>{users.language}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell style={{ fontWeight: 'bold' }}>Benutzername</TableCell>
-                            <TableCell>{users.username}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell style={{ fontWeight: 'bold' }}>Telefon</TableCell>
-                            <TableCell>{users.contact_phone}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell style={{ fontWeight: 'bold' }}>E-Mail</TableCell>
-                            <TableCell>{users.email}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell style={{ fontWeight: 'bold' }}>Rolle</TableCell>
-                            <TableCell>{users.role}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell style={{ fontWeight: 'bold' }}>Aktiv</TableCell>
-                            <TableCell>{users.is_active ? 'Ja' : 'Nein'}</TableCell>
-                          </TableRow>
-                        </>
+                       <>
+                       <TableRow>
+                         <TableCell style={{ fontWeight: 'bold' }}>{t('id')}</TableCell>
+                         <TableCell>{users.id}</TableCell>
+                       </TableRow>
+                       <TableRow>
+                         <TableCell style={{ fontWeight: 'bold' }}>{t('first-name')}</TableCell>
+                         <TableCell>{users.first_name}</TableCell>
+                       </TableRow>
+                       <TableRow>
+                         <TableCell style={{ fontWeight: 'bold' }}>{t('last-name')}</TableCell>
+                         <TableCell>{users.last_name}</TableCell>
+                       </TableRow>
+                       <TableRow>
+                         <TableCell style={{ fontWeight: 'bold' }}>{t('language')}</TableCell>
+                         <TableCell>{users.language}</TableCell>
+                       </TableRow>
+                       <TableRow>
+                         <TableCell style={{ fontWeight: 'bold' }}>{t('username')}</TableCell>
+                         <TableCell>{users.username}</TableCell>
+                       </TableRow>
+                       <TableRow>
+                         <TableCell style={{ fontWeight: 'bold' }}>{t('phone')}</TableCell>
+                         <TableCell>{users.contact_phone}</TableCell>
+                       </TableRow>
+                       <TableRow>
+                         <TableCell style={{ fontWeight: 'bold' }}>{t('email')}</TableCell>
+                         <TableCell>{users.email}</TableCell>
+                       </TableRow>
+                       <TableRow>
+                         <TableCell style={{ fontWeight: 'bold' }}>{t('role')}</TableCell>
+                         <TableCell>{users.role}</TableCell>
+                       </TableRow>
+                       <TableRow>
+                         <TableCell style={{ fontWeight: 'bold' }}>{t('active')}</TableCell>
+                         <TableCell>{users.is_active ? t('yes') : t('no')}</TableCell>
+                       </TableRow>
+                     </>
                       )}
                     </TableBody>
                   </Table>
@@ -274,10 +273,10 @@ const UserDetail: React.FC = () => {
 
           <ConfirmDeleteModal
             open={openModalConfirm}
-            title="Delete User"
+            title={t('delete')}
             handleDelete={handleDelete}
             onClose={handleCloseModal}
-            description={"Are you sure you want to delete User?"}
+            description={t('delete-User')}
 
           />
 
@@ -302,91 +301,91 @@ const UserDetail: React.FC = () => {
             <DialogContent>
               {error && <Typography color="error">{error}</Typography>}
               <Typography variant="body1" component="span" id="alert-dialog-description">
-                <Box sx={{ marginBottom: 2, marginTop: '15px' }}>
-                  <TextField
-                    fullWidth
-                    label="Username *"
-                    name="username"
-                    value={updatedUser?.username}
-                    onChange={handleEditChange}
-                    InputProps={{
-                      readOnly: true,
-                    }}
-                  />
-                </Box>
+              <Box sx={{ marginBottom: 2, marginTop: '15px' }}>
+                <TextField
+                  fullWidth
+                  label={t('username') + ' *'}
+                  name="username"
+                  value={updatedUser?.username}
+                  onChange={handleEditChange}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+              </Box>
 
-                {/* First Name */}
-                <Box sx={{ marginBottom: 2 }}>
-                  <TextField
-                    fullWidth
-                    label="Vorname"
-                    name="first_name"
-                    value={updatedUser?.first_name}
-                    onChange={handleEditChange}
-                  />
-                </Box>
+              {/* First Name */}
+              <Box sx={{ marginBottom: 2 }}>
+                <TextField
+                  fullWidth
+                  label={t('first-name')}
+                  name="first_name"
+                  value={updatedUser?.first_name}
+                  onChange={handleEditChange}
+                />
+              </Box>
 
-                {/* Last Name */}
-                <Box sx={{ marginBottom: 2 }}>
-                  <TextField
-                    fullWidth
-                    label="Nachname"
-                    name="last_name"
-                    value={updatedUser?.last_name}
-                    onChange={handleEditChange}
-                  />
-                </Box>
+              {/* Last Name */}
+              <Box sx={{ marginBottom: 2 }}>
+                <TextField
+                  fullWidth
+                  label={t('last-name')}
+                  name="last_name"
+                  value={updatedUser?.last_name}
+                  onChange={handleEditChange}
+                />
+              </Box>
 
-                {/* Language */}
-                <Box sx={{ marginBottom: 2 }}>
-                  <TextField
-                    fullWidth
-                    label="Sprache"
-                    name="language"
-                    value={updatedUser?.language}
-                    onChange={handleEditChange}
-                  />
-                </Box>
+              {/* Language */}
+              <Box sx={{ marginBottom: 2 }}>
+                <TextField
+                  fullWidth
+                  label={t('language')}
+                  name="language"
+                  value={updatedUser?.language}
+                  onChange={handleEditChange}
+                />
+              </Box>
 
-                {/* Contact Phone */}
-                <Box sx={{ marginBottom: 2 }}>
-                  <TextField
-                    fullWidth
-                    label="Kontaktnummer *"
-                    name="contact_phone"
-                    value={updatedUser?.contact_phone}
-                    onChange={handleEditChange}
-                  />
-                </Box>
+              {/* Contact Phone */}
+              <Box sx={{ marginBottom: 2 }}>
+                <TextField
+                  fullWidth
+                  label={t('contact-phone') + ' *'}
+                  name="contact_phone"
+                  value={updatedUser?.contact_phone}
+                  onChange={handleEditChange}
+                />
+              </Box>
 
-                {/* Email */}
-                <Box sx={{ marginBottom: 2 }}>
-                  <TextField
-                    fullWidth
-                    label="Email *"
-                    name="email"
-                    value={updatedUser?.email}
-                    onChange={handleEditChange}
-                  />
-                </Box>
+              {/* Email */}
+              <Box sx={{ marginBottom: 2 }}>
+                <TextField
+                  fullWidth
+                  label={t('email') + ' *'}
+                  name="email"
+                  value={updatedUser?.email}
+                  onChange={handleEditChange}
+                />
+              </Box>
 
-                {/* Role */}
-                <Box sx={{ marginBottom: 2 }}>
-                  <TextField
-                    fullWidth
-                    label="Role"
-                    name="role"
-                    value={updatedUser?.role}
-                    onChange={handleEditChange}
-                  />
-                </Box>
-              </Typography>
+              {/* Role */}
+              <Box sx={{ marginBottom: 2 }}>
+                <TextField
+                  fullWidth
+                  label={t('role')}
+                  name="role"
+                  value={updatedUser?.role}
+                  onChange={handleEditChange}
+                />
+              </Box>
+            </Typography>
             </DialogContent>
             <DialogActions>
 
-              <Button onClick={() => setIsEditing(false)}>Cancel</Button>
+              <Button onClick={() => setIsEditing(false)}>{t('cancel')}</Button>
               <Button onClick={() => handleSaveChanges()} autoFocus>
-                Update
+                {t('ok')}
               </Button>
 
             </DialogActions>

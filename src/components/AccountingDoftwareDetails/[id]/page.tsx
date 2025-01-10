@@ -325,10 +325,10 @@ const DetailsTable: React.FC = () => {
                     </Grid>
                     <ConfirmDeleteModal
                         open={openModal}
-                        title="Delete"
+                        title={t('delete')}
                         handleDelete={handleDelete}
                         onClose={handleCloseModal}
-                        description={"Are you sure you want to delete Accounting Software?"}
+                        description={t('delete-Accounting-Software')}
                         
                     />
                     <Grid item xs={12} sx={{ textAlign: addNewDetails ? "center" : 'left' }}>

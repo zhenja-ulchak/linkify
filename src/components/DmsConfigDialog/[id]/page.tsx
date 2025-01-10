@@ -296,10 +296,10 @@ const DetailsTableDms: React.FC = () => {
                 }
                 <ConfirmDeleteModal
                     open={openModal}
-                    title="Delete"
+                    title={t('delete')}
                     handleDelete={handleDelete}
                     onClose={handleCloseModal}
-                    description={"Are you sure you want to delete DMS config?"}
+                    description={t('deleteDMSconfig')}
 
                 />
 
