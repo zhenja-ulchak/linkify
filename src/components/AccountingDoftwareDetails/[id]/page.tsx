@@ -124,7 +124,7 @@ const DetailsTable: React.FC = () => {
             }
 
             if (response.status === 200) {
-                enqueueSnackbar('Accounting data fetched successfully!', { variant: 'success' });
+                enqueueSnackbar(t('accounting-entry-updated-successfully'), { variant: 'success' });
             }
 
             if (response?.data && Array.isArray(response.data) && response.data[0] && Array.isArray(response.data[0]) && response.data[0][0]) {
@@ -246,7 +246,7 @@ const DetailsTable: React.FC = () => {
 
             <Grid container spacing={2} style={{ width: '100%' }}>
                 <Grid item xs={12} style={{ textAlign: "center" }}>
-                    <h3>Accounting Software Details</h3>
+                    <h3>{t('Accounting-Software.details')}</h3>
                     <Grid container spacing={2}>
 
                         {addNewDetails ? (
@@ -259,51 +259,47 @@ const DetailsTable: React.FC = () => {
                                         <Table>
                                             <TableHead>
                                                 <TableRow>
-                                                    <TableCell style={{ fontWeight: "bold" }}>Feld</TableCell>
-                                                    <TableCell style={{ fontWeight: "bold" }}>Wert</TableCell>
+                                                    <TableCell style={{ fontWeight: "bold" }}>{t('Accounting-Software.feld')}</TableCell>
+                                                    <TableCell style={{ fontWeight: "bold" }}>{t('Accounting-Software.wert')}</TableCell>
                                                 </TableRow>
                                             </TableHead>
                                             <TableBody>
                                                 {tenantDetails && (
                                                     <>
-                                                         <TableRow>
-                                                            <TableCell>Name</TableCell>
-                                                            <TableCell>{tenantDetails?.name || ''}</TableCell>
-                                                        </TableRow>
-                                                       <TableRow>
-                                                            <TableCell>Type</TableCell>
-                                                            <TableCell>{tenantDetails?.type || ''}</TableCell>
-                                                        </TableRow>
-                                                       <TableRow>
-                                                            <TableCell>URL</TableCell>
-                                                            <TableCell>{tenantDetails?.url || ''}</TableCell>
-                                                        </TableRow>
-                                                          <TableRow>
-                                                            <TableCell>Organization ID</TableCell>
-                                                            <TableCell>{tenantDetails?.organization_id || ''}</TableCell>
+                                                        <TableRow>
+                                                            <TableCell>{t('Accounting-Software.name')}</TableCell>
+                                                            <TableCell>{tenantDetails.name}</TableCell>
                                                         </TableRow>
                                                         <TableRow>
-                                                            <TableCell>Event Type</TableCell>
-
-                                                            <TableCell>{
-                                                                 // @ts-ignore
-                                                            tenantDetails?.event_type || "N/A"}</TableCell>
-                                                        </TableRow> 
-
-                                                       <TableRow>
-                                                            <TableCell>Description</TableCell>
-                                                            <TableCell>{tenantDetails?.description || ''}</TableCell>
+                                                            <TableCell>{t('Accounting-Software.type')}</TableCell>
+                                                            <TableCell>{tenantDetails.type}</TableCell>
                                                         </TableRow>
                                                         <TableRow>
-                                                            <TableCell>Region</TableCell>
-                                                            <TableCell>{tenantDetails?.additional_settings?.region ?? "N/A"}</TableCell>
+                                                            <TableCell>{t('Accounting-Software.url')}</TableCell>
+                                                            <TableCell>{tenantDetails.url}</TableCell>
                                                         </TableRow>
-                                                         <TableRow>
-                                                            <TableCell>Active</TableCell>
-                                                            <TableCell>{tenantDetails?.is_active ? "Yes" : "No"}</TableCell> 
-                                                         </TableRow> 
+                                                        <TableRow>
+                                                            <TableCell>{t('Accounting-Software.organization_id')}</TableCell>
+                                                            <TableCell>{tenantDetails.organization_id}</TableCell>
+                                                        </TableRow>
+                                                        <TableRow>
+                                                            <TableCell>{t('Accounting-Software.event-type')}</TableCell>
+                                                            <TableCell>{tenantDetails.event_type ?? "N/A"}</TableCell>
+                                                        </TableRow>
+                                                        <TableRow>
+                                                            <TableCell>{t('Accounting-Software.description')}</TableCell>
+                                                            <TableCell>{tenantDetails.description}</TableCell>
+                                                        </TableRow>
+                                                        <TableRow>
+                                                            <TableCell>{t('Accounting-Software.region')}</TableCell>
+                                                            <TableCell>{tenantDetails.additional_settings?.region ?? "N/A"}</TableCell>
+                                                        </TableRow>
+                                                        <TableRow>
+                                                            <TableCell>{t('Accounting-Software.active')}</TableCell>
+                                                            <TableCell> {tenantDetails.is_active ? t('Accounting-Software.yes') : t('Accounting-Software.no')}</TableCell>
+                                                        </TableRow>
                                                     </>
-                                                )}
+                                                ) }
                                             </TableBody>
                                         </Table>
                                     </TableContainer>
@@ -329,10 +325,10 @@ const DetailsTable: React.FC = () => {
                     </Grid>
                     <ConfirmDeleteModal
                         open={openModal}
-                        title="Delete"
+                        title={t('delete')}
                         handleDelete={handleDelete}
                         onClose={handleCloseModal}
-                        description={"Are you sure you want to delete Accounting Software?"}
+                        description={t('delete-Accounting-Software')}
                         
                     />
                     <Grid item xs={12} sx={{ textAlign: addNewDetails ? "center" : 'left' }}>
@@ -340,9 +336,9 @@ const DetailsTable: React.FC = () => {
                             variant="outlined"
                             startIcon={<KeyboardBackspaceIcon />}
                             onClick={handleGoingBack}
-                            title="  back"
+                            title={t('Accounting-Software.back')}
                         >
-                            back
+                            {t('Accounting-Software.back')}
                         </Button>
                     </Grid>
                 </Grid>
@@ -354,14 +350,14 @@ const DetailsTable: React.FC = () => {
                     fullWidth
                 >
                     <DialogTitle id="alert-dialog-title">
-                        {"Сhange Accounting Software"}
+                    {t('Accounting-Software.changeaccounting')}
                     </DialogTitle>
                     <form onSubmit={handleSaveChanges}>
                         <DialogContent>
                             <Typography variant="body1" component="span" id="alert-dialog-description">
                                 <Box sx={{ marginBottom: 2 , marginTop: "15px" }}>
                                     <FormControl fullWidth>
-                                        <InputLabel id="dms-select-label">Type</InputLabel>
+                                        <InputLabel id="dms-select-label">{t('Accounting-Software.type')}</InputLabel>
                                         <Select
                                             labelId="dms-select-label"
                                             value={selectedOption}
@@ -381,17 +377,7 @@ const DetailsTable: React.FC = () => {
                                 <Box sx={{ marginBottom: 2 }}>
                                     <TextField
                                         fullWidth
-                                        label="Name"
-                                        name="name"
-                                        value={updatedTenant?.name || ""}  // Заповнення значення
-                                        onChange={handleEditChange}
-                                    />
-                                </Box>
-
-                                <Box sx={{ marginBottom: 2 }}>
-                                    <TextField
-                                        fullWidth
-                                        label="URL"
+                                        label={t('Accounting-Software.url')}
                                         name="url"
                                         value={updatedTenant?.url || ""}
                                         onChange={handleEditChange}
@@ -401,7 +387,7 @@ const DetailsTable: React.FC = () => {
                                 <Box sx={{ marginBottom: 2 }}>
                                     <TextField
                                         fullWidth
-                                        label="Organization ID"
+                                        label={t('Accounting-Software.organization_id')}
                                         name="organization_id"
                                         value={updatedTenant?.organization_id || ""}
                                         onChange={handleEditChange}
@@ -411,7 +397,7 @@ const DetailsTable: React.FC = () => {
                                 <Box sx={{ marginBottom: 2 }}>
                                     <TextField
                                         fullWidth
-                                        label="Event Type"
+                                        label={t('Accounting-Software.event-type')}
                                         name="event_type"
                                         value={updatedTenant?.event_type || ""}
                                         onChange={handleEditChange}
@@ -421,7 +407,7 @@ const DetailsTable: React.FC = () => {
                                 <Box sx={{ marginBottom: 2 }}>
                                     <TextField
                                         fullWidth
-                                        label="Description"
+                                        label={t('Accounting-Software.description')}
                                         name="description"
                                         value={updatedTenant?.description || ""}
                                         onChange={handleEditChange}
@@ -431,7 +417,7 @@ const DetailsTable: React.FC = () => {
                                 <Box sx={{ marginBottom: 2 }}>
                                     <TextField
                                         fullWidth
-                                        label="Region"
+                                        label={t('Accounting-Software.region')}
                                         name="additional_settings.region"
                                         value={updatedTenant?.additional_settings?.region || ""}
                                         onChange={handleEditChange}
@@ -442,8 +428,8 @@ const DetailsTable: React.FC = () => {
 
                         <DialogActions>
 
-                            <Button onClick={handleClose}>Cancel</Button>
-                            <Button type="submit" color="primary">Update</Button>
+                            <Button onClick={handleClose}>{t('Accounting-Software.cancel')}</Button>
+                            <Button type="submit" color="primary">{t('Accounting-Software.save')}</Button>
                         </DialogActions>
                     </form>
                 </Dialog>

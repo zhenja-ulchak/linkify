@@ -37,7 +37,7 @@ export default function Profile() {
   const [profileData, setProfileData] = useState<FormData | null>(null)
   const [profileUser, setProfileUser] = useState<any>(null)
 
-  const getToken: any = sessionStorage.getItem('AuthToken');
+
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const t = useTranslations('Customer');
@@ -70,7 +70,7 @@ export default function Profile() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    const getToken: any = sessionStorage.getItem('AuthToken');
     const response: any = await apiService.put(
       `user/profile`,
       formData, getToken
@@ -84,7 +84,7 @@ export default function Profile() {
     }
 
     if (response.status === 200) {
-      enqueueSnackbar('Profile updated successfully!', { variant: 'success' });
+      enqueueSnackbar(t('profile-updated-successfully'), { variant: 'success' });
 
 
     }
@@ -112,7 +112,7 @@ export default function Profile() {
         enqueueSnackbar(message, { variant: variant });
       }
       if (response.status === 200) {
-        enqueueSnackbar('Profile data fetched successfully!', { variant: 'success' });
+        enqueueSnackbar(t('profile-data-fetched-successfully'), { variant: 'success' });
 
       }
 

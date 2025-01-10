@@ -88,7 +88,7 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
         const response: any = await apiService.get("tenant", getToken);
 
         if (response.status === 200) {
-          enqueueSnackbar('Tenant information fetched successfully!', { variant: 'success' });
+          enqueueSnackbar(t('tenant-information-fetched-successfully'), { variant: 'success' });
         }
 
         const tenantData: any = response?.data[0];
@@ -148,49 +148,49 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
       id: "company_name",
       numeric: false,
       disablePadding: true,
-      label: "Firmenname",
+      label: t('Tenant.company_name'),
     },
     {
       id: "address",
       numeric: false, // Text, daher numeric: false
       disablePadding: false,
-      label: "Adresse",
+      label: t('Tenant.address'),
     },
     {
       id: "invoice_address",
       numeric: false, // Text, daher numeric: false
       disablePadding: false,
-      label: "Rechnungsadresse",
+      label: t('Tenant.invoice_address'),
     },
     {
       id: "license_valid_until",
       numeric: false, // Text, daher numeric: false
       disablePadding: false,
-      label: "Lizenzgültigkeit",
+      label: t('Tenant.license_valid_until'),
     },
     {
       id: "contact_email",
       numeric: false, // Text, daher numeric: false
       disablePadding: false,
-      label: "Kontakt-Email",
+      label: t('Tenant.contact_email'),
     },
     {
       id: "invoice_email",
       numeric: false,
       disablePadding: false,
-      label: "Rechnungs-E-Mail",
+      label: t('Tenant.invoice_email'),
     },
     {
       id: "contact_phone",
       numeric: false,
       disablePadding: false,
-      label: "Kontakttelefon",
+      label: t('Tenant.contact_phone'),
     },
     {
       id: "actions",
       numeric: false,
       disablePadding: false,
-      label: "Actions",
+      label: t('Tenant.actions'),
     },
   ];
 
@@ -309,7 +309,7 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
             component="div"
             textAlign={"center"}
           >
-            Tenant Liste
+            {t('Tenant.Tenant-Liste')}
           </Typography>
         )}
         {numSelected > 0 ? (
@@ -319,7 +319,7 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
             </IconButton>
           </Tooltip>
         ) : (
-          <Tooltip className="FilterList" title="Filter list">
+          <Tooltip className="FilterList" title={t('Userlist.filterlist')}>
             <IconButton>
               <FilterListIcon />
             </IconButton>
@@ -564,7 +564,7 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
           width: "fit-content",
         }}
         control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
+        label={t('Userlist.densepadding')}
       />
     </Box>
   );

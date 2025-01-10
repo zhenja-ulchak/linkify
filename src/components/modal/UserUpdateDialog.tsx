@@ -99,7 +99,7 @@ const UserUpdateDialog = ({ tenantDetails }: AccountingType) => {
             setOpen(false);
         }
         if (response.status === 200) {
-            enqueueSnackbar('DMS Config details updated successfully!', { variant: 'success' });
+            enqueueSnackbar(t('dms-config-details-updated-successfully'), { variant: 'success' });
             setOpen(false);
         }
 

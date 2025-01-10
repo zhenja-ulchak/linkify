@@ -46,12 +46,12 @@ const Administrator: React.FC = () => {
   const [autoAuth, setAutoAuth] = useState(false);
   const [emailConfig, setEmailConfig] = React.useState<EmailConfig | null>(null);
   const tAPI = useTranslations('API');
-  const t = useTranslations('Smtp-Email');
+  const t = useTranslations('API');
 
   // Zustände für Fehlermeldungen
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [serverError, setServerError] = useState<string | null>(null);
-  const getToken: any = sessionStorage.getItem('AuthToken');
+
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
@@ -59,14 +59,14 @@ const Administrator: React.FC = () => {
   // Eingabe validieren
   const validateInputs = () => {
     const newErrors: Record<string, string> = {};
-    if (!smtpServer) newErrors.smtpServer = "SMTP-Server darf nicht leer sein.";
+    if (!smtpServer) newErrors.smtpServer =  t('Smtp.smtp-server');
     if (!smtpPort || isNaN(Number(smtpPort))) {
-      newErrors.smtpPort = "SMTP-Port muss eine gültige Zahl sein.";
+      newErrors.smtpPort = t('Smtp.smtp-port');
     }
-    if (!encryption) newErrors.encryption = "Verschlüsselung ist erforderlich.";
-    if (!username) newErrors.username = "Benutzername darf nicht leer sein.";
+    if (!encryption) newErrors.encryption = t('Smtp.versch');
+    if (!username) newErrors.username = t('Smtp.benutzername');
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      newErrors.email = "Bitte geben Sie eine gültige E-Mail-Adresse ein.";
+      newErrors.email = t('Smtp.bitte-geben');
     }
     if (!password) newErrors.password = "Passwort darf nicht leer sein.";
 
@@ -111,7 +111,7 @@ const Administrator: React.FC = () => {
     setServerError(null); // Vorherige Fehler zurücksetzen
 
 
-
+    const getToken: any = sessionStorage.getItem('AuthToken');
     const response: any = await apiService.post("tenant/email-setting", payload, getToken)
     if (response instanceof Error) {
       const { status, variant, message } = apiService.CheckAndShow(response, tAPI);
@@ -121,7 +121,7 @@ const Administrator: React.FC = () => {
     }
 
     if (response.status === 200) {
-      enqueueSnackbar('The email has been saved successfully!', { variant: 'success' });
+      enqueueSnackbar(t('test-email-saved-successfully'), { variant: 'success' });
     }
   };
 
@@ -135,6 +135,7 @@ const Administrator: React.FC = () => {
     } else {
 
       console.log('work');
+      const getToken: any = sessionStorage.getItem('AuthToken');
       const response: any = await apiService.post("service/test-email", { email }
         , getToken)
 
@@ -147,7 +148,7 @@ const Administrator: React.FC = () => {
       }
       console.log(response.status);
       if (response.status === 200) {
-        enqueueSnackbar('The test email has been saved successfully!', { variant: 'success' });
+        enqueueSnackbar(t('test-email-saved-successfully'), { variant: 'success' });
       }
 
     }
@@ -182,7 +183,7 @@ const Administrator: React.FC = () => {
 
 
       if (response.status === 200) {
-        enqueueSnackbar('DMS Config data fetched successfully!', { variant: 'success' });
+        enqueueSnackbar(t('dms-config-fetched-successfully'), { variant: 'success' });
 
       }
 
@@ -206,14 +207,14 @@ const Administrator: React.FC = () => {
         id="AdminHeader"
         fontWeight={"900"}
       >
-        {t("smtp-email")}
+        {t("Smtp.smtp-email")}
       </Typography>
       {serverError && <Alert severity="error">{serverError}</Alert>}
       <Grid container spacing={3} id="AdminPageContainer">
         {/* SMTP-Server */}
         <Grid item xs={12} sm={6}>
           <TextField
-            label={t("smtp-email")}
+            label={t("Smtp.smtp-email")}
             value={smtpServer}
             onChange={(e) => setSmtpServer(e.target.value)}
             error={!!errors.smtpServer}
@@ -227,7 +228,7 @@ const Administrator: React.FC = () => {
         {/* SMTP-Port */}
         <Grid item xs={12} sm={6}>
           <TextField
-            label={t("smtp-port")}
+            label={t("Smtp.smtp-port2")}
             value={smtpPort}
             onChange={(e) => setSmtpPort(e.target.value)}
             error={!!errors.smtpPort}
@@ -241,7 +242,7 @@ const Administrator: React.FC = () => {
         {/* Verschlüsselung */}
         <Grid item xs={12} sm={6}>
           <TextField
-            label={t("art-der")}
+            label={t("Smtp.art-der")}
             value={encryption}
             onChange={(e) => setEncryption(e.target.value)}
             error={!!errors.encryption}
@@ -255,7 +256,7 @@ const Administrator: React.FC = () => {
         {/* Benutzername */}
         <Grid item xs={12} sm={6}>
           <TextField
-            label={t("benutzername")}
+            label={t("Smtp.benutzername2")}
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             error={!!errors.username}
@@ -269,7 +270,7 @@ const Administrator: React.FC = () => {
         {/* E-Mail-Adresse */}
         <Grid item xs={12} sm={6}>
           <TextField
-            label={t("email-adresse")}
+            label={t("Smtp.email-adresse")}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             error={!!errors.email}
@@ -283,7 +284,7 @@ const Administrator: React.FC = () => {
         {/* Passwort */}
         <Grid item xs={12} sm={6}>
           <TextField
-            label={t("passwort")}
+            label={t("Smtp.passwort2")}
             type={showPassword ? "text" : "password"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -298,7 +299,7 @@ const Administrator: React.FC = () => {
                   <IconButton
                     onClick={togglePasswordVisibility}
                     edge="end"
-                    aria-label={t("passwort-umschalten")}
+                    aria-label={t("Smtp.passwort-umschalten")}
                   >
                     {showPassword ? (
                       <VisibilityOffIcon />
@@ -312,8 +313,8 @@ const Administrator: React.FC = () => {
           />
         </Grid>
 
-        {/* Optionen
-        <Grid item xs={12} >
+        {/* Optionen */}
+        {/* <Grid item xs={12} >
           <FormControlLabel
             control={
               <Switch
@@ -321,7 +322,7 @@ const Administrator: React.FC = () => {
                 onChange={(e) => setSavePassword(e.target.checked)}
               />
             }
-            label={t("passwort-speichern")}
+            label={t("Smtp.passwort-speichern")}
             id="PasswordSaveLabel"
           />
           {errors.savePassword && (
@@ -339,7 +340,7 @@ const Administrator: React.FC = () => {
                 onChange={(e) => setAutoAuth(e.target.checked)}
               />
             }
-            label={t("authentificationLabel")}
+            label={t("Smtp.authentificationLabel")}
             id="AuthentificationLabel"
           />
         </Grid> */}
@@ -358,18 +359,18 @@ const Administrator: React.FC = () => {
               color="error"
               onClick={() => console.log("Abbrechen")}
             >
-              {t("abbrechen")}
+              {t("Smtp.abbrechen")}
             </Button>
             <Button
               variant="contained"
               color="primary"
               onClick={() => handleTestEmail()}
             >
-              {t("test-email-senden")}
+              {t("Smtp.test-email-senden")}
             </Button>
             {isFormValid() && (
-              <Button variant="contained" color="success" onClick={() => handleSave()}>
-                {t("fertigstellen")}
+              <Button variant="contained" color="success" onClick={handleSave}>
+                {t("Smtp.fertigstellen")}
               </Button>
             )}
           </Box>

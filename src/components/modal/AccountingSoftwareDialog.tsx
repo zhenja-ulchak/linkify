@@ -106,7 +106,7 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
             setOpen(false);
         }
         if (response.status === 200) {
-            enqueueSnackbar('Accounting software details updated successfully!', { variant: 'success' });
+            enqueueSnackbar(t('messages.dataSavedSuccessfully'), { variant: 'success' });
             setOpen(false);
         }
 
@@ -142,9 +142,9 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
                     color="primary"
                     variant="contained"
                     onClick={handleClickOpenUpdate}
-                    title="Add new accounting-software"
+                    title={t('Accounting-Software.addNewAccountingSoftware')}
                 >
-                    Add New Accounting Software
+                    {t('Accounting-Software.addNewAccountingSoftware')}
                 </Button>
             </Box>
             <Dialog
@@ -156,13 +156,13 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
             >
                 <form onSubmit={handleSubmit}>
                     <DialogTitle id="alert-dialog-title">
-                        {"Add New Accounting Software"}
+                    {t('Accounting-Software.addNewAccountingSoftware')}
                     </DialogTitle>
                     <DialogContent>
                         <Typography variant="body1" component="span" id="alert-dialog-description">
                             <Box sx={{ marginBottom: 2  , marginTop: "15px"}}>
                                 <FormControl fullWidth>
-                                    <InputLabel id="dms-select-label">Type</InputLabel>
+                                    <InputLabel id="dms-select-label">{t('Accounting-Software.type')}</InputLabel>
                                     <Select
                                         labelId="dms-select-label"
                                         value={selectedOption}
@@ -181,7 +181,7 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
                             <Box sx={{ marginBottom: 2 }}>
                                 <TextField
                                     fullWidth
-                                    label="name"
+                                    label={t('Accounting-Software.name')}
                                     name="name"
                                     value={updatedTenant.name || ""}
                                     onChange={handleInputChange}
@@ -193,7 +193,7 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
                             <Box sx={{ marginBottom: 2 }}>
                                 <TextField
                                     fullWidth
-                                    label="URL"
+                                    label={t('Accounting-Software.url')}
                                     name="url"
                                     value={updatedTenant.url || ""}
                                     onChange={handleInputChange}
@@ -205,7 +205,7 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
                             <Box sx={{ marginBottom: 2 }}>
                                 <TextField
                                     fullWidth
-                                    label="Organisation ID"
+                                    label={t('Accounting-Software.organization_id')}
                                     name="organization_id"
                                     value={updatedTenant.organization_id || ""}
                                     onChange={handleInputChange}
@@ -217,7 +217,7 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
                             <Box sx={{ marginBottom: 2 }}>
                                 <TextField
                                     fullWidth
-                                    label="Event Type"
+                                    label={t('Accounting-Software.event-type')}
                                     name="event_type"
                                     value={updatedTenant.event_type || ""}
                                     onChange={handleInputChange}
@@ -228,7 +228,7 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
                             <Box sx={{ marginBottom: 2 }}>
                                 <TextField
                                     fullWidth
-                                    label="Description"
+                                    label={t('Accounting-Software.description')}
                                     name="description"
                                     value={updatedTenant.description || ""}
                                     onChange={handleInputChange}
@@ -239,7 +239,7 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
                             <Box sx={{ marginBottom: 2 }}>
                                 <TextField
                                     fullWidth
-                                    label="Region"
+                                    label={t('Accounting-Software.region')}
                                     name="additional_settings.region"
                                     value={updatedTenant?.additional_settings?.region}
                                     onChange={handleInputChange}
@@ -250,9 +250,9 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
                     </DialogContent>
 
                     <DialogActions>
-                        <Button onClick={handleClose}>Cancel</Button>
+                        <Button onClick={handleClose}>{t('Accounting-Software.cancel')}</Button>
                         <Button type="submit" autoFocus>
-                            Create
+                        {t('Accounting-Software.create')}
                         </Button>
                     </DialogActions>
                 </form>

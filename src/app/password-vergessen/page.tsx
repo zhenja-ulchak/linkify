@@ -89,9 +89,9 @@ const ForgotPassword: NextPage = () => {
           }}
         >
           <Typography variant="h5" gutterBottom>
-            Passwort vergessen
+            {t('forgot-password')}
           </Typography>
-
+  
           <form onSubmit={handleSubmit} style={{ width: "100%" }}>
             <TextField
               variant="outlined"
@@ -99,17 +99,17 @@ const ForgotPassword: NextPage = () => {
               required
               fullWidth
               id="email"
-              label="E-Mail-Adresse"
+              label={t('email-address')}
               name="email"
               autoComplete="email"
               autoFocus
               value={email}
               onChange={handleEmailChange}
-              placeholder="Geben Sie Ihre E-Mail-Adresse ein"
+              placeholder={t('enter-your-email')}
               error={!!emailError}
-              helperText={emailError}
+              helperText={emailError && t('email-error')}
             />
-
+  
             <Button
               type="submit"
               fullWidth
@@ -117,10 +117,10 @@ const ForgotPassword: NextPage = () => {
               color="primary"
               sx={{ mt: 2 }}
             >
-              E-Mail senden
+              {t('send-email')}
             </Button>
           </form>
-
+  
           <Button
             onClick={handleLoginLinkClick}
             variant="text"
@@ -131,12 +131,13 @@ const ForgotPassword: NextPage = () => {
               fontWeight: 500,
             }}
           >
-            Zurück zum Login?
+            {t('back-to-login')}
           </Button>
         </Box>
       </Container>
     </Box>
   );
+  
 };
 
 export default ForgotPassword;

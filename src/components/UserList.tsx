@@ -28,6 +28,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useTranslations } from 'next-intl';
 import ApiService from "../app/services/apiService";
 import { enqueueSnackbar } from "notistack";
+import { Grid } from "@mui/material";
 type Order = "asc" | "desc";
 
 type TableHelperType = {
@@ -78,7 +79,7 @@ export default function TableHelperUserList({ title }: TableHelperType) {
             }
 
             if (response.status === 200) {
-                enqueueSnackbar('User list fetched successfully!', { variant: 'success' });
+                enqueueSnackbar(t('user-list-fetched-successfully'), { variant: 'success' });
             }
 
         };
@@ -126,56 +127,56 @@ export default function TableHelperUserList({ title }: TableHelperType) {
             id: "first_name",
             numeric: false,
             disablePadding: true,
-            label: "first_name",
+            label: t('Userlist.first_name'),
         },
         {
             id: "last_name",
             numeric: false, // Text, daher numeric: false
             disablePadding: false,
-            label: "last_name",
+            label: t('Userlist.last_name'),
         },
         {
             id: "role",
             numeric: false,
             disablePadding: false,
-            label: "role",
+            label: t('Userlist.role'),
         },
         {
             id: "language",
             numeric: false, // Text, daher numeric: false
             disablePadding: false,
-            label: "language",
+            label: t('Userlist.language'),
         },
         {
             id: "username",
             numeric: false, // Text, daher numeric: false
             disablePadding: false,
-            label: "username",
+            label: t('Userlist.username'),
         },
         {
             id: "contact_phone",
             numeric: false, // Text, daher numeric: false
             disablePadding: false,
-            label: "contact_phone",
+            label: t('Userlist.contact_phone'),
         },
         {
             id: "email",
             numeric: false,
             disablePadding: false,
-            label: "email",
+            label: t('Userlist.email'),
         },
         {
             id: "is_active",
             numeric: false,
             disablePadding: false,
-            label: "is_active",
+            label: t('Userlist.is_active'),
         },
 
         {
             id: "actions",
             numeric: false,
             disablePadding: false,
-            label: "Actions",
+            label: t('Userlist.actions'),
         },
     ];
 
@@ -214,10 +215,11 @@ export default function TableHelperUserList({ title }: TableHelperType) {
                             checked={rowCount > 0 && numSelected === rowCount}
                             onChange={onSelectAllClick}
                             inputProps={{
-                                "aria-label": "select all desserts",
+                                "aria-label": t('Userlist.desserts'),
                             }}
                             className="TableCell"
                         />
+
                     </TableCell>
                     {headCells.map((headCell: any) => (
                         <TableCell
@@ -297,7 +299,7 @@ export default function TableHelperUserList({ title }: TableHelperType) {
                         </IconButton>
                     </Tooltip>
                 ) : (
-                    <Tooltip className="FilterList" title="Filter list">
+                    <Tooltip className="FilterList" title={t('Userlist.filterlist')}>
                         <IconButton>
                             <FilterListIcon />
                         </IconButton>
@@ -391,7 +393,13 @@ export default function TableHelperUserList({ title }: TableHelperType) {
                 width: "95%",
                 flexDirection: "column",
             }}
+
         >
+            {/* Контейнер UserDetailContainer2 */}
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <h3>{t('Userlist.user-list')}</h3>
+            </div>
+
             <Paper sx={{ mb: 1 }} className="TablePaper">
                 <EnhancedTableToolbar numSelected={selected.length} />
                 <TableContainer
@@ -520,6 +528,7 @@ export default function TableHelperUserList({ title }: TableHelperType) {
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
                     className="TableFooter"
+                    labelRowsPerPage={t('Userlist.rowsPerPage')}
                 />
             </Paper>
             <FormControlLabel
@@ -528,7 +537,7 @@ export default function TableHelperUserList({ title }: TableHelperType) {
                     width: "fit-content",
                 }}
                 control={<Switch checked={dense} onChange={handleChangeDense} />}
-                label="Dense padding"
+                label={t('Userlist.densepadding')}
             />
         </Box>
     );

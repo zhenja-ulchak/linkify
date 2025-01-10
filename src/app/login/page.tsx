@@ -49,6 +49,7 @@ const Login: React.FC = () => {
     e.preventDefault();
     setErrorMessage(null);
 
+
     try {
       const resp = await ApiService.login<any>(username, password);
 
@@ -74,7 +75,7 @@ const Login: React.FC = () => {
         };
     
         sessionStorage.setItem('setting', JSON.stringify(obj));
-        enqueueSnackbar('Login erfolgreich!', { variant: 'success' });
+        enqueueSnackbar(t('messages.login'), { variant: 'success' });
       }
 
       if (resp?.data[0]?.user?.username === username) {
@@ -89,12 +90,12 @@ const Login: React.FC = () => {
         const token = resp?.data[0]?.token
         sessionStorage.setItem('AuthToken', `${token}`)
         setIsLoggedIn(true);
-        enqueueSnackbar('Willkommen!', { variant: 'info' });
+        enqueueSnackbar(t('messages.willkommen'), { variant: 'info' });
 
 
         router.push('/dashboard');
       } else {
-        enqueueSnackbar('Login fehlgeschlagen!', { variant: 'error' });
+        enqueueSnackbar(t('messages.login-fehl'), { variant: 'error' });
       }
 
     
@@ -107,19 +108,19 @@ const Login: React.FC = () => {
       if (axios.isAxiosError(error)) {
         // Обробка HTTP-статусів
         if (error.response?.status === 401) {
-          enqueueSnackbar('Ungültige Anmeldedaten!', { variant: 'warning' });
+          enqueueSnackbar(t('messages.ungult'), { variant: 'warning' });
         } else if (error.response?.status === 500) {
-          enqueueSnackbar('Serverfehler. Bitte später erneut versuchen.', { variant: 'error' });
+          enqueueSnackbar(t('messages.serverfehler'), { variant: 'error' });
         } else {
           enqueueSnackbar(
-            error.response?.data?.message || 'Ein unbekannter Fehler ist aufgetreten.',
+            error.response?.data?.message || t('messages.ein-unbekannter'),
             { variant: 'error' }
           );
         }
       } else if (error instanceof Error) {
         enqueueSnackbar(error.message, { variant: 'error' });
       } else {
-        enqueueSnackbar('Netzwerkfehler. Bitte prüfen Sie Ihre Verbindung.', { variant: 'warning' });
+        enqueueSnackbar(t('messages.netzwerkfehler'), { variant: 'warning' });
       }
     }
   }
@@ -142,7 +143,7 @@ const Login: React.FC = () => {
         }
     
         if (response.status === 200) {
-          enqueueSnackbar('Session refreshed successfully!', { variant: 'success' });
+          enqueueSnackbar(t('Settings.change-password'), { variant: 'success' });
         }
     }
   }, [isLoggedIn]);
@@ -265,7 +266,7 @@ const Login: React.FC = () => {
 
           {isLoggedIn && timeRemaining !== null && (
             <Typography variant="body1" style={{ marginTop: "20px" }}>
-              Verbleibende Zeit: {Math.floor(timeRemaining / 1000)} Sekunden
+              {t('messages.verblei')} {Math.floor(timeRemaining / 1000)} {t('messages.sekunden')}
             </Typography>
           )}
         </Box>

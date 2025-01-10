@@ -94,7 +94,7 @@ const TenantDetails: React.FC = () => {
       !updatedTenant.contact_email ||
       !updatedTenant.invoice_email
     ) {
-      setError("Alle Felder müssen ausgefüllt werden.");
+      setError(t('Tenant.alle-felder'));
       return false;
     }
     setError("");
@@ -104,7 +104,7 @@ const TenantDetails: React.FC = () => {
   useEffect(() => {
     const fetchElements = async () => {
       if (!id) {
-        setError("Keine gültige ID angegeben.");
+        setError(t('Tenant.alle-felder'));
         return;
       }
 
@@ -119,7 +119,7 @@ const TenantDetails: React.FC = () => {
 
 
       if (response.status === 200) {
-        enqueueSnackbar(`Details for tenant ID ${id} fetched successfully!`, { variant: 'success' });
+        enqueueSnackbar(t('tenant-details-fetched-successfully'), { variant: 'success' });
 
       }
       setTenants(response?.data[0]);
@@ -145,23 +145,17 @@ const TenantDetails: React.FC = () => {
   const handleSaveChanges = async () => {
     if (validateInputs()) {
 
-
-      const response: any = await ApiService.put(
-        `tenant/${id}`,
-        cleanedObject, Auth
-      );
-      if (response instanceof Error) {
-        const { status, variant, message } = ApiService.CheckAndShow(response, t);
-        console.log(message);
-        // @ts-ignore
-        enqueueSnackbar(message, { variant: variant });
-        setIsEditing(false)
-      }
-
-
-      if (response.status === 200) {
-        enqueueSnackbar('New tenant created successfully!', { variant: 'success' });
-        setIsEditing(false)
+      try {
+        const response = await ApiService.put(
+          `tenant/${id}`,
+          cleanedObject, Auth
+        );
+        if (!response) {
+          console.log("Benutzerdaten gespeichert:", cleanedObject);
+          setIsEditing(false);
+        }
+      } catch (error) {
+        setError(t('Tenant.fehler-beim:') + error)
       }
 
     }
@@ -181,7 +175,7 @@ const TenantDetails: React.FC = () => {
 
 
     if (response.status === 200) {
-      enqueueSnackbar(`Tenant ID ${id} deleted successfully!`, { variant: 'success' });
+      enqueueSnackbar(t('tenant-deleted-successfully'), { variant: 'success' });
     }
 
   };
@@ -231,7 +225,7 @@ const TenantDetails: React.FC = () => {
 
       <Grid container spacing={2} style={{ width: '100%' }}>
         <Grid item xs={12} style={{ textAlign: "center" }}>
-          <h3>Tenant Details</h3>
+          <h3>{t('Tenant.details')}</h3>
         </Grid>
 
         <Grid item xs={12}>
@@ -239,43 +233,43 @@ const TenantDetails: React.FC = () => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Feld</TableCell>
-                  <TableCell>Wert</TableCell>
+                  <TableCell>{t('Tenant.feld')}</TableCell>
+                  <TableCell>{t('Tenant.wert')}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {tenants.map((tenant) => (
                   <React.Fragment key={tenant.id}>
                     <TableRow key={`${tenant.id}-id`}>
-                      <TableCell style={{ fontWeight: 'bold' }}>ID</TableCell>
+                      <TableCell style={{ fontWeight: 'bold' }}>{t('Tenant.id')}</TableCell>
                       <TableCell>{tenant.id}</TableCell>
                     </TableRow>
                     <TableRow key={`${tenant.id}-company_name`}>
-                      <TableCell style={{ fontWeight: 'bold' }}>Firmenname</TableCell>
+                      <TableCell style={{ fontWeight: 'bold' }}>{t('Tenant.firmenname')}</TableCell>
                       <TableCell>{tenant.company_name}</TableCell>
                     </TableRow>
                     <TableRow key={`${tenant.id}-address`}>
-                      <TableCell style={{ fontWeight: 'bold' }}>Adresse</TableCell>
+                      <TableCell style={{ fontWeight: 'bold' }}>{t('Tenant.adresse')}</TableCell>
                       <TableCell>{tenant.address}</TableCell>
                     </TableRow>
                     <TableRow key={`${tenant.id}-invoice_address`}>
-                      <TableCell style={{ fontWeight: 'bold' }}>Rechnungsadresse</TableCell>
+                      <TableCell style={{ fontWeight: 'bold' }}>{t('Tenant.rechnungsadresse')}</TableCell>
                       <TableCell>{tenant.invoice_address}</TableCell>
                     </TableRow>
                     <TableRow key={`${tenant.id}-license_valid_until`}>
-                      <TableCell style={{ fontWeight: 'bold' }}>Lizenz gültig bis</TableCell>
+                      <TableCell style={{ fontWeight: 'bold' }}>{t('Tenant.lizenzgultigbis')}</TableCell>
                       <TableCell>{tenant.license_valid_until}</TableCell>
                     </TableRow>
                     <TableRow key={`${tenant.id}-contact_email`}>
-                      <TableCell style={{ fontWeight: 'bold' }}>Kontakt-Email</TableCell>
+                      <TableCell style={{ fontWeight: 'bold' }}>{t('Tenant.kontakt-email')}</TableCell>
                       <TableCell>{tenant.contact_email}</TableCell>
                     </TableRow>
                     <TableRow key={`${tenant.id}-invoice_email`}>
-                      <TableCell style={{ fontWeight: 'bold' }}>Rechnungs-E-Mail</TableCell>
+                      <TableCell style={{ fontWeight: 'bold' }}>{t('Tenant.rechungs-email')}</TableCell>
                       <TableCell>{tenant.invoice_email}</TableCell>
                     </TableRow>
                     <TableRow key={`${tenant.id}-contact_phone`}>
-                      <TableCell style={{ fontWeight: 'bold' }}>Kontakt-Telefon</TableCell>
+                      <TableCell style={{ fontWeight: 'bold' }}>{t('Tenant.kontakt-telefon')}</TableCell>
                       <TableCell>{tenant.contact_phone}</TableCell>
                     </TableRow>
                   </React.Fragment>
@@ -287,20 +281,20 @@ const TenantDetails: React.FC = () => {
 
 
         <Grid item xs={12} display="flex" justifyContent="space-evenly">
-          <IconButton color="primary" onClick={() => setIsEditing(true)} title="Bearbeiten">
+          <IconButton color="primary" onClick={() => setIsEditing(true)} title={t('Tenant.bearbeiten')}>
             <EditIcon />
           </IconButton>
 
-          <IconButton color="error" onClick={handleOpenModal} title="Löschen">
+          <IconButton color="error" onClick={handleOpenModal} title={t('Tenant.loschen')}>
             <DeleteIcon />
           </IconButton>
         </Grid>
         <ConfirmDeleteModal
           open={openModal}
-          title="Delete"
+          title={t('delete')}
           handleDelete={handleDelete}
           onClose={handleCloseModal}
-          description={"Are you sure you want to delete Tenants?"}
+          description={t('delete-Tenants')}
 
         />
         <Grid item xs={12}>
@@ -308,9 +302,9 @@ const TenantDetails: React.FC = () => {
             variant="outlined"
             startIcon={<KeyboardBackspaceIcon />}
             onClick={handleGoingBack}
-            title="  back"
+            title={t('Tenant.back')}
           >
-            back
+            {t('Tenant.back')}
           </Button>
         </Grid>
 
@@ -328,13 +322,13 @@ const TenantDetails: React.FC = () => {
             }}
           >
             <Typography variant="h6" gutterBottom>
-              Benutzerdaten bearbeiten
+            {t('Tenant.benutzerdaten')}
             </Typography>
 
             {error && <Typography color="error">{error}</Typography>}
 
             <TextField
-              label="Firmenname:"
+              label={t('Tenant.firmenname')}
               name="company_name"
               fullWidth
               margin="normal"
@@ -343,7 +337,7 @@ const TenantDetails: React.FC = () => {
             />
 
             <TextField
-              label="Adresse:"
+              label={t('Tenant.adresse')}
               name="address"
               fullWidth
               margin="normal"
@@ -352,7 +346,7 @@ const TenantDetails: React.FC = () => {
             />
 
             <TextField
-              label="Lizenz gültig bis:"
+              label={t('Tenant.lizenzgultigbis')}
               name="license_valid_until"
               fullWidth
               margin="normal"
@@ -361,7 +355,7 @@ const TenantDetails: React.FC = () => {
             />
 
             <TextField
-              label="Kontakt-Telefon:"
+              label={t('Tenant.lizenzgultigbis')}
               name="contact_phone"
               fullWidth
               margin="normal"
@@ -370,7 +364,7 @@ const TenantDetails: React.FC = () => {
             />
 
             <TextField
-              label="Rechnungsadresse:"
+              label={t('Tenant.rechnungsadresse')}
               name="invoice_address"
               fullWidth
               margin="normal"
@@ -379,7 +373,7 @@ const TenantDetails: React.FC = () => {
             />
 
             <TextField
-              label="Kontakt-Email:"
+              label={t('Tenant.kontakt-email')}
               name="contact_email"
               fullWidth
               margin="normal"
@@ -388,7 +382,7 @@ const TenantDetails: React.FC = () => {
             />
 
             <TextField
-              label="Rechnungs-E-Mail:"
+              label={t('Tenant.rechungs-email')}
               name="invoice_email"
               fullWidth
               margin="normal"
@@ -403,12 +397,12 @@ const TenantDetails: React.FC = () => {
               <Button
                 onClick={() => setIsEditing(false)}
               >
-                Cancel
+                {t('Tenant.cancel')}
               </Button>
               <Button
                 onClick={handleSaveChanges}
               >
-                Update
+                {t('Tenant.ok')}
               </Button>
             </Box>
           </Box>

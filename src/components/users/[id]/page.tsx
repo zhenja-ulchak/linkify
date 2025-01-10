@@ -32,7 +32,7 @@ const UserDetail: React.FC = () => {
 
   const { id } = useParams();
   const router = useRouter();
-  const t = useTranslations('API');
+
   const [openModal, setOpenModal] = useState(false);
   const [openModalConfirm, setOpenModalConfirm] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -50,6 +50,7 @@ const UserDetail: React.FC = () => {
     is_active: false
   });
   const [users, setUser] = useState<User | null>(null);
+  const t = useTranslations('API');
 
   useEffect(() => {
     const fetchElements = async () => {
@@ -66,7 +67,7 @@ const UserDetail: React.FC = () => {
         setAddNewDetails(true)
       }
       if (response.status === 200) {
-        enqueueSnackbar(`Details for user ID ${id} fetched successfully!`, { variant: 'success' });
+        enqueueSnackbar(t('user-details-fetched-successfully'), { variant: 'success' });
       }
       if (response instanceof Error) {
         const { status, variant, message } = ApiService.CheckAndShow(response, t);
@@ -113,7 +114,7 @@ const UserDetail: React.FC = () => {
       cleanedObject, Auth
     );
     if (response.status === 200) {
-      enqueueSnackbar('New user created successfully!', { variant: 'success' });
+      enqueueSnackbar(t('new-user-created-successfully'), { variant: 'success' });
       setIsEditing(false);
     }
 
@@ -135,7 +136,7 @@ const UserDetail: React.FC = () => {
       `user/${updatedUser?.id}`, Auth
     );
     if (response.status === 200) {
-      enqueueSnackbar(`User ID ${id} deleted successfully!`, { variant: 'success' });
+      enqueueSnackbar(t('user-deleted-successfully'), { variant: 'success' });
       router.push("/users");
 
     }
@@ -192,7 +193,7 @@ const UserDetail: React.FC = () => {
 
         <Grid container spacing={2} style={{ width: '100%' }}>
           <Grid item xs={12} style={{ textAlign: "center" }}>
-            <h3>User Config Details</h3>
+            <h3>{t('User-deteling.User-Config-Details')}</h3>
           </Grid>
 
           {addNewDetails ? (
@@ -206,51 +207,50 @@ const UserDetail: React.FC = () => {
                   <Table>
                     <TableHead>
                       <TableRow>
-                        <TableCell className="UserDetailTableHeader">Feld</TableCell>
-                        <TableCell className="UserDetailTableHeader">Wert</TableCell>
+                        <TableCell className="UserDetailTableHeader">{t('User-deteling.feld')}</TableCell>
+                        <TableCell className="UserDetailTableHeader">{t('User-deteling.wert')}</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
                       {users && (
-                        <>
-
-                          <TableRow>
-                            <TableCell style={{ fontWeight: 'bold' }}>ID</TableCell>
-                            <TableCell>{users.id}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell style={{ fontWeight: 'bold' }}>Vorname</TableCell>
-                            <TableCell>{users.first_name}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell style={{ fontWeight: 'bold' }}>Nachname</TableCell>
-                            <TableCell>{users.last_name}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell style={{ fontWeight: 'bold' }}>Sprache</TableCell>
-                            <TableCell>{users.language}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell style={{ fontWeight: 'bold' }}>Benutzername</TableCell>
-                            <TableCell>{users.username}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell style={{ fontWeight: 'bold' }}>Telefon</TableCell>
-                            <TableCell>{users.contact_phone}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell style={{ fontWeight: 'bold' }}>E-Mail</TableCell>
-                            <TableCell>{users.email}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell style={{ fontWeight: 'bold' }}>Rolle</TableCell>
-                            <TableCell>{users.role}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell style={{ fontWeight: 'bold' }}>Aktiv</TableCell>
-                            <TableCell>{users.is_active ? 'Ja' : 'Nein'}</TableCell>
-                          </TableRow>
-                        </>
+                       <>
+                       <TableRow>
+                         <TableCell style={{ fontWeight: 'bold' }}>{'id'}</TableCell>
+                         <TableCell>{users.id}</TableCell>
+                       </TableRow>
+                       <TableRow>
+                         <TableCell style={{ fontWeight: 'bold' }}>{t('User-deteling.first-name')}</TableCell>
+                         <TableCell>{users.first_name}</TableCell>
+                       </TableRow>
+                       <TableRow>
+                         <TableCell style={{ fontWeight: 'bold' }}>{t('User-deteling.last-name')}</TableCell>
+                         <TableCell>{users.last_name}</TableCell>
+                       </TableRow>
+                       <TableRow>
+                         <TableCell style={{ fontWeight: 'bold' }}>{t('User-deteling.language')}</TableCell>
+                         <TableCell>{users.language}</TableCell>
+                       </TableRow>
+                       <TableRow>
+                         <TableCell style={{ fontWeight: 'bold' }}>{t('username')}</TableCell>
+                         <TableCell>{users.username}</TableCell>
+                       </TableRow>
+                       <TableRow>
+                         <TableCell style={{ fontWeight: 'bold' }}>{t('User-deteling.phone')}</TableCell>
+                         <TableCell>{users.contact_phone}</TableCell>
+                       </TableRow>
+                       <TableRow>
+                         <TableCell style={{ fontWeight: 'bold' }}>{t('User-deteling.email')}</TableCell>
+                         <TableCell>{users.email}</TableCell>
+                       </TableRow>
+                       <TableRow>
+                         <TableCell style={{ fontWeight: 'bold' }}>{t('User-deteling.role')}</TableCell>
+                         <TableCell>{users.role}</TableCell>
+                       </TableRow>
+                       <TableRow>
+                         <TableCell style={{ fontWeight: 'bold' }}>{t('User-deteling.active')}</TableCell>
+                         <TableCell>{users.is_active ? t('User-deteling.yes') : t('User-deteling.no')}</TableCell>
+                       </TableRow>
+                     </>
                       )}
                     </TableBody>
                   </Table>
@@ -274,10 +274,10 @@ const UserDetail: React.FC = () => {
 
           <ConfirmDeleteModal
             open={openModalConfirm}
-            title="Delete User"
+            title={t('delete')}
             handleDelete={handleDelete}
             onClose={handleCloseModal}
-            description={"Are you sure you want to delete User?"}
+            description={t('delete-User')}
 
           />
 
@@ -298,95 +298,95 @@ const UserDetail: React.FC = () => {
       {
         isEditing && (
           <Dialog open={isEditing} onClose={() => setIsEditing(false)} fullWidth>
-            <DialogTitle>User Update</DialogTitle>
+            <DialogTitle>{t('User-Update')}</DialogTitle>
             <DialogContent>
               {error && <Typography color="error">{error}</Typography>}
               <Typography variant="body1" component="span" id="alert-dialog-description">
-                <Box sx={{ marginBottom: 2, marginTop: '15px' }}>
-                  <TextField
-                    fullWidth
-                    label="Username *"
-                    name="username"
-                    value={updatedUser?.username}
-                    onChange={handleEditChange}
-                    InputProps={{
-                      readOnly: true,
-                    }}
-                  />
-                </Box>
+              <Box sx={{ marginBottom: 2, marginTop: '15px' }}>
+                <TextField
+                  fullWidth
+                  label={t('username')}
+                  name="username"
+                  value={updatedUser?.username}
+                  onChange={handleEditChange}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+              </Box>
 
-                {/* First Name */}
-                <Box sx={{ marginBottom: 2 }}>
-                  <TextField
-                    fullWidth
-                    label="Vorname"
-                    name="first_name"
-                    value={updatedUser?.first_name}
-                    onChange={handleEditChange}
-                  />
-                </Box>
+              {/* First Name */}
+              <Box sx={{ marginBottom: 2 }}>
+                <TextField
+                  fullWidth
+                  label={t('User-deteling.first-name')}
+                  name="first_name"
+                  value={updatedUser?.first_name}
+                  onChange={handleEditChange}
+                />
+              </Box>
 
-                {/* Last Name */}
-                <Box sx={{ marginBottom: 2 }}>
-                  <TextField
-                    fullWidth
-                    label="Nachname"
-                    name="last_name"
-                    value={updatedUser?.last_name}
-                    onChange={handleEditChange}
-                  />
-                </Box>
+              {/* Last Name */}
+              <Box sx={{ marginBottom: 2 }}>
+                <TextField
+                  fullWidth
+                  label={t('User-deteling.last-name')}
+                  name="last_name"
+                  value={updatedUser?.last_name}
+                  onChange={handleEditChange}
+                />
+              </Box>
 
-                {/* Language */}
-                <Box sx={{ marginBottom: 2 }}>
-                  <TextField
-                    fullWidth
-                    label="Sprache"
-                    name="language"
-                    value={updatedUser?.language}
-                    onChange={handleEditChange}
-                  />
-                </Box>
+              {/* Language */}
+              <Box sx={{ marginBottom: 2 }}>
+                <TextField
+                  fullWidth
+                  label={t('User-deteling.language')}
+                  name="language"
+                  value={updatedUser?.language}
+                  onChange={handleEditChange}
+                />
+              </Box>
 
-                {/* Contact Phone */}
-                <Box sx={{ marginBottom: 2 }}>
-                  <TextField
-                    fullWidth
-                    label="Kontaktnummer *"
-                    name="contact_phone"
-                    value={updatedUser?.contact_phone}
-                    onChange={handleEditChange}
-                  />
-                </Box>
+              {/* Contact Phone */}
+              <Box sx={{ marginBottom: 2 }}>
+                <TextField
+                  fullWidth
+                  label={t('User-deteling.phone') + ' *'}
+                  name="contact_phone"
+                  value={updatedUser?.contact_phone}
+                  onChange={handleEditChange}
+                />
+              </Box>
 
-                {/* Email */}
-                <Box sx={{ marginBottom: 2 }}>
-                  <TextField
-                    fullWidth
-                    label="Email *"
-                    name="email"
-                    value={updatedUser?.email}
-                    onChange={handleEditChange}
-                  />
-                </Box>
+              {/* Email */}
+              <Box sx={{ marginBottom: 2 }}>
+                <TextField
+                  fullWidth
+                  label={t('User-deteling.email') + ' *'}
+                  name="email"
+                  value={updatedUser?.email}
+                  onChange={handleEditChange}
+                />
+              </Box>
 
-                {/* Role */}
-                <Box sx={{ marginBottom: 2 }}>
-                  <TextField
-                    fullWidth
-                    label="Role"
-                    name="role"
-                    value={updatedUser?.role}
-                    onChange={handleEditChange}
-                  />
-                </Box>
-              </Typography>
+              {/* Role */}
+              <Box sx={{ marginBottom: 2 }}>
+                <TextField
+                  fullWidth
+                  label={t('User-deteling.role')}
+                  name="role"
+                  value={updatedUser?.role}
+                  onChange={handleEditChange}
+                />
+              </Box>
+            </Typography>
             </DialogContent>
             <DialogActions>
 
-              <Button onClick={() => setIsEditing(false)}>Cancel</Button>
+              <Button onClick={() => setIsEditing(false)}>{t('cancel')}</Button>
               <Button onClick={() => handleSaveChanges()} autoFocus>
-                Update
+                {t('User-deteling.ok')}
               </Button>
 
             </DialogActions>

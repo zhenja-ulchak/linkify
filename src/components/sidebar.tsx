@@ -40,6 +40,7 @@ import CryptoJS from 'crypto-js';
 import apiService from "@/app/services/apiService";
 import { enqueueSnackbar } from "notistack";
 import { useTranslations } from 'next-intl';
+import { useLocale } from 'next-intl';
 
 
 
@@ -166,16 +167,16 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
   const handleLogout = async () => {
     const getToken: any = sessionStorage.getItem('AuthToken');
     if (!getToken) {
-      enqueueSnackbar("No token found. Redirecting to the login page automatically.", {
+      console.warn("Kein Token gefunden, automatisches Weiterleiten zur Login-Seite.");
+      enqueueSnackbar(t('logout-message'), {
         variant: "warning"
       });
       router.push("/login");
       sessionStorage.clear();
       return;
     }
-
     const response: any = await apiService.get(`user/logout`, getToken);
-    enqueueSnackbar("Logout erfolgreich!", {
+    enqueueSnackbar(t('logout-message'), {
       variant: "success"
     });
 
@@ -187,7 +188,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
     }
 
     if (response.status === 200) {
-      enqueueSnackbar('Logout successful!', { variant: 'success' });
+      enqueueSnackbar(t('logout-successful'), { variant: 'success' });
     }
 
     router.push("/login");
@@ -287,19 +288,47 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
           {(() => {
             const isAdmin = TextRule === 'admin';
             const isSuperAdmin = TextRule === 'superadmin';
-
+            const locale = useLocale();
             const adminItems = [
               { path: "/dashboard/admin/einstellungen", icon: <AdminPanelSettingsIcon style={{ color: "black" }} />, text: t("admin"), style: { backgroundColor: "pink" } },
-              { path: `/dashboard/admin/accounting-software/${authUser?.tenant_id || ""}`, icon: <WysiwygIcon style={{ color: "black" }} />, text: t("accounting-software") },
+              { 
+                path: `/dashboard/admin/accounting-software/${authUser?.tenant_id || ""}`, 
+                icon: <WysiwygIcon style={{ color: "black" }} />, 
+                text: (
+                  <>
+                    {t("accounting")} <br /> {t("software")}
+                  </>
+                ) 
+              },
               { path: `/dashboard/admin/dms-config/${authUser?.tenant_id || ""}`, icon: <EngineeringIcon style={{ color: "black" }} />, text: t("dms-config") },
-              { path: "/dashboard/admin/user-list", icon: <RecentActorsIcon style={{ color: "black" }} />, text: t("user-list") },
-              { path: "/dashboard/admin/SMTP-Email", icon: <EmailIcon style={{ color: "black" }} />, text: t("smtp-email") },
+              { 
+                path: "/dashboard/admin/user-list", 
+                icon: <RecentActorsIcon style={{ color: "black" }} />, 
+                text: locale === 'en' 
+                ? t("user-list") 
+                 : locale === 'de'
+                 ? t("user-list")
+                : (
+                  <>
+                    {t("user")} <br /> {t("list")}
+                  </>
+                )
+            },
+              { path: "/dashboard/admin/SMTP-Email", icon: <SupervisorAccountIcon style={{ color: "black" }} />, text: t("smtp-email") },
               { path: `/dashboard/admin/tenant/${authUser?.tenant_id || ""}`, icon: <FormatListBulletedIcon style={{ color: "black" }} />, text: t("tenant") },
             ];
-
+          
             const superAdminItems = [
               { path: "/dashboard/superadmin", icon: <SecurityIcon style={{ color: "black" }} />, text: t("superadmin"), style: { backgroundColor: "green" } },
-              { path: "/dashboard/superadmin/accounting-software", icon: <WysiwygIcon style={{ color: "black" }} />, text: t("accounting-software") },
+              { 
+                path: "/dashboard/superadmin/accounting-software", 
+                icon: <WysiwygIcon style={{ color: "black" }} />, 
+                text: (
+                  <>
+                    {t("accounting")} <br /> {t("software")}
+                  </>
+                )   
+              },
               { path: "/dashboard/superadmin/dms-config", icon: <EngineeringIcon style={{ color: "black" }} />, text: t("dms-config") },
               { path: "/dashboard/superadmin/tenant", icon: <FormatListBulletedIcon style={{ color: "black" }} />, text: t("tenant") },
             ];

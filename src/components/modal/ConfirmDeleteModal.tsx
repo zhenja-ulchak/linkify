@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Box, Button, Typography } from '@mui/material';
+import { useTranslations } from 'next-intl';
 
 interface ConfirmDeleteModalProps {
   open: boolean;
@@ -11,7 +12,7 @@ interface ConfirmDeleteModalProps {
 
 const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({ open, title,description, handleDelete, onClose }) => {
   const [counter, setCounter] = useState(3);
-
+ const t = useTranslations('API');
   useEffect(() => {
     if (counter > 0 && open) {
       const timer = setInterval(() => {
@@ -52,7 +53,7 @@ const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({ open, title,des
           {description}
         </Typography>
         <Typography variant="body2" color="textSecondary" gutterBottom>
-          You can delete after {counter} seconds.
+        {t('timerMessage')} {counter}
         </Typography>
         <Button
           variant="contained"
@@ -60,10 +61,10 @@ const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({ open, title,des
           onClick={handleConfirmDelete}
           disabled={counter > 0} // Disable the button until counter reaches 0
         >
-          Delete
+            {t('delete')}
         </Button>
         <Button variant="outlined" onClick={onClose} sx={{ marginTop: 2 }}>
-          Cancel
+        {t('cancel')}
         </Button>
       </Box>
     </Modal>

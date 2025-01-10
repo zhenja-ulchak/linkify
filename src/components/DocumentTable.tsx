@@ -33,7 +33,8 @@ const DocumentTable: React.FC = () => {
     const [updatedTenant, setUpdatedTenant] = useState<any>(null);
      const [openModal, setOpenModal] = useState(false);
  
-    const t = useTranslations('API');
+    const t = useTranslations('Document-Table');
+    const c = useTranslations('API');
 
     const handleEdit = (id: number) => {
         console.log(`Editing document with ID: ${id}`);
@@ -42,7 +43,6 @@ const DocumentTable: React.FC = () => {
 
     const handleDelete = (id: number) => {
         setDocumentsList(documentsList.filter(doc => doc.id !== id));
-        console.log(`Deleted document with ID: ${id}`);
     };
 
     const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,7 +88,7 @@ const DocumentTable: React.FC = () => {
                             <TableCell>{t('docDescription')}</TableCell>
                             <TableCell>{t('docVersion')}</TableCell>
                             <TableCell>{t('docParentID')}</TableCell>
-                            <TableCell>{t('docLastChangeAt')}</TableCell>
+                            <TableCell>{t('docLAstChangeAt')}</TableCell>
                             <TableCell>{t('syncDms')}</TableCell>
                             <TableCell>{t('syncAccounting')}</TableCell>
                             <TableCell>{t('Actions')}</TableCell>
@@ -130,10 +130,10 @@ const DocumentTable: React.FC = () => {
             </TableContainer>
             <ConfirmDeleteModal
                     open={openModal}
-                    title="Delete Document"
+                    title={t('Delete-Document')}
                     handleDelete={handleDeleteModal}
                     onClose={handleCloseModal}
-                    description={"Are you sure you want to delete Document?"}
+                    description={t('delete-Document')}
 
                 />
             <Dialog open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description" fullWidth>
@@ -224,7 +224,7 @@ const DocumentTable: React.FC = () => {
                         <Box sx={{ marginBottom: 2 }}>
                             <TextField
                                 fullWidth
-                                label={t('docLastChangeAt')}
+                                label={t('docLAstChangeAt')}
                                 name="docLastChangeAt"
                                 value={updatedTenant?.docLastChangeAt || ''}
                                 onChange={handleEditChange}
