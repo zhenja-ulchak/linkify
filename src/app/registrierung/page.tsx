@@ -38,8 +38,8 @@ const Register: React.FC = () => {
   const [company, setCompany] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>(""); // Fehlernachricht
   const [successMessage, setSuccessMessage] = useState<string>("");
-  const t = useTranslations('Registrierung');
-  const tAPI = useTranslations('API'); 
+
+  const t = useTranslations('API'); 
   // Erfolgsnachricht
   const router = useRouter();
 
@@ -104,7 +104,7 @@ const Register: React.FC = () => {
 
       // Erfolgreiche Registrierung
       if (response instanceof Error) {
-        const { status, variant, message } = apiService.CheckAndShow(response, tAPI);
+        const { status, variant, message } = apiService.CheckAndShow(response, t);
         console.log(message);
         // @ts-ignore
         enqueueSnackbar(message, { variant: variant });

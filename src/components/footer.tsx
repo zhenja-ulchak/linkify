@@ -179,7 +179,7 @@ const Footer: React.FC = () => {
     }
     try {
       await apiService.get(`user/logout`, getToken);
-      enqueueSnackbar("Logout erfolgreich!", {
+      enqueueSnackbar(t('logout-message'), {
         variant: "success"
       });
 

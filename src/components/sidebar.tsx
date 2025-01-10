@@ -176,7 +176,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
       return;
     }
     const response: any = await apiService.get(`user/logout`, getToken);
-    enqueueSnackbar("Logout erfolgreich!", {
+    enqueueSnackbar(t('logout-message'), {
       variant: "success"
     });
 
