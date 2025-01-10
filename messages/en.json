@@ -254,7 +254,24 @@
   "delete-User": "Are you sure you want to delete User?",
   "ok": "OK",
   "feld": "Field",
-  "wert": "Value"
+  "wert": "Value",
+  "test-email-saved-successfully": "The test email has been saved successfully!",
+  "dms-config-fetched-successfully": "DMS Config data fetched successfully!",
+  "profile-updated-successfully": "Profile updated successfully!",
+  "profile-data-fetched-successfully": "Profile data fetched successfully!",
+  "accounting-data-fetched-successfully": "Accounting data fetched successfully!",
+  "logout-successful": "Logout successful!",
+  "user-list-fetched-successfully": "User list fetched successfully!",
+  "accounting-entry-updated-successfully": "Accounting entry updated successfully!",
+  "dms-configuration-fetched-successfully": "DMS configuration fetched successfully!",
+  "dms-configuration-updated-successfully": "DMS configuration updated successfully!",
+  "dms-config-details-updated-successfully": "DMS Config details updated successfully!",
+  "tenant-information-fetched-successfully": "Tenant information fetched successfully!",
+  "tenant-details-fetched-successfully": "Details for tenant ID ${id} fetched successfully!",
+  "tenant-deleted-successfully": "Tenant ID ${id} deleted successfully!",
+  "user-details-fetched-successfully": "Details for user ID ${id} fetched successfully!",
+  "new-user-created-successfully": "New user created successfully!",
+  "user-deleted-successfully": "User ID ${id} deleted successfully!"
 }
 ,
   "LocaleSwitcher": {

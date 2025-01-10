@@ -121,7 +121,7 @@ const Administrator: React.FC = () => {
     }
 
     if (response.status === 200) {
-      enqueueSnackbar('The email has been saved successfully!', { variant: 'success' });
+      enqueueSnackbar(t('test-email-saved-successfully'), { variant: 'success' });
     }
   };
 
@@ -148,7 +148,7 @@ const Administrator: React.FC = () => {
       }
       console.log(response.status);
       if (response.status === 200) {
-        enqueueSnackbar('The test email has been saved successfully!', { variant: 'success' });
+        enqueueSnackbar(t('test-email-saved-successfully'), { variant: 'success' });
       }
 
     }
@@ -183,7 +183,7 @@ const Administrator: React.FC = () => {
 
 
       if (response.status === 200) {
-        enqueueSnackbar('DMS Config data fetched successfully!', { variant: 'success' });
+        enqueueSnackbar(t('dms-config-fetched-successfully'), { variant: 'success' });
 
       }
 

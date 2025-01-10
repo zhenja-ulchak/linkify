@@ -88,7 +88,7 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
         const response: any = await apiService.get("tenant", getToken);
 
         if (response.status === 200) {
-          enqueueSnackbar('Tenant information fetched successfully!', { variant: 'success' });
+          enqueueSnackbar(t('tenant-information-fetched-successfully'), { variant: 'success' });
         }
 
         const tenantData: any = response?.data[0];

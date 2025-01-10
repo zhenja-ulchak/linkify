@@ -117,7 +117,7 @@ const DetailsTableDms: React.FC = () => {
                 }
             }
             if (response.status === 200) {
-                enqueueSnackbar('DMS configuration fetched successfully!', { variant: 'success' });
+                enqueueSnackbar(t('dms-configuration-fetched-successfully'), { variant: 'success' });
             }
             if (response?.data && Array.isArray(response.data) && response.data[0] && Array.isArray(response.data[0]) && response.data[0][0]) {
                 setTenantDetails(response.data[0][0]);
@@ -159,7 +159,7 @@ const DetailsTableDms: React.FC = () => {
                 setOpen(false);
             }
             if (response.status === 200) {
-                enqueueSnackbar('DMS configuration updated successfully!', { variant: 'success' });
+                enqueueSnackbar(t('dms-configuration-updated-successfully'), { variant: 'success' });
                 setOpen(false);
             }
 

@@ -119,7 +119,7 @@ const TenantDetails: React.FC = () => {
 
 
       if (response.status === 200) {
-        enqueueSnackbar(`Details for tenant ID ${id} fetched successfully!`, { variant: 'success' });
+        enqueueSnackbar(t('tenant-details-fetched-successfully'), { variant: 'success' });
 
       }
       setTenants(response?.data[0]);
@@ -175,7 +175,7 @@ const TenantDetails: React.FC = () => {
 
 
     if (response.status === 200) {
-      enqueueSnackbar(`Tenant ID ${id} deleted successfully!`, { variant: 'success' });
+      enqueueSnackbar(t('tenant-deleted-successfully'), { variant: 'success' });
     }
 
   };

@@ -96,7 +96,7 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
         }
      
          if (response.status === 200) {
-          enqueueSnackbar('Accounting data fetched successfully!', { variant: 'success' });
+          enqueueSnackbar(t('accounting-data-fetched-successfully'), { variant: 'success' });
          }
     };
 

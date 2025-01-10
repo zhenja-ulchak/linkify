@@ -124,7 +124,7 @@ const DetailsTable: React.FC = () => {
             }
 
             if (response.status === 200) {
-                enqueueSnackbar('Accounting data fetched successfully!', { variant: 'success' });
+                enqueueSnackbar(t('accounting-entry-updated-successfully'), { variant: 'success' });
             }
 
             if (response?.data && Array.isArray(response.data) && response.data[0] && Array.isArray(response.data[0]) && response.data[0][0]) {

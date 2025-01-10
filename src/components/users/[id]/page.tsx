@@ -67,7 +67,7 @@ const UserDetail: React.FC = () => {
         setAddNewDetails(true)
       }
       if (response.status === 200) {
-        enqueueSnackbar(`Details for user ID ${id} fetched successfully!`, { variant: 'success' });
+        enqueueSnackbar(t('user-details-fetched-successfully'), { variant: 'success' });
       }
       if (response instanceof Error) {
         const { status, variant, message } = ApiService.CheckAndShow(response, t);
@@ -114,7 +114,7 @@ const UserDetail: React.FC = () => {
       cleanedObject, Auth
     );
     if (response.status === 200) {
-      enqueueSnackbar('New user created successfully!', { variant: 'success' });
+      enqueueSnackbar(t('new-user-created-successfully'), { variant: 'success' });
       setIsEditing(false);
     }
 
@@ -136,7 +136,7 @@ const UserDetail: React.FC = () => {
       `user/${updatedUser?.id}`, Auth
     );
     if (response.status === 200) {
-      enqueueSnackbar(`User ID ${id} deleted successfully!`, { variant: 'success' });
+      enqueueSnackbar(t('user-deleted-successfully'), { variant: 'success' });
       router.push("/users");
 
     }

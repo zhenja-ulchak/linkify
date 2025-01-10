@@ -188,7 +188,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
     }
 
     if (response.status === 200) {
-      enqueueSnackbar('Logout successful!', { variant: 'success' });
+      enqueueSnackbar(t('logout-successful'), { variant: 'success' });
     }
 
     router.push("/login");

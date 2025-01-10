@@ -81,7 +81,7 @@ export default function TableHelperDmsConfig({ title }: TableHelperType) {
 
             setRows(response.data[0]);
             if (response.status === 200) {
-                enqueueSnackbar('DMS Config data fetched successfully!', { variant: 'success' });
+                enqueueSnackbar(t('dms-config-fetched-successfully'), { variant: 'success' });
             }
 
         }
