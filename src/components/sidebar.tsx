@@ -41,6 +41,7 @@ import apiService from "@/app/services/apiService";
 import { enqueueSnackbar } from "notistack";
 import { useTranslations } from 'next-intl';
 import { useLocale } from 'next-intl';
+import LocaleSwitcher from "./LocaleSwitcher";
 
 
 
@@ -134,7 +135,7 @@ type MiniDrawerProps = {
 
 export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
   const t = useTranslations('Panel-sidebar');
-      const tAPI = useTranslations('API');
+  const tAPI = useTranslations('API');
   const theme = useTheme();
 
   // @ts-ignore
@@ -224,6 +225,8 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
+
+
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -249,7 +252,15 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
               cursor: "pointer",
             }}
           />
-
+          <div className="locale-switcher-container" style={{
+            position: "absolute",
+            right: 70,
+            display: "flex",
+            justifyContent: "flex-end",
+            cursor: "pointer",
+          }}>
+            <LocaleSwitcher />
+          </div>
           <ChangeMode color="#fff" />
         </Toolbar>
       </AppBar>
@@ -263,6 +274,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
               <ChevronLeftIcon />
             )}
           </IconButton>
+
         </DrawerHeader>
 
         <List sx={{ minHeight: "360px" }} className="ListContainer">
@@ -291,43 +303,43 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
             const locale = useLocale();
             const adminItems = [
               { path: "/dashboard/admin/einstellungen", icon: <AdminPanelSettingsIcon style={{ color: "black" }} />, text: t("admin"), style: { backgroundColor: "pink" } },
-              { 
-                path: `/dashboard/admin/accounting-software/${authUser?.tenant_id || ""}`, 
-                icon: <WysiwygIcon style={{ color: "black" }} />, 
+              {
+                path: `/dashboard/admin/accounting-software/${authUser?.tenant_id || ""}`,
+                icon: <WysiwygIcon style={{ color: "black" }} />,
                 text: (
                   <>
                     {t("accounting")} <br /> {t("software")}
                   </>
-                ) 
+                )
               },
               { path: `/dashboard/admin/dms-config/${authUser?.tenant_id || ""}`, icon: <EngineeringIcon style={{ color: "black" }} />, text: t("dms-config") },
-              { 
-                path: "/dashboard/admin/user-list", 
-                icon: <RecentActorsIcon style={{ color: "black" }} />, 
-                text: locale === 'en' 
-                ? t("user-list") 
-                 : locale === 'de'
-                 ? t("user-list")
-                : (
-                  <>
-                    {t("user")} <br /> {t("list")}
-                  </>
-                )
-            },
+              {
+                path: "/dashboard/admin/user-list",
+                icon: <RecentActorsIcon style={{ color: "black" }} />,
+                text: locale === 'en'
+                  ? t("user-list")
+                  : locale === 'de'
+                    ? t("user-list")
+                    : (
+                      <>
+                        {t("user")} <br /> {t("list")}
+                      </>
+                    )
+              },
               { path: "/dashboard/admin/SMTP-Email", icon: <SupervisorAccountIcon style={{ color: "black" }} />, text: t("smtp-email") },
               { path: `/dashboard/admin/tenant/${authUser?.tenant_id || ""}`, icon: <FormatListBulletedIcon style={{ color: "black" }} />, text: t("tenant") },
             ];
-          
+
             const superAdminItems = [
               { path: "/dashboard/superadmin", icon: <SecurityIcon style={{ color: "black" }} />, text: t("superadmin"), style: { backgroundColor: "green" } },
-              { 
-                path: "/dashboard/superadmin/accounting-software", 
-                icon: <WysiwygIcon style={{ color: "black" }} />, 
+              {
+                path: "/dashboard/superadmin/accounting-software",
+                icon: <WysiwygIcon style={{ color: "black" }} />,
                 text: (
                   <>
                     {t("accounting")} <br /> {t("software")}
                   </>
-                )   
+                )
               },
               { path: "/dashboard/superadmin/dms-config", icon: <EngineeringIcon style={{ color: "black" }} />, text: t("dms-config") },
               { path: "/dashboard/superadmin/tenant", icon: <FormatListBulletedIcon style={{ color: "black" }} />, text: t("tenant") },

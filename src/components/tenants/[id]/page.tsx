@@ -2,7 +2,7 @@
 
 import ApiService from "../../../../src/app/services/apiService";
 import React, { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -40,8 +40,8 @@ type Tenant = {
 };
 
 const TenantDetails: React.FC = () => {
-  const { id } = useParams();
-  console.log(id);
+    const searchParams = useSearchParams();
+    const id = searchParams.get('id');
 
   const router = useRouter();
 
@@ -102,11 +102,12 @@ const TenantDetails: React.FC = () => {
   };
 
   useEffect(() => {
+    if (!id) {
+      setError(t('Tenant.alle-felder'));
+      return;
+    }
     const fetchElements = async () => {
-      if (!id) {
-        setError(t('Tenant.alle-felder'));
-        return;
-      }
+     
 
       const Auth: any = sessionStorage.getItem('AuthToken')
       const response: any = await ApiService.get(`tenant/${id}`, Auth)

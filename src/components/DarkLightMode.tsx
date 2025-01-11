@@ -27,6 +27,7 @@ export default function ChangeMode({ color = "#1976d2" }: ChangeModeProps) {
       style={{
         position: "absolute",
         right: 20,
+        top:'6px',
         display: "flex",
         justifyContent: "flex-end",
         cursor: "pointer",

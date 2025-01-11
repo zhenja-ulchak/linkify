@@ -32,7 +32,7 @@ const Login: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // Track login status
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null); // State to track the remaining time
   const t = useTranslations('API'); // Переводы для компонента логина
- 
+
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
@@ -59,52 +59,52 @@ const Login: React.FC = () => {
         console.log(message);
         // @ts-ignore
         enqueueSnackbar(message, { variant: variant });
-        }else{
-
-
-
-      if (resp?.data?.length > 0 && resp.data[0]?.tanant) {
-        sessionStorage.setItem('tenant', JSON.stringify(resp.data[0]?.tanant.license_valid_until));
-      }
-
-      if (resp?.data?.length > 0 && resp.data[0]?.user) {
-        sessionStorage.setItem('AuthUser', JSON.stringify(resp.data[0]?.user));
-        const obj: any = {
-          name: resp.data[0].user.first_name || "Default Name", // Підстраховка на випадок відсутності значення
-          last_name: resp.data[0].user.last_name || "Default Last Name",
-        };
-    
-        sessionStorage.setItem('setting', JSON.stringify(obj));
-        enqueueSnackbar(t('messages.login'), { variant: 'success' });
-      }
-
-      if (resp?.data[0]?.user?.username === username) {
-        console.log(resp?.data[0]?.user);
-        const RoleALl = resp?.data[0]?.user?.role
-      
-        if(RoleALl){
-          const ciphertext = CryptoJS.AES.encrypt(RoleALl, 'secret-key').toString();
-          sessionStorage.setItem('user', ciphertext);
-        }
-        
-        const token = resp?.data[0]?.token
-        sessionStorage.setItem('AuthToken', `${token}`)
-        setIsLoggedIn(true);
-        enqueueSnackbar(t('messages.willkommen'), { variant: 'info' });
-
-
-        router.push('/dashboard');
       } else {
-        enqueueSnackbar(t('messages.login-fehl'), { variant: 'error' });
+
+
+
+        if (resp?.data?.length > 0 && resp.data[0]?.tanant) {
+          sessionStorage.setItem('tenant', JSON.stringify(resp.data[0]?.tanant.license_valid_until));
+        }
+
+        if (resp?.data?.length > 0 && resp.data[0]?.user) {
+          sessionStorage.setItem('AuthUser', JSON.stringify(resp.data[0]?.user));
+          const obj: any = {
+            name: resp.data[0].user.first_name || "Default Name", // Підстраховка на випадок відсутності значення
+            last_name: resp.data[0].user.last_name || "Default Last Name",
+          };
+
+          sessionStorage.setItem('setting', JSON.stringify(obj));
+          enqueueSnackbar(t('messages.login'), { variant: 'success' });
+        }
+
+        if (resp?.data[0]?.user?.username === username) {
+          console.log(resp?.data[0]?.user);
+          const RoleALl = resp?.data[0]?.user?.role
+
+          if (RoleALl) {
+            const ciphertext = CryptoJS.AES.encrypt(RoleALl, 'secret-key').toString();
+            sessionStorage.setItem('user', ciphertext);
+          }
+
+          const token = resp?.data[0]?.token
+          sessionStorage.setItem('AuthToken', `${token}`)
+          setIsLoggedIn(true);
+          enqueueSnackbar(t('messages.willkommen'), { variant: 'info' });
+
+
+          router.push('/dashboard');
+        } else {
+          enqueueSnackbar(t('messages.login-fehl'), { variant: 'error' });
+        }
+
+
       }
 
-    
-    }
-        
-       
+
     } catch (error: unknown) {
       console.error("Fehler beim Login:", error);
-  
+
       if (axios.isAxiosError(error)) {
         // Обробка HTTP-статусів
         if (error.response?.status === 401) {
@@ -129,22 +129,22 @@ const Login: React.FC = () => {
   const loginRefresh = useCallback(async () => {
     if (isLoggedIn) {
       const getToken: any = sessionStorage.getItem('AuthToken');
-    
-      const response: any =  await ApiService.get(
-          `user/login-refresh`,
-          getToken
-        );
-        console.log("Login Refresh erfolgreich!");
-     if (response instanceof Error) {
-          const { status, variant, message } = ApiService.CheckAndShow(response, t);
-          console.log(message);
-          // @ts-ignore
-          enqueueSnackbar(message, { variant: variant });
-        }
-    
-        if (response.status === 200) {
-          enqueueSnackbar(t('Settings.change-password'), { variant: 'success' });
-        }
+
+      const response: any = await ApiService.get(
+        `user/login-refresh`,
+        getToken
+      );
+      console.log("Login Refresh erfolgreich!");
+      if (response instanceof Error) {
+        const { status, variant, message } = ApiService.CheckAndShow(response, t);
+        console.log(message);
+        // @ts-ignore
+        enqueueSnackbar(message, { variant: variant });
+      }
+
+      if (response.status === 200) {
+        enqueueSnackbar(t('Settings.change-password'), { variant: 'success' });
+      }
     }
   }, [isLoggedIn]);
 
@@ -173,17 +173,9 @@ const Login: React.FC = () => {
 
   return (
     <>
-<div className="locale-switcher-container" style={{ position: 'absolute', top: '13px', left: '66px' }}>
-  <LocaleSwitcher />
-</div>
-      <Button
-        id="RegisterBtnOnLoginPage"
-        sx={{ float: "right", marginTop: "10px", marginRight: "10px" }}
-        variant="outlined"
-        onClick={handleRegistrierung}
-      >
-        {t("registrierung")}
-      </Button>
+      <div className="locale-switcher-container" style={{ position: 'absolute', top: '3px', right: '66px' }}>
+        <LocaleSwitcher />
+      </div>
 
       <Container maxWidth="sm" className="ContainerLogin">
         <Box
@@ -194,7 +186,7 @@ const Login: React.FC = () => {
           minHeight="100vh"
         >
           <Typography variant="h2" component="h2" gutterBottom>
-          {t("login")} 
+            {t("login")}
           </Typography>
 
           <form onSubmit={handleLogin}>
@@ -243,25 +235,41 @@ const Login: React.FC = () => {
               </Typography>
             )}
 
-            <Box display="flex" justifyContent="space-between" width="100%" mt={2}>
+            <Box display="flex" justifyContent="space-between"  width="100%" >
+            
               <Button
                 variant="text"
                 color="secondary"
-                style={{ width: "40%" }}
+                style={{ width: "100%", marginBottom:'10px'}}
                 onClick={handlePasswordReset}
               >
                 {t("passwort-vergessen")}
               </Button>
 
+              
+            </Box>
+
+
+            <Box display="flex" justifyContent="space-between" width="100%" >
+              <Button
+                id="RegisterBtnOnLoginPage"
+                style={{ width: "49%",marginRight:'15px' }}
+                variant="outlined"
+                onClick={handleRegistrierung}
+              >
+                {t("registrierung")}
+              </Button>
+        
               <Button
                 type="submit"
                 variant="contained"
                 color="primary"
-                style={{ width: "60%" }}
+                style={{ width: "49%",marginLeft:'15px' }}
               >
                 {t("login")}
               </Button>
             </Box>
+
           </form>
 
           {isLoggedIn && timeRemaining !== null && (

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation"; // Для URL параметрів і маршрутизатора
+import { useParams, useRouter, useSearchParams } from "next/navigation"; // Для URL параметрів і маршрутизатора
 import axios from "axios";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -46,8 +46,9 @@ const dmsOptions = [
 ];
 
 const DetailsTable: React.FC = () => {
-    const { id } = useParams();
-    const router = useRouter()
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const id = searchParams.get('id'); 
     const [isEditing, setIsEditing] = useState(false);
     const [error, setError] = useState<string>("");
     const [modalTextColor, setModalTextColor] = useState("black");
@@ -100,11 +101,12 @@ const DetailsTable: React.FC = () => {
 
     // Для отримання даних про користувача
     useEffect(() => {
+        if (!id) {
+            console.error('Недійсний ID');
+            return;
+        }
         const fetchTenantDetails = async () => {
-            if (!id) {
-                setError("Keine gültige ID angegeben.");
-                return;
-            }
+        
 
 
             const Auth: any = sessionStorage.getItem('AuthToken');
