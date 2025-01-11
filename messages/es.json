@@ -305,7 +305,7 @@
     "save": "Guardar",
     "address-registration": "Dirección de registro",
     "invoice-address": "Dirección de facturación",
-
+"phone": "Número de teléfono",
     "details-registration": "Detalles de registro"
   },
   "LocaleSwitcher": {

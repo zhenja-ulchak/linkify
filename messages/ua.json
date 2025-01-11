@@ -306,6 +306,7 @@
     "save": "Зберегти",
     "address-registration": "Адреса реєстрації",
     "invoice-address": "Адреса для виставлення рахунку",
+    "phone": "Номер телефону",
     "details-registration": "Деталі реєстрації"
   },
   "LocaleSwitcher": {

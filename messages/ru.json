@@ -305,7 +305,8 @@
     "save": "Сохранить",
     "address-registration": "Адреса регистрации",
     "invoice-address": "Адрес для выставления счета",
-    "details-registration": "Детали регистрации"
+    "details-registration": "Детали регистрации",
+    "phone": "Номер телефона"
   },
   "LocaleSwitcher": {
     "en": "English",

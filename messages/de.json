@@ -305,7 +305,7 @@
     "save": "Speichern",
     "address-registration": "Registrierungsadresse",
   "invoice-address": "Rechnungsadresse",
- 
+ "phone": "Phone number",
   "details-registration": "Registrierungsdetails"
   },
   "LocaleSwitcher": {

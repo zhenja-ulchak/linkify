@@ -31,7 +31,7 @@ const Register: React.FC = () => {
   const [region, setRegion] = useState<string>("");
   const [country, setCountry] = useState<string>("");
   const [addressSupplement, setAddressSupplement] = useState<string>("");
-     {/* invoice-address */}
+  {/* invoice-address */ }
   const [invoiceStreet, setInvoiceStreet] = useState<string>("");
   const [invoiceHouseNumber, setInvoiceHouseNumber] = useState<string>("");
   const [invoicePostalCode, setInvoicePostalCode] = useState<string>("");
@@ -39,8 +39,9 @@ const Register: React.FC = () => {
   const [invoiceRegion, setInvoiceRegion] = useState<string>("");
   const [invoiceCountry, setInvoiceCountry] = useState<string>("");
   const [invoiceAddressSupplement, setInvoiceAddressSupplement] = useState<string>("");
-     {/* invoice-address */}
+  {/* invoice-address */ }
   const [email, setEmail] = useState<string>("");
+  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [username, setUsername] = useState<string>("");
@@ -94,17 +95,19 @@ const Register: React.FC = () => {
     const allAdress = `${addressSupplement}, ${street} ${houseNumber}, ${postalCode} ${city}, ${region}, ${country}`
     console.log(allAdress);
 
-    const allInvoiceAdress =  `${invoiceAddressSupplement}, ${invoiceStreet} ${invoiceHouseNumber}, ${invoicePostalCode} ${invoiceCity}, ${invoiceRegion}, ${invoiceCountry}`
+    const allInvoiceAdress = `${invoiceAddressSupplement}, ${invoiceStreet} ${invoiceHouseNumber}, ${invoicePostalCode} ${invoiceCity}, ${invoiceRegion}, ${invoiceCountry}`
 
     const dataObj = {
-      firstName,
-      lastName,
-      allAdress,
-      email,
+      "first_name": firstName,
+      "last_name": lastName,
+      "address": allAdress,
+      "email": email,
       password,
-      username,
-      company,
-      allInvoiceAdress
+      "username": username,
+      "company_name": company,
+      "invoice_address": allInvoiceAdress,
+      "tariff": "free",
+      "contact_phone": phone
     }
     console.log(dataObj);
 
@@ -176,7 +179,7 @@ const Register: React.FC = () => {
               {t('Registrierung.registrierung')}
             </Typography>
             <Grid container spacing={2}>
-            <Grid item xs={12} >
+              <Grid item xs={12} >
                 <Typography
                   sx={{ textAlign: "center" }}
                   variant="h4"
@@ -425,10 +428,10 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  label={t('Registrierung.email')}
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  label={t('phone')}
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
                   required
                   fullWidth
                   style={border}
