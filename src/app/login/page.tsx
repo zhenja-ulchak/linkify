@@ -9,6 +9,7 @@ import {
   Box,
   InputAdornment,
   IconButton,
+  Link,
 } from "@mui/material";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -235,41 +236,57 @@ const Login: React.FC = () => {
               </Typography>
             )}
 
-            <Box display="flex" justifyContent="space-between"  width="100%" >
-            
+            <Box display="flex" justifyContent="space-between" width="100%" >
+
               <Button
                 variant="text"
                 color="secondary"
-                style={{ width: "100%", marginBottom:'10px'}}
+                style={{ width: "100%", marginBottom: '10px' }}
                 onClick={handlePasswordReset}
               >
                 {t("passwort-vergessen")}
               </Button>
 
-              
+
             </Box>
 
 
             <Box display="flex" justifyContent="space-between" width="100%" >
               <Button
                 id="RegisterBtnOnLoginPage"
-                style={{ width: "49%",marginRight:'15px' }}
+                style={{ width: "49%", marginRight: '15px' }}
                 variant="outlined"
                 onClick={handleRegistrierung}
               >
                 {t("registrierung")}
               </Button>
-        
+
               <Button
                 type="submit"
                 variant="contained"
                 color="primary"
-                style={{ width: "49%",marginLeft:'15px' }}
+                style={{ width: "49%", marginLeft: '15px' }}
               >
                 {t("login")}
               </Button>
             </Box>
+            <Box display="flex" justifyContent="space-between" width="100%">
+              <Link
+                href="https://www.linkify.cloud/info"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ width: "100%" }}
+              >
+                <Button
+                 variant="contained"
+                  color="primary"
+                  style={{ width: "100%", marginTop: '10px', background:'red' }}
 
+                >
+                  {t("return-to-the-info-page")}
+                </Button>
+              </Link>
+            </Box>
           </form>
 
           {isLoggedIn && timeRemaining !== null && (

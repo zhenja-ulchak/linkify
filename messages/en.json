@@ -281,7 +281,8 @@
   "send-email": "Send email",
   "back-to-login": "Back to login?",
   "invalidEmail":"Invalid email address",
-  "dms-details":"DMS details"
+  "dms-details":"DMS details",
+  "return-to-the-info-page": "return to the info page"
 }
 ,
   "LocaleSwitcher": {
