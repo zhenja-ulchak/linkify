@@ -87,6 +87,9 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
    
         const getToken: any = sessionStorage.getItem('AuthToken');
         const response: any = await apiService.get("accounting-software", getToken)
+
+        console.log(response.data[0]);
+        
         setRows(response.data[0]);
         if (response instanceof Error) {
           const { status, variant, message } = apiService.CheckAndShow(response, t);

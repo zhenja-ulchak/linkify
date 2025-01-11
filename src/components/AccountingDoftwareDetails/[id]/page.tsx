@@ -47,8 +47,11 @@ const dmsOptions = [
 
 const DetailsTable: React.FC = () => {
     const router = useRouter();
+
     const searchParams = useSearchParams();
-    const id = searchParams.get('id'); 
+    const id = useParams()
+    console.log(id.id);
+    
     const [isEditing, setIsEditing] = useState(false);
     const [error, setError] = useState<string>("");
     const [modalTextColor, setModalTextColor] = useState("black");
@@ -101,16 +104,18 @@ const DetailsTable: React.FC = () => {
 
     // Для отримання даних про користувача
     useEffect(() => {
-        if (!id) {
-            console.error('Недійсний ID');
-            return;
-        }
+        // if (!id) {
+        //     console.error('Недійсний ID');
+        //     return;
+        // }
         const fetchTenantDetails = async () => {
         
 
 
             const Auth: any = sessionStorage.getItem('AuthToken');
-            const response: any = await ApiService.get(`accounting-software`, Auth); //${id}
+            const response: any = await ApiService.get(`accounting-software/${id.id}`, Auth); //${id}
+           
+            
             if (response instanceof Error) {
                 const { status, variant, message } = ApiService.CheckAndShow(response, t);
 
@@ -127,10 +132,11 @@ const DetailsTable: React.FC = () => {
 
             if (response.status === 200) {
                 enqueueSnackbar(t('accounting-entry-updated-successfully'), { variant: 'success' });
+                setTenantDetails(response.data[0]);
             }
 
-            if (response?.data && Array.isArray(response.data) && response.data[0] && Array.isArray(response.data[0]) && response.data[0][0]) {
-                setTenantDetails(response.data[0][0]);
+            if (response?.data && response.data[0]) {
+                setTenantDetails(response.data[0]);
             } else {
                 setAddNewDetails(true)
             }

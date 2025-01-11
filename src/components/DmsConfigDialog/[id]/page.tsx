@@ -96,10 +96,10 @@ const DetailsTableDms: React.FC = () => {
 
     // Для отримання даних про користувача
     useEffect(() => {
-        if (!id) {
-            console.error('Недійсний ID');
-            return;
-        }
+        // if (!id) {
+        //     console.error('Недійсний ID');
+        //     return;
+        // }
         const fetchTenantDetails = async () => {
            
 

@@ -70,17 +70,17 @@ const Register: React.FC = () => {
     setErrorMessage(""); // Fehlernachricht zurücksetzen
     setSuccessMessage(""); // Erfolgsnachricht zurücksetzen
 
-    if (username.length < 4) {
-      setErrorMessage(t('Registrierung.benutzername-muss'));
-      return;
-    }
+    // if (username.length < 4) {
+    //   setErrorMessage(t('Registrierung.benutzername-muss'));
+    //   return;
+    // }
 
     // Erlaubt nur alphanumerische Zeichen
-    const usernameRegex = /^[a-zA-Z0-9]+$/;
-    if (!usernameRegex.test(username)) {
-      setErrorMessage(t('Registrierung.darf'));
-      return;
-    }
+    // const usernameRegex = /^[a-zA-Z0-9]+$/;
+    // if (!usernameRegex.test(username)) {
+    //   setErrorMessage(t('Registrierung.darf'));
+    //   return;
+    // }
 
     if (password !== confirmPassword) {
       setErrorMessage(t('Registrierung.passworter'));
@@ -103,11 +103,13 @@ const Register: React.FC = () => {
       "address": allAdress,
       "email": email,
       password,
-      "username": username,
+      "password_confirmation": password,
+      "username": "super-zhenja@ukr.net",
       "company_name": company,
       "invoice_address": allInvoiceAdress,
-      "tariff": "free",
-      "contact_phone": phone
+      "tarif": "free",
+      "contact_phone": phone,
+      "language": "ua"
     }
     console.log(dataObj);
 
@@ -128,8 +130,9 @@ const Register: React.FC = () => {
       enqueueSnackbar(message, { variant: variant });
     }
 
-    if (response.status === 200) {
+    if (response.success === true || response.status === 200) {
       enqueueSnackbar('Accounting data fetched successfully!', { variant: 'success' });
+      router.push('/login');
     }
 
   };
@@ -418,10 +421,10 @@ const Register: React.FC = () => {
               <Grid item xs={12} >
                 <TextField
                   label={t('Registrierung.benutzername')}
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  required
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                 
                   fullWidth
                   style={border}
                 />
