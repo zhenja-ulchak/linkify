@@ -162,6 +162,8 @@ const DetailsTable: React.FC = () => {
         // }
 
         const Auth: any = sessionStorage.getItem('AuthToken');
+        console.log(cleanedObject);
+        
         const response: any = await ApiService.put(`accounting-software`, cleanedObject, Auth);
         if (response instanceof Error) {
             const { status, variant, message } = ApiService.CheckAndShow(response, t);
@@ -284,7 +286,9 @@ const DetailsTable: React.FC = () => {
                                                         </TableRow>
                                                         <TableRow>
                                                             <TableCell>{t('Accounting-Software.event-type')}</TableCell>
-                                                            <TableCell>{tenantDetails.event_type ?? "N/A"}</TableCell>
+                                                            <TableCell>{
+                                                                  // @ts-ignore
+                                                            tenantDetails.event_type ?? "N/A"}</TableCell>
                                                         </TableRow>
                                                         <TableRow>
                                                             <TableCell>{t('Accounting-Software.description')}</TableCell>
@@ -399,7 +403,9 @@ const DetailsTable: React.FC = () => {
                                         fullWidth
                                         label={t('Accounting-Software.event-type')}
                                         name="event_type"
-                                        value={updatedTenant?.event_type || ""}
+                                        value={
+                                               // @ts-ignore
+                                            updatedTenant?.event_type || ""}
                                         onChange={handleEditChange}
                                     />
                                 </Box>

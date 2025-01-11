@@ -83,11 +83,11 @@ const Register: React.FC = () => {
     const getToken: any = sessionStorage.getItem('AuthToken');
  
       const response: any = await apiService.post(
-        `user/register`,
+        `service/register`,
         {
           firstName,
           lastName,
-          street,
+          street,//addressSupplement, street houseNumber, postalCode city, region, country
           houseNumber,
           postalCode,
           city,

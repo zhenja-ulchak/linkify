@@ -337,6 +337,8 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
 
 
   const handleRowClick = (id: number) => {
+    console.log(id);
+    
     // enqueueSnackbar(`Ви обрали рядок з ID: ${id}`, { variant: 'info' });
     if (role === "admin") {
       router.push(`/dashboard/admin/accounting-software/${id}`);
@@ -512,7 +514,7 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
                           cursor: "pointer",
                           borderRadius: "15px",
                         }}
-                        onClick={() => handleRowClick(row.id)}
+                        onClick={() => handleRowClick(row.tenant_id)}
                       >
                         <VisibilityIcon />
                         <div style={{ position: "absolute", margin: "0", padding: "0", opacity: "0" }}>

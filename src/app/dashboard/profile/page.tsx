@@ -296,7 +296,7 @@ export default function Profile() {
               onChange={handleInputChange}
             />
           </Grid>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <Typography variant="h6">{t("group2")}</Typography>
           </Grid>
           <Grid item xs={12}>
@@ -307,7 +307,7 @@ export default function Profile() {
               value={formData?.group ?? ""}
               onChange={handleInputChange}
             />
-          </Grid>
+          </Grid> */}
 
           <Grid item xs={12}>
             <Button

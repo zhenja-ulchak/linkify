@@ -233,7 +233,7 @@ const Administrator: React.FC = () => {
             onChange={(e) => setSmtpPort(e.target.value)}
             error={!!errors.smtpPort}
             helperText={errors.smtpPort}
-            required
+           
             fullWidth
             className="input-group"
           />
@@ -247,7 +247,7 @@ const Administrator: React.FC = () => {
             onChange={(e) => setEncryption(e.target.value)}
             error={!!errors.encryption}
             helperText={errors.encryption}
-            required
+       
             fullWidth
             className="input-group"
           />
@@ -261,7 +261,7 @@ const Administrator: React.FC = () => {
             onChange={(e) => setUsername(e.target.value)}
             error={!!errors.username}
             helperText={errors.username}
-            required
+       
             fullWidth
             className="input-group"
           />
