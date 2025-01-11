@@ -64,7 +64,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang={locale || "en"}>
       <body style={{ margin: '0', padding: '0', minHeight: '100vh' }}>
         <div style={{ }}>
-          <ChangeMode />
+          {/* <ChangeMode /> */}
         </div>
         <NextIntlClientProvider locale={locale || "en"} messages={messages} timeZone={timeZone}>
           <SnackbarProvider

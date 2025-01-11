@@ -282,7 +282,22 @@
   "back-to-login": "Back to login?",
   "invalidEmail":"Invalid email address",
   "dms-details":"DMS details",
-  "return-to-the-info-page": "info page"
+  "return-to-the-info-page": "info page",
+  "profile": "Profile",
+  "change-password": "Change password",
+  "Old-password": "Old password",
+  "New-password": "New password",
+  "confirmation-password": "Confirm password",
+  "password-length-error": "Password must be at least 8 characters long",
+  "password-mismatch": "Passwords do not match",
+  "Language": "Language",
+  "UA": "Ukrainian",
+  "RU": "Russian",
+  "EN": "English",
+  "ES": "Spanish",
+  "DE": "German",
+  "ZH": "中文 - Chinese",
+  "save": "Save"
 }
 ,
   "LocaleSwitcher": {

@@ -281,7 +281,22 @@
     "back-to-login": "Повернутися до входу?",
     "invalidEmail":"Неправильна електронна адреса",
     "dms-details":"Деталі DMS",
-    "return-to-the-info-page": "на інфо сторінку"
+    "return-to-the-info-page": "на інфо сторінку",
+    "profile": "Профіль",
+    "change-password": "Змінити пароль",
+    "Old-password": "Старий пароль",
+    "New-password": "Новий пароль",
+    "confirmation-password": "Підтвердження пароля",
+    "password-length-error": "Пароль повинен бути не менше 8 символів",
+    "password-mismatch": "Паролі не співпадають",
+    "Language": "Мова",
+    "UA": "Українська",
+    "RU": "Русский",
+    "EN": "English",
+    "ES": "Español",
+    "DE": "Deutsch",
+    "ZH": "中文 - Китайська",
+    "save": "Зберегти"
   },
   "LocaleSwitcher": {
     "en": "English",

@@ -254,14 +254,14 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
           />
           <div className="locale-switcher-container" style={{
             position: "absolute",
-            right: 70,
+            right: 30,
             display: "flex",
             justifyContent: "flex-end",
             cursor: "pointer",
           }}>
             <LocaleSwitcher />
           </div>
-          <ChangeMode color="#fff" />
+          {/* <ChangeMode color="#fff" /> */}
         </Toolbar>
       </AppBar>
 

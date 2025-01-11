@@ -278,7 +278,22 @@
     "send-email": "发送电子邮件",
     "back-to-login": "返回登录页?",
     "invalidEmail": "无效的电子邮件地址",
-    "dms-details":"DMS 详情"
+    "dms-details":"DMS 详情",
+    "profile": "个人资料",
+    "change-password": "更改密码",
+    "Old-password": "旧密码",
+    "New-password": "新密码",
+    "confirmation-password": "确认密码",
+    "password-length-error": "密码必须至少包含8个字符",
+    "password-mismatch": "密码不匹配",
+    "Language": "语言",
+    "UA": "乌克兰语",
+    "RU": "俄语",
+    "EN": "英语",
+    "ES": "西班牙语",
+    "DE": "德语",
+    "ZH": "中文 - 中文",
+    "save": "保存"
   },
   "LocaleSwitcher": {
     "en": "English",
