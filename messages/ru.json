@@ -51,7 +51,14 @@
       "benutzername": "Имя пользователя",
       "email": "Электронная почта",
       "passwort": "Пароль",
-      "passwort-bestatigen": "Подтвердите пароль"
+      "passwort-bestatigen": "Подтвердите пароль",
+      "invoice-adresse": "Улица",
+      "invoice-hausnummer": "Номер дома",
+      "invoice-postleitzahl": "Почтовый индекс",
+      "invoice-ort": "Город",
+      "invoice-region": "Регион",
+      "invoice-land": "Страна",
+      "invoice-adresszusatz": "Дополнительная информация об адресе"
     },
     "Dms": {
       "username": "Имя пользователя",
@@ -295,7 +302,10 @@
     "ES": "Испанский",
     "DE": "Немецкий",
     "ZH": "中文 - Китайский",
-    "save": "Сохранить"
+    "save": "Сохранить",
+    "address-registration": "Адреса регистрации",
+    "invoice-address": "Адрес для выставления счета",
+    "details-registration": "Детали регистрации"
   },
   "LocaleSwitcher": {
     "en": "English",

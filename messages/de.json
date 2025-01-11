@@ -51,7 +51,14 @@
       "benutzername": "Benutzername",
       "email": "E-Mail",
       "passwort": "Passwort",
-      "passwort-bestatigen": "Passwort bestätigen"
+      "passwort-bestatigen": "Passwort bestätigen",
+      "invoice-adresse": "Straße",
+      "invoice-hausnummer": "Hausnummer",
+      "invoice-postleitzahl": "Postleitzahl",
+      "invoice-ort": "Stadt",
+      "invoice-region": "Region",
+      "invoice-land": "Land",
+      "invoice-adresszusatz": "Zusätzliche Adressinformationen"
     },
     "Dms": {
       "username": "Benutzername",
@@ -295,7 +302,11 @@
     "ES": "Spanisch",
     "DE": "Deutsch",
     "ZH": "中文 - Chinesisch",
-    "save": "Speichern"
+    "save": "Speichern",
+    "address-registration": "Registrierungsadresse",
+  "invoice-address": "Rechnungsadresse",
+ 
+  "details-registration": "Registrierungsdetails"
   },
   "LocaleSwitcher": {
     "en": "English",

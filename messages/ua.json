@@ -51,7 +51,14 @@
       "benutzername": "Ім'я користувача",
       "email": "Електронна пошта",
       "passwort": "Пароль",
-      "passwort-bestatigen": "Підтвердіть пароль"
+      "passwort-bestatigen": "Підтвердіть пароль",
+      "invoice-adresse": "Вулиця",
+      "invoice-hausnummer": "Номер будинку",
+      "invoice-postleitzahl": "Поштовий індекс",
+      "invoice-ort": "Місто",
+      "invoice-region": "Регіон",
+      "invoice-land": "Країна",
+      "invoice-adresszusatz": "Додаткова адресна інформація"
     },
     "Dms": {
       "username": "Ім'я користувача",
@@ -279,8 +286,8 @@
     "email-error": "Неправильна електронна адреса",
     "send-email": "Надіслати лист",
     "back-to-login": "Повернутися до входу?",
-    "invalidEmail":"Неправильна електронна адреса",
-    "dms-details":"Деталі DMS",
+    "invalidEmail": "Неправильна електронна адреса",
+    "dms-details": "Деталі DMS",
     "return-to-the-info-page": "на інфо сторінку",
     "profile": "Профіль",
     "change-password": "Змінити пароль",
@@ -296,7 +303,10 @@
     "ES": "Español",
     "DE": "Deutsch",
     "ZH": "中文 - Китайська",
-    "save": "Зберегти"
+    "save": "Зберегти",
+    "address-registration": "Адреса реєстрації",
+    "invoice-address": "Адреса для виставлення рахунку",
+    "details-registration": "Деталі реєстрації"
   },
   "LocaleSwitcher": {
     "en": "English",

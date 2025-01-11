@@ -51,7 +51,14 @@
       "benutzername": "用户名",
       "email": "电子邮件",
       "passwort": "密码",
-      "passwort-bestatigen": "确认密码"
+      "passwort-bestatigen": "确认密码",
+      "invoice-adresse": "街道",
+      "invoice-hausnummer": "门牌号",
+      "invoice-postleitzahl": "邮政编码",
+      "invoice-ort": "城市",
+      "invoice-region": "地区",
+      "invoice-land": "国家",
+      "invoice-adresszusatz": "附加地址信息"
     },
     "Dms": {
       "username": "用户名",
@@ -293,7 +300,11 @@
     "ES": "西班牙语",
     "DE": "德语",
     "ZH": "中文 - 中文",
-    "save": "保存"
+    "save": "保存",
+    "address-registration": "注册地址",
+    "invoice-address": "账单地址",
+
+    "details-registration": "注册详情"
   },
   "LocaleSwitcher": {
     "en": "English",

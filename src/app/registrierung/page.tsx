@@ -9,6 +9,7 @@ import {
   Grid,
   InputAdornment,
   IconButton,
+  Divider,
 } from "@mui/material";
 import { useRouter } from "next/navigation";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -30,6 +31,15 @@ const Register: React.FC = () => {
   const [region, setRegion] = useState<string>("");
   const [country, setCountry] = useState<string>("");
   const [addressSupplement, setAddressSupplement] = useState<string>("");
+     {/* invoice-address */}
+  const [invoiceStreet, setInvoiceStreet] = useState<string>("");
+  const [invoiceHouseNumber, setInvoiceHouseNumber] = useState<string>("");
+  const [invoicePostalCode, setInvoicePostalCode] = useState<string>("");
+  const [invoiceCity, setInvoiceCity] = useState<string>("");
+  const [invoiceRegion, setInvoiceRegion] = useState<string>("");
+  const [invoiceCountry, setInvoiceCountry] = useState<string>("");
+  const [invoiceAddressSupplement, setInvoiceAddressSupplement] = useState<string>("");
+     {/* invoice-address */}
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
@@ -39,7 +49,7 @@ const Register: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string>(""); // Fehlernachricht
   const [successMessage, setSuccessMessage] = useState<string>("");
 
-  const t = useTranslations('API'); 
+  const t = useTranslations('API');
   // Erfolgsnachricht
   const router = useRouter();
 
@@ -80,40 +90,45 @@ const Register: React.FC = () => {
       setErrorMessage(t('Registrierung.pass-muss'));
       return;
     }
+
+    const allAdress = `${addressSupplement}, ${street} ${houseNumber}, ${postalCode} ${city}, ${region}, ${country}`
+    console.log(allAdress);
+
+    const allInvoiceAdress =  `${invoiceAddressSupplement}, ${invoiceStreet} ${invoiceHouseNumber}, ${invoicePostalCode} ${invoiceCity}, ${invoiceRegion}, ${invoiceCountry}`
+
+    const dataObj = {
+      firstName,
+      lastName,
+      allAdress,
+      email,
+      password,
+      username,
+      company,
+      allInvoiceAdress
+    }
+    console.log(dataObj);
+
     const getToken: any = sessionStorage.getItem('AuthToken');
- 
-      const response: any = await apiService.post(
-        `service/register`,
-        {
-          firstName,
-          lastName,
-          street,//addressSupplement, street houseNumber, postalCode city, region, country
-          houseNumber,
-          postalCode,
-          city,
-          region,
-          country,
-          addressSupplement,
-          email,
-          password,
-          username,
-          company,
-        },
-        getToken
-      );
 
-      // Erfolgreiche Registrierung
-      if (response instanceof Error) {
-        const { status, variant, message } = apiService.CheckAndShow(response, t);
-        console.log(message);
-        // @ts-ignore
-        enqueueSnackbar(message, { variant: variant });
-      }
+    const response: any = await apiService.post(
+      `service/register`,
+      dataObj
+      ,
+      getToken
+    );
 
-      if (response.status === 200) {
-        enqueueSnackbar('Accounting data fetched successfully!', { variant: 'success' });
-      }
-   
+    // Erfolgreiche Registrierung
+    if (response instanceof Error) {
+      const { status, variant, message } = apiService.CheckAndShow(response, t);
+      console.log(message);
+      // @ts-ignore
+      enqueueSnackbar(message, { variant: variant });
+    }
+
+    if (response.status === 200) {
+      enqueueSnackbar('Accounting data fetched successfully!', { variant: 'success' });
+    }
+
   };
 
   const handleLogin = () => {
@@ -161,6 +176,18 @@ const Register: React.FC = () => {
               {t('Registrierung.registrierung')}
             </Typography>
             <Grid container spacing={2}>
+            <Grid item xs={12} >
+                <Typography
+                  sx={{ textAlign: "center" }}
+                  variant="h4"
+                  component="h2"
+                  gutterBottom
+                >
+
+                  {t('address-registration')}
+                </Typography>
+              </Grid>
+
               <Grid item xs={12} sm={6}>
                 <TextField
                   label={t('Registrierung.vorname')}
@@ -270,7 +297,122 @@ const Register: React.FC = () => {
                   style={border}
                 />
               </Grid>
-              <Grid item xs={12}>
+
+              <Grid item xs={12} >
+                <Typography
+                  sx={{ textAlign: "center" }}
+                  variant="h4"
+                  component="h2"
+                  gutterBottom
+                >
+
+                  {t('invoice-address')}
+                </Typography>
+              </Grid>
+
+              {/* invoice-address */}
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label={t('Registrierung.invoice-adresse')}
+                  type="text"
+                  value={invoiceStreet}
+                  onChange={(e) => setInvoiceStreet(e.target.value)}
+                  required
+                  fullWidth
+                  style={border}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label={t('Registrierung.invoice-hausnummer')}
+                  type="text"
+                  value={invoiceHouseNumber}
+                  onChange={(e) => setInvoiceHouseNumber(e.target.value)}
+                  required
+                  fullWidth
+                  style={border}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label={t('Registrierung.invoice-postleitzahl')}
+                  type="text"
+                  value={invoicePostalCode}
+                  onChange={(e) => setInvoicePostalCode(e.target.value)}
+                  required
+                  fullWidth
+                  style={border}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label={t('Registrierung.invoice-ort')}
+                  type="text"
+                  value={invoiceCity}
+                  onChange={(e) => setInvoiceCity(e.target.value)}
+                  required
+                  fullWidth
+                  style={border}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label={t('Registrierung.invoice-region')}
+                  type="text"
+                  value={invoiceRegion}
+                  onChange={(e) => setInvoiceRegion(e.target.value)}
+                  required
+                  fullWidth
+                  style={border}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label={t('Registrierung.invoice-land')}
+                  type="text"
+                  value={invoiceCountry}
+                  onChange={(e) => setInvoiceCountry(e.target.value)}
+                  required
+                  fullWidth
+                  style={border}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12}>
+                <TextField
+                  label={t('Registrierung.invoice-adresszusatz')}
+                  type="text"
+                  value={invoiceAddressSupplement}
+                  onChange={(e) => setInvoiceAddressSupplement(e.target.value)}
+                  fullWidth
+                  style={border}
+                />
+              </Grid>
+
+              {/* <Grid item xs={12} sm={6}>
+                <TextField
+                  label={t('Registrierung.invoice-firma')}
+                  type="text"
+                  value={invoiceСompany}
+                  onChange={(e) => setInvoiceCompany(e.target.value)}
+                  fullWidth
+                  style={border}
+                />
+              </Grid> */}
+
+              {/* invoice-address */}
+              <Grid item xs={12} >
+                <Typography
+                  sx={{ textAlign: "center" }}
+                  variant="h4"
+                  component="h2"
+                  gutterBottom
+                >
+
+                  {t('details-registration')}
+                </Typography>
+              </Grid>
+
+              <Grid item xs={12} >
                 <TextField
                   label={t('Registrierung.benutzername')}
                   type="text"
@@ -366,6 +508,7 @@ const Register: React.FC = () => {
                 </Button>
               </Grid>
             </Grid>
+
           </Box>
         </Box>
       </Container>
