@@ -241,52 +241,59 @@ const Login: React.FC = () => {
               <Button
                 variant="text"
                 color="secondary"
-                style={{ width: "100%", marginBottom: '10px' }}
+                style={{
+                  width: "35%",
+                  marginBottom: '10px',
+                  textAlign: 'left',
+                  fontSize: '12px'
+                }}
                 onClick={handlePasswordReset}
               >
                 {t("passwort-vergessen")}
               </Button>
+
+              <Button
+                id="RegisterBtnOnLoginPage"
+                style={{ width: "26%", fontSize: '12px' }}
+                variant="text"
+                color="secondary"
+                onClick={handleRegistrierung}
+              >
+                {t("registrierung")}
+              </Button>
+
 
 
             </Box>
 
 
             <Box display="flex" justifyContent="space-between" width="100%" >
-              <Button
-                id="RegisterBtnOnLoginPage"
-                style={{ width: "49%", marginRight: '15px' }}
-                variant="outlined"
-                onClick={handleRegistrierung}
-              >
-                {t("registrierung")}
-              </Button>
-
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                style={{ width: "49%", marginLeft: '15px' }}
-              >
-                {t("login")}
-              </Button>
-            </Box>
-            <Box display="flex" justifyContent="space-between" width="100%">
               <Link
                 href="https://www.linkify.cloud/info"
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ width: "100%" }}
+                style={{ width: "50%" }}
               >
                 <Button
-                 variant="contained"
+                  variant="contained"
                   color="primary"
-                  style={{ width: "100%", marginTop: '10px', background:'red' }}
+                  style={{ width: "100%",height: '100%', background: '#050f32'  }}
 
                 >
                   {t("return-to-the-info-page")}
                 </Button>
               </Link>
+
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                style={{ width: "50%", marginLeft: '15px' }}
+              >
+                {t("login")}
+              </Button>
             </Box>
+
           </form>
 
           {isLoggedIn && timeRemaining !== null && (

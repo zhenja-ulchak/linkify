@@ -11,6 +11,10 @@ import {
   Paper,
   Alert,
   InputAdornment,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import { useTranslations } from 'next-intl';
 import apiService from "@/app/services/apiService";
@@ -58,7 +62,11 @@ export default function Profile() {
     group: "",
 
   });
+  const [language, setLanguage] = useState('ua'); // Початкова мова
 
+  const handleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+    setLanguage(event.target.value);
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -89,7 +97,7 @@ export default function Profile() {
 
     }
   };
- 
+
 
 
   useEffect(() => {
@@ -100,10 +108,10 @@ export default function Profile() {
       setProfileUser(response.data[0]?.user)
       if (response?.data && response.data.length > 0 && response.data[0]?.tanant) {
         setProfileData(response.data[0].tanant);
-    } else {
+      } else {
         console.error("Tenant data not found in API response:", response?.data);
-    }
-      
+      }
+
 
       if (response instanceof Error) {
         const { status, variant, message } = apiService.CheckAndShow(response, tAPI);
@@ -122,37 +130,37 @@ export default function Profile() {
     fetchData();
 
 
-  
+
   }, []);
 
-  useEffect(() => {
-    if (profileData && profileUser) {
-      setFormData({
-        username: profileUser.first_name ,
-        //@ts-ignore
-        companyName: profileData.company_name,
-        name: profileUser.first_name || "",
-        firstName: profileUser.last_name || "",
-        //@ts-ignore
-        street: profileData.address || "",
-        postalCode: profileData.postalCode || "",
-        city: profileData.city || "",
-        region: profileData.region || "",
-        country: profileData.country || "",
-        //@ts-ignore
-        addressAdditional: profileData.address || "",
-        //@ts-ignore
-        licenseValidity: profileData.license_valid_until || "",
-        group: profileData.group || "",
-      });
-    }
-  }, [profileData, profileUser]);
+  // useEffect(() => {
+  //   if (profileData && profileUser) {
+  //     setFormData({
+  //       username: profileUser.first_name ,
+  //       //@ts-ignore
+  //       companyName: profileData.company_name,
+  //       name: profileUser.first_name || "",
+  //       firstName: profileUser.last_name || "",
+  //       //@ts-ignore
+  //       street: profileData.address || "",
+  //       postalCode: profileData.postalCode || "",
+  //       city: profileData.city || "",
+  //       region: profileData.region || "",
+  //       country: profileData.country || "",
+  //       //@ts-ignore
+  //       addressAdditional: profileData.address || "",
+  //       //@ts-ignore
+  //       licenseValidity: profileData.license_valid_until || "",
+  //       group: profileData.group || "",
+  //     });
+  //   }
+  // }, [profileData, profileUser]);
 
 
 
 
   console.log('Profile data updated:', profileData);
-    console.log(profileUser);
+  console.log(profileUser);
   return (
     <Paper elevation={0} sx={{ padding: 4, maxWidth: 600, margin: "auto" }}>
       <Typography variant="h4" gutterBottom textAlign="center">
@@ -160,155 +168,53 @@ export default function Profile() {
       </Typography>
 
       <Grid item xs={12}>
-        <Typography variant="h6">{t("benutzer")}</Typography>
+        <Typography variant="h6">{t("change-password")}</Typography>
       </Grid>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
               fullWidth
-              label={t("benutzername")}
+              label={t("Old-password")}
               name="username"
               required
-              value={formData?.username ?? ""}
-              onChange={handleInputChange}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <Typography variant="h6">{t("rechungsadresse")} </Typography>
-          </Grid>
-
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label={t("firmenname")}
-              name="companyName"
-              value={formData?.companyName ?? ""}
-              onChange={handleInputChange}
-            />
-          </Grid>
-
-          <Grid item xs={6}>
-            <TextField
-              fullWidth
-              label={t("name")}
-              name="name"
-              value={formData?.name ?? ""}
-              onChange={handleInputChange}
-              inputProps={{ pattern: "^[A-Za-z]+$" }}
-            />
-          </Grid>
-
-          <Grid item xs={6}>
-            <TextField
-              fullWidth
-              label={t("vorname")}
-              name="firstName"
-              value={formData?.firstName ?? ""}
-              onChange={handleInputChange}
-              inputProps={{ pattern: "^[A-Za-z]+$" }}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label={t("street")}
-              name="street"
-              value={formData?.street ?? ""}
-              onChange={handleInputChange}
-            />
-          </Grid>
-
-          <Grid item xs={6}>
-            <TextField
-              fullWidth
-              label={t("postalcode")}
-              name="postalCode"
-              value={formData?.postalCode ?? ""}
-              onChange={handleInputChange}
-              inputProps={{ pattern: "^[0-9]+$" }}
-            />
-          </Grid>
-
-          <Grid item xs={6}>
-            <TextField
-              fullWidth
-              label={t("city")}
-              name="city"
-              value={formData?.city ?? ""}
-              onChange={handleInputChange}
-            />
-          </Grid>
-
-          <Grid item xs={6}>
-            <TextField
-              fullWidth
-              label={t("region")}
-              name="region"
-              value={formData?.region ?? ""}
-              onChange={handleInputChange}
-            />
-          </Grid>
-
-          <Grid item xs={6}>
-            <TextField
-              fullWidth
-              label={t("land")}
-              name="country"
-              value={formData?.country ?? ""}
-              onChange={handleInputChange}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label={t("addressAdditional")}
-              name="addressAdditional"
-              value={formData?.addressAdditional ?? ""}
-              onChange={handleInputChange}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <Typography variant="h6">{t("firmenname2")}</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label={t("firmenname")}
-              name="companyName"
-              value={formData?.companyName ?? ""}
+              value={''}
               onChange={handleInputChange}
             />
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h6">{t("licenseValidity2")}</Typography>
-          </Grid>
-          <Grid item xs={12}>
             <TextField
               fullWidth
-              label={t("licenseValidity")}
+              label={t("New-password")}
               name="licenseValidity"
-              value={formData?.licenseValidity ?? ""}
+              value={''}
               onChange={handleInputChange}
             />
           </Grid>
-          {/* <Grid item xs={12}>
-            <Typography variant="h6">{t("group2")}</Typography>
-          </Grid>
+
           <Grid item xs={12}>
             <TextField
               fullWidth
-              label={t("group")}
-              name="group"
-              value={formData?.group ?? ""}
+              label={t("confirmation-password")}
+              name="licenseValidity"
+              value={''}
               onChange={handleInputChange}
             />
-          </Grid> */}
+          </Grid>
 
+          <FormControl fullWidth>
+            <InputLabel>Language</InputLabel>
+            <Select
+              value={language}
+              onChange={handleChange}
+              label="Language"
+            >
+              <MenuItem value="ua">UA (Українська)</MenuItem>
+              <MenuItem value="ru">RU (Русский)</MenuItem>
+              <MenuItem value="en">EN (English)</MenuItem>
+              <MenuItem value="es">ES (Español)</MenuItem>
+            </Select>
+          </FormControl>
           <Grid item xs={12}>
             <Button
               type="submit"
