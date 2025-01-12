@@ -35,6 +35,7 @@ const DocumentTable: React.FC = () => {
     const [syncAccounts, setSyncAccounts] = useState<string[]>([]);
     const [loading, setLoading] = useState(false);
     const [synced, setSynced] = useState(false);
+    const [selectedDmsStatus, setSelectedDmsStatus] = useState('');
     console.log(synced);
 
 
@@ -70,20 +71,30 @@ const DocumentTable: React.FC = () => {
             invoice.accounting_name.toLowerCase().includes(globalSearch.toLowerCase()) ||
             invoice.document_name.toLowerCase().includes(globalSearch.toLowerCase()) ||
             invoice.accounting_document_id.toLowerCase().includes(globalSearch.toLowerCase()) ||
-            // invoice.dms_document_id.toLowerCase().includes(globalSearch.toLowerCase()) ||
             invoice.document_extension.toLowerCase().includes(globalSearch.toLowerCase()) ||
             invoice.accounting_document_date.toLowerCase().includes(globalSearch.toLowerCase()) ||
             invoice.dms_name.toLowerCase().includes(globalSearch.toLowerCase());
 
-        return (
-            globalMatch &&
-            (selectedCompany === '' || invoice.accounting_name === selectedCompany) &&
-            (selectedStatus === '' || invoice.document_name === selectedStatus || invoice.document_extension === selectedStatus) &&
-            (selectedSyncAccount === '' || invoice.dms_name === selectedSyncAccount)
-        );
+        const statusMatch =
+            selectedStatus === '' ||
+            (selectedStatus === 'true' && invoice.accounting_document_id) ||
+            (selectedStatus === 'false' && !invoice.accounting_document_id);
+
+        const dmsStatusMatch =
+            selectedDmsStatus === '' ||
+            (selectedDmsStatus === 'true' && invoice.dms_document_id) ||
+            (selectedDmsStatus === 'false' && !invoice.dms_document_id);
+
+        const syncAccountMatch =
+            selectedSyncAccount === '' || invoice.dms_name === selectedSyncAccount;
+
+        const companyMatch =
+            selectedCompany === '' || invoice.accounting_name === selectedCompany;
+
+        return globalMatch && statusMatch && dmsStatusMatch && syncAccountMatch && companyMatch;
     });
 
-  
+
     const handleSyncClick = async () => {
         setLoading(true);
 
@@ -138,12 +149,12 @@ const DocumentTable: React.FC = () => {
                 enqueueSnackbar(message, { variant: variant });
             }
 
-            if ( response.success === true) {
+            if (response.success === true) {
                 enqueueSnackbar(t('accounting-data-fetched-successfully'), { variant: 'success' });
                 // @ts-ignore
                 setCompanies([...new Set(response.data.map((item: any) => item.accounting_name))]); // Унікальні компанії
                 // @ts-ignore
-                setStatuses([...new Set(response.data.map((item: any) => item.document_name))]); // Унікальні статуси
+                setStatuses([...new Set(response.data.map((item: any) => item.accounting_document_id))]); // Унікальні статуси
                 // @ts-ignore
                 setSyncAccounts([...new Set(response.data.map((item: any) => item.dms_name))]); // Унікальні акаунти синхронізації
             }
@@ -197,17 +208,27 @@ const DocumentTable: React.FC = () => {
                                 ))}
                             </Select>
                         </FormControl>
-                        {/* <FormControl sx={{ width: '20%', marginRight: '16px' }}>
-                            <InputLabel>document name</InputLabel>
+                        <FormControl sx={{ width: '20%', marginRight: '16px' }}>
+                            <InputLabel>Status Account</InputLabel>
                             <Select value={selectedStatus} onChange={handleStatusChange}>
                                 <MenuItem value="">All</MenuItem>
-                                {statuses.map((status, index) => (
-                                    <MenuItem key={index} value={status}>
-                                        {status}
-                                    </MenuItem>
-                                ))}
+                                <MenuItem value="true">True</MenuItem>
+                                <MenuItem value="false">False</MenuItem>
                             </Select>
-                        </FormControl> */}
+                        </FormControl>
+                        <FormControl sx={{ width: '20%', marginRight: '16px' }}>
+                            <InputLabel>DMS Document Status</InputLabel>
+                            <Select
+                                value={selectedDmsStatus}
+                                onChange={(event: SelectChangeEvent<string>) =>
+                                    setSelectedDmsStatus(event.target.value)
+                                }
+                            >
+                                <MenuItem value="">All</MenuItem>
+                                <MenuItem value="true">True</MenuItem>
+                                <MenuItem value="false">False</MenuItem>
+                            </Select>
+                        </FormControl>
                         <FormControl sx={{ width: '20%', }}>
                             <InputLabel>Sync Account</InputLabel>
                             <Select value={selectedSyncAccount} onChange={handleSyncAccountChange}>
