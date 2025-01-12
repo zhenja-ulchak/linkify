@@ -54,7 +54,7 @@ const ForgotPassword: NextPage = () => {
         enqueueSnackbar(message, { variant });
       }
 
-      if (response.status === 200) {
+      if (response.status === 200 || response.success === true) {
         enqueueSnackbar(t("passwordResetSuccess"), { variant: "success" });
       }
     } catch (error) {

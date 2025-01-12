@@ -143,7 +143,7 @@ const Login: React.FC = () => {
         enqueueSnackbar(message, { variant: variant });
       }
 
-      if (response.status === 200) {
+      if (response.status === 200 || response.success === true) {
         enqueueSnackbar(t('Settings.change-password'), { variant: 'success' });
       }
     }

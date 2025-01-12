@@ -80,7 +80,7 @@ export default function TableHelperDmsConfig({ title }: TableHelperType) {
             }
 
             setRows(response.data[0]);
-            if (response.status === 200) {
+            if (response.status === 200 || response.success === true) {
                 enqueueSnackbar(t('dms-config-fetched-successfully'), { variant: 'success' });
             }
 

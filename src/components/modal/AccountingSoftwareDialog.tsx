@@ -104,7 +104,7 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
             enqueueSnackbar(message, { variant: variant });
             setOpen(false);
         }
-        if (response.status === 200) {
+        if (response.status === 200 || response.success === true) {
             enqueueSnackbar(t('messages.dataSavedSuccessfully'), { variant: 'success' });
             setOpen(false);
         }

@@ -87,7 +87,7 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
         const getToken: any = sessionStorage.getItem('AuthToken');
         const response: any = await apiService.get("tenant", getToken);
 
-        if (response.status === 200) {
+        if (response.status === 200 || response.success === true) {
           enqueueSnackbar(t('tenant-information-fetched-successfully'), { variant: 'success' });
         }
 

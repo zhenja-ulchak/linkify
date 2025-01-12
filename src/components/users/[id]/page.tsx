@@ -32,7 +32,7 @@ const UserDetail: React.FC = () => {
 
   const { id } = useParams();
   const router = useRouter();
-
+    const [initialTenant, setInitialTenant] = useState<any>();
   const [openModal, setOpenModal] = useState(false);
   const [openModalConfirm, setOpenModalConfirm] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -66,7 +66,7 @@ const UserDetail: React.FC = () => {
       } else {
         setAddNewDetails(true)
       }
-      if (response.status === 200) {
+      if (response.status === 200 || response.success === true) {
         enqueueSnackbar(t('user-details-fetched-successfully'), { variant: 'success' });
       }
       if (response instanceof Error) {
@@ -84,36 +84,29 @@ const UserDetail: React.FC = () => {
 
   const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
+    
+    setInitialTenant((prevTenant: any) => ({
+      ...prevTenant,
+      [name]: value,
+  }))
+
     setUpdatedUser({
       ...updatedUser,
       [name]: value,
     });
   };
 
-  const validateInputs = () => {
-    if (
-      !updatedUser.first_name ||
-      !updatedUser.last_name ||
-      !updatedUser.language ||
-      !updatedUser.username ||
-      !updatedUser.contact_phone ||
-      !updatedUser.email
-    ) {
 
-      return false;
-    }
-    setError("");
-    return true;
-  };
 
   const handleSaveChanges = async () => {
-    const cleanedObject = removeEmptyValues(updatedUser);
+
 
     const response: any = await ApiService.put(
       `user/${users?.id}`,
-      cleanedObject, Auth
+      initialTenant, Auth
     );
-    if (response.status === 200) {
+    if (response.status === 200 || response.success === true) {
       enqueueSnackbar(t('new-user-created-successfully'), { variant: 'success' });
       setIsEditing(false);
     }
@@ -127,15 +120,14 @@ const UserDetail: React.FC = () => {
     }
 
   };
-  const removeEmptyValues = (obj: any) => {
-    return Object.fromEntries(Object.entries(obj).filter(([key, value]) => value != null && value !== ""));
-  };
+
+
   const handleDelete = async () => {
 
     const response: any = await ApiService.delete(
       `user/${updatedUser?.id}`, Auth
     );
-    if (response.status === 200) {
+    if (response.status === 200 || response.success === true) {
       enqueueSnackbar(t('user-deleted-successfully'), { variant: 'success' });
       router.push("/users");
 

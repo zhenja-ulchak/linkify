@@ -116,7 +116,7 @@ const DetailsTableDms: React.FC = () => {
                     enqueueSnackbar(message, { variant: variant });
                 }
             }
-            if (response.status === 200) {
+            if (response.status === 200 || response.success === true) {
                 enqueueSnackbar(t('dms-configuration-fetched-successfully'), { variant: 'success' });
             }
             if (response?.data && Array.isArray(response.data) && response.data[0] && Array.isArray(response.data[0]) && response.data[0][0]) {
@@ -163,7 +163,7 @@ const DetailsTableDms: React.FC = () => {
                 enqueueSnackbar(message, { variant: variant });
                 setOpen(false);
             }
-            if (response.status === 200) {
+            if (response.status === 200 || response.success === true) {
                 enqueueSnackbar(t('dms-configuration-updated-successfully'), { variant: 'success' });
                 setOpen(false);
             }

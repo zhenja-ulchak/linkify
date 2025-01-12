@@ -40,13 +40,13 @@ type Tenant = {
 };
 
 const TenantDetails: React.FC = () => {
- 
-    const id = useParams()
-    console.log(id.id);
+
+  const id = useParams()
+  console.log(id.id);
 
 
   const router = useRouter();
-
+  const [initialTenant, setInitialTenant] = useState<any>();
   const [openModal, setOpenModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [updatedTenant, setUpdatedTenant] = useState<Tenant>({
@@ -79,6 +79,12 @@ const TenantDetails: React.FC = () => {
   // Falls kein Benutzer gefunden wurde
   const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    
+    setInitialTenant((prevTenant: any) => ({
+      ...prevTenant,
+      [name]: value,
+    }))
+
     if (updatedTenant) {
       setUpdatedTenant({
         ...updatedTenant,
@@ -109,7 +115,7 @@ const TenantDetails: React.FC = () => {
       return;
     }
     const fetchElements = async () => {
-     
+
 
       const Auth: any = sessionStorage.getItem('AuthToken')
       const response: any = await ApiService.get(`tenant/${id.id}`, Auth)
@@ -121,7 +127,7 @@ const TenantDetails: React.FC = () => {
       }
 
 
-      if (response.status === 200) {
+      if (response.status === 200 || response.success === true) {
         enqueueSnackbar(t('tenant-details-fetched-successfully'), { variant: 'success' });
 
       }
@@ -133,39 +139,36 @@ const TenantDetails: React.FC = () => {
 
     fetchElements();
   }, [id]);
-  const Auth: any = sessionStorage.getItem('AuthToken')
 
 
-  const removeEmptyValues = (obj: { [s: string]: unknown; } | ArrayLike<unknown>) => {
-    return Object.fromEntries(
-      Object.entries(obj).filter(([key, value]) => value != null && value !== "")
-    );
-  };
-  const cleanedObject = removeEmptyValues(updatedTenant);
-
-  console.log(cleanedObject);
 
   const handleSaveChanges = async () => {
-    if (validateInputs()) {
 
-      try {
-        const response = await ApiService.put(
-          `tenant/${id}`,
-          cleanedObject, Auth
-        );
-        if (!response) {
-          console.log("Benutzerdaten gespeichert:", cleanedObject);
-          setIsEditing(false);
-        }
-      } catch (error) {
-        setError(t('Tenant.fehler-beim:') + error)
-      }
 
+    const Auth: any = sessionStorage.getItem('AuthToken')
+    const response: any = await ApiService.put(
+      `tenant/${id}`,
+      initialTenant, Auth
+    );
+
+    if (response instanceof Error) {
+      const { status, variant, message } = ApiService.CheckAndShow(response, t);
+      console.log(message);
+      // @ts-ignore
+      enqueueSnackbar(message, { variant: variant });
     }
+
+
+    if (response.status === 200 || response.success === true) {
+      enqueueSnackbar(t('tenant-deleted-successfully'), { variant: 'success' });
+    }
+
+
+
   };
 
   const handleDelete = async () => {
-
+    const Auth: any = sessionStorage.getItem('AuthToken')
     const response: any = await ApiService.delete(
       `tenant/${id}`, Auth
     );
@@ -177,7 +180,7 @@ const TenantDetails: React.FC = () => {
     }
 
 
-    if (response.status === 200) {
+    if (response.status === 200 || response.success === true) {
       enqueueSnackbar(t('tenant-deleted-successfully'), { variant: 'success' });
     }
 
@@ -325,7 +328,7 @@ const TenantDetails: React.FC = () => {
             }}
           >
             <Typography variant="h6" gutterBottom>
-            {t('Tenant.benutzerdaten')}
+              {t('Tenant.benutzerdaten')}
             </Typography>
 
             {error && <Typography color="error">{error}</Typography>}
