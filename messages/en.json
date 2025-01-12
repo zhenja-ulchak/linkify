@@ -218,7 +218,9 @@
     "save": "Save",
     "addnewdmsconfig": "Add new DMS configuration",
     "actions": "Actions",
-    "filterlist": "Filter list"
+    "filterlist": "Filter list",
+    "endpoint_url": "URL",
+    "endpoint_port": "Port"
   },
   "User-deteling":{
     "ok": "OK",

@@ -58,7 +58,9 @@
       "invoice-ort": "Город",
       "invoice-region": "Регион",
       "invoice-land": "Страна",
-      "invoice-adresszusatz": "Дополнительная информация об адресе"
+      "invoice-adresszusatz": "Дополнительная информация об адресе",
+      "Invoice_email": "Электронная почта для счетов",
+      "Contact_email": "Контактная электронная почта"
     },
     "Dms": {
       "username": "Имя пользователя",
@@ -216,7 +218,10 @@
       "save": "Сохранить",
       "addnewdmsconfig": "Добавить новую конфигурацию DMS",
       "actions": "Действия",
-      "filterlist": "Список фильтров"
+      "filterlist": "Список фильтров",
+     
+      "endpoint_url": "URL конечной точки",
+      "endpoint_port": "Порт"
     },
     "User-deteling": {
       "ok": "ОК",

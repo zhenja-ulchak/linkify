@@ -67,7 +67,7 @@ const DetailsTableDms: React.FC = () => {
     const [addNewDetails, setAddNewDetails] = useState<any>(false);
     const [open, setOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState(tenantDetails?.type);
-    console.log(tenantDetails?.type);
+    const [initialTenant, setInitialTenant] = useState<any>();
 
 
     const handleClickOpen = () => {
@@ -133,6 +133,11 @@ const DetailsTableDms: React.FC = () => {
     // Обробка змін в полях
     const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
+        
+        setInitialTenant((prevTenant: any) => ({
+            ...prevTenant,
+            [name]: value,
+        }))
 
         setUpdatedTenant({
             ...updatedTenant,
@@ -150,7 +155,7 @@ const DetailsTableDms: React.FC = () => {
         if (validateInputs(cleanedObject)) {
 
             const Auth: any = sessionStorage.getItem('AuthToken');
-            const response: any = await ApiService.put(`dms-config/${tenantDetails?.id}`, cleanedObject, Auth);
+            const response: any = await ApiService.put(`dms-config/${tenantDetails?.id}`, initialTenant, Auth);
             if (response instanceof Error) {
                 const { status, variant, message } = ApiService.CheckAndShow(response, t);
                 console.log(message);

@@ -58,6 +58,8 @@
       "invoice-ort": "Stadt",
       "invoice-region": "Region",
       "invoice-land": "Land",
+      "Invoice_email": "Rechnungs-E-Mail",
+      "Contact_email": "Kontakt-E-Mail",
       "invoice-adresszusatz": "Zusätzliche Adressinformationen"
     },
     "Dms": {
@@ -216,7 +218,9 @@
       "save": "Speichern",
       "addnewdmsconfig": "Neue DMS-Konfiguration hinzufügen",
       "actions": "Aktionen",
-      "filterlist": "Filterliste"
+      "filterlist": "Filterliste",
+      "endpoint_url": "URL des Endpunkts",
+      "endpoint_port": "Port"
     },
     "User-deteling": {
       "ok": "OK",

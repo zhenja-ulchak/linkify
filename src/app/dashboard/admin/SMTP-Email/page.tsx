@@ -168,11 +168,11 @@ const Administrator: React.FC = () => {
       setEmailConfig(data);
 
       // Синхронізація станів
-      setSmtpServer(data.username || "");
-      setSmtpPort(data.port || 0);
-      setEncryption(data.encryption || "");
-      setUsername(data.username || "");
-      setEmail(data.from_address || "");
+      setSmtpServer(data?.username || "");
+      setSmtpPort(data?.port || 0);
+      setEncryption(data?.encryption || "");
+      setUsername(data?.username || "");
+      setEmail(data?.from_address || "");
 
       if (response instanceof Error) {
         const { status, variant, message } = apiService.CheckAndShow(response, t);

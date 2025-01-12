@@ -58,6 +58,8 @@
       "invoice-ort": "城市",
       "invoice-region": "地区",
       "invoice-land": "国家",
+      "Invoice_email": "发票电子邮件",
+      "Contact_email": "联系电子邮件",
       "invoice-adresszusatz": "附加地址信息"
     },
     "Dms": {
@@ -216,7 +218,10 @@
       "save": "保存",
       "addnewdmsconfig": "添加新DMS配置",
       "actions": "操作",
-      "filterlist": "過濾器列表"
+      "filterlist": "過濾器列表",
+
+      "endpoint_url": "端点 URL",
+      "endpoint_port": "端口"
     },
     "User-deteling": {
       "ok": "确定",

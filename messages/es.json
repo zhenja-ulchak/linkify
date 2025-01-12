@@ -58,6 +58,8 @@
       "invoice-ort": "Ciudad",
       "invoice-region": "Región",
       "invoice-land": "País",
+      "Invoice_email": "Correo electrónico de la factura",
+      "Contact_email": "Correo electrónico de contacto",
       "invoice-adresszusatz": "Información adicional de la dirección"
     },
     "Dms": {
@@ -216,7 +218,10 @@
       "save": "Guardar",
       "addnewdmsconfig": "Agregar nueva configuración DMS",
       "actions": "Acciones",
-      "filterlist": "Lista de filtros"
+      "filterlist": "Lista de filtros",
+
+      "endpoint_url": "URL del punto final",
+      "endpoint_port": "Puerto"
     },
     "User-deteling": {
       "ok": "OK",
@@ -305,7 +310,7 @@
     "save": "Guardar",
     "address-registration": "Dirección de registro",
     "invoice-address": "Dirección de facturación",
-"phone": "Número de teléfono",
+    "phone": "Número de teléfono",
     "details-registration": "Detalles de registro"
   },
   "LocaleSwitcher": {
