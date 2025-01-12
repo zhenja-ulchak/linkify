@@ -26,8 +26,8 @@ import { enqueueSnackbar } from "notistack";
 const Login: React.FC = () => {
   const router = useRouter();
 
-  const [username, setUsername] = useState("super.admin@tenant2.com"); // super.admin@tenant2.com          superadmin     super-zhenja@ukr.net          alice.smith@example.com user   john.doe@example.com
-  const [password, setPassword] = useState("password123");
+  const [username, setUsername] = useState("super-zhenja@ukr.net"); // super.admin@tenant2.com          superadmin     super-zhenja@ukr.net          alice.smith@example.com user   john.doe@example.com
+  const [password, setPassword] = useState("123456789Qq@");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // Track login status

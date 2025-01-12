@@ -96,7 +96,12 @@ const DMSDialog = () => {
         const cleanedObject = removeEmptyValues(updatedTenant);
 
         const Auth: any = sessionStorage.getItem('AuthToken');
+        console.log(cleanedObject);
+        
         const response: any = await ApiService.post(`dms-config`, cleanedObject, Auth);
+
+        console.log(response);
+        
         if (response instanceof Error) {
             const { status, variant, message } = ApiService.CheckAndShow(response, t);
             console.log(message);

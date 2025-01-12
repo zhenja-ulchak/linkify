@@ -9,7 +9,7 @@ import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import AddIcon from "@mui/icons-material/Add";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ApiService from "../../../../src/app/services/apiService";
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, TextField, Button, IconButton, FormControl, InputLabel, Select, MenuItem, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, TextField, Button, IconButton, FormControl, InputLabel, Select, MenuItem, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid, SliderValueLabel } from '@mui/material';
 import { enqueueSnackbar } from "notistack";
 import { useTranslations } from 'next-intl';
 import AccountingDialog from "@/components/modal/AccountingSoftwareDialog";
@@ -76,7 +76,7 @@ const DetailsTable: React.FC = () => {
         updated_at: "",
         deleted_at: null,
     });
-    console.log(tenantDetails);
+    const [initialTenant, setInitialTenant] = useState<any>();
 
 
     const handleClickOpen = () => {
@@ -114,6 +114,8 @@ const DetailsTable: React.FC = () => {
 
             const Auth: any = sessionStorage.getItem('AuthToken');
             const response: any = await ApiService.get(`accounting-software/${id.id}`, Auth); //${id}
+            console.log(id);
+            
            console.log(response);
            
             
@@ -133,11 +135,11 @@ const DetailsTable: React.FC = () => {
 
             if (response.status === 200) {
                 enqueueSnackbar(t('accounting-entry-updated-successfully'), { variant: 'success' });
-                setTenantDetails(response.data[0]);
+                setTenantDetails(response.data);
             }
 
-            if (response?.data && response.data[0]) {
-                setTenantDetails(response.data[0]);
+            if (response?.data && response.data) {
+                setTenantDetails(response.data);
             } else {
                 setAddNewDetails(true)
             }
@@ -152,6 +154,11 @@ const DetailsTable: React.FC = () => {
     const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
 
+        setInitialTenant((prevTenant: any) => ({
+            ...prevTenant,
+            [name]: value,
+        }))
+        
         setUpdatedTenant((prevTenant) => ({
             ...prevTenant,
             [name]: value,
@@ -159,21 +166,19 @@ const DetailsTable: React.FC = () => {
 
     };
 
-
+   console.log(initialTenant);
+   
 
     const handleSaveChanges = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const cleanedObject = removeEmptyValues(updatedTenant);
-        // if (!validateInputs(cleanedObject)) {
-        //     enqueueSnackbar("Please fill all required fields.", { variant: "error" });
-        //     return;
-        // }
+       
+    
 
         const Auth: any = sessionStorage.getItem('AuthToken');
-        console.log(cleanedObject);
+  
         
-        const response: any = await ApiService.put(`accounting-software`, cleanedObject, Auth);
+        const response: any = await ApiService.put(`accounting-software/${id.id}`, initialTenant, Auth);
         if (response instanceof Error) {
             const { status, variant, message } = ApiService.CheckAndShow(response, t);
             console.log(message);
@@ -182,22 +187,17 @@ const DetailsTable: React.FC = () => {
             setOpen(false);
         }
 
-        if (response.status === 200) {
+        if (response.status === 200 || response.success === true) {
             enqueueSnackbar('Accounting entry updated successfully!', { variant: 'success' });
             setOpen(false);
         }
         // @ts-ignore
-        setTenantDetails(cleanedObject);
+        setTenantDetails(response.data[0]);
         setIsEditing(false);
 
     };
 
 
-
-    // Очищення об'єкта від порожніх значень
-    const removeEmptyValues = (obj: any) => {
-        return Object.fromEntries(Object.entries(obj).filter(([key, value]) => value != null && value !== ""));
-    };
     const handleDelete = async () => {
 
         const Auth: any = sessionStorage.getItem('AuthToken');
@@ -242,7 +242,7 @@ const DetailsTable: React.FC = () => {
                 url: tenantDetails.url || "",
                 organization_id: tenantDetails.organization_id || "0",
                 // @ts-ignore
-                event_type: tenantDetails.event_type || "",
+                event_type: tenantDetails.event_type.document || "",
                 description: tenantDetails.description || "",
                 is_active: tenantDetails.is_active,
 
@@ -297,7 +297,7 @@ const DetailsTable: React.FC = () => {
                                                             <TableCell>{t('Accounting-Software.event-type')}</TableCell>
                                                             <TableCell>{
                                                                   // @ts-ignore
-                                                            tenantDetails.event_type ?? "N/A"}</TableCell>
+                                                            tenantDetails.event_type.document ?? "N/A"}</TableCell>
                                                         </TableRow>
                                                         <TableRow>
                                                             <TableCell>{t('Accounting-Software.description')}</TableCell>
@@ -414,7 +414,7 @@ const DetailsTable: React.FC = () => {
                                         name="event_type"
                                         value={
                                                // @ts-ignore
-                                            updatedTenant?.event_type || ""}
+                                               updatedTenant?.event_type ?   updatedTenant?.event_type || '':  updatedTenant?.event_type?.document || ''}
                                         onChange={handleEditChange}
                                     />
                                 </Box>

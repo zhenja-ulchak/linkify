@@ -42,7 +42,7 @@ const DetailsTableDms: React.FC = () => {
     const router = useRouter();
  
     const id = useParams()
-    console.log(id.id);
+    console.log(id);
 
     const t = useTranslations('API');
 
@@ -97,16 +97,13 @@ const DetailsTableDms: React.FC = () => {
 
     // Для отримання даних про користувача
     useEffect(() => {
-        // if (!id) {
-        //     console.error('Недійсний ID');
-        //     return;
-        // }
         const fetchTenantDetails = async () => {
            
-
-
             const Auth: any = sessionStorage.getItem('AuthToken');
             const response: any = await ApiService.get(`dms-config/${id.id}`, Auth); //${id.id}
+         
+            console.log(response);
+            
             if (response instanceof Error) {
                 const { status, variant, message } = ApiService.CheckAndShow(response, t);
 

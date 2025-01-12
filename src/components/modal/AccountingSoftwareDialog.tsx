@@ -42,7 +42,7 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
         type: '',
         url: "",
         organization_id: "",
-        event_type: null,
+        event_type: {"document":"invoice"},
         description: "",
         is_active: 0,
 
@@ -95,7 +95,6 @@ const AccountingDialog = ({ tenantDetails }: AccountingType) => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const cleanedObject = removeEmptyValues(updatedTenant);
-
         const Auth: any = sessionStorage.getItem('AuthToken');
         const response: any = await ApiService.post(`accounting-software`, cleanedObject, Auth);
         if (response instanceof Error) {
