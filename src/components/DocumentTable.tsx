@@ -186,21 +186,20 @@ const DocumentTable: React.FC = () => {
         <>
             <TableContainer component={Paper} sx={{ width: '95%', marginLeft: '86px', marginTop: '16px' }}>
                 <Typography variant="h5" align="center" sx={{ fontWeight: 'bold', fontSize: '1.5rem', marginBottom: '16px' }}>
-                    Invoice Table
+                    {t('invoiceTable.title')}
                 </Typography>
                 <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: '16px', width: '100%', margin: '13px auto', float: 'left', marginLeft: '15px' }}>
                     <TextField
-                        label="Global Search"
+                        label={t('invoiceTable.globalSearch')}
                         value={globalSearch}
                         onChange={handleGlobalSearchChange}
                         sx={{ width: '12%', marginRight: '16px' }}
                     />
                     <Box sx={{ width: '70%', float: 'left' }}>
-
                         <FormControl sx={{ width: '20%', marginRight: '16px' }}>
-                            <InputLabel>Company/Portal</InputLabel>
+                            <InputLabel>{t('invoiceTable.companyPortal')}</InputLabel>
                             <Select value={selectedCompany} onChange={handleCompanyChange}>
-                                <MenuItem value="">All</MenuItem>
+                                <MenuItem value="">{t('invoiceTable.all')}</MenuItem>
                                 {companies.map((company, index) => (
                                     <MenuItem key={index} value={company}>
                                         {company}
@@ -209,30 +208,30 @@ const DocumentTable: React.FC = () => {
                             </Select>
                         </FormControl>
                         <FormControl sx={{ width: '20%', marginRight: '16px' }}>
-                            <InputLabel>Status Account</InputLabel>
+                            <InputLabel>{t('invoiceTable.statusAccount')}</InputLabel>
                             <Select value={selectedStatus} onChange={handleStatusChange}>
-                                <MenuItem value="">All</MenuItem>
-                                <MenuItem value="true">True</MenuItem>
-                                <MenuItem value="false">False</MenuItem>
+                                <MenuItem value="">{t('invoiceTable.all')}</MenuItem>
+                                <MenuItem value="true">{t('invoiceTable.yes')}</MenuItem>
+                                <MenuItem value="false">{t('invoiceTable.no')}</MenuItem>
                             </Select>
                         </FormControl>
                         <FormControl sx={{ width: '20%', marginRight: '16px' }}>
-                            <InputLabel>DMS Document Status</InputLabel>
+                            <InputLabel>{t('invoiceTable.dmsDocumentStatus')}</InputLabel>
                             <Select
                                 value={selectedDmsStatus}
                                 onChange={(event: SelectChangeEvent<string>) =>
                                     setSelectedDmsStatus(event.target.value)
                                 }
                             >
-                                <MenuItem value="">All</MenuItem>
-                                <MenuItem value="true">True</MenuItem>
-                                <MenuItem value="false">False</MenuItem>
+                                <MenuItem value="">{t('invoiceTable.all')}</MenuItem>
+                                <MenuItem value="true">{t('invoiceTable.yes')}</MenuItem>
+                                <MenuItem value="false">{t('invoiceTable.no')}</MenuItem>
                             </Select>
                         </FormControl>
-                        <FormControl sx={{ width: '20%', }}>
-                            <InputLabel>Sync Account</InputLabel>
+                        <FormControl sx={{ width: '20%' }}>
+                            <InputLabel>{t('invoiceTable.syncAccount')}</InputLabel>
                             <Select value={selectedSyncAccount} onChange={handleSyncAccountChange}>
-                                <MenuItem value="">All</MenuItem>
+                                <MenuItem value="">{t('invoiceTable.all')}</MenuItem>
                                 {syncAccounts.map((account, index) => (
                                     <MenuItem key={index} value={account}>
                                         {account}
@@ -240,47 +239,41 @@ const DocumentTable: React.FC = () => {
                                 ))}
                             </Select>
                         </FormControl>
-
                     </Box>
-
                     <Button
                         sx={{ width: '10%', margin: 'auto' }}
                         variant="contained"
-                        color={synced ? 'success' : 'error'} // Зелений якщо синхронізовано, червоний якщо ні
+                        color={synced ? 'success' : 'error'}
                         onClick={handleSyncClick}
-                        disabled={loading} // Вимикає кнопку під час синхронізації
+                        disabled={loading}
                         startIcon={loading ? <CircularProgress size={20} color="inherit" /> : <Sync />}
                     >
-                        {loading ? 'Синхронізація...' : synced ? 'Синхронізовано' : 'Синхронізувати'}
+                        {loading ? t('invoiceTable.synchronizing') : synced ? t('invoiceTable.synchronized') : t('invoiceTable.sync')}
                     </Button>
                 </Box>
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Company/Portal</TableCell>
-                            <TableCell>Invoice Number</TableCell>
-                            <TableCell>icon</TableCell>
-                            <TableCell>Invoice Date</TableCell>
-                            <TableCell>Sync Account</TableCell>
-                            <TableCell>Status Account</TableCell>
-                            <TableCell>Status DMS</TableCell>
-                            <TableCell>Date+Time</TableCell>
-                            {/* <TableCell>Actions</TableCell> */}
+                            <TableCell>{t('invoiceTable.companyPortal')}</TableCell>
+                            <TableCell>{t('invoiceTable.invoiceNumber')}</TableCell>
+                            <TableCell>{t('invoiceTable.icon')}</TableCell>
+                            <TableCell>{t('invoiceTable.invoiceDate')}</TableCell>
+                            <TableCell>{t('invoiceTable.syncAccount')}</TableCell>
+                            <TableCell>{t('invoiceTable.statusAccount')}</TableCell>
+                            <TableCell>{t('invoiceTable.statusDms')}</TableCell>
+                            <TableCell>{t('invoiceTable.dateTime')}</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {paginatedInvoices.length !== 0 ?
-
                             paginatedInvoices.map((invoice) => (
                                 <TableRow key={invoice.id}>
                                     <>
-
                                         <TableCell>{invoice?.accounting_name}</TableCell>
                                         <TableCell>{invoice?.document_name}.{invoice?.document_extension}</TableCell>
                                         <TableCell>{renderFileIcon(invoice?.document_mime_type)}</TableCell>
                                         <TableCell>{invoice?.accounting_document_date}</TableCell>
                                         <TableCell>{invoice?.dms_name}</TableCell>
-
                                         <TableCell>
                                             <div style={{
                                                 width: '20px',
@@ -300,22 +293,12 @@ const DocumentTable: React.FC = () => {
                                             }}></div>
                                         </TableCell>
                                         <TableCell>{invoice?.accounting_document_date}</TableCell>
-                                        {/* <TableCell>
-                                    <IconButton color="primary">
-                                        <Edit />
-                                    </IconButton>
-                                    <IconButton color="error">
-                                        <Delete />
-                                    </IconButton>
-                                </TableCell> */}
-
                                     </>
                                 </TableRow>
                             )) :
-
                             (<TableRow>
                                 <TableCell colSpan={8} style={{ textAlign: 'center', padding: '16px' }}>
-                                    Not Found
+                                    {t('invoiceTable.notFound')}
                                 </TableCell>
                             </TableRow>)
                         }
@@ -330,6 +313,7 @@ const DocumentTable: React.FC = () => {
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
+
             </TableContainer>
         </>
     );
