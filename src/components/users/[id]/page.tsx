@@ -100,6 +100,7 @@ const UserDetail: React.FC = () => {
 
 
   const handleSaveChanges = async () => {
+console.log(initialTenant);
 
 
     const response: any = await ApiService.put(
@@ -290,7 +291,7 @@ const UserDetail: React.FC = () => {
       {
         isEditing && (
           <Dialog open={isEditing} onClose={() => setIsEditing(false)} fullWidth>
-            <DialogTitle>{t('User-Update')}</DialogTitle>
+            <DialogTitle>{t('user-update')}</DialogTitle>
             <DialogContent>
               {error && <Typography color="error">{error}</Typography>}
               <Typography variant="body1" component="span" id="alert-dialog-description">

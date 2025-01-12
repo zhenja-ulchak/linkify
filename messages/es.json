@@ -281,7 +281,7 @@
     "tenant-information-fetched-successfully": "¡La información del inquilino se ha obtenido con éxito!",
     "tenant-details-fetched-successfully": "¡Los detalles del inquilino con ID ${id} se han obtenido con éxito!",
     "tenant-deleted-successfully": "¡El inquilino con ID ${id} se ha eliminado con éxito!",
-    "user-details-fetched-successfully": "¡Los detalles del usuario con ID ${id} se han obtenido con éxito!",
+    "user-details-fetched-successfully": "¡Los detalles del usuario con ID se han obtenido con éxito!",
     "new-user-created-successfully": "¡El nuevo usuario se ha creado con éxito!",
     "user-deleted-successfully": "¡El usuario con ID ${id} se ha eliminado con éxito!",
     "accounting-data-update-successfully": "¡Los datos contables se actualizaron con éxito!",

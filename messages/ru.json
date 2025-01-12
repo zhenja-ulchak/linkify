@@ -281,7 +281,7 @@
     "tenant-information-fetched-successfully": "Информация об арендаторе успешно получена!",
     "tenant-details-fetched-successfully": "Детали арендатора с ID ${id} успешно получены!",
     "tenant-deleted-successfully": "Арендатор с ID ${id} успешно удален!",
-    "user-details-fetched-successfully": "Детали пользователя с ID ${id} успешно получены!",
+    "user-details-fetched-successfully": "Детали пользователя с ID успешно получены!",
     "new-user-created-successfully": "Новый пользователь успешно создан!",
     "user-deleted-successfully": "Пользователь с ID ${id} успешно удален!",
     "accounting-data-update-successfully": "Данные бухгалтерского учета успешно обновлены!",

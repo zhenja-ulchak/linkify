@@ -79,7 +79,7 @@ const TenantDetails: React.FC = () => {
   // Falls kein Benutzer gefunden wurde
   const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    
+
     setInitialTenant((prevTenant: any) => ({
       ...prevTenant,
       [name]: value,
@@ -93,27 +93,10 @@ const TenantDetails: React.FC = () => {
     }
   };
 
-  // Validierung der Benutzereingaben
-  const validateInputs = () => {
-    if (
-      // !updatedTenant.company_name ||
-      // !updatedTenant.address ||
-      // !updatedTenant.invoice_address ||
-      !updatedTenant.contact_email ||
-      !updatedTenant.invoice_email
-    ) {
-      setError(t('Tenant.alle-felder'));
-      return false;
-    }
-    setError("");
-    return true;
-  };
+
 
   useEffect(() => {
-    if (!id) {
-      setError(t('Tenant.alle-felder'));
-      return;
-    }
+
     const fetchElements = async () => {
 
 
@@ -143,11 +126,12 @@ const TenantDetails: React.FC = () => {
 
 
   const handleSaveChanges = async () => {
+    console.log(initialTenant);
 
 
     const Auth: any = sessionStorage.getItem('AuthToken')
     const response: any = await ApiService.put(
-      `tenant/${id}`,
+      `tenant/${id.id}`,
       initialTenant, Auth
     );
 
