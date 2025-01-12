@@ -48,7 +48,7 @@ const dmsOptions = [
 const DetailsTable: React.FC = () => {
     const router = useRouter();
 
-    const searchParams = useSearchParams();
+
     const id = useParams()
     console.log(id.id);
     
@@ -114,6 +114,7 @@ const DetailsTable: React.FC = () => {
 
             const Auth: any = sessionStorage.getItem('AuthToken');
             const response: any = await ApiService.get(`accounting-software/${id.id}`, Auth); //${id}
+           console.log(response);
            
             
             if (response instanceof Error) {

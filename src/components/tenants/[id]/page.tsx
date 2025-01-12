@@ -40,8 +40,10 @@ type Tenant = {
 };
 
 const TenantDetails: React.FC = () => {
-    const searchParams = useSearchParams();
-    const id = searchParams.get('id');
+ 
+    const id = useParams()
+    console.log(id.id);
+
 
   const router = useRouter();
 
@@ -110,7 +112,7 @@ const TenantDetails: React.FC = () => {
      
 
       const Auth: any = sessionStorage.getItem('AuthToken')
-      const response: any = await ApiService.get(`tenant/${id}`, Auth)
+      const response: any = await ApiService.get(`tenant/${id.id}`, Auth)
       if (response instanceof Error) {
         const { status, variant, message } = ApiService.CheckAndShow(response, t);
 

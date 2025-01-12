@@ -40,8 +40,9 @@ const dmsOptions = [
 
 const DetailsTableDms: React.FC = () => {
     const router = useRouter();
-    const searchParams = useSearchParams();
-    const id = searchParams.get('id'); 
+ 
+    const id = useParams()
+    console.log(id.id);
 
     const t = useTranslations('API');
 
@@ -105,7 +106,7 @@ const DetailsTableDms: React.FC = () => {
 
 
             const Auth: any = sessionStorage.getItem('AuthToken');
-            const response: any = await ApiService.get(`dms-config`, Auth); //${id}
+            const response: any = await ApiService.get(`dms-config/${id.id}`, Auth); //${id.id}
             if (response instanceof Error) {
                 const { status, variant, message } = ApiService.CheckAndShow(response, t);
 
