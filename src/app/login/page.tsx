@@ -21,19 +21,20 @@ import LocaleSwitcher from '../../app/../components/LocaleSwitcher'; // Import L
 // @ts-expect-error
 import CryptoJS from 'crypto-js';
 import { enqueueSnackbar } from "notistack";
+import useBooleanStore from "@/store/userStore";
 
 
 const Login: React.FC = () => {
   const router = useRouter();
 
-  const [username, setUsername] = useState("super-zhenja@ukr.net"); // super.admin@tenant2.com          superadmin     super-zhenja@ukr.net          alice.smith@example.com user   john.doe@example.com
-  const [password, setPassword] = useState("123456789Qq@");
+  const [username, setUsername] = useState("john.doe@example.com"); // super.admin@tenant2.com          superadmin     super-zhenja@ukr.net          alice.smith@example.com user   john.doe@example.com
+  const [password, setPassword] = useState("password123");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // Track login status
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null); // State to track the remaining time
   const t = useTranslations('API'); // Переводы для компонента логина
-
+  const { setIsSynced }: any = useBooleanStore();
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
@@ -61,9 +62,10 @@ const Login: React.FC = () => {
         // @ts-ignore
         enqueueSnackbar(message, { variant: variant });
       } else {
-
-
-
+        // @ts-ignore
+        const booleanDebag = resp?.data[0]?.debug
+            
+        setIsSynced({ open: booleanDebag })
         if (resp?.data?.length > 0 && resp.data[0]?.tanant) {
           sessionStorage.setItem('tenant', JSON.stringify(resp.data[0]?.tanant.license_valid_until));
         }
@@ -143,7 +145,7 @@ const Login: React.FC = () => {
         enqueueSnackbar(message, { variant: variant });
       }
 
-      if (response.status === 200) {
+      if (response.status === 200 || response.success === true) {
         enqueueSnackbar(t('Settings.change-password'), { variant: 'success' });
       }
     }
@@ -277,7 +279,7 @@ const Login: React.FC = () => {
                 <Button
                   variant="contained"
                   color="primary"
-                  style={{ width: "100%",height: '100%', background: '#050f32'  }}
+                  style={{ width: "100%", height: '100%', background: '#050f32' }}
 
                 >
                   {t("return-to-the-info-page")}

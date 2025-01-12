@@ -78,7 +78,7 @@ export default function TableHelperUserList({ title }: TableHelperType) {
                 enqueueSnackbar(message, { variant: variant });
             }
 
-            if (response.status === 200) {
+            if (response.status === 200 || response.success === true) {
                 enqueueSnackbar(t('user-list-fetched-successfully'), { variant: 'success' });
             }
 

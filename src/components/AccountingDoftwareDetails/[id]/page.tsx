@@ -133,7 +133,7 @@ const DetailsTable: React.FC = () => {
               
             }
 
-            if (response.status === 200) {
+            if (response.status === 200 || response.success === true) {
                 enqueueSnackbar(t('accounting-entry-updated-successfully'), { variant: 'success' });
                 setTenantDetails(response.data);
             }

@@ -72,7 +72,7 @@ export default function Profile() {
       enqueueSnackbar(message, { variant: variant });
     }
 
-    if (response.status === 200) {
+    if (response.status === 200 || response.success === true) {
       enqueueSnackbar(t('profile-updated-successfully'), { variant: 'success' });
       router.push('/login');
     }
@@ -90,7 +90,7 @@ export default function Profile() {
         enqueueSnackbar(message, { variant: variant });
       }
 
-      if (response.status === 200) {
+      if (response.status === 200 || response.success === true) {
         enqueueSnackbar(t('profile-data-fetched-successfully'), { variant: 'success' });
       }
     };
