@@ -1,125 +1,141 @@
 import React, { useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Typography, Dialog, DialogTitle, DialogContent, Box, TextField, DialogActions, Button } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Typography, Select, MenuItem, FormControl, InputLabel, Box, TextField, TablePagination } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material';
-import { useTranslations } from 'next-intl';
-import ConfirmDeleteModal from './modal/ConfirmDeleteModal';
+import { SelectChangeEvent } from '@mui/material';
 
-interface Document {
+interface Invoice {
     id: number;
-    name: string;
-    type: string;
-    size: string;
-    mimeType: string;
-    docName: string;
-    docType: string;
-    docDescription: string;
-    docVersion: string;
-    docParentID: string;
-    docLastChangeAt: string;
-    syncDms: boolean;
-    syncAccounting: boolean;
-    createdAt: string;
+    companyPortal: string;
+    invoiceNumber: string;
+    invoiceDate: string;
+    syncAccount: string;
+    status: string;
+    dateTime: string;
 }
 
-const documents: Document[] = [
-    { id: 1, name: 'Document 1', type: 'PDF', size: '1 MB', mimeType: 'application/pdf', docName: 'Doc 1', docType: 'Type 1', docDescription: 'Description 1', docVersion: '1.0', docParentID: '001', docLastChangeAt: '2025-01-01', syncDms: true, syncAccounting: false, createdAt: '2025-01-01' },
-    { id: 2, name: 'Document 2', type: 'Word', size: '2 MB', mimeType: 'application/msword', docName: 'Doc 2', docType: 'Type 2', docDescription: 'Description 2', docVersion: '1.1', docParentID: '002', docLastChangeAt: '2025-01-02', syncDms: false, syncAccounting: true, createdAt: '2025-01-02' },
-    { id: 3, name: 'Document 3', type: 'Excel', size: '500 KB', mimeType: 'application/vnd.ms-excel', docName: 'Doc 3', docType: 'Type 3', docDescription: 'Description 3', docVersion: '1.2', docParentID: '003', docLastChangeAt: '2025-01-03', syncDms: true, syncAccounting: true, createdAt: '2025-01-03' },
+const invoices: Invoice[] = [
+    { id: 1, companyPortal: 'Unassigned', invoiceNumber: 'RE-1001', invoiceDate: '25.01.2019', syncAccount: 'sevDesk', status: 'green', dateTime: '25.01.2019 11:24' },
+    { id: 2, companyPortal: 'Amazon.de', invoiceNumber: 'AEU-INV-DE-2018-313308106', invoiceDate: '14.12.2018', syncAccount: 'sevDesk', status: 'green', dateTime: '25.01.2019 11:23' },
+    { id: 3, companyPortal: 'Telekom Deutschland GmbH', invoiceNumber: '24488224000871', invoiceDate: '11.12.2018', syncAccount: 'sevDesk', status: 'green', dateTime: '25.01.2019 11:23' },
 ];
 
 const DocumentTable: React.FC = () => {
-    const [open, setOpen] = useState(false);
-    const [documentsList, setDocumentsList] = useState(documents);
-    const [updatedTenant, setUpdatedTenant] = useState<any>(null);
-     const [openModal, setOpenModal] = useState(false);
- 
-    const t = useTranslations('Document-Table');
-    const tAPI = useTranslations('API');
+    const [selectedCompany, setSelectedCompany] = useState('');
+    const [selectedStatus, setSelectedStatus] = useState('');
+    const [selectedSyncAccount, setSelectedSyncAccount] = useState('');
+    const [globalSearch, setGlobalSearch] = useState('');
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(2);
 
-    const handleEdit = (id: number) => {
-        console.log(`Editing document with ID: ${id}`);
-        // Додайте код для редагування документа
+    const handleCompanyChange = (event: SelectChangeEvent<string>) => {
+        setSelectedCompany(event.target.value as string);
     };
 
-    const handleDelete = (id: number) => {
-        setDocumentsList(documentsList.filter(doc => doc.id !== id));
+    const handleStatusChange = (event: SelectChangeEvent<string>) => {
+        setSelectedStatus(event.target.value as string);
     };
 
-    const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-
-        setUpdatedTenant({
-            ...updatedTenant,
-            [name]: value,
-        });
+    const handleSyncAccountChange = (event: SelectChangeEvent<string>) => {
+        setSelectedSyncAccount(event.target.value as string);
     };
 
-    const handleClickOpen = () => {
-        setOpen(true);
+    const handleGlobalSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setGlobalSearch(event.target.value);
     };
 
-    const handleClose = () => {
-        setOpen(false);
+    const handleChangePage = (event: unknown, newPage: number) => {
+        setPage(newPage);
     };
 
-    const handleCloseModal = () => {
-        setOpenModal(false);
+    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    }
 
-    };
+    const filteredInvoices = invoices.filter((invoice) => {
+        const globalMatch =
+            invoice.companyPortal.toLowerCase().includes(globalSearch.toLowerCase()) ||
+            invoice.invoiceNumber.toLowerCase().includes(globalSearch.toLowerCase()) ||
+            invoice.invoiceDate.toLowerCase().includes(globalSearch.toLowerCase()) ||
+            invoice.syncAccount.toLowerCase().includes(globalSearch.toLowerCase()) ||
+            invoice.status.toLowerCase().includes(globalSearch.toLowerCase()) ||
+            invoice.dateTime.toLowerCase().includes(globalSearch.toLowerCase());
 
-   const handleDeleteModal = ()=>{
+        return (
+            globalMatch &&
+            (selectedCompany === '' || invoice.companyPortal === selectedCompany) &&
+            (selectedStatus === '' || invoice.status === selectedStatus) &&
+            (selectedSyncAccount === '' || invoice.syncAccount === selectedSyncAccount)
+        );
+    });
 
-   }
+
+    const paginatedInvoices = filteredInvoices.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+
+
     return (
         <>
-            <TableContainer component={Paper} sx={{ width: '95%', marginLeft: '86px' }}>
+            <TableContainer component={Paper} sx={{ width: '95%', marginLeft: '86px', marginTop: '16px' }}>
                 <Typography variant="h5" align="center" sx={{ fontWeight: 'bold', fontSize: '1.5rem', marginBottom: '16px' }}>
-                    {t('document-table')}
+                    Invoice Table
                 </Typography>
+                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: '16px', width: '80%', margin: '13px auto', float: 'left', marginLeft: '15px' }}>
+                    <TextField
+                        label="Global Search"
+                        value={globalSearch}
+                        onChange={handleGlobalSearchChange}
+                        sx={{ flex: 1, marginRight: '16px' }}
+                    />
+                    <FormControl sx={{ flex: 1, marginRight: '16px' }}>
+                        <InputLabel>Company/Portal</InputLabel>
+                        <Select value={selectedCompany} onChange={handleCompanyChange}>
+                            <MenuItem value="">All</MenuItem>
+                            <MenuItem value="Unassigned">Unassigned</MenuItem>
+                            <MenuItem value="Amazon.de">Amazon.de</MenuItem>
+                            <MenuItem value="Telekom Deutschland GmbH">Telekom Deutschland GmbH</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <FormControl sx={{ flex: 1, marginRight: '16px' }}>
+                        <InputLabel>Status</InputLabel>
+                        <Select value={selectedStatus} onChange={handleStatusChange}>
+                            <MenuItem value="">All</MenuItem>
+                            <MenuItem value="green">Green</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <FormControl sx={{ flex: 1 }}>
+                        <InputLabel>Sync Account</InputLabel>
+                        <Select value={selectedSyncAccount} onChange={handleSyncAccountChange}>
+                            <MenuItem value="">All</MenuItem>
+                            <MenuItem value="sevDesk">sevDesk</MenuItem>
+                        </Select>
+                    </FormControl>
+                </Box>
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>{t('id')}</TableCell>
-                            <TableCell>{t('ExtantanionType')}</TableCell>
-                            <TableCell>{t('Size')}</TableCell>
-                            <TableCell>{t('mimeType')}</TableCell>
-                            <TableCell>{t('docName')}</TableCell>
-                            <TableCell>{t('docType')}</TableCell>
-                            <TableCell>{t('docDescription')}</TableCell>
-                            <TableCell>{t('docVersion')}</TableCell>
-                            <TableCell>{t('docParentID')}</TableCell>
-                            <TableCell>{t('docLAstChangeAt')}</TableCell>
-                            <TableCell>{t('syncDms')}</TableCell>
-                            <TableCell>{t('syncAccounting')}</TableCell>
-                            <TableCell>{t('Actions')}</TableCell>
+                            <TableCell>Company/Portal</TableCell>
+                            <TableCell>Invoice Number</TableCell>
+                            <TableCell>Invoice Date</TableCell>
+                            <TableCell>Sync Account</TableCell>
+                            <TableCell>Status</TableCell>
+                            <TableCell>Date+Time</TableCell>
+                            <TableCell>Actions</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {documentsList.map((document) => (
-                            <TableRow key={document.id}>
-                                <TableCell>{document.id}</TableCell>
-                                <TableCell>{document.type}</TableCell>
-                                <TableCell>{document.size}</TableCell>
-                                <TableCell>{document.mimeType}</TableCell>
-                                <TableCell>{document.docName}</TableCell>
-                                <TableCell>{document.docType}</TableCell>
-                                <TableCell>{document.docDescription}</TableCell>
-                                <TableCell>{document.docVersion}</TableCell>
-                                <TableCell>{document.docParentID}</TableCell>
-                                <TableCell>{document.docLastChangeAt}</TableCell>
-                                <TableCell>{document.syncDms ? 'Yes' : 'No'}</TableCell>
-                                <TableCell>{document.syncAccounting ? 'Yes' : 'No'}</TableCell>
+                        {paginatedInvoices.map((invoice) => (
+                            <TableRow key={invoice.id}>
+                                <TableCell>{invoice.companyPortal}</TableCell>
+                                <TableCell>{invoice.invoiceNumber}</TableCell>
+                                <TableCell>{invoice.invoiceDate}</TableCell>
+                                <TableCell>{invoice.syncAccount}</TableCell>
+                                <TableCell>{invoice.status}</TableCell>
+                                <TableCell>{invoice.dateTime}</TableCell>
                                 <TableCell>
-                                    <IconButton color="primary" onClick={() => {
-                                        setOpen(true);
-                                        handleEdit(document.id);
-                                    }}>
+                                    <IconButton color="primary">
                                         <Edit />
                                     </IconButton>
-                                    <IconButton color="error" onClick={() =>{
-                                        setOpenModal(true)
-                                        handleDelete(document.id)
-                                    } }>
+                                    <IconButton color="error">
                                         <Delete />
                                     </IconButton>
                                 </TableCell>
@@ -127,134 +143,16 @@ const DocumentTable: React.FC = () => {
                         ))}
                     </TableBody>
                 </Table>
-            </TableContainer>
-            <ConfirmDeleteModal
-                    open={openModal}
-                    title={tAPI('Delete-Document')}
-                    handleDelete={handleDeleteModal}
-                    onClose={handleCloseModal}
-                    description={tAPI('delete-Document')}
-
+                <TablePagination
+                    rowsPerPageOptions={[5, 10, 15]}
+                    component="div"
+                    count={filteredInvoices.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
                 />
-            <Dialog open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description" fullWidth>
-                <DialogTitle id="alert-dialog-title">{"Update Document"}</DialogTitle>
-                <DialogContent>
-                    <Typography variant="body1" component="span" id="alert-dialog-description">
-                        <Box sx={{ marginBottom: 2, marginTop: "15px" }}>
-                            <TextField
-                                fullWidth
-                                label={t('id')}
-                                name="id"
-                                value={updatedTenant?.id || ''}
-                                onChange={handleEditChange}
-                            />
-                        </Box>
-                        <Box sx={{ marginBottom: 2 }}>
-                            <TextField
-                                fullWidth
-                                label={t('ExtantanionType')}
-                                name="type"
-                                value={updatedTenant?.type || ''}
-                                onChange={handleEditChange}
-                            />
-                        </Box>
-                        <Box sx={{ marginBottom: 2 }}>
-                            <TextField
-                                fullWidth
-                                label={t('Size')}
-                                name="size"
-                                value={updatedTenant?.size || ''}
-                                onChange={handleEditChange}
-                            />
-                        </Box>
-                        <Box sx={{ marginBottom: 2 }}>
-                            <TextField
-                                fullWidth
-                                label={t('mimeType')}
-                                name="mimeType"
-                                value={updatedTenant?.mimeType || ''}
-                                onChange={handleEditChange}
-                            />
-                        </Box>
-                        <Box sx={{ marginBottom: 2 }}>
-                            <TextField
-                                fullWidth
-                                label={t('docName')}
-                                name="docName"
-                                value={updatedTenant?.docName || ''}
-                                onChange={handleEditChange}
-                            />
-                        </Box>
-                        <Box sx={{ marginBottom: 2 }}>
-                            <TextField
-                                fullWidth
-                                label={t('docType')}
-                                name="docType"
-                                value={updatedTenant?.docType || ''}
-                                onChange={handleEditChange}
-                            />
-                        </Box>
-                        <Box sx={{ marginBottom: 2 }}>
-                            <TextField
-                                fullWidth
-                                label={t('docDescription')}
-                                name="docDescription"
-                                value={updatedTenant?.docDescription || ''}
-                                onChange={handleEditChange}
-                            />
-                        </Box>
-                        <Box sx={{ marginBottom: 2 }}>
-                            <TextField
-                                fullWidth
-                                label={t('docVersion')}
-                                name="docVersion"
-                                value={updatedTenant?.docVersion || ''}
-                                onChange={handleEditChange}
-                            />
-                        </Box>
-                        <Box sx={{ marginBottom: 2 }}>
-                            <TextField
-                                fullWidth
-                                label={t('docParentID')}
-                                name="docParentID"
-                                value={updatedTenant?.docParentID || ''}
-                                onChange={handleEditChange}
-                            />
-                        </Box>
-                        <Box sx={{ marginBottom: 2 }}>
-                            <TextField
-                                fullWidth
-                                label={t('docLAstChangeAt')}
-                                name="docLastChangeAt"
-                                value={updatedTenant?.docLastChangeAt || ''}
-                                onChange={handleEditChange}
-                            />
-                        </Box>
-                        <Box sx={{ marginBottom: 2 }}>
-                            <TextField
-                                fullWidth
-                                label={t('syncDms')}
-                                name="syncDms"
-                                value={updatedTenant?.syncDms ? 'Yes' : 'No'}
-                                onChange={handleEditChange}
-                            />
-                        </Box>
-                        <Box sx={{ marginBottom: 2 }}>
-                            <TextField
-                                fullWidth
-                                label={t('syncAccounting')}
-                                name="syncAccounting"
-                                value={updatedTenant?.syncAccounting ? 'Yes' : 'No'}
-                                onChange={handleEditChange}
-                            />
-                        </Box>
-                    </Typography>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button autoFocus>OK</Button>
-                </DialogActions>
-            </Dialog>
+            </TableContainer>
         </>
     );
 };

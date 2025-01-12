@@ -87,7 +87,10 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
    
         const getToken: any = sessionStorage.getItem('AuthToken');
         const response: any = await apiService.get("accounting-software", getToken)
-        setRows(response.data[0]);
+
+        console.log(response.data);
+        
+        setRows(response.data);
         if (response instanceof Error) {
           const { status, variant, message } = apiService.CheckAndShow(response, t);
           console.log(message);
@@ -337,6 +340,8 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
 
 
   const handleRowClick = (id: number) => {
+    console.log(id);
+    
     // enqueueSnackbar(`Ви обрали рядок з ID: ${id}`, { variant: 'info' });
     if (role === "admin") {
       router.push(`/dashboard/admin/accounting-software/${id}`);
@@ -512,7 +517,7 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
                           cursor: "pointer",
                           borderRadius: "15px",
                         }}
-                        onClick={() => handleRowClick(row.id)}
+                        onClick={() => handleRowClick(row.tenant_id)}
                       >
                         <VisibilityIcon />
                         <div style={{ position: "absolute", margin: "0", padding: "0", opacity: "0" }}>

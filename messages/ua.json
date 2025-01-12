@@ -51,7 +51,16 @@
       "benutzername": "Ім'я користувача",
       "email": "Електронна пошта",
       "passwort": "Пароль",
-      "passwort-bestatigen": "Підтвердіть пароль"
+      "passwort-bestatigen": "Підтвердіть пароль",
+      "invoice-adresse": "Вулиця",
+      "invoice-hausnummer": "Номер будинку",
+      "invoice-postleitzahl": "Поштовий індекс",
+      "invoice-ort": "Місто",
+      "invoice-region": "Регіон",
+      "invoice-land": "Країна",
+      "invoice-adresszusatz": "Додаткова адресна інформація",
+      "Invoice_email": "Електронна пошта для рахунків",
+      "Contact_email": "Контактна електронна пошта"
     },
     "Dms": {
       "username": "Ім'я користувача",
@@ -196,7 +205,7 @@
       "active": "Активний",
       "yes": "Так",
       "no": "Ні",
-      "endpoint-url": "URL кінцевої точки",
+      "endpoint-url": "URL",
       "username": "Ім'я користувача",
       "repository": "Репозиторій",
       "dms-config": "Конфігурація DMS",
@@ -209,7 +218,10 @@
       "save": "Зберегти",
       "addnewdmsconfig": "Додати нову конфігурацію DMS",
       "actions": "Дії",
-      "filterlist": "Список фільтрів"
+      "filterlist": "Список фільтрів",
+
+      "endpoint_url": "URL",
+      "endpoint_port": "Порт"
     },
     "User-deteling": {
       "ok": "ОК",
@@ -279,8 +291,28 @@
     "email-error": "Неправильна електронна адреса",
     "send-email": "Надіслати лист",
     "back-to-login": "Повернутися до входу?",
-    "invalidEmail":"Неправильна електронна адреса",
-    "dms-details":"Деталі DMS"
+    "invalidEmail": "Неправильна електронна адреса",
+    "dms-details": "Деталі DMS",
+    "return-to-the-info-page": "на інфо сторінку",
+    "profile": "Профіль",
+    "change-password": "Змінити пароль",
+    "Old-password": "Старий пароль",
+    "New-password": "Новий пароль",
+    "confirmation-password": "Підтвердження пароля",
+    "password-length-error": "Пароль повинен бути не менше 8 символів",
+    "password-mismatch": "Паролі не співпадають",
+    "Language": "Мова",
+    "UA": "Українська",
+    "RU": "Русский",
+    "EN": "English",
+    "ES": "Español",
+    "DE": "Deutsch",
+    "ZH": "中文 - Китайська",
+    "save": "Зберегти",
+    "address-registration": "Адреса реєстрації",
+    "invoice-address": "Адрес для виставлення рахунку",
+    "phone": "Номер телефону",
+    "details-registration": "Деталі реєстрації"
   },
   "LocaleSwitcher": {
     "en": "English",

@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { SelectChangeEvent } from '@mui/material';
+import { InputAdornment, SelectChangeEvent } from '@mui/material';
 import ApiService from "../../app/services/apiService";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, TextField, Button, IconButton, FormControl, InputLabel, Select, MenuItem, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid } from '@mui/material';
 import { enqueueSnackbar } from "notistack";
 import { useTranslations } from 'next-intl';
-
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 type TenantDetails = {
     id?: number;
@@ -15,6 +16,7 @@ type TenantDetails = {
     endpoint_url: string;
     username: string;
     api_key: string | null;
+    endpoint_port: string
     repository: string;
     extra_settings: string;  // Передбачається, що це JSON-рядок
     created_at: string;
@@ -24,7 +26,7 @@ type TenantDetails = {
 
 const dmsOptions = [
     "SharePoint",
-    "ecodms",,
+    "EcoDms", ,
     "DocuWare",
     "M-Files",
     "OpenText",
@@ -35,7 +37,10 @@ const dmsOptions = [
 
 
 const DMSDialog = () => {
-    const [isEditing, setIsEditing] = useState(false);
+    // const [isEditing, setIsEditing] = useState(false);
+    const [showPasswords, setShowPasswords] = useState<boolean>(false);
+    const [password, setPassword] = useState<string>("");
+    const [confirmPassword, setConfirmPassword] = useState<string>("");
     const [updatedTenant, setUpdatedTenant] = useState<any>({
         type: "",
         endpoint_url: "",
@@ -43,16 +48,22 @@ const DMSDialog = () => {
         api_key: null,
         repository: "",
         extra_settings: "",
+        endpoint_port: "",
         created_at: "",
         updated_at: "",
     });
 
-    const [addNewDetails, setAddNewDetails] = useState<any>(false);
-// @ts-ignore
+    // const [addNewDetails, setAddNewDetails] = useState<any>(false);
+    // @ts-ignore
     const [selectedOption, setSelectedOption] = useState<string>("");
     const t = useTranslations('API');
     const [open, setOpen] = useState(false);
 
+    const validatePassword = (password: string): boolean => {
+        const passwordRegex =
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*?])[A-Za-z\d!@#$%^&*?]{8,}$/;
+        return passwordRegex.test(password);
+    };
 
 
     const handleClickOpenUpdate = () => {
@@ -94,9 +105,37 @@ const DMSDialog = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const cleanedObject = removeEmptyValues(updatedTenant);
+        if (password !== confirmPassword) {
+            enqueueSnackbar(t('Registrierung.passworter'), { variant: 'error' });    
+        }
+    
+        if (!validatePassword(password)) {
+            enqueueSnackbar(t('Registrierung.pass-muss'), { variant: 'error' });
+        }
+
+
+console.log(  {
+    ...cleanedObject,
+    password,
+    "password_confirmation": password,
+  } );
+
 
         const Auth: any = sessionStorage.getItem('AuthToken');
-        const response: any = await ApiService.post(`dms-config`, cleanedObject, Auth);
+        console.log(cleanedObject);
+
+        const response: any = await ApiService.post(`dms-config`, 
+            
+          {
+            ...cleanedObject,
+            password,
+            "password_confirmation": password,
+          }  , Auth);
+
+        console.log(response);
+
+       
+
         if (response instanceof Error) {
             const { status, variant, message } = ApiService.CheckAndShow(response, t);
             console.log(message);
@@ -117,22 +156,22 @@ const DMSDialog = () => {
     const removeEmptyValues = (obj: any) => {
         return Object.fromEntries(Object.entries(obj).filter(([key, value]) => value != null && value !== ""));
     };
-//  useEffect(() => {
-//         if (tenantDetails) {
-//             setUpdatedTenant((prevTenant: any) => ({
-//                 ...prevTenant,
-//                 endpoint_url: tenantDetails.endpoint_url || "",
-//                 type: tenantDetails.type || "",
-//                 username: tenantDetails.username || "",
-//                 repository: tenantDetails.repository || "",
-//                 api_key: tenantDetails.api_key || "",
-//                 extra_settings: tenantDetails.extra_settings || "",
-//             }));
-//             if (tenantDetails && tenantDetails.type) {
-//                 setSelectedOption(tenantDetails.type); // Встановлюємо значення по умолчанию, якщо є
-//             } // Оновлення вибору в Select
-//         }
-//     }, [tenantDetails]);
+    //  useEffect(() => {
+    //         if (tenantDetails) {
+    //             setUpdatedTenant((prevTenant: any) => ({
+    //                 ...prevTenant,
+    //                 endpoint_url: tenantDetails.endpoint_url || "",
+    //                 type: tenantDetails.type || "",
+    //                 username: tenantDetails.username || "",
+    //                 repository: tenantDetails.repository || "",
+    //                 api_key: tenantDetails.api_key || "",
+    //                 extra_settings: tenantDetails.extra_settings || "",
+    //             }));
+    //             if (tenantDetails && tenantDetails.type) {
+    //                 setSelectedOption(tenantDetails.type); // Встановлюємо значення по умолчанию, якщо є
+    //             } // Оновлення вибору в Select
+    //         }
+    //     }, [tenantDetails]);
 
     return (
         <>
@@ -141,8 +180,8 @@ const DMSDialog = () => {
                     color="primary"
                     variant="contained"
                     onClick={handleClickOpenUpdate}
-                    title= {t('Accounting-Software.addNewAccountingSoftware')}
-                    
+                    title={t('Accounting-Software.addNewAccountingSoftware')}
+
                 >
                     {t('Accounting-Software.addnewdmsconfig')}
                 </Button>
@@ -156,11 +195,11 @@ const DMSDialog = () => {
             >
                 <form onSubmit={handleSubmit}>
                     <DialogTitle id="alert-dialog-title">
-                    {t('Accounting-Software.addnewdmsconfig')}
+                        {t('Accounting-Software.addnewdmsconfig')}
                     </DialogTitle>
                     <DialogContent>
                         <Typography variant="body1" component="span" id="alert-dialog-description">
-                            <Box sx={{ marginBottom: 2  , marginTop: "15px"}}>
+                            <Box sx={{ marginBottom: 2, marginTop: "15px" }}>
                                 <FormControl fullWidth>
                                     <InputLabel id="dms-select-label">{t('Accounting-Software.type')}</InputLabel>
                                     <Select
@@ -192,9 +231,31 @@ const DMSDialog = () => {
                             <Box sx={{ marginBottom: 2 }}>
                                 <TextField
                                     fullWidth
+                                    label={t('Accounting-Software.endpoint_url')}
+                                    name="endpoint_url"
+                                    value={updatedTenant.endpoint_url || ""}
+                                    onChange={handleInputChange}
+
+                                />
+                            </Box>
+
+                            <Box sx={{ marginBottom: 2 }}>
+                                <TextField
+                                    fullWidth
                                     label={t('Accounting-Software.repository')}
                                     name="repository"
                                     value={updatedTenant.repository || ""}
+                                    onChange={handleInputChange}
+
+                                />
+                            </Box>
+
+                            <Box sx={{ marginBottom: 2 }}>
+                                <TextField
+                                    fullWidth
+                                    label={t('Accounting-Software.endpoint_port')}
+                                    name="port"
+                                    value={""}
                                     onChange={handleInputChange}
 
                                 />
@@ -211,7 +272,62 @@ const DMSDialog = () => {
                                 />
                             </Box>
 
-                            <Box sx={{ marginBottom: 2 }}>
+                            <Grid item xs={12} sx={{ marginBottom: 2 }}>
+                                <TextField
+                                    label={t('Registrierung.passwort')}
+                                    type={showPasswords ? "text" : "password"}
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                    fullWidth
+                                    className="ContainerVisibility"
+
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    onClick={() => setShowPasswords(!showPasswords)}
+                                                >
+                                                    {showPasswords ? (
+                                                        <VisibilityOffIcon className="VisibilityOFF" />
+                                                    ) : (
+                                                        <VisibilityIcon className="VisibilityONN" />
+                                                    )}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    label={t('Registrierung.passwort-bestatigen')}
+                                    type={showPasswords ? "text" : "password"}
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    required
+                                    fullWidth
+                                    className="ContainerVisibility"
+
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    onClick={() => setShowPasswords(!showPasswords)}
+                                                >
+                                                    {showPasswords ? (
+                                                        <VisibilityOffIcon className="VisibilityOFF" />
+                                                    ) : (
+                                                        <VisibilityIcon className="VisibilityONN" />
+                                                    )}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                            </Grid>
+
+                            {/* <Box sx={{ marginBottom: 2 }}>
                                 <TextField
                                     fullWidth
                                     label={t('Accounting-Software.extra_settings')}
@@ -222,14 +338,14 @@ const DMSDialog = () => {
                                     multiline
                                     rows={4}
                                 />
-                            </Box>
+                            </Box> */}
                         </Typography>
                     </DialogContent>
 
                     <DialogActions>
                         <Button onClick={handleClose}>{t('Accounting-Software.cancel')}</Button>
                         <Button type="submit" autoFocus>
-                        {t('Accounting-Software.create')}
+                            {t('Accounting-Software.create')}
                         </Button>
                     </DialogActions>
                 </form>

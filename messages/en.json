@@ -51,7 +51,16 @@
     "benutzername": "Username",
     "email": "Email",
     "passwort": "Password",
-    "passwort-bestatigen": "Confirm password"
+    "passwort-bestatigen": "Confirm password",
+    "invoice-adresse": "Street",
+    "invoice-hausnummer": "House Number",
+    "invoice-postleitzahl": "Postal Code",
+    "invoice-ort": "City",
+    "invoice-region": "Region",
+    "invoice-land": "Country",
+    "invoice-adresszusatz": "Additional Address Information",
+    "Invoice_email": "Invoice email",
+    "Contact_email": "Contact email"
   },
   "Dms": {
     "username": "Username",
@@ -209,7 +218,9 @@
     "save": "Save",
     "addnewdmsconfig": "Add new DMS configuration",
     "actions": "Actions",
-    "filterlist": "Filter list"
+    "filterlist": "Filter list",
+    "endpoint_url": "URL",
+    "endpoint_port": "Port"
   },
   "User-deteling":{
     "ok": "OK",
@@ -281,7 +292,27 @@
   "send-email": "Send email",
   "back-to-login": "Back to login?",
   "invalidEmail":"Invalid email address",
-  "dms-details":"DMS details"
+  "dms-details":"DMS details",
+  "return-to-the-info-page": "info page",
+  "profile": "Profile",
+  "change-password": "Change password",
+  "Old-password": "Old password",
+  "New-password": "New password",
+  "confirmation-password": "Confirm password",
+  "password-length-error": "Password must be at least 8 characters long",
+  "password-mismatch": "Passwords do not match",
+  "Language": "Language",
+  "UA": "Ukrainian",
+  "RU": "Russian",
+  "EN": "English",
+  "ES": "Spanish",
+  "DE": "German",
+  "ZH": "中文 - Chinese",
+  "save": "Save",
+  "address-registration": "Registration Address",
+  "invoice-address": "Invoice Address",
+  "phone": "Phone number",
+  "details-registration": "Registration Details"
 }
 ,
   "LocaleSwitcher": {

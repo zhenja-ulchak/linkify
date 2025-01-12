@@ -51,7 +51,16 @@
       "benutzername": "Benutzername",
       "email": "E-Mail",
       "passwort": "Passwort",
-      "passwort-bestatigen": "Passwort bestätigen"
+      "passwort-bestatigen": "Passwort bestätigen",
+      "invoice-adresse": "Straße",
+      "invoice-hausnummer": "Hausnummer",
+      "invoice-postleitzahl": "Postleitzahl",
+      "invoice-ort": "Stadt",
+      "invoice-region": "Region",
+      "invoice-land": "Land",
+      "Invoice_email": "Rechnungs-E-Mail",
+      "Contact_email": "Kontakt-E-Mail",
+      "invoice-adresszusatz": "Zusätzliche Adressinformationen"
     },
     "Dms": {
       "username": "Benutzername",
@@ -209,7 +218,9 @@
       "save": "Speichern",
       "addnewdmsconfig": "Neue DMS-Konfiguration hinzufügen",
       "actions": "Aktionen",
-      "filterlist": "Filterliste"
+      "filterlist": "Filterliste",
+      "endpoint_url": "URL des Endpunkts",
+      "endpoint_port": "Port"
     },
     "User-deteling": {
       "ok": "OK",
@@ -279,8 +290,27 @@
     "email-error": "Ungültige E-Mail-Adresse",
     "send-email": "E-Mail senden",
     "back-to-login": "Zurück zum Login?",
-    "invalidEmail":"Ungültige E-Mail-Adresse",
-    "dms-details": "Details DMS"
+    "invalidEmail": "Ungültige E-Mail-Adresse",
+    "dms-details": "Details DMS",
+    "profile": "Profil",
+    "change-password": "Passwort ändern",
+    "Old-password": "Altes Passwort",
+    "New-password": "Neues Passwort",
+    "confirmation-password": "Passwort bestätigen",
+    "password-length-error": "Das Passwort muss mindestens 8 Zeichen lang sein",
+    "password-mismatch": "Die Passwörter stimmen nicht überein",
+    "Language": "Sprache",
+    "UA": "Ukrainisch",
+    "RU": "Russisch",
+    "EN": "Englisch",
+    "ES": "Spanisch",
+    "DE": "Deutsch",
+    "ZH": "中文 - Chinesisch",
+    "save": "Speichern",
+    "address-registration": "Registrierungsadresse",
+  "invoice-address": "Rechnungsadresse",
+ "phone": "Phone number",
+  "details-registration": "Registrierungsdetails"
   },
   "LocaleSwitcher": {
     "en": "English",

@@ -134,7 +134,7 @@ const Administrator: React.FC = () => {
       return;
     } else {
 
-      console.log('work');
+      console.log(email);
       const getToken: any = sessionStorage.getItem('AuthToken');
       const response: any = await apiService.post("service/test-email", { email }
         , getToken)
@@ -168,11 +168,11 @@ const Administrator: React.FC = () => {
       setEmailConfig(data);
 
       // Синхронізація станів
-      setSmtpServer(data.username || "");
-      setSmtpPort(data.port || 0);
-      setEncryption(data.encryption || "");
-      setUsername(data.username || "");
-      setEmail(data.from_address || "");
+      setSmtpServer(data?.username || "");
+      setSmtpPort(data?.port || 0);
+      setEncryption(data?.encryption || "");
+      setUsername(data?.username || "");
+      setEmail(data?.from_address || "");
 
       if (response instanceof Error) {
         const { status, variant, message } = apiService.CheckAndShow(response, t);
@@ -215,7 +215,7 @@ const Administrator: React.FC = () => {
         <Grid item xs={12} sm={6}>
           <TextField
             label={t("Smtp.smtp-email")}
-            value={smtpServer}
+            value={smtpServer || ''}
             onChange={(e) => setSmtpServer(e.target.value)}
             error={!!errors.smtpServer}
             helperText={errors.smtpServer}
@@ -229,11 +229,11 @@ const Administrator: React.FC = () => {
         <Grid item xs={12} sm={6}>
           <TextField
             label={t("Smtp.smtp-port2")}
-            value={smtpPort}
+            value={smtpPort || ''}
             onChange={(e) => setSmtpPort(e.target.value)}
             error={!!errors.smtpPort}
             helperText={errors.smtpPort}
-            required
+           
             fullWidth
             className="input-group"
           />
@@ -243,11 +243,11 @@ const Administrator: React.FC = () => {
         <Grid item xs={12} sm={6}>
           <TextField
             label={t("Smtp.art-der")}
-            value={encryption}
+            value={encryption || ''}
             onChange={(e) => setEncryption(e.target.value)}
             error={!!errors.encryption}
             helperText={errors.encryption}
-            required
+       
             fullWidth
             className="input-group"
           />
@@ -257,11 +257,11 @@ const Administrator: React.FC = () => {
         <Grid item xs={12} sm={6}>
           <TextField
             label={t("Smtp.benutzername2")}
-            value={username}
+            value={username || ''}
             onChange={(e) => setUsername(e.target.value)}
             error={!!errors.username}
             helperText={errors.username}
-            required
+       
             fullWidth
             className="input-group"
           />
@@ -271,7 +271,7 @@ const Administrator: React.FC = () => {
         <Grid item xs={12} sm={6}>
           <TextField
             label={t("Smtp.email-adresse")}
-            value={email}
+            value={email || ''}
             onChange={(e) => setEmail(e.target.value)}
             error={!!errors.email}
             helperText={errors.email}

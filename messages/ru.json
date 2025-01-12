@@ -51,7 +51,16 @@
       "benutzername": "Имя пользователя",
       "email": "Электронная почта",
       "passwort": "Пароль",
-      "passwort-bestatigen": "Подтвердите пароль"
+      "passwort-bestatigen": "Подтвердите пароль",
+      "invoice-adresse": "Улица",
+      "invoice-hausnummer": "Номер дома",
+      "invoice-postleitzahl": "Почтовый индекс",
+      "invoice-ort": "Город",
+      "invoice-region": "Регион",
+      "invoice-land": "Страна",
+      "invoice-adresszusatz": "Дополнительная информация об адресе",
+      "Invoice_email": "Электронная почта для счетов",
+      "Contact_email": "Контактная электронная почта"
     },
     "Dms": {
       "username": "Имя пользователя",
@@ -209,7 +218,10 @@
       "save": "Сохранить",
       "addnewdmsconfig": "Добавить новую конфигурацию DMS",
       "actions": "Действия",
-      "filterlist": "Список фильтров"
+      "filterlist": "Список фильтров",
+     
+      "endpoint_url": "URL конечной точки",
+      "endpoint_port": "Порт"
     },
     "User-deteling": {
       "ok": "ОК",
@@ -272,15 +284,34 @@
     "user-details-fetched-successfully": "Детали пользователя с ID ${id} успешно получены!",
     "new-user-created-successfully": "Новый пользователь успешно создан!",
     "user-deleted-successfully": "Пользователь с ID ${id} успешно удален!",
-    "accounting-data-update-successfully":"Данные бухгалтерского учета успешно обновлены!",
+    "accounting-data-update-successfully": "Данные бухгалтерского учета успешно обновлены!",
     "forgot-password": "Забыли пароль",
     "email-address": "Электронная почта",
     "enter-your-email": "Введите ваш адрес электронной почты",
     "email-error": "Неверный адрес электронной почты",
     "send-email": "Отправить письмо",
     "back-to-login": "Вернуться к входу?",
-    "invalidEmail":"Неверный адрес электронной почты",
-    "dms-details":"Детали DMS"
+    "invalidEmail": "Неверный адрес электронной почты",
+    "dms-details": "Детали DMS",
+    "profile": "Профиль",
+    "change-password": "Сменить пароль",
+    "Old-password": "Старый пароль",
+    "New-password": "Новый пароль",
+    "confirmation-password": "Подтверждение пароля",
+    "password-length-error": "Пароль должен содержать не менее 8 символов",
+    "password-mismatch": "Пароли не совпадают",
+    "Language": "Язык",
+    "UA": "Украинский",
+    "RU": "Русский",
+    "EN": "Английский",
+    "ES": "Испанский",
+    "DE": "Немецкий",
+    "ZH": "中文 - Китайский",
+    "save": "Сохранить",
+    "address-registration": "Адреса регистрации",
+    "invoice-address": "Адрес для выставления счета",
+    "details-registration": "Детали регистрации",
+    "phone": "Номер телефона"
   },
   "LocaleSwitcher": {
     "en": "English",

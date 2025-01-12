@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation"; // Для URL параметрів і маршрутизатора
+import { useParams, useRouter, useSearchParams } from "next/navigation"; // Для URL параметрів і маршрутизатора
 import axios from "axios";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -39,12 +39,14 @@ const dmsOptions = [
 ];
 
 const DetailsTableDms: React.FC = () => {
-    const { id } = useParams();
+    const router = useRouter();
+ 
+    const id = useParams()
     console.log(id);
 
     const t = useTranslations('API');
 
-    const router = useRouter();
+    
     const [openModal, setOpenModal] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     // const [open, setOpen] = React.useState(false);
@@ -65,7 +67,7 @@ const DetailsTableDms: React.FC = () => {
     const [addNewDetails, setAddNewDetails] = useState<any>(false);
     const [open, setOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState(tenantDetails?.type);
-    console.log(tenantDetails?.type);
+    const [initialTenant, setInitialTenant] = useState<any>();
 
 
     const handleClickOpen = () => {
@@ -96,14 +98,12 @@ const DetailsTableDms: React.FC = () => {
     // Для отримання даних про користувача
     useEffect(() => {
         const fetchTenantDetails = async () => {
-            if (!id) {
-                setError("Keine gültige ID angegeben.");
-                return;
-            }
-
-
+           
             const Auth: any = sessionStorage.getItem('AuthToken');
-            const response: any = await ApiService.get(`dms-config`, Auth); //${id}
+            const response: any = await ApiService.get(`dms-config/${id.id}`, Auth); //${id.id}
+         
+            console.log(response);
+            
             if (response instanceof Error) {
                 const { status, variant, message } = ApiService.CheckAndShow(response, t);
 
@@ -133,6 +133,11 @@ const DetailsTableDms: React.FC = () => {
     // Обробка змін в полях
     const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
+        
+        setInitialTenant((prevTenant: any) => ({
+            ...prevTenant,
+            [name]: value,
+        }))
 
         setUpdatedTenant({
             ...updatedTenant,
@@ -150,7 +155,7 @@ const DetailsTableDms: React.FC = () => {
         if (validateInputs(cleanedObject)) {
 
             const Auth: any = sessionStorage.getItem('AuthToken');
-            const response: any = await ApiService.put(`dms-config/${tenantDetails?.id}`, cleanedObject, Auth);
+            const response: any = await ApiService.put(`dms-config/${tenantDetails?.id}`, initialTenant, Auth);
             if (response instanceof Error) {
                 const { status, variant, message } = ApiService.CheckAndShow(response, t);
                 console.log(message);
