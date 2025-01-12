@@ -10,6 +10,11 @@ import {
   InputAdornment,
   IconButton,
   Divider,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  SelectChangeEvent,
 } from "@mui/material";
 import { useRouter } from "next/navigation";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -47,7 +52,14 @@ const Register: React.FC = () => {
   const [username, setUsername] = useState<string>("");
   const [showPasswords, setShowPasswords] = useState<boolean>(false);
   const [company, setCompany] = useState<string>("");
-  const [errorMessage, setErrorMessage] = useState<string>(""); // Fehlernachricht
+  const [contact_email, setContact_email] = useState<string>("");
+  const [invoice_email, setInvoice_email] = useState<string>("");
+  const [formData, setFormData] = useState<any>({
+    language: "",
+
+  });
+
+  const [errorMessage, setErrorMessage] = useState<string>(""); // Fehlernachricht invoice_email
   const [successMessage, setSuccessMessage] = useState<string>("");
 
   const t = useTranslations('API');
@@ -104,12 +116,14 @@ const Register: React.FC = () => {
       "email": email,
       password,
       "password_confirmation": password,
-      "username": "super-zhenja@ukr.net",
+      "username": email,
       "company_name": company,
       "invoice_address": allInvoiceAdress,
       "tarif": "free",
       "contact_phone": phone,
-      "language": "ua"
+      "language": formData.language,
+      'contact_email': contact_email,
+      'invoice_email': invoice_email
     }
     console.log(dataObj);
 
@@ -135,6 +149,14 @@ const Register: React.FC = () => {
       router.push('/login');
     }
 
+  };
+
+  const handleSelectChange = (event: SelectChangeEvent<string>) => {
+    const newValue = event.target.value;
+    setFormData((prevData: any) => ({
+      ...prevData,
+      language: newValue, // Зміна мови
+    }));
   };
 
   const handleLogin = () => {
@@ -393,6 +415,17 @@ const Register: React.FC = () => {
                   style={border}
                 />
               </Grid>
+              <Grid item xs={12} sm={12} >
+                <TextField
+                  label={t('Registrierung.Invoice_email')}
+                  type="email"
+                  value={invoice_email}
+                  onChange={(e) => setInvoice_email(e.target.value)}
+
+                  fullWidth
+                  style={border}
+                />
+              </Grid>
 
               {/* <Grid item xs={12} sm={6}>
                 <TextField
@@ -406,6 +439,9 @@ const Register: React.FC = () => {
               </Grid> */}
 
               {/* invoice-address */}
+
+
+
               <Grid item xs={12} >
                 <Typography
                   sx={{ textAlign: "center" }}
@@ -418,13 +454,47 @@ const Register: React.FC = () => {
                 </Typography>
               </Grid>
 
+              <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel>{t("Language")}</InputLabel>
+                  <Select
+                    value={formData.language || ''}
+                    onChange={handleSelectChange}
+                    label={t("Language")}
+                  >
+                    <MenuItem value="ua">UA (Українська)</MenuItem>
+                    <MenuItem value="ru">RU (Русский)</MenuItem>
+                    <MenuItem value="en">EN (English)</MenuItem>
+                    <MenuItem value="es">ES (Español)</MenuItem>
+                    <MenuItem value="de">DE (Deutsch)</MenuItem>  {/* Виправлено з "німецька" на "Deutsch" */}
+                    <MenuItem value="zh-CH">ZH (中文 - Китайська)</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} >
+                <TextField
+                  label={t('Registrierung.Contact_email')}
+                  type="email"
+                  value={contact_email}
+                  onChange={(e) => setContact_email(e.target.value)}
+
+                  fullWidth
+                  style={border}
+                />
+              </Grid>
+
+
+
+
+
+
               <Grid item xs={12} >
                 <TextField
                   label={t('Registrierung.benutzername')}
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                 
+
                   fullWidth
                   style={border}
                 />

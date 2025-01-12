@@ -58,7 +58,9 @@
     "invoice-ort": "City",
     "invoice-region": "Region",
     "invoice-land": "Country",
-    "invoice-adresszusatz": "Additional Address Information"
+    "invoice-adresszusatz": "Additional Address Information",
+    "Invoice_email": "Invoice email",
+    "Contact_email": "Contact email"
   },
   "Dms": {
     "username": "Username",
