@@ -2,7 +2,7 @@ import { Box, Checkbox, FilledTextFieldProps, FormControlLabel, FormLabel, Outli
 import { JSX, useState } from "react";
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-
+import { useTranslations } from 'next-intl';
 
 
 
@@ -19,7 +19,7 @@ const boxStyle = {
 const DmsDialogForm = ({ selectedOption }: DmsDialogFormType) => {
 
     const [selectedType, setSelectedType] = useState("");
-
+    const t = useTranslations('API');
 
     const [formData, setFormData] = useState({
         name: "",
@@ -66,7 +66,7 @@ const DmsDialogForm = ({ selectedOption }: DmsDialogFormType) => {
                     <>
                         <TextField
                             fullWidth
-                            label="Name"
+                            label={t("name")}
                             name="name"
                             value={formData.name}
                             onChange={handleInputChange}
@@ -74,7 +74,7 @@ const DmsDialogForm = ({ selectedOption }: DmsDialogFormType) => {
                         />
                         <TextField
                             fullWidth
-                            label="EcoDMS Host"
+                            label={t("ecoDmsHost")}
                             name="host"
                             value={formData.host}
                             onChange={handleInputChange}
@@ -82,7 +82,7 @@ const DmsDialogForm = ({ selectedOption }: DmsDialogFormType) => {
                         />
                         <TextField
                             fullWidth
-                            label="EcoDMS Port"
+                            label={t("ecoDmsPort")}
                             name="port"
                             value={formData.port}
                             onChange={handleInputChange}
@@ -90,7 +90,7 @@ const DmsDialogForm = ({ selectedOption }: DmsDialogFormType) => {
                         />
                         <TextField
                             fullWidth
-                            label="EcoDMS Username"
+                            label={t("ecoDmsUsername")}
                             name="username"
                             value={formData.username}
                             onChange={handleInputChange}
@@ -98,7 +98,7 @@ const DmsDialogForm = ({ selectedOption }: DmsDialogFormType) => {
                         />
                         <TextField
                             fullWidth
-                            label="EcoDMS Password"
+                            label={t("ecoDmsPassword")}
                             name="password"
                             type="password"
                             value={formData.password}
@@ -107,7 +107,7 @@ const DmsDialogForm = ({ selectedOption }: DmsDialogFormType) => {
                         />
                         <TextField
                             fullWidth
-                            label="Path"
+                            label={t("path")}
                             name="path"
                             value={formData.path}
                             onChange={handleInputChange}
@@ -121,7 +121,7 @@ const DmsDialogForm = ({ selectedOption }: DmsDialogFormType) => {
                                     onChange={handleInputChange}
                                 />
                             }
-                            label="Sync all into one folder"
+                            label={t("syncIntoFolder")}
                         />
                         <FormControlLabel
                             control={
@@ -131,10 +131,10 @@ const DmsDialogForm = ({ selectedOption }: DmsDialogFormType) => {
                                     onChange={handleInputChange}
                                 />
                             }
-                            label="No sub-folder for accounts"
+                            label={t("noSubFolder")}
                         />
                         <Box sx={{ mt: 2, mb: 2 }}>
-                            <FormLabel>Date Range</FormLabel>
+                            <FormLabel>{t("dateRange")}</FormLabel>
                             <RadioGroup
                                 name="dateRange"
                                 value={formData.dateRange}
@@ -144,17 +144,17 @@ const DmsDialogForm = ({ selectedOption }: DmsDialogFormType) => {
                                 <FormControlLabel
                                     value="currentMonth"
                                     control={<Radio />}
-                                    label="Current Month"
+                                    label={t("currentMonth")}
                                 />
                                 <FormControlLabel
                                     value="last3Months"
                                     control={<Radio />}
-                                    label="Last 3 Months"
+                                    label={t("last3Months")}
                                 />
                                 <FormControlLabel
                                     value="afterCertainDate"
                                     control={<Radio />}
-                                    label="After certain date"
+                                    label={t("afterCertainDate")}
                                 />
                             </RadioGroup>
                         </Box>
@@ -174,6 +174,7 @@ const DmsDialogForm = ({ selectedOption }: DmsDialogFormType) => {
                                 />
                             </Box>
                         </LocalizationProvider>
+
                         <FormControlLabel
                             control={
                                 <Radio
@@ -183,7 +184,7 @@ const DmsDialogForm = ({ selectedOption }: DmsDialogFormType) => {
                                     onChange={handleInputChange}
                                 />
                             }
-                            label="Import Date"
+                            label={t("importDate")}
                         />
                         <FormControlLabel
                             control={
@@ -194,7 +195,7 @@ const DmsDialogForm = ({ selectedOption }: DmsDialogFormType) => {
                                     onChange={handleInputChange}
                                 />
                             }
-                            label="Invoice Date"
+                            label={t("invoiceDate")}
                         />
                         <Box sx={{ mt: 2, mb: 2 }}>
                             <FormControlLabel
@@ -205,9 +206,8 @@ const DmsDialogForm = ({ selectedOption }: DmsDialogFormType) => {
                                         onChange={handleInputChange}
                                     />
                                 }
-                                label="Sync All Invoices"
+                                label={t("syncAllInvoices")}
                             />
-
                         </Box>
                     </>
                 )}
