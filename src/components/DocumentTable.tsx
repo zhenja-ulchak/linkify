@@ -20,6 +20,7 @@ interface Invoice {
     dms_name: string;
     document_mime_type: string;
     to_update: number
+    created_at: string
 }
 
 
@@ -279,7 +280,7 @@ const DocumentTable: React.FC = () => {
                         <TableRow>
                             <TableCell>{t('invoiceTable.companyPortal')}</TableCell>
                             <TableCell>{t('invoiceTable.invoiceNumber')}</TableCell>
-                            <TableCell>{t('invoiceTable.icon')}</TableCell>
+                    
                             <TableCell>{t('invoiceTable.invoiceDate')}</TableCell>
                             <TableCell>{t('invoiceTable.syncAccount')}</TableCell>
                             <TableCell>{t('invoiceTable.statusAccount')}</TableCell>
@@ -296,12 +297,12 @@ const DocumentTable: React.FC = () => {
                     </TableHead>
                     <TableBody>
                         {paginatedInvoices.length !== 0 ?
-                            sortedInvoices.map((invoice) => (
+                            paginatedInvoices.map((invoice) => (
                                 <TableRow key={invoice.id} style={{ background: invoice?.to_update === 1 ? '#60606075' : 'none' }}>
                                     <>
                                         <TableCell>{invoice?.accounting_name}</TableCell>
-                                        <TableCell>{invoice?.document_name}</TableCell>
-                                        <TableCell>{renderFileIcon(invoice?.document_mime_type)}</TableCell>
+                                        <TableCell sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}><Box sx={{ margin: 'auto' }}>{renderFileIcon(invoice?.document_mime_type)}</Box><Box sx={{ margin: 'auto' }}> {invoice?.document_name}</Box></TableCell>
+
                                         <TableCell>{invoice?.accounting_document_date}</TableCell>
                                         <TableCell>{invoice?.dms_name}</TableCell>
                                         <TableCell>
@@ -322,7 +323,22 @@ const DocumentTable: React.FC = () => {
                                                 display: 'inline-block'
                                             }}></div>
                                         </TableCell>
-                                        <TableCell>{invoice?.accounting_document_date}</TableCell>
+                                      
+                                        <TableCell> {(() => {
+                                            const date = new Date(invoice?.created_at);
+
+                                            // Форматуємо дату для читабельності
+                                            const readableDate = date.toLocaleString('uk-UA', {
+                                                year: 'numeric',
+                                                month: 'long',
+                                                day: 'numeric',
+                                                hour: '2-digit',
+                                                minute: '2-digit',
+                                                second: '2-digit',
+                                            });
+
+                                            return readableDate;
+                                        })()}</TableCell>
                                     </>
                                 </TableRow>
                             )) :
