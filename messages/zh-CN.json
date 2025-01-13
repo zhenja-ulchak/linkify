@@ -331,7 +331,23 @@
     "address-registration": "注册地址",
     "invoice-address": "账单地址",
     "phone": "电话号码",
-    "details-registration": "注册详情"
+    "details-registration": "注册详情",
+    "name": "名称",
+    "ecoDmsHost": "EcoDMS 主机",
+    "ecoDmsPort": "EcoDMS 端口",
+    "ecoDmsUsername": "EcoDMS 用户名",
+    "ecoDmsPassword": "EcoDMS 密码",
+    "path": "路径",
+    "syncIntoFolder": "将所有内容同步到一个文件夹",
+    "noSubFolder": "没有子文件夹用于帐户",
+    "dateRange": "日期范围",
+    "currentMonth": "当前月份",
+    "last3Months": "过去三个月",
+    "afterCertainDate": "某个日期之后",
+    "selectDate": "选择日期",
+    "importDate": "导入日期",
+    "invoiceDate": "发票日期",
+    "syncAllInvoices": "同步所有发票"
   },
   "LocaleSwitcher": {
     "en": "English",
@@ -346,6 +362,7 @@
     "welcome-message": "你好，欢迎！感谢加入Linkify"
   },
   "Panel-sidebar": {
+    "logout-successful": "注销成功！",
     "DOCS-LIst": "文档列表",
     "admin": "管理员",
     "accounting-software": "会计软件",

@@ -333,7 +333,23 @@
     "address-registration": "Адреса реєстрації",
     "invoice-address": "Адрес для виставлення рахунку",
     "phone": "Номер телефону",
-    "details-registration": "Деталі реєстрації"
+    "details-registration": "Деталі реєстрації",
+    "name": "Назва",
+    "ecoDmsHost": "Хост EcoDMS",
+    "ecoDmsPort": "Порт EcoDMS",
+    "ecoDmsUsername": "Користувач EcoDMS",
+    "ecoDmsPassword": "Пароль EcoDMS",
+    "path": "Шлях",
+    "syncIntoFolder": "Синхронізувати все в одну папку",
+    "noSubFolder": "Без підкаталогів для акаунтів",
+    "dateRange": "Діапазон дат",
+    "currentMonth": "Поточний місяць",
+    "last3Months": "Останні 3 місяці",
+    "afterCertainDate": "Після певної дати",
+    "selectDate": "Виберіть дату",
+    "importDate": "Дата імпорту",
+    "invoiceDate": "Дата рахунку",
+    "syncAllInvoices": "Синхронізувати всі рахунки"
   },
   "LocaleSwitcher": {
     "en": "English",
@@ -365,6 +381,7 @@
     "welcome-message": "Привіт і ласкаво просимо! Дякуємо за приєднання до Linkify"
   },
   "Panel-sidebar": {
+    "logout-successful": "Вихід успішний!",
     "DOCS-LIst": "Список документів",
     "admin": "Адміністратор",
     "accounting-software": "Бухгалтерське програмне забезпечення",

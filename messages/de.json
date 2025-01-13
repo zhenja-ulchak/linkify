@@ -332,7 +332,23 @@
     "address-registration": "Registrierungsadresse",
     "invoice-address": "Rechnungsadresse",
     "phone": "Phone number",
-    "details-registration": "Registrierungsdetails"
+    "details-registration": "Registrierungsdetails",
+    "name": "Name",
+    "ecoDmsHost": "EcoDMS Host",
+    "ecoDmsPort": "EcoDMS Port",
+    "ecoDmsUsername": "EcoDMS Benutzername",
+    "ecoDmsPassword": "EcoDMS Passwort",
+    "path": "Pfad",
+    "syncIntoFolder": "Alles in einen Ordner synchronisieren",
+    "noSubFolder": "Keine Unterordner für Konten",
+    "dateRange": "Datumsbereich",
+    "currentMonth": "Aktueller Monat",
+    "last3Months": "Letzte 3 Monate",
+    "afterCertainDate": "Nach einem bestimmten Datum",
+    "selectDate": "Datum auswählen",
+    "importDate": "Importdatum",
+    "invoiceDate": "Rechnungsdatum",
+    "syncAllInvoices": "Alle Rechnungen synchronisieren"
   },
   "LocaleSwitcher": {
     "en": "English",
@@ -347,6 +363,7 @@
     "welcome-message": "Hallo und herzlich willkommen! Danke, dass Sie Linkify beigetreten sind"
   },
   "Panel-sidebar": {
+    "logout-successful": "Abmeldung erfolgreich!",
     "DOCS-LIst": "DOCS-LIste",
     "admin": "Admin",
     "accounting-software": "Buchhaltungssoftware",

@@ -335,7 +335,23 @@
     "invoice-address": "Invoice Address",
     "user-update": "User Update",
     "phone": "Phone number",
-    "details-registration": "Registration Details"
+    "details-registration": "Registration Details",
+    "name": "Name",
+    "ecoDmsHost": "EcoDMS Host",
+    "ecoDmsPort": "EcoDMS Port",
+    "ecoDmsUsername": "EcoDMS Username",
+    "ecoDmsPassword": "EcoDMS Password",
+    "path": "Path",
+    "syncIntoFolder": "Sync all into one folder",
+    "noSubFolder": "No sub-folder for accounts",
+    "dateRange": "Date Range",
+    "currentMonth": "Current Month",
+    "last3Months": "Last 3 Months",
+    "afterCertainDate": "After certain date",
+    "selectDate": "Select Date",
+    "importDate": "Import Date",
+    "invoiceDate": "Invoice Date",
+    "syncAllInvoices": "Sync All Invoices"
   },
   "LocaleSwitcher": {
     "en": "English",
@@ -350,6 +366,7 @@
     "welcome-message": "Hello and welcome! Thanks for joining Linkify"
   },
   "Panel-sidebar": {
+    "logout-successful": "Logout successful!",
     "DOCS-LIst": "DOCS-LIst",
     "admin": "Admin",
     "accounting-software": "Accounting-software",

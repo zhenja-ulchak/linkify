@@ -19,10 +19,13 @@ interface Invoice {
     accounting_document_date: string;
     dms_name: string;
     document_mime_type: string;
+    to_update: number
 }
 
 
 const DocumentTable: React.FC = () => {
+    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+    const [sortBy, setSortBy] = useState<string>('accounting_document_date');
     const [selectedCompany, setSelectedCompany] = useState('');
     const [selectedStatus, setSelectedStatus] = useState('');
     const [selectedSyncAccount, setSelectedSyncAccount] = useState('');
@@ -40,6 +43,15 @@ const DocumentTable: React.FC = () => {
 
 
     const t = useTranslations('API');
+
+
+    const handleSort = (property: string) => {
+        const isAscending = sortBy === property && sortOrder === 'asc';
+        setSortOrder(isAscending ? 'desc' : 'asc');
+        setSortBy(property);
+    };
+
+
 
     const handleCompanyChange = (event: SelectChangeEvent<string>) => {
         setSelectedCompany(event.target.value as string);
@@ -92,6 +104,17 @@ const DocumentTable: React.FC = () => {
             selectedCompany === '' || invoice.accounting_name === selectedCompany;
 
         return globalMatch && statusMatch && dmsStatusMatch && syncAccountMatch && companyMatch;
+    });
+
+
+
+    const sortedInvoices = filteredInvoices.sort((a, b) => {
+        if (sortBy === 'accounting_document_date') {
+            const dateA = new Date(a.accounting_document_date);
+            const dateB = new Date(b.accounting_document_date);
+            return sortOrder === 'asc' ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime();
+        }
+        return 0;
     });
 
 
@@ -261,16 +284,23 @@ const DocumentTable: React.FC = () => {
                             <TableCell>{t('invoiceTable.syncAccount')}</TableCell>
                             <TableCell>{t('invoiceTable.statusAccount')}</TableCell>
                             <TableCell>{t('invoiceTable.statusDms')}</TableCell>
-                            <TableCell>{t('invoiceTable.dateTime')}</TableCell>
+                            {/* <TableCell>{t('invoiceTable.dateTime')}</TableCell> */}
+
+                            <TableCell onClick={() => handleSort('accounting_document_date')} style={{ cursor: 'pointer' }}>
+                                {t('invoiceTable.dateTime')}
+                                {sortBy === 'accounting_document_date' ? (sortOrder === 'asc' ? ' ↑' : ' ↓') : null}
+                            </TableCell>
+                            {/* Інші колонки */}
+
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {paginatedInvoices.length !== 0 ?
-                            paginatedInvoices.map((invoice) => (
-                                <TableRow key={invoice.id}>
+                            sortedInvoices.map((invoice) => (
+                                <TableRow key={invoice.id} style={{ background: invoice?.to_update === 1 ? '#60606075' : 'none' }}>
                                     <>
                                         <TableCell>{invoice?.accounting_name}</TableCell>
-                                        <TableCell>{invoice?.document_name}.{invoice?.document_extension}</TableCell>
+                                        <TableCell>{invoice?.document_name}</TableCell>
                                         <TableCell>{renderFileIcon(invoice?.document_mime_type)}</TableCell>
                                         <TableCell>{invoice?.accounting_document_date}</TableCell>
                                         <TableCell>{invoice?.dms_name}</TableCell>

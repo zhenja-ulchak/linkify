@@ -332,7 +332,23 @@
     "address-registration": "Адреса регистрации",
     "invoice-address": "Адрес для выставления счета",
     "details-registration": "Детали регистрации",
-    "phone": "Номер телефона"
+    "phone": "Номер телефона",
+    "name": "Название",
+    "ecoDmsHost": "Хост EcoDMS",
+    "ecoDmsPort": "Порт EcoDMS",
+    "ecoDmsUsername": "Имя пользователя EcoDMS",
+    "ecoDmsPassword": "Пароль EcoDMS",
+    "path": "Путь",
+    "syncIntoFolder": "Синхронизировать все в одну папку",
+    "noSubFolder": "Без подкаталогов для учетных записей",
+    "dateRange": "Диапазон дат",
+    "currentMonth": "Текущий месяц",
+    "last3Months": "Последние 3 месяца",
+    "afterCertainDate": "После определенной даты",
+    "selectDate": "Выберите дату",
+    "importDate": "Дата импорта",
+    "invoiceDate": "Дата счета",
+    "syncAllInvoices": "Синхронизировать все счета"
   },
   "LocaleSwitcher": {
     "en": "English",
@@ -347,6 +363,7 @@
     "welcome-message": "Здравствуйте и добро пожаловать! Спасибо, что присоединились к Linkify"
   },
   "Panel-sidebar": {
+    "logout-successful": "Выход успешен!",
     "DOCS-LIst": "Список документов",
     "admin": "Администратор",
     "accounting-software": "Бухгалтерское программное обеспечение",
