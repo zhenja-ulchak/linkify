@@ -347,6 +347,7 @@
     "welcome-message": "Hallo und herzlich willkommen! Danke, dass Sie Linkify beigetreten sind"
   },
   "Panel-sidebar": {
+    "logout-successful": "Abmeldung erfolgreich!",
     "DOCS-LIst": "DOCS-LIste",
     "admin": "Admin",
     "accounting-software": "Buchhaltungssoftware",

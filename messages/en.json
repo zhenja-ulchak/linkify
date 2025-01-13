@@ -350,6 +350,7 @@
     "welcome-message": "Hello and welcome! Thanks for joining Linkify"
   },
   "Panel-sidebar": {
+    "logout-successful": "Logout successful!",
     "DOCS-LIst": "DOCS-LIst",
     "admin": "Admin",
     "accounting-software": "Accounting-software",

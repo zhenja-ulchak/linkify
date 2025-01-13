@@ -365,6 +365,7 @@
     "welcome-message": "Привіт і ласкаво просимо! Дякуємо за приєднання до Linkify"
   },
   "Panel-sidebar": {
+    "logout-successful": "Вихід успішний!",
     "DOCS-LIst": "Список документів",
     "admin": "Адміністратор",
     "accounting-software": "Бухгалтерське програмне забезпечення",

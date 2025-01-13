@@ -242,7 +242,7 @@ const DetailsTable: React.FC = () => {
                 url: tenantDetails.url || "",
                 organization_id: tenantDetails.organization_id || "0",
                 // @ts-ignore
-                event_type: tenantDetails.event_type.document || "",
+                event_type: tenantDetails?.event_type?.document || "",
                 description: tenantDetails.description || "",
                 is_active: tenantDetails.is_active,
 
@@ -279,37 +279,37 @@ const DetailsTable: React.FC = () => {
                                                     <>
                                                         <TableRow>
                                                             <TableCell>{t('Accounting-Software.name')}</TableCell>
-                                                            <TableCell>{tenantDetails.name}</TableCell>
+                                                            <TableCell>{tenantDetails?.name}</TableCell>
                                                         </TableRow>
                                                         <TableRow>
                                                             <TableCell>{t('Accounting-Software.type')}</TableCell>
-                                                            <TableCell>{tenantDetails.type}</TableCell>
+                                                            <TableCell>{tenantDetails?.type}</TableCell>
                                                         </TableRow>
                                                         <TableRow>
                                                             <TableCell>{t('Accounting-Software.url')}</TableCell>
-                                                            <TableCell>{tenantDetails.url}</TableCell>
+                                                            <TableCell>{tenantDetails?.url}</TableCell>
                                                         </TableRow>
                                                         <TableRow>
                                                             <TableCell>{t('Accounting-Software.organization_id')}</TableCell>
-                                                            <TableCell>{tenantDetails.organization_id}</TableCell>
+                                                            <TableCell>{tenantDetails?.organization_id}</TableCell>
                                                         </TableRow>
                                                         <TableRow>
                                                             <TableCell>{t('Accounting-Software.event-type')}</TableCell>
                                                             <TableCell>{
                                                                   // @ts-ignore
-                                                            tenantDetails.event_type.document ?? "N/A"}</TableCell>
+                                                            tenantDetails?.event_type?.document || tenantDetails?.event_type ?? "N/A"}</TableCell>
                                                         </TableRow>
                                                         <TableRow>
                                                             <TableCell>{t('Accounting-Software.description')}</TableCell>
-                                                            <TableCell>{tenantDetails.description}</TableCell>
+                                                            <TableCell>{tenantDetails?.description}</TableCell>
                                                         </TableRow>
                                                         <TableRow>
                                                             <TableCell>{t('Accounting-Software.region')}</TableCell>
-                                                            <TableCell>{tenantDetails.additional_settings?.region ?? "N/A"}</TableCell>
+                                                            <TableCell>{tenantDetails?.additional_settings?.region ?? "N/A"}</TableCell>
                                                         </TableRow>
                                                         <TableRow>
                                                             <TableCell>{t('Accounting-Software.active')}</TableCell>
-                                                            <TableCell> {tenantDetails.is_active ? t('Accounting-Software.yes') : t('Accounting-Software.no')}</TableCell>
+                                                            <TableCell> {tenantDetails?.is_active ? t('Accounting-Software.yes') : t('Accounting-Software.no')}</TableCell>
                                                         </TableRow>
                                                     </>
                                                 ) }

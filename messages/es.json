@@ -347,6 +347,7 @@
     "welcome-message": "¡Hola y bienvenido! Gracias por unirte a Linkify"
   },
   "Panel-sidebar": {
+    "logout-successful": "¡Cierre de sesión exitoso!",
     "DOCS-LIst": "Lista de documentos",
     "admin": "Administrador",
     "accounting-software": "Software de contabilidad",

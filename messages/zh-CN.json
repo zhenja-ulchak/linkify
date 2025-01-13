@@ -346,6 +346,7 @@
     "welcome-message": "你好，欢迎！感谢加入Linkify"
   },
   "Panel-sidebar": {
+    "logout-successful": "注销成功！",
     "DOCS-LIst": "文档列表",
     "admin": "管理员",
     "accounting-software": "会计软件",
