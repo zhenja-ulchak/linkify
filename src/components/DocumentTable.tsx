@@ -79,7 +79,7 @@ const DocumentTable: React.FC = () => {
         setPage(0);
     }
 
-    const filteredInvoices = rows.filter((invoice) => {
+    const filteredInvoices = rows?.filter((invoice) => {
         const globalMatch =
             invoice.accounting_name.toLowerCase().includes(globalSearch.toLowerCase()) ||
             invoice.document_name.toLowerCase().includes(globalSearch.toLowerCase()) ||
@@ -109,7 +109,7 @@ const DocumentTable: React.FC = () => {
 
 
 
-    const sortedInvoices = filteredInvoices.sort((a, b) => {
+    const sortedInvoices = filteredInvoices?.sort((a, b) => {
         if (sortBy === 'accounting_document_date') {
             const dateA = new Date(a.accounting_document_date);
             const dateB = new Date(b.accounting_document_date);
@@ -132,7 +132,7 @@ const DocumentTable: React.FC = () => {
 
         try {
             // Виконання запиту
-            const response: any = await apiService.get("accounting-software/invoices-sync", getToken);
+            const response: any = await apiService.getLong("accounting-software/invoices-sync", getToken);
             if (response instanceof Error) {
                 const { status, variant, message } = apiService.CheckAndShow(response, t);
                 console.log(message);
@@ -203,7 +203,7 @@ const DocumentTable: React.FC = () => {
     };
 
 
-    const paginatedInvoices = filteredInvoices.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+    const paginatedInvoices = filteredInvoices?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
 
     return (
@@ -296,8 +296,8 @@ const DocumentTable: React.FC = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {paginatedInvoices.length !== 0 ?
-                            paginatedInvoices.map((invoice) => (
+                        {paginatedInvoices?.length !== 0 ?
+                            paginatedInvoices?.map((invoice) => (
                                 <TableRow key={invoice.id} style={{ background: invoice?.to_update === 1 ? '#60606075' : 'none' }}>
                                     <>
                                         <TableCell>{invoice?.accounting_name}</TableCell>

@@ -253,7 +253,7 @@
     },"invoiceTable": {
         "yes": "Да",
         "no": "Нет",
-        "title": "Таблица счетов",
+        "title": "Таблица документов",
         "globalSearch": "Глобальный поиск",
         "companyPortal": "Компания/Портал",
         "statusAccount": "Статус аккаунта",

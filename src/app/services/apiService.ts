@@ -59,6 +59,29 @@ class ApiService {
     }
   }
 
+
+  public async getLong<T>(endpoint: string, token: string, options?: { timeout?: number }): Promise<T | Error> {
+    try {
+        const controller = new AbortController();
+        const timeout = options?.timeout || 300000; // Таймаут за замовчуванням — 30 секунд
+        const timer = setTimeout(() => controller.abort(), timeout);
+
+        const response: AxiosResponse<T> = await axios.get(`${this.baseURL}${endpoint}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true,
+            signal: controller.signal, // Додаємо підтримку AbortController
+        });
+
+        clearTimeout(timer); // Очищення таймера після завершення запиту
+        return response.data;
+    }  catch (error) {
+      return error as Error
+    }
+}
+
+
   public async post<T, R>(endpoint: string, data: T, token: string): Promise<R | Error> {
     try {
       const response: AxiosResponse<R> = await axios.post(`${this.baseURL}${endpoint}`, data, {

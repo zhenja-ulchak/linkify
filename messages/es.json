@@ -253,7 +253,7 @@
     }, "invoiceTable": {
       "yes": "Sí",
       "no": "No",
-      "title": "Tabla de facturas",
+      "title": "Tabla de documentos",
       "globalSearch": "Búsqueda global",
       "companyPortal": "Compañía/Portal",
       "statusAccount": "Estado de la cuenta",
@@ -384,7 +384,7 @@
   },
   "Document-Table": {
     "id": "id",
-    "document-table": "Таблица документов",
+    "document-table": "Tabla de documentos",
     "ExtantanionType": "Tipo de extensión",
     "Size": "Tamaño",
     "mimeType": "Tipo MIME",

@@ -253,7 +253,7 @@
     "invoiceTable": {
       "yes": "Ja",
       "no": "Nein",
-      "title": "Rechnungstabelle",
+      "title": "Dokumenttabelle",
       "globalSearch": "Globale Suche",
       "companyPortal": "Unternehmen/Portal",
       "statusAccount": "Status des Kontos",

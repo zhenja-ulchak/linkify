@@ -253,7 +253,7 @@
     }, "invoiceTable": {
       "yes": "Так",
       "no": "Ні",
-      "title": "Таблиця рахунків",
+      "title": "Таблиця документів",
       "globalSearch": "Глобальний пошук",
       "companyPortal": "Компанія/Портал",
       "statusAccount": "Статус акаунта",

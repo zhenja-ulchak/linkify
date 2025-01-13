@@ -252,7 +252,7 @@
     "invoiceTable": {
       "yes": "Yes",
       "no": "No",
-      "title": "Invoice Table",
+      "title": "Document Table",
       "globalSearch": "Global Search",
       "companyPortal": "Company/Portal",
       "statusAccount": "Status Account",
@@ -386,7 +386,7 @@
     "list": "List"
   },
   "Document-Table": {
-    "document-table": "Document Table.",
+    "document-table": "Document Table",
     "id": "id",
     "ExtantanionType": "ExtantanionType",
     "Size": "Size",
