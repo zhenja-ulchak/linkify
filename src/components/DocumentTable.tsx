@@ -19,6 +19,7 @@ interface Invoice {
     accounting_document_date: string;
     dms_name: string;
     document_mime_type: string;
+    to_update: number
 }
 
 
@@ -267,7 +268,7 @@ const DocumentTable: React.FC = () => {
                     <TableBody>
                         {paginatedInvoices.length !== 0 ?
                             paginatedInvoices.map((invoice) => (
-                                <TableRow key={invoice.id}>
+                                <TableRow key={invoice.id} style={{background:invoice?.to_update === 1 ? '#60606075' : 'none'}}>
                                     <>
                                         <TableCell>{invoice?.accounting_name}</TableCell>
                                         <TableCell>{invoice?.document_name}.{invoice?.document_extension}</TableCell>
