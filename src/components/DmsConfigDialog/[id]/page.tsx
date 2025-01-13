@@ -9,11 +9,12 @@ import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import AddIcon from "@mui/icons-material/Add";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ApiService from "../../../../src/app/services/apiService";
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, TextField, Button, IconButton, FormControl, InputLabel, Select, MenuItem, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, TextField, Button, IconButton, FormControl, InputLabel, Select, MenuItem, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid, FormControlLabel, Checkbox, FormLabel, RadioGroup, Radio } from '@mui/material';
 import { enqueueSnackbar } from "notistack";
 import { useTranslations } from 'next-intl';
 import DMSDialog from "@/components/modal/DmsConfigDialog";
 import ConfirmDeleteModal from '@/components/modal/ConfirmDeleteModal';
+import DmsDialogForm from "@/components/SyncAccountDialogForm";
 
 type TenantDetails = {
     id?: number;
@@ -30,7 +31,7 @@ type TenantDetails = {
 
 const dmsOptions = [
     "SharePoint",
-    "ecodms",
+    "EcoDms",
     "DocuWare",
     "M-Files",
     "OpenText",
@@ -40,13 +41,13 @@ const dmsOptions = [
 
 const DetailsTableDms: React.FC = () => {
     const router = useRouter();
- 
+
     const id = useParams()
     console.log(id);
 
     const t = useTranslations('API');
 
-    
+
     const [openModal, setOpenModal] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     // const [open, setOpen] = React.useState(false);
@@ -68,6 +69,7 @@ const DetailsTableDms: React.FC = () => {
     const [open, setOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState(tenantDetails?.type);
     const [initialTenant, setInitialTenant] = useState<any>();
+    
 
 
     const handleClickOpen = () => {
@@ -98,19 +100,19 @@ const DetailsTableDms: React.FC = () => {
     // Для отримання даних про користувача
     useEffect(() => {
         const fetchTenantDetails = async () => {
-           
+
             const Auth: any = sessionStorage.getItem('AuthToken');
             const response: any = await ApiService.get(`dms-config/${id.id}`, Auth); //${id.id}
-         
+
             console.log(response);
-            
+
             if (response instanceof Error) {
                 const { status, variant, message } = ApiService.CheckAndShow(response, t);
 
                 if (status === 404) {
                     console.log(404);
-                    
-                }else{
+
+                } else {
                     console.log(message);
                     // @ts-ignore
                     enqueueSnackbar(message, { variant: variant });
@@ -133,7 +135,7 @@ const DetailsTableDms: React.FC = () => {
     // Обробка змін в полях
     const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        
+
         setInitialTenant((prevTenant: any) => ({
             ...prevTenant,
             [name]: value,
@@ -245,57 +247,57 @@ const DetailsTableDms: React.FC = () => {
                 {addNewDetails ?
                     (
                         <>
-                            <DMSDialog/>
+                            <DMSDialog />
                         </>
                     ) :
 
                     (
 
                         <>
-                        <Grid item xs={12}>
-                            <TableContainer component={Paper} style={{ width: '100%' }}>
-                                <Table>
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell>{t('Accounting-Software.feld')}</TableCell>
-                                            <TableCell>{t('Accounting-Software.wert')}</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {tenantDetails && (
-                                            <>
-                                                <TableRow>
-                                                    <TableCell style={{ fontWeight: 'bold' }}>{t('Accounting-Software.type')}</TableCell>
-                                                    <TableCell>{tenantDetails?.type}</TableCell>
-                                                </TableRow>
-                                                <TableRow>
-                                                    <TableCell style={{ fontWeight: 'bold' }}>{t('Accounting-Software.endpoint-url')}</TableCell>
-                                                    <TableCell>{tenantDetails?.endpoint_url}</TableCell>
-                                                </TableRow>
-                                                <TableRow>
-                                                    <TableCell style={{ fontWeight: 'bold' }}>{t('Accounting-Software.username')}</TableCell>
-                                                    <TableCell>{tenantDetails?.username}</TableCell>
-                                                </TableRow>
-                                                <TableRow>
-                                                    <TableCell style={{ fontWeight: 'bold' }}>{t('Accounting-Software.repository')}</TableCell>
-                                                    <TableCell>{tenantDetails?.repository}</TableCell>
-                                                </TableRow>
-                                            </>
-                                        )}
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
-                        </Grid>
-                        <Grid item xs={12} display="flex" justifyContent="space-evenly">
-                            <IconButton color="primary" onClick={handleClickOpen} title={t('Accounting-Software.bearbeiten')}>
-                                <EditIcon />
-                            </IconButton>
-                    
-                            <IconButton color="error" onClick={handleOpenModal} title={t('Accounting-Software.loschen')}>
-                                <DeleteIcon />
-                            </IconButton>
-                        </Grid>
-                    </>
+                            <Grid item xs={12}>
+                                <TableContainer component={Paper} style={{ width: '100%' }}>
+                                    <Table>
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell>{t('Accounting-Software.feld')}</TableCell>
+                                                <TableCell>{t('Accounting-Software.wert')}</TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {tenantDetails && (
+                                                <>
+                                                    <TableRow>
+                                                        <TableCell style={{ fontWeight: 'bold' }}>{t('Accounting-Software.type')}</TableCell>
+                                                        <TableCell>{tenantDetails?.type}</TableCell>
+                                                    </TableRow>
+                                                    <TableRow>
+                                                        <TableCell style={{ fontWeight: 'bold' }}>{t('Accounting-Software.endpoint-url')}</TableCell>
+                                                        <TableCell>{tenantDetails?.endpoint_url}</TableCell>
+                                                    </TableRow>
+                                                    <TableRow>
+                                                        <TableCell style={{ fontWeight: 'bold' }}>{t('Accounting-Software.username')}</TableCell>
+                                                        <TableCell>{tenantDetails?.username}</TableCell>
+                                                    </TableRow>
+                                                    <TableRow>
+                                                        <TableCell style={{ fontWeight: 'bold' }}>{t('Accounting-Software.repository')}</TableCell>
+                                                        <TableCell>{tenantDetails?.repository}</TableCell>
+                                                    </TableRow>
+                                                </>
+                                            )}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                            </Grid>
+                            <Grid item xs={12} display="flex" justifyContent="space-evenly">
+                                <IconButton color="primary" onClick={handleClickOpen} title={t('Accounting-Software.bearbeiten')}>
+                                    <EditIcon />
+                                </IconButton>
+
+                                <IconButton color="error" onClick={handleOpenModal} title={t('Accounting-Software.loschen')}>
+                                    <DeleteIcon />
+                                </IconButton>
+                            </Grid>
+                        </>
                     )
 
                 }
@@ -331,7 +333,7 @@ const DetailsTableDms: React.FC = () => {
                 </DialogTitle>
                 <DialogContent>
                     <Typography variant="body1" component="span" id="alert-dialog-description">
-                        <Box sx={{ marginBottom: 2 , marginTop: "15px"  }}>
+                        <Box sx={{ marginBottom: 2, marginTop: "15px" }}>
                             <TextField
                                 fullWidth
                                 label={t('Accounting-Software.endpoint-url')}
@@ -358,6 +360,14 @@ const DetailsTableDms: React.FC = () => {
                                 </Select>
                             </FormControl>
                         </Box>
+                 
+                                    <DmsDialogForm selectedOption={selectedOption} />
+
+
+
+
+
+
 
 
 
@@ -412,7 +422,7 @@ const DetailsTableDms: React.FC = () => {
 
                     <Button onClick={handleClose}>{t('Accounting-Software.cancel')}</Button>
                     <Button onClick={() => handleSaveChanges()} autoFocus>
-                    {t('Accounting-Software.ok')}
+                        {t('Accounting-Software.ok')}
                     </Button>
                 </DialogActions>
             </Dialog>
