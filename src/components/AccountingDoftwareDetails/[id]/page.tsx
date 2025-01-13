@@ -51,13 +51,18 @@ const DetailsTable: React.FC = () => {
 
     const id = useParams()
     console.log(id.id);
-    
+
     const [isEditing, setIsEditing] = useState(false);
     const [error, setError] = useState<string>("");
     const [modalTextColor, setModalTextColor] = useState("black");
     const [tenantDetails, setTenantDetails] = useState<TenantDetails | null>(null);
     const [addNewDetails, setAddNewDetails] = useState<any>(false);
     const [open, setOpen] = useState(false);
+    const [formData, setFormData] = useState<any>({
+
+        password: "",
+        confirmationPassword: "",
+    });
     const [selectedOption, setSelectedOption] = useState(tenantDetails?.type);
     const t = useTranslations('API');
     const [openModal, setOpenModal] = useState(false);
@@ -77,7 +82,13 @@ const DetailsTable: React.FC = () => {
         deleted_at: null,
     });
     const [initialTenant, setInitialTenant] = useState<any>();
-
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData((prevData: any) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -109,28 +120,28 @@ const DetailsTable: React.FC = () => {
         //     return;
         // }
         const fetchTenantDetails = async () => {
-        
+
 
 
             const Auth: any = sessionStorage.getItem('AuthToken');
             const response: any = await ApiService.get(`accounting-software/${id.id}`, Auth); //${id}
             console.log(id);
-            
-           console.log(response);
-           
-            
+
+            console.log(response);
+
+
             if (response instanceof Error) {
                 const { status, variant, message } = ApiService.CheckAndShow(response, t);
 
                 if (status === 404) {
                     console.log(404);
-                    
-                }else{
+
+                } else {
                     console.log(message);
                     // @ts-ignore
                     enqueueSnackbar(message, { variant: variant });
                 }
-              
+
             }
 
             if (response.status === 200 || response.success === true) {
@@ -158,7 +169,7 @@ const DetailsTable: React.FC = () => {
             ...prevTenant,
             [name]: value,
         }))
-        
+
         setUpdatedTenant((prevTenant) => ({
             ...prevTenant,
             [name]: value,
@@ -166,18 +177,18 @@ const DetailsTable: React.FC = () => {
 
     };
 
-   console.log(initialTenant);
-   
+    console.log(initialTenant);
+
 
     const handleSaveChanges = async (e: React.FormEvent) => {
         e.preventDefault();
 
-       
-    
+
+
 
         const Auth: any = sessionStorage.getItem('AuthToken');
-  
-        
+
+
         const response: any = await ApiService.put(`accounting-software/${id.id}`, initialTenant, Auth);
         if (response instanceof Error) {
             const { status, variant, message } = ApiService.CheckAndShow(response, t);
@@ -203,7 +214,7 @@ const DetailsTable: React.FC = () => {
         const Auth: any = sessionStorage.getItem('AuthToken');
         const response: any = await ApiService.delete(`accounting-software/${id}`, Auth);
         console.log(response);
-        
+
         if (response.success === true) {
             enqueueSnackbar('Accounting entry deleted successfully!', { variant: 'success' });
             router.push("/dashboard/admin");
@@ -226,7 +237,7 @@ const DetailsTable: React.FC = () => {
 
     const handleCloseModal = () => {
         setOpenModal(false);
-     
+
     };
 
     function handleGoingBack() {
@@ -262,7 +273,7 @@ const DetailsTable: React.FC = () => {
 
                         {addNewDetails ? (
                             <AccountingDialog tenantDetails={tenantDetails} />
-                
+
                         ) : (
                             <>
                                 <Grid item xs={12}>
@@ -296,8 +307,8 @@ const DetailsTable: React.FC = () => {
                                                         <TableRow>
                                                             <TableCell>{t('Accounting-Software.event-type')}</TableCell>
                                                             <TableCell>{
-                                                                  // @ts-ignore
-                                                            tenantDetails?.event_type?.document || tenantDetails?.event_type ?? "N/A"}</TableCell>
+                                                                // @ts-ignore
+                                                                tenantDetails?.event_type?.document || tenantDetails?.event_type ?? "N/A"}</TableCell>
                                                         </TableRow>
                                                         <TableRow>
                                                             <TableCell>{t('Accounting-Software.description')}</TableCell>
@@ -312,7 +323,7 @@ const DetailsTable: React.FC = () => {
                                                             <TableCell> {tenantDetails?.is_active ? t('Accounting-Software.yes') : t('Accounting-Software.no')}</TableCell>
                                                         </TableRow>
                                                     </>
-                                                ) }
+                                                )}
                                             </TableBody>
                                         </Table>
                                     </TableContainer>
@@ -342,7 +353,7 @@ const DetailsTable: React.FC = () => {
                         handleDelete={handleDelete}
                         onClose={handleCloseModal}
                         description={t('delete-Accounting-Software')}
-                        
+
                     />
                     <Grid item xs={12} sx={{ textAlign: addNewDetails ? "center" : 'left' }}>
                         <Button
@@ -363,12 +374,12 @@ const DetailsTable: React.FC = () => {
                     fullWidth
                 >
                     <DialogTitle id="alert-dialog-title">
-                    {t('Accounting-Software.changeaccounting')}
+                        {t('Accounting-Software.changeaccounting')}
                     </DialogTitle>
                     <form onSubmit={handleSaveChanges}>
                         <DialogContent>
                             <Typography variant="body1" component="span" id="alert-dialog-description">
-                                <Box sx={{ marginBottom: 2 , marginTop: "15px" }}>
+                                <Box sx={{ marginBottom: 2, marginTop: "15px" }}>
                                     <FormControl fullWidth>
                                         <InputLabel id="dms-select-label">{t('Accounting-Software.type')}</InputLabel>
                                         <Select
@@ -413,8 +424,8 @@ const DetailsTable: React.FC = () => {
                                         label={t('Accounting-Software.event-type')}
                                         name="event_type"
                                         value={
-                                               // @ts-ignore
-                                               updatedTenant?.event_type ?   updatedTenant?.event_type || '':  updatedTenant?.event_type?.document || ''}
+                                            // @ts-ignore
+                                            updatedTenant?.event_type ? updatedTenant?.event_type || '' : updatedTenant?.event_type?.document || ''}
                                         onChange={handleEditChange}
                                     />
                                 </Box>
@@ -436,6 +447,34 @@ const DetailsTable: React.FC = () => {
                                         name="additional_settings.region"
                                         value={updatedTenant?.additional_settings?.region || ""}
                                         onChange={handleEditChange}
+                                    />
+                                </Box>
+
+                                <Box sx={{ marginBottom: 2 }}>
+                                    <TextField
+                                        fullWidth
+                                        label={t("New-password")}
+                                        name="password"
+                                        required
+                                        type="password"
+                                        value={formData.password}
+                                        onChange={handleInputChange}
+                                        error={!!formData.password && formData.password.length < 8} // Перевірка на мінімальну довжину
+                                        helperText={formData.password && formData.password.length < 8 ? t('password-length-error') : ''} // Повідомлення про помилку
+                                    />
+                                </Box>
+
+                                <Box sx={{ marginBottom: 2 }}>
+                                    <TextField
+                                        fullWidth
+                                        label={t("confirmation-password")}
+                                        name="confirmationPassword"
+                                        required
+                                        type="password"
+                                        value={formData.confirmationPassword}
+                                        onChange={handleInputChange}
+                                        error={formData.confirmationPassword !== formData.password} // Перевірка на збіг паролів
+                                        helperText={formData.confirmationPassword !== formData.password ? t('password-mismatch') : ''} // Повідомлення про помилку
                                     />
                                 </Box>
                             </Typography>

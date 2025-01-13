@@ -20,6 +20,7 @@ interface Invoice {
     dms_name: string;
     document_mime_type: string;
     to_update: number
+    created_at: string
 }
 
 
@@ -78,7 +79,7 @@ const DocumentTable: React.FC = () => {
         setPage(0);
     }
 
-    const filteredInvoices = rows.filter((invoice) => {
+    const filteredInvoices = rows?.filter((invoice) => {
         const globalMatch =
             invoice.accounting_name.toLowerCase().includes(globalSearch.toLowerCase()) ||
             invoice.document_name.toLowerCase().includes(globalSearch.toLowerCase()) ||
@@ -108,7 +109,7 @@ const DocumentTable: React.FC = () => {
 
 
 
-    const sortedInvoices = filteredInvoices.sort((a, b) => {
+    const sortedInvoices = filteredInvoices?.sort((a, b) => {
         if (sortBy === 'accounting_document_date') {
             const dateA = new Date(a.accounting_document_date);
             const dateB = new Date(b.accounting_document_date);
@@ -131,7 +132,7 @@ const DocumentTable: React.FC = () => {
 
         try {
             // Виконання запиту
-            const response: any = await apiService.get("accounting-software/invoices-sync", getToken);
+            const response: any = await apiService.getLong("accounting-software/invoices-sync", getToken);
             if (response instanceof Error) {
                 const { status, variant, message } = apiService.CheckAndShow(response, t);
                 console.log(message);
@@ -202,7 +203,7 @@ const DocumentTable: React.FC = () => {
     };
 
 
-    const paginatedInvoices = filteredInvoices.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+    const paginatedInvoices = filteredInvoices?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
 
     return (
@@ -279,7 +280,7 @@ const DocumentTable: React.FC = () => {
                         <TableRow>
                             <TableCell>{t('invoiceTable.companyPortal')}</TableCell>
                             <TableCell>{t('invoiceTable.invoiceNumber')}</TableCell>
-                            <TableCell>{t('invoiceTable.icon')}</TableCell>
+
                             <TableCell>{t('invoiceTable.invoiceDate')}</TableCell>
                             <TableCell>{t('invoiceTable.syncAccount')}</TableCell>
                             <TableCell>{t('invoiceTable.statusAccount')}</TableCell>
@@ -295,13 +296,13 @@ const DocumentTable: React.FC = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {paginatedInvoices.length !== 0 ?
-                            sortedInvoices.map((invoice) => (
+                        {paginatedInvoices?.length !== 0 ?
+                            paginatedInvoices?.map((invoice) => (
                                 <TableRow key={invoice.id} style={{ background: invoice?.to_update === 1 ? '#60606075' : 'none' }}>
                                     <>
                                         <TableCell>{invoice?.accounting_name}</TableCell>
-                                        <TableCell>{invoice?.document_name}</TableCell>
-                                        <TableCell>{renderFileIcon(invoice?.document_mime_type)}</TableCell>
+                                        <TableCell sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}><Box sx={{ margin: 'auto' }}>{renderFileIcon(invoice?.document_mime_type)}</Box><Box sx={{ margin: 'auto' }}> {invoice?.document_name}</Box></TableCell>
+
                                         <TableCell>{invoice?.accounting_document_date}</TableCell>
                                         <TableCell>{invoice?.dms_name}</TableCell>
                                         <TableCell>
@@ -322,7 +323,22 @@ const DocumentTable: React.FC = () => {
                                                 display: 'inline-block'
                                             }}></div>
                                         </TableCell>
-                                        <TableCell>{invoice?.accounting_document_date}</TableCell>
+
+                                        <TableCell> {(() => {
+                                            const date = new Date(invoice?.created_at);
+
+                                            // Форматуємо дату для читабельності
+                                            const readableDate = date.toLocaleString('uk-UA', {
+                                                year: 'numeric',
+                                                month: 'long',
+                                                day: 'numeric',
+                                                hour: '2-digit',
+                                                minute: '2-digit',
+                                                second: '2-digit',
+                                            });
+
+                                            return readableDate;
+                                        })()}</TableCell>
                                     </>
                                 </TableRow>
                             )) :
@@ -335,7 +351,7 @@ const DocumentTable: React.FC = () => {
                     </TableBody>
                 </Table>
                 <TablePagination
-                    rowsPerPageOptions={[5, 10, 15]}
+                    rowsPerPageOptions={[5, 10, 15, 50, 100, 200]}
                     component="div"
                     count={filteredInvoices.length}
                     rowsPerPage={rowsPerPage}
