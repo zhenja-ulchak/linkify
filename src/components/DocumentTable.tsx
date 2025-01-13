@@ -280,7 +280,7 @@ const DocumentTable: React.FC = () => {
                         <TableRow>
                             <TableCell>{t('invoiceTable.companyPortal')}</TableCell>
                             <TableCell>{t('invoiceTable.invoiceNumber')}</TableCell>
-                    
+
                             <TableCell>{t('invoiceTable.invoiceDate')}</TableCell>
                             <TableCell>{t('invoiceTable.syncAccount')}</TableCell>
                             <TableCell>{t('invoiceTable.statusAccount')}</TableCell>
@@ -323,7 +323,7 @@ const DocumentTable: React.FC = () => {
                                                 display: 'inline-block'
                                             }}></div>
                                         </TableCell>
-                                      
+
                                         <TableCell> {(() => {
                                             const date = new Date(invoice?.created_at);
 
@@ -351,7 +351,7 @@ const DocumentTable: React.FC = () => {
                     </TableBody>
                 </Table>
                 <TablePagination
-                    rowsPerPageOptions={[5, 10, 15]}
+                    rowsPerPageOptions={[5, 10, 15, 50, 100, 200]}
                     component="div"
                     count={filteredInvoices.length}
                     rowsPerPage={rowsPerPage}
