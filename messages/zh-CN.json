@@ -347,7 +347,8 @@
     "selectDate": "选择日期",
     "importDate": "导入日期",
     "invoiceDate": "发票日期",
-    "syncAllInvoices": "同步所有发票"
+    "syncAllInvoices": "同步所有发票",
+    "question": "问题"
   },
   "LocaleSwitcher": {
     "en": "English",

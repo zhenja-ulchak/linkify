@@ -349,7 +349,8 @@
     "selectDate": "Виберіть дату",
     "importDate": "Дата імпорту",
     "invoiceDate": "Дата рахунку",
-    "syncAllInvoices": "Синхронізувати всі рахунки"
+    "syncAllInvoices": "Синхронізувати всі рахунки",
+    "question": "Питання"
   },
   "LocaleSwitcher": {
     "en": "English",

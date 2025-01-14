@@ -351,7 +351,8 @@
     "selectDate": "Select Date",
     "importDate": "Import Date",
     "invoiceDate": "Invoice Date",
-    "syncAllInvoices": "Sync All Invoices"
+    "syncAllInvoices": "Sync All Invoices",
+    "question": "Questions"
   },
   "LocaleSwitcher": {
     "en": "English",

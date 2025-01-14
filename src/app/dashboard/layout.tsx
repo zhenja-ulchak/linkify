@@ -36,7 +36,7 @@ export default function DashboardLayout({
   return (
     <>
       <SideBar setIsSideBarOpen={setIsSideBarOpen} />
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex", marginLeft: '57px' }}>
         <div
           style={{
             flex: 1,

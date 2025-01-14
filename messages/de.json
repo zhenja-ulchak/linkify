@@ -348,7 +348,8 @@
     "selectDate": "Datum auswählen",
     "importDate": "Importdatum",
     "invoiceDate": "Rechnungsdatum",
-    "syncAllInvoices": "Alle Rechnungen synchronisieren"
+    "syncAllInvoices": "Alle Rechnungen synchronisieren",
+    "question": "Frage"
   },
   "LocaleSwitcher": {
     "en": "English",
