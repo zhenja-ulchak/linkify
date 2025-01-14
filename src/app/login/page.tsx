@@ -22,11 +22,12 @@ import LocaleSwitcher from '../../app/../components/LocaleSwitcher'; // Import L
 import CryptoJS from 'crypto-js';
 import { enqueueSnackbar } from "notistack";
 import useBooleanStore from "@/store/userStore";
+import RefreshSessionTimeout from "@/components/RefreshTimeout/Refresh";
 
 
 const Login: React.FC = () => {
   const router = useRouter();
-
+  const [time, setTime] = useState<number | undefined>();
   const [username, setUsername] = useState("john.doe@example.com"); // super.admin@tenant2.com          superadmin     super-zhenja@ukr.net          alice.smith@example.com user   john.doe@example.com
   const [password, setPassword] = useState("password123");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -64,8 +65,10 @@ const Login: React.FC = () => {
       } else {
         // @ts-ignore
         const booleanDebag = resp?.data[0]?.debug
-
+        setTime(resp?.data[0]?.token_expires)
         setIsSynced({ open: booleanDebag })
+
+        sessionStorage.setItem('timeStep', JSON.stringify(resp?.data[0]?.token_expires));
         if (resp?.data?.length > 0 && resp.data[0]?.tanant) {
           sessionStorage.setItem('tenant', JSON.stringify(resp.data[0]?.tanant.license_valid_until));
         }
@@ -128,54 +131,14 @@ const Login: React.FC = () => {
     }
   }
 
-  // Memoize loginRefresh function using useCallback
-  const loginRefresh = useCallback(async () => {
-    if (isLoggedIn) {
-      const getToken: any = sessionStorage.getItem('AuthToken');
-
-      const response: any = await ApiService.get(
-        `user/login-refresh`,
-        getToken
-      );
-      console.log("Login Refresh erfolgreich!");
-      if (response instanceof Error) {
-        const { status, variant, message } = ApiService.CheckAndShow(response, t);
-        console.log(message);
-        // @ts-ignore
-        enqueueSnackbar(message, { variant: variant });
-      }
-
-      if (response.status === 200 || response.success === true) {
-        enqueueSnackbar(t('Settings.change-password'), { variant: 'success' });
-      }
-    }
-  }, [isLoggedIn]);
 
 
-  useEffect(() => {
-    let timer: NodeJS.Timeout;
-    const sessionTimeout = 3600000; // Beispiel für eine 1-Stunden-Sitzung (3600000ms)
-    const refreshThreshold = sessionTimeout * 0.9; // 90% der Sitzung
 
-    if (isLoggedIn) {
-      timer = setInterval(() => {
-        const currentTime = Date.now();
-        const sessionRemaining = sessionTimeout - (currentTime % sessionTimeout);
-        setTimeRemaining(sessionRemaining); // Update the time remaining
 
-        if (sessionRemaining <= refreshThreshold) {
-          //  loginRefresh(); // Login-Refresh ausführen, wenn 90% erreicht sind
-        }
-      }, 1000); // Alle 1 Sekunde den verbleibenden Zeitraum prüfen
-
-      return () => clearInterval(timer);
-    }
-
-    return undefined;
-  }, [isLoggedIn, loginRefresh]);
 
   return (
     <>
+    <RefreshSessionTimeout time={time} />
       <div className="locale-switcher-container" style={{ position: 'absolute', top: '3px', right: '66px' }}>
         <LocaleSwitcher />
       </div>
@@ -264,10 +227,7 @@ const Login: React.FC = () => {
                 {t("registrierung")}
               </Button>
 
-
-
             </Box>
-
 
             <Box display="flex" justifyContent="space-between" width="100%" >
               <Link
@@ -315,11 +275,6 @@ const Login: React.FC = () => {
                 {t("question")}
               </Button>
               </Link>
-
-             
-
-
-
             </Box>
 
 

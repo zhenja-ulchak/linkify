@@ -215,7 +215,7 @@ const DocumentTable: React.FC = () => {
 
     return (
         <>
-            <TableContainer component={Paper} sx={{ width: '95%', marginLeft: '18px', marginTop: '16px' }}>
+            <TableContainer component={Paper} sx={{ width: '99%', marginLeft: '18px', marginTop: '16px' }}>
                 <Typography variant="h5" align="center" sx={{ fontWeight: 'bold', fontSize: '1.5rem', marginBottom: '16px' }}>
                     {t('invoiceTable.title')}
                 </Typography>
@@ -275,8 +275,8 @@ const DocumentTable: React.FC = () => {
                         sx={{
                             width: {
                                 xs: '30%', // Для маленьких екранів
-                                sm: '50%', // Для середніх екранів
-                                md: '30%', // Для великих екранів
+                                sm: '20%', // Для середніх екранів
+                                md: '10%', // Для великих екранів
                             },
                             margin: 'auto',
                             fontSize: {
