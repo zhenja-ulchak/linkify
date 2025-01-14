@@ -64,7 +64,7 @@ const Login: React.FC = () => {
       } else {
         // @ts-ignore
         const booleanDebag = resp?.data[0]?.debug
-            
+
         setIsSynced({ open: booleanDebag })
         if (resp?.data?.length > 0 && resp.data[0]?.tanant) {
           sessionStorage.setItem('tenant', JSON.stringify(resp.data[0]?.tanant.license_valid_until));
@@ -256,7 +256,7 @@ const Login: React.FC = () => {
 
               <Button
                 id="RegisterBtnOnLoginPage"
-                style={{ width: "26%", fontSize: '12px' }}
+                style={{ width: "26%", fontSize: '12px', marginBottom: '10px', }}
                 variant="text"
                 color="secondary"
                 onClick={handleRegistrierung}
@@ -295,6 +295,33 @@ const Login: React.FC = () => {
                 {t("login")}
               </Button>
             </Box>
+
+            <Box display="flex" justifyContent="space-between" width="100%" >
+
+            <Link
+                href="https://www.linkify.cloud/fragen"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ width: "100%",    textAlign: 'center' }}
+                sx={{marginTop: '50px'}}
+              >
+                <Button
+                id="RegisterBtnOnLoginPage"
+                style={{ width: "26%", fontSize: '14px',  margin: 'auto' }}
+                variant="text"
+                color="secondary"
+                
+              >
+                {t("question")}
+              </Button>
+              </Link>
+
+             
+
+
+
+            </Box>
+
 
           </form>
 

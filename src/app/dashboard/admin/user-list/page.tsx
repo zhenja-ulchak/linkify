@@ -6,11 +6,11 @@ import TableHelperUserList from '@/components/UserList';
 const UserList = () => {
 
 
-  
+
 
   return (
     <>
-    <TableHelperUserList/>
+      <TableHelperUserList />
     </>
   );
 };

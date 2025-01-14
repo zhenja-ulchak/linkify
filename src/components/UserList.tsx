@@ -178,6 +178,7 @@ export default function TableHelperUserList({ title }: TableHelperType) {
             disablePadding: false,
             label: t('Userlist.actions'),
         },
+      
     ];
 
     interface EnhancedTableProps {
@@ -386,12 +387,14 @@ export default function TableHelperUserList({ title }: TableHelperType) {
             id="BoxTable"
             sx={{
                 position: "relative",
-                left: "83px",
+                left: "18px",
+
                 display: "flex",
                 alignContent: "center",
                 justifyContent: "center",
-                width: "95%",
+                width: "100%",
                 flexDirection: "column",
+                
             }}
 
         >

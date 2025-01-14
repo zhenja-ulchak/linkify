@@ -392,11 +392,11 @@ export default function TableHelperDmsConfig({ title }: TableHelperType) {
             id="BoxTable"
             sx={{
                 position: "relative",
-                left: "83px",
+                left: "18px",
                 display: "flex",
                 alignContent: "center",
                 justifyContent: "center",
-                width: "95%",
+                width: "100%",
                 flexDirection: "column",
             }}
         >

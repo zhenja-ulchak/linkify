@@ -97,7 +97,7 @@ const DashboardPage = () => {
         <Typography
           component="h1"
           sx={{
-            fontSize: '2rem',
+            fontSize: window.innerWidth <= 1024 ? '1rem' : '2rem', // text
             fontWeight: 'bold',
             color: 'white',
             textAlign: 'center',
@@ -141,7 +141,7 @@ const DashboardPage = () => {
                 position: 'absolute',
                 top: `${positions[index]?.y}%`,
                 left: `${positions[index]?.x}%`,
-                fontSize: '2rem',
+                fontSize:  window.innerWidth <= 1024 ? '1rem' : '2rem', // icons
                 zIndex: 0,
                 transform: `translate(-50%, -50%) scale(${scaleEffect})`,
                 transition: 'transform 0.1s ease-out',

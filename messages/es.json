@@ -348,7 +348,8 @@
     "selectDate": "Seleccionar fecha",
     "importDate": "Fecha de importación",
     "invoiceDate": "Fecha de factura",
-    "syncAllInvoices": "Sincronizar todas las facturas"
+    "syncAllInvoices": "Sincronizar todas las facturas",
+    "question": "Pregunta"
   },
   "LocaleSwitcher": {
     "en": "Inglés",

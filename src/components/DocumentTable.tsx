@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Typography, Select, MenuItem, FormControl, InputLabel, Box, TextField, TablePagination, Button } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material';
 import { SelectChangeEvent } from '@mui/material';
@@ -40,6 +40,7 @@ const DocumentTable: React.FC = () => {
     const [loading, setLoading] = useState(false);
     const [synced, setSynced] = useState(false);
     const [selectedDmsStatus, setSelectedDmsStatus] = useState('');
+    const [localDate, setLocalDate] = useState<string | null>();
     console.log(synced);
 
 
@@ -187,6 +188,12 @@ const DocumentTable: React.FC = () => {
         fetchData();
     }, []);
 
+    useEffect(()=>{
+        return setLocalDate(localStorage.getItem('locale'));
+    },[localDate])
+    console.log('мова' ,localDate);
+    
+
     const renderFileIcon = (mimeType: string) => {
         switch (mimeType) {
             case 'application/pdf':
@@ -208,18 +215,18 @@ const DocumentTable: React.FC = () => {
 
     return (
         <>
-            <TableContainer component={Paper} sx={{ width: '95%', marginLeft: '86px', marginTop: '16px' }}>
+            <TableContainer component={Paper} sx={{ width: '95%', marginLeft: '18px', marginTop: '16px' }}>
                 <Typography variant="h5" align="center" sx={{ fontWeight: 'bold', fontSize: '1.5rem', marginBottom: '16px' }}>
                     {t('invoiceTable.title')}
                 </Typography>
-                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: '16px', width: '100%', margin: '13px auto', float: 'left', marginLeft: '15px' }}>
+                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: '16px', width: '98%', margin: '13px auto', float: 'left', marginLeft: '15px' }}>
                     <TextField
                         label={t('invoiceTable.globalSearch')}
                         value={globalSearch}
                         onChange={handleGlobalSearchChange}
                         sx={{ width: '12%', marginRight: '16px' }}
                     />
-                    <Box sx={{ width: '70%', float: 'left' }}>
+                    <Box sx={{ width: '65%', float: 'left' }}>
                         <FormControl sx={{ width: '20%', marginRight: '16px' }}>
                             <InputLabel>{t('invoiceTable.companyPortal')}</InputLabel>
                             <Select value={selectedCompany} onChange={handleCompanyChange}>
@@ -265,7 +272,24 @@ const DocumentTable: React.FC = () => {
                         </FormControl>
                     </Box>
                     <Button
-                        sx={{ width: '10%', margin: 'auto' }}
+                        sx={{
+                            width: {
+                                xs: '30%', // Для маленьких екранів
+                                sm: '50%', // Для середніх екранів
+                                md: '30%', // Для великих екранів
+                            },
+                            margin: 'auto',
+                            fontSize: {
+                                xs: '0.5rem', // Менший шрифт для маленьких екранів
+                                sm: '0.8rem',
+                                md: '1rem',
+                            },
+                            padding: {
+                                xs: '8px 12px',
+                                sm: '10px 16px',
+                                md: '12px 20px',
+                            }, 
+                        }}
                         variant="contained"
                         color={synced ? 'success' : 'error'}
                         onClick={handleSyncClick}
@@ -328,7 +352,7 @@ const DocumentTable: React.FC = () => {
                                             const date = new Date(invoice?.created_at);
 
                                             // Форматуємо дату для читабельності
-                                            const readableDate = date.toLocaleString('uk-UA', {
+                                            const readableDate = date.toLocaleString(localDate || 'en', {
                                                 year: 'numeric',
                                                 month: 'long',
                                                 day: 'numeric',
