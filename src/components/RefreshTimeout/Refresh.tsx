@@ -30,7 +30,7 @@ const RefreshSessionTimeout = ({ time }: TimeType) => {
             }
 
             if (response.status === 200 || response.success === true) {
-                enqueueSnackbar(t('Settings.change-password'), { variant: 'success' });
+                enqueueSnackbar(t('change-password'), { variant: 'success' });
             }
         }
     }, [isLoggedIn]);
