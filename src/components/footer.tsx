@@ -64,7 +64,7 @@ const Footer: React.FC = () => {
     objectPage: 'up',
   });
 
-  const login_timeout = !User ? '200' : '300'
+  const login_timeout = !User ? '300' : '300'
   const page_refresh_time = !User ? '300' : '300'
   const display_name = !User ? 'user' : '100'
   const id = !User ? '1' : '100'
@@ -94,8 +94,6 @@ const Footer: React.FC = () => {
   };
 
 
-  // const [counter, setCounter] = useState(Timeout);
-  // const [showModal, setShowModal] = useState(false);
   const getSharedObject = () => {
     const storedSetting = sessionStorage.getItem("setting");
     if (storedSetting) {
@@ -112,40 +110,6 @@ const Footer: React.FC = () => {
   const [sharedObject, setSharedObject] = useState(getSharedObject());
 
 
-
-  // const resetTimer = useCallback(() => {
-  //   setCounter(Timeout);
-  //   setShowModal(false);
-  //   setCounter(Timeout);
-  //   setShowModal(false);
-  // }, []);
-
-  // const handleLogoutLocal = () => {
-  //   sessionStorage.clear();
-  //   localStorage.clear();
-  //   window.location.href = "/login";
-  // };
-
-  // useEffect(() => {
-  //   const timer = setInterval(() => {
-  //     setCounter((prev) => {
-  //       if (prev <= 1) {
-  //         clearInterval(timer);
-  //         handleLogoutLocal();
-  //         return 0;
-  //       }
-  //       if (prev <= LogoutViewTimer) setShowModal(true);
-  //       return prev - 1;
-  //     });
-  //   }, 1000);
-
-  //   window.addEventListener("mousemove", resetTimer);
-
-  //   return () => {
-  //     clearInterval(timer);
-  //     window.removeEventListener("mousemove", resetTimer);
-  //   };
-  // }, [resetTimer]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -200,7 +164,7 @@ const Footer: React.FC = () => {
   useEffect(() => {
     if (count !== 0) {
       if (refresh <= (refresh * 90) / 100) {
-        // handleLogout()
+        handleLogout()
 
         setRefresh(Number(page_refresh_time))
       }
@@ -210,7 +174,8 @@ const Footer: React.FC = () => {
 
   const handleMouseMove = useCallback(() => {
     setCount(Number(login_timeout));
-  }, [login_timeout]);
+    setRefresh(Number(page_refresh_time))
+  }, [login_timeout, page_refresh_time]);
 
   useEffect(() => {
     window.addEventListener('mousemove', handleMouseMove);
