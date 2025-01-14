@@ -14,11 +14,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
   const [locale, setLocale] = useState<string | undefined>();
   const [messages, setMessages] = useState<any>(enMessages);
-  
+
 
   useEffect(() => {
     const savedLocale = localStorage.getItem('locale') || 'en';
-  
+
     setLocale(savedLocale);
 
     // Логика для загрузки сообщений в зависимости от локали
@@ -45,16 +45,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 
 
-   
- 
 
-  
-  const timer = setTimeout(() => {
-     localStorage.removeItem('locale');// Очищаємо sessionStorage після завершення сесії
-  }, 3600000);
 
-  // Очищуємо таймер при розмонтуванні компонента
-  return () => clearTimeout(timer);
+
+    const timer = setTimeout(() => {
+      localStorage.removeItem('locale');// Очищаємо sessionStorage після завершення сесії
+    }, 3600000);
+
+    // Очищуємо таймер при розмонтуванні компонента
+    return () => clearTimeout(timer);
   }, []);
 
   // Detect browser's time zone or use a default like UTC
@@ -63,7 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang={locale || "en"}>
       <body style={{ margin: '0', padding: '0', minHeight: '100vh' }}>
-        <div style={{ }}>
+        <div style={{}}>
           {/* <ChangeMode /> */}
         </div>
         <NextIntlClientProvider locale={locale || "en"} messages={messages} timeZone={timeZone}>

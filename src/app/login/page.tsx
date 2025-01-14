@@ -67,6 +67,8 @@ const Login: React.FC = () => {
         const booleanDebag = resp?.data[0]?.debug
         setTime(resp?.data[0]?.token_expires)
         setIsSynced({ open: booleanDebag })
+
+        sessionStorage.setItem('timeStep', JSON.stringify(resp?.data[0]?.token_expires));
         if (resp?.data?.length > 0 && resp.data[0]?.tanant) {
           sessionStorage.setItem('tenant', JSON.stringify(resp.data[0]?.tanant.license_valid_until));
         }
@@ -128,6 +130,8 @@ const Login: React.FC = () => {
       }
     }
   }
+
+
 
 
 

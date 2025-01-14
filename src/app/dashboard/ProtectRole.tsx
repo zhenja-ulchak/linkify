@@ -41,6 +41,19 @@ const ProtectedRole: React.FC<ProtectedRouteProps> = ({ children }) => {
             return;
         }
 
+        const currentTime = Math.floor(Date.now() / 1000);
+        const time = sessionStorage.getItem('timeStep');
+        
+        if (time) { // Перевіряємо, чи ключ існує
+          const storedTime = parseInt(time, 10); // Конвертуємо рядок у число
+          if (Number(currentTime) >= Number(storedTime)) {
+            sessionStorage.clear(); // Очищаємо sessionStorage
+            router.push('/login'); // Перенаправляємо на сторінку входу
+          }
+        } else {
+          console.warn('timeStep not found in sessionStorage');
+        }
+
         // if (ciphertext) {
         //     // Дешифруємо роль користувача
         //     const bytes = CryptoJS.AES.decrypt(ciphertext, 'secret-key');
