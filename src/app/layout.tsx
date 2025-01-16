@@ -9,6 +9,7 @@ import ruMessages from '../../messages/ru.json';
 import zhcnMessages from '../../messages/zh-CN.json';
 import ChangeMode from '@/components/DarkLightMode';
 import { SnackbarProvider } from 'notistack';
+import { ThemeContextProvider } from '@/context/ThemeContext';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 
@@ -71,7 +72,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             autoHideDuration={3000}
             anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
           >
+            <ThemeContextProvider>
             {children}
+            </ThemeContextProvider>
           </SnackbarProvider>
         </NextIntlClientProvider>
       </body>

@@ -23,6 +23,8 @@ import CryptoJS from "crypto-js";
 import { enqueueSnackbar } from "notistack";
 import useBooleanStore from "@/store/userStore";
 import RefreshSessionTimeout from "@/components/RefreshTimeout/Refresh";
+import ChangeMode from "@/components/DarkLightMode";
+import ThemeToggleButton from "@/components/ThemeToggleButton";
 
 const Login: React.FC = () => {
   const router = useRouter();
@@ -137,6 +139,7 @@ const Login: React.FC = () => {
   return (
     <>
       <RefreshSessionTimeout time={time} />
+      <ThemeToggleButton />
       <div
         className="locale-switcher-container"
         style={{ position: "absolute", top: "3px", right: "66px" }}
