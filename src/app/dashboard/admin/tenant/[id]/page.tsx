@@ -2,7 +2,7 @@
 
 import TenantDetails from "@/components/tenants/[id]/page";
 const PageTenant = () => {
-    return <TenantDetails />;
+  return <TenantDetails />;
 };
 
 export default PageTenant;

@@ -5,26 +5,21 @@ import CloseIcon from "@mui/icons-material/Close";
 // Context for modal state
 const GlobalModalContext = createContext({
   open: false,
-  setOpen: (open: boolean) => { },
+  setOpen: (open: boolean) => {},
 });
 
-
-export const GlobalModalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const GlobalModalProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [open, setOpen] = useState(false);
-
-
-
-
 
   useEffect(() => {
     const checkCertificateExpiry = async () => {
-  
-      const userObj: any = sessionStorage.getItem('tenant')
+      const userObj: any = sessionStorage.getItem("tenant");
       const certificateExpiryDate = new Date(userObj);
       const today = new Date();
       const timeDifference = certificateExpiryDate.getTime() - today.getTime();
       const daysRemaining = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
-      console.log(certificateExpiryDate);
 
       if (daysRemaining <= 3) {
         setOpen(true);
@@ -33,8 +28,6 @@ export const GlobalModalProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
     checkCertificateExpiry();
   }, []);
-
-
 
   return (
     <GlobalModalContext.Provider value={{ open, setOpen }}>
@@ -78,24 +71,17 @@ export const GlobalModalProvider: React.FC<{ children: React.ReactNode }> = ({ c
           <Box sx={{ padding: "24px" }}>
             <Typography variant="h6" gutterBottom>
               У вас заканчивается время сертификата
-
-
             </Typography>
             <Typography variant="body1" gutterBottom>
               Хотите ли вы продолжить время сертификата?
             </Typography>
             <Button
-
               onClick={() => setOpen(false)}
-              sx={{ marginTop: "16px", marginRight: '20px' }}
+              sx={{ marginTop: "16px", marginRight: "20px" }}
             >
               Cancel
             </Button>
-            <Button
-
-              onClick={() => setOpen(false)}
-              sx={{ marginTop: "16px" }}
-            >
+            <Button onClick={() => setOpen(false)} sx={{ marginTop: "16px" }}>
               Сontinue
             </Button>
           </Box>

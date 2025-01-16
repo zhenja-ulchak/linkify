@@ -1,7 +1,7 @@
 import ToggleOnIcon from "@mui/icons-material/ToggleOn";
 import ToggleOffIcon from "@mui/icons-material/ToggleOff";
 import TableCell from "@mui/material/TableCell";
-import IconButton from "@mui/material/IconButton";  // Используем IconButton вместо button
+import IconButton from "@mui/material/IconButton"; // Используем IconButton вместо button
 import * as React from "react";
 
 interface ToggleSwitchProps {

@@ -2,7 +2,7 @@
 
 import DetailsTableDms from "@/components/DmsConfigDialog/[id]/page";
 const PageTenant = () => {
-    return <DetailsTableDms />;
+  return <DetailsTableDms />;
 };
 
 export default PageTenant;

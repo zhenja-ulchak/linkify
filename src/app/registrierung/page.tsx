@@ -20,11 +20,12 @@ import { useRouter } from "next/navigation";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import axios from "axios";
-import LocaleSwitcher from '../../components/LocaleSwitcher';
-import { useTranslations } from 'next-intl';
+import LocaleSwitcher from "../../components/LocaleSwitcher";
+import { useTranslations } from "next-intl";
 import apiService from "@/app/services/apiService";
+import ThemeToggleButton from "@/components/ThemeToggleButton";
 import { enqueueSnackbar } from "notistack";
-
+import { useThemeContext } from "@/context/ThemeContext";
 
 const Register: React.FC = () => {
   const [firstName, setFirstName] = useState<string>("");
@@ -36,17 +37,22 @@ const Register: React.FC = () => {
   const [region, setRegion] = useState<string>("");
   const [country, setCountry] = useState<string>("");
   const [addressSupplement, setAddressSupplement] = useState<string>("");
-  {/* invoice-address */ }
+  {
+    /* invoice-address */
+  }
   const [invoiceStreet, setInvoiceStreet] = useState<string>("");
   const [invoiceHouseNumber, setInvoiceHouseNumber] = useState<string>("");
   const [invoicePostalCode, setInvoicePostalCode] = useState<string>("");
   const [invoiceCity, setInvoiceCity] = useState<string>("");
   const [invoiceRegion, setInvoiceRegion] = useState<string>("");
   const [invoiceCountry, setInvoiceCountry] = useState<string>("");
-  const [invoiceAddressSupplement, setInvoiceAddressSupplement] = useState<string>("");
-  {/* invoice-address */ }
+  const [invoiceAddressSupplement, setInvoiceAddressSupplement] =
+    useState<string>("");
+  {
+    /* invoice-address */
+  }
   const [email, setEmail] = useState<string>("");
-  const [phone, setPhone] = useState('');
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [username, setUsername] = useState<string>("");
@@ -56,18 +62,16 @@ const Register: React.FC = () => {
   const [invoice_email, setInvoice_email] = useState<string>("");
   const [formData, setFormData] = useState<any>({
     language: "",
-
   });
 
   const [errorMessage, setErrorMessage] = useState<string>(""); // Fehlernachricht invoice_email
   const [successMessage, setSuccessMessage] = useState<string>("");
 
-  const t = useTranslations('API');
+  const t = useTranslations("API");
   // Erfolgsnachricht
   const router = useRouter();
-
+ const { mode } = useThemeContext();
   const border = {
-
     borderRadius: "5px",
   };
 
@@ -95,60 +99,58 @@ const Register: React.FC = () => {
     // }
 
     if (password !== confirmPassword) {
-      setErrorMessage(t('Registrierung.passworter'));
+      setErrorMessage(t("Registrierung.passworter"));
       return;
     }
 
     if (!validatePassword(password)) {
-      setErrorMessage(t('Registrierung.pass-muss'));
+      setErrorMessage(t("Registrierung.pass-muss"));
       return;
     }
 
-    const allAdress = `${addressSupplement}, ${street} ${houseNumber}, ${postalCode} ${city}, ${region}, ${country}`
-    console.log(allAdress);
+    const allAdress = `${addressSupplement}, ${street} ${houseNumber}, ${postalCode} ${city}, ${region}, ${country}`;
 
-    const allInvoiceAdress = `${invoiceAddressSupplement}, ${invoiceStreet} ${invoiceHouseNumber}, ${invoicePostalCode} ${invoiceCity}, ${invoiceRegion}, ${invoiceCountry}`
+    const allInvoiceAdress = `${invoiceAddressSupplement}, ${invoiceStreet} ${invoiceHouseNumber}, ${invoicePostalCode} ${invoiceCity}, ${invoiceRegion}, ${invoiceCountry}`;
 
     const dataObj = {
-      "first_name": firstName,
-      "last_name": lastName,
-      "address": allAdress,
-      "email": email,
+      first_name: firstName,
+      last_name: lastName,
+      address: allAdress,
+      email: email,
       password,
-      "password_confirmation": password,
-      "username": email,
-      "company_name": company,
-      "invoice_address": allInvoiceAdress,
-      "tarif": "free",
-      "contact_phone": phone,
-      "language": formData.language,
-      'contact_email': contact_email,
-      'invoice_email': invoice_email
-    }
-    console.log(dataObj);
+      password_confirmation: password,
+      username: email,
+      company_name: company,
+      invoice_address: allInvoiceAdress,
+      tarif: "free",
+      contact_phone: phone,
+      language: formData.language,
+      contact_email: contact_email,
+      invoice_email: invoice_email,
+    };
 
-    const getToken: any = sessionStorage.getItem('AuthToken');
+    const getToken: any = sessionStorage.getItem("AuthToken");
 
     const response: any = await apiService.post(
       `service/register`,
-      dataObj
-      ,
+      dataObj,
       getToken
     );
 
     // Erfolgreiche Registrierung
     if (response instanceof Error) {
       const { status, variant, message } = apiService.CheckAndShow(response, t);
-      console.log(message);
+
       // @ts-ignore
       enqueueSnackbar(message, { variant: variant });
     }
 
     if (response.success === true || response.status === 200) {
-      enqueueSnackbar('Accounting data fetched successfully!', { variant: 'success' });
-      router.push('/login');
+      enqueueSnackbar("Accounting data fetched successfully!", {
+        variant: "success",
+      });
+      router.push("/login");
     }
-
   };
 
   const handleSelectChange = (event: SelectChangeEvent<string>) => {
@@ -165,16 +167,22 @@ const Register: React.FC = () => {
 
   return (
     <>
-      <div className="locale-switcher-container" style={{ position: 'absolute', top: '13px', left: '66px' }}>
+      <div
+        className="locale-switcher-container"
+        style={{ position: "absolute", top: "13px", left: "66px" }}
+      >
         <LocaleSwitcher />
       </div>
+      <Box sx={{marginRight: "10px", marginTop: "10px", position: "absolute", top: "5px", left: "16px"}}>
+        <ThemeToggleButton />
+      </Box>
       <Button
         id="LoginBtnOnRegisterPage"
         sx={{ float: "right", marginRight: "10px", marginTop: "10px" }}
         variant="outlined"
         onClick={handleLogin}
       >
-        {t('Registrierung.zuruck')}
+        {t("Registrierung.zuruck")}
       </Button>
 
       <Container maxWidth="sm">
@@ -201,24 +209,23 @@ const Register: React.FC = () => {
               component="h2"
               gutterBottom
             >
-              {t('Registrierung.registrierung')}
+              {t("Registrierung.registrierung")}
             </Typography>
             <Grid container spacing={2}>
-              <Grid item xs={12} >
+              <Grid item xs={12}>
                 <Typography
                   sx={{ textAlign: "center" }}
                   variant="h4"
                   component="h2"
                   gutterBottom
                 >
-
-                  {t('address-registration')}
+                  {t("address-registration")}
                 </Typography>
               </Grid>
 
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label={t('Registrierung.vorname')}
+                  label={t("Registrierung.vorname")}
                   type="text"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
@@ -229,7 +236,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label={t('Registrierung.nachname')}
+                  label={t("Registrierung.nachname")}
                   type="text"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
@@ -240,7 +247,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label={t('Registrierung.adresse')}
+                  label={t("Registrierung.adresse")}
                   type="text"
                   value={street}
                   onChange={(e) => setStreet(e.target.value)}
@@ -251,7 +258,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label={t('Registrierung.hausnummer')}
+                  label={t("Registrierung.hausnummer")}
                   type="text"
                   value={houseNumber}
                   onChange={(e) => setHouseNumber(e.target.value)}
@@ -262,7 +269,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label={t('Registrierung.postleitzahl')}
+                  label={t("Registrierung.postleitzahl")}
                   type="text"
                   value={postalCode}
                   onChange={(e) => setPostalCode(e.target.value)}
@@ -273,7 +280,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label={t('Registrierung.ort')}
+                  label={t("Registrierung.ort")}
                   type="text"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
@@ -284,7 +291,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label={t('Registrierung.region')}
+                  label={t("Registrierung.region")}
                   type="text"
                   value={region}
                   onChange={(e) => setRegion(e.target.value)}
@@ -295,7 +302,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label={t('Registrierung.land')}
+                  label={t("Registrierung.land")}
                   type="text"
                   value={country}
                   onChange={(e) => setCountry(e.target.value)}
@@ -306,7 +313,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label={t('Registrierung.adresszusatz')}
+                  label={t("Registrierung.adresszusatz")}
                   type="text"
                   value={addressSupplement}
                   onChange={(e) => setAddressSupplement(e.target.value)}
@@ -317,7 +324,7 @@ const Register: React.FC = () => {
 
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label={t('Registrierung.firma')}
+                  label={t("Registrierung.firma")}
                   type="text"
                   value={company}
                   onChange={(e) => setCompany(e.target.value)}
@@ -326,22 +333,21 @@ const Register: React.FC = () => {
                 />
               </Grid>
 
-              <Grid item xs={12} >
+              <Grid item xs={12}>
                 <Typography
                   sx={{ textAlign: "center" }}
                   variant="h4"
                   component="h2"
                   gutterBottom
                 >
-
-                  {t('invoice-address')}
+                  {t("invoice-address")}
                 </Typography>
               </Grid>
 
               {/* invoice-address */}
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label={t('Registrierung.invoice-adresse')}
+                  label={t("Registrierung.invoice-adresse")}
                   type="text"
                   value={invoiceStreet}
                   onChange={(e) => setInvoiceStreet(e.target.value)}
@@ -352,7 +358,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label={t('Registrierung.invoice-hausnummer')}
+                  label={t("Registrierung.invoice-hausnummer")}
                   type="text"
                   value={invoiceHouseNumber}
                   onChange={(e) => setInvoiceHouseNumber(e.target.value)}
@@ -363,7 +369,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label={t('Registrierung.invoice-postleitzahl')}
+                  label={t("Registrierung.invoice-postleitzahl")}
                   type="text"
                   value={invoicePostalCode}
                   onChange={(e) => setInvoicePostalCode(e.target.value)}
@@ -374,7 +380,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label={t('Registrierung.invoice-ort')}
+                  label={t("Registrierung.invoice-ort")}
                   type="text"
                   value={invoiceCity}
                   onChange={(e) => setInvoiceCity(e.target.value)}
@@ -385,7 +391,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label={t('Registrierung.invoice-region')}
+                  label={t("Registrierung.invoice-region")}
                   type="text"
                   value={invoiceRegion}
                   onChange={(e) => setInvoiceRegion(e.target.value)}
@@ -396,7 +402,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label={t('Registrierung.invoice-land')}
+                  label={t("Registrierung.invoice-land")}
                   type="text"
                   value={invoiceCountry}
                   onChange={(e) => setInvoiceCountry(e.target.value)}
@@ -407,7 +413,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={12}>
                 <TextField
-                  label={t('Registrierung.invoice-adresszusatz')}
+                  label={t("Registrierung.invoice-adresszusatz")}
                   type="text"
                   value={invoiceAddressSupplement}
                   onChange={(e) => setInvoiceAddressSupplement(e.target.value)}
@@ -415,13 +421,12 @@ const Register: React.FC = () => {
                   style={border}
                 />
               </Grid>
-              <Grid item xs={12} sm={12} >
+              <Grid item xs={12} sm={12}>
                 <TextField
-                  label={t('Registrierung.Invoice_email')}
+                  label={t("Registrierung.Invoice_email")}
                   type="email"
                   value={invoice_email}
                   onChange={(e) => setInvoice_email(e.target.value)}
-
                   fullWidth
                   style={border}
                 />
@@ -440,17 +445,14 @@ const Register: React.FC = () => {
 
               {/* invoice-address */}
 
-
-
-              <Grid item xs={12} >
+              <Grid item xs={12}>
                 <Typography
                   sx={{ textAlign: "center" }}
                   variant="h4"
                   component="h2"
                   gutterBottom
                 >
-
-                  {t('details-registration')}
+                  {t("details-registration")}
                 </Typography>
               </Grid>
 
@@ -458,7 +460,7 @@ const Register: React.FC = () => {
                 <FormControl fullWidth>
                   <InputLabel>{t("Language")}</InputLabel>
                   <Select
-                    value={formData.language || ''}
+                    value={formData.language || ""}
                     onChange={handleSelectChange}
                     label={t("Language")}
                   >
@@ -466,37 +468,36 @@ const Register: React.FC = () => {
                     <MenuItem value="ru">RU (Русский)</MenuItem>
                     <MenuItem value="en">EN (English)</MenuItem>
                     <MenuItem value="es">ES (Español)</MenuItem>
-                    <MenuItem value="de">DE (Deutsch)</MenuItem>  {/* Виправлено з "німецька" на "Deutsch" */}
+                    <MenuItem value="de">DE (Deutsch)</MenuItem>{" "}
+                    {/* Виправлено з "німецька" на "Deutsch" */}
                     <MenuItem value="zh-CH">ZH (中文 - Китайська)</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12} >
+              <Grid item xs={12}>
                 <TextField
-                  label={t('Registrierung.Contact_email')}
+                  label={t("Registrierung.Contact_email")}
                   type="email"
                   value={contact_email}
                   onChange={(e) => setContact_email(e.target.value)}
-
                   fullWidth
                   style={border}
                 />
               </Grid>
 
-              <Grid item xs={12} >
+              <Grid item xs={12}>
                 <TextField
-                  label={t('Registrierung.benutzername')}
+                  label={t("Registrierung.benutzername")}
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-
                   fullWidth
                   style={border}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  label={t('phone')}
+                  label={t("phone")}
                   type="tel"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
@@ -507,7 +508,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  label={t('Registrierung.passwort')}
+                  label={t("Registrierung.passwort")}
                   type={showPasswords ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -534,7 +535,7 @@ const Register: React.FC = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  label={t('Registrierung.passwort-bestatigen')}
+                  label={t("Registrierung.passwort-bestatigen")}
                   type={showPasswords ? "text" : "password"}
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
@@ -575,11 +576,10 @@ const Register: React.FC = () => {
 
               <Grid item xs={12}>
                 <Button type="submit" fullWidth variant="contained">
-                  {t('Registrierung.registrierung')}
+                  {t("Registrierung.registrierung")}
                 </Button>
               </Grid>
             </Grid>
-
           </Box>
         </Box>
       </Container>

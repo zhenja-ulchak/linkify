@@ -2,85 +2,86 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 // @ts-expect-error
-import CryptoJS from 'crypto-js';
+import CryptoJS from "crypto-js";
 
 interface ProtectedRouteProps {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 // Функція для перевірки JWT
 function isJWT(token: string) {
-    if (typeof token !== "string") return false;
+  if (typeof token !== "string") return false;
 
-    const parts = token.split(".");
-    if (parts.length !== 3) return false; // JWT повинні мати 3 частини
+  const parts = token.split(".");
+  if (parts.length !== 3) return false; // JWT повинні мати 3 частини
 
-    try {
-        // Декодуємо Header та Payload
-        const header = JSON.parse(atob(parts[0]));
-        const payload = JSON.parse(atob(parts[1]));
+  try {
+    // Декодуємо Header та Payload
+    const header = JSON.parse(atob(parts[0]));
+    const payload = JSON.parse(atob(parts[1]));
 
-        // Перевіряємо, чи є це валідними об'єктами
-        return typeof header === "object" && typeof payload === "object";
-    } catch (error) {
-        return false; // Якщо не вдалося декодувати або парсити JSON, це не JWT
-    }
+    // Перевіряємо, чи є це валідними об'єктами
+    return typeof header === "object" && typeof payload === "object";
+  } catch (error) {
+    return false; // Якщо не вдалося декодувати або парсити JSON, це не JWT
+  }
 }
 
 const ProtectedRole: React.FC<ProtectedRouteProps> = ({ children }) => {
-    const router = useRouter();
+  const router = useRouter();
 
-    useEffect(() => {
-        // Отримуємо токен і роль з sessionStorage
-        const getToken = sessionStorage.getItem('AuthToken');
-        // const ciphertext = sessionStorage.getItem('user');
+  useEffect(() => {
+    // Отримуємо токен і роль з sessionStorage
+    const getToken = sessionStorage.getItem("AuthToken");
+    // const ciphertext = sessionStorage.getItem('user');
 
-        if (!getToken || !isJWT(getToken)) {
-            // Якщо токен відсутній або не є валідним JWT, редиректимо на сторінку входу
-            router.push('/login');
-            return;
-        }
+    if (!getToken || !isJWT(getToken)) {
+      // Якщо токен відсутній або не є валідним JWT, редиректимо на сторінку входу
+      router.push("/login");
+      return;
+    }
 
-        const currentTime = Math.floor(Date.now() / 1000);
-        const time = sessionStorage.getItem('timeStep');
-        
-        if (time) { // Перевіряємо, чи ключ існує
-          const storedTime = parseInt(time, 10); // Конвертуємо рядок у число
-          if (Number(currentTime) >= Number(storedTime)) {
-            sessionStorage.clear(); // Очищаємо sessionStorage
-            router.push('/login'); // Перенаправляємо на сторінку входу
-          }
-        } else {
-          console.warn('timeStep not found in sessionStorage');
-        }
+    const currentTime = Math.floor(Date.now() / 1000);
+    const time = sessionStorage.getItem("timeStep");
 
-        // if (ciphertext) {
-        //     // Дешифруємо роль користувача
-        //     const bytes = CryptoJS.AES.decrypt(ciphertext, 'secret-key');
-        //     const getRole = bytes.toString(CryptoJS.enc.Utf8);
+    if (time) {
+      // Перевіряємо, чи ключ існує
+      const storedTime = parseInt(time, 10); // Конвертуємо рядок у число
+      if (Number(currentTime) >= Number(storedTime)) {
+        sessionStorage.clear(); // Очищаємо sessionStorage
+        router.push("/login"); // Перенаправляємо на сторінку входу
+      }
+    } else {
+      console.warn("timeStep not found in sessionStorage");
+    }
 
-        //     if (!getRole) {
-        //         // Якщо роль не знайдена, редиректимо на сторінку панелі
-        //         router.push('/dashboard');
-        //         return;
-        //     }
+    // if (ciphertext) {
+    //     // Дешифруємо роль користувача
+    //     const bytes = CryptoJS.AES.decrypt(ciphertext, 'secret-key');
+    //     const getRole = bytes.toString(CryptoJS.enc.Utf8);
 
-        //     // Редирект залежно від ролі
-        //     if (getRole === "admin") {
-        //         router.push('/dashboard/admin');
-        //     } else if (getRole === "superadmin") {
-        //         router.push('/dashboard/superadmin');
-        //     } else if (getRole === "user") {
-        //         router.push('/dashboard/user');
-        //     }
-        //     //  else {
-        //     //     // Якщо роль не відповідає жодному з випадків, редиректимо на загальну сторінку
-        //     //     router.push('/dashboard');
-        //     // }
-        // }
-    }, [router]);
+    //     if (!getRole) {
+    //         // Якщо роль не знайдена, редиректимо на сторінку панелі
+    //         router.push('/dashboard');
+    //         return;
+    //     }
 
-    return <>{children}</>;
+    //     // Редирект залежно від ролі
+    //     if (getRole === "admin") {
+    //         router.push('/dashboard/admin');
+    //     } else if (getRole === "superadmin") {
+    //         router.push('/dashboard/superadmin');
+    //     } else if (getRole === "user") {
+    //         router.push('/dashboard/user');
+    //     }
+    //     //  else {
+    //     //     // Якщо роль не відповідає жодному з випадків, редиректимо на загальну сторінку
+    //     //     router.push('/dashboard');
+    //     // }
+    // }
+  }, [router]);
+
+  return <>{children}</>;
 };
 
 export default ProtectedRole;

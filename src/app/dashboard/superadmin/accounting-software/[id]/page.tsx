@@ -1,8 +1,8 @@
 "use client";
 
-import DetailsTable from "@/components/AccountingDoftwareDetails/[id]/page";
+import DetailsTable from "@/components/AccountingSoftwareDetails/[id]/page";
 const PageTenant = () => {
-    return <DetailsTable />;
+  return <DetailsTable />;
 };
 
 export default PageTenant;

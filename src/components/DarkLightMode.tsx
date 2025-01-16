@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import { useState } from "react";
@@ -27,7 +27,7 @@ export default function ChangeMode({ color = "#1976d2" }: ChangeModeProps) {
       style={{
         position: "absolute",
         right: 20,
-        top:'6px',
+        top: "6px",
         display: "flex",
         justifyContent: "flex-end",
         cursor: "pointer",

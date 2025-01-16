@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "next/navigation";
-import { useTranslations } from 'next-intl';
+import { useTranslations } from "next-intl";
 import {
   TextField,
   Button,
@@ -39,7 +39,7 @@ export default function AdminProfile() {
     contact_phone: 0,
   });
 
-    const t = useTranslations('Admin-profile');
+  const t = useTranslations("Admin-profile");
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const id = useParams();
@@ -94,13 +94,10 @@ export default function AdminProfile() {
     }
   };
 
-  console.log(formData);
-  
-
   return (
     <Paper elevation={3} sx={{ padding: 4, maxWidth: 600, margin: "auto" }}>
       <Typography variant="h4" align="center" gutterBottom>
-        {t("profile")} 
+        {t("profile")}
       </Typography>
 
       <Typography variant="h6">{t("benutzer")} </Typography>

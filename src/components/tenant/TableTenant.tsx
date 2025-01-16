@@ -25,18 +25,16 @@ import { visuallyHidden } from "@mui/utils";
 import { useRouter } from "next/navigation";
 import ToggleSwitch from "@/components/toggleBtn";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import axios from 'axios';
+import axios from "axios";
 import apiService from "@/app/services/apiService";
 import { enqueueSnackbar } from "notistack";
-import { useTranslations } from 'next-intl';
-
-
+import { useTranslations } from "next-intl";
 
 type Order = "asc" | "desc";
 
 type EnhancedTableType = {
-  CrudReadonly: boolean
-}
+  CrudReadonly: boolean;
+};
 
 export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
   const [order, setOrder] = React.useState<Order>("asc");
@@ -46,10 +44,8 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const router = useRouter();
-  const [rows, setRows] = React.useState<Data[]>([]);  // Zustand für die Zeilen
-  const t = useTranslations('API');
-  console.log(rows);
-
+  const [rows, setRows] = React.useState<Data[]>([]); // Zustand für die Zeilen
+  const t = useTranslations("API");
 
   // Data und TenantData Typen
   type Data = {
@@ -61,7 +57,7 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
     contact_email: string;
     invoice_email: string;
     contact_phone: string;
-    actions: boolean
+    actions: boolean;
   };
 
   type TenantData = {
@@ -73,55 +69,47 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
     contact_email: string;
     invoice_email: string;
     contact_phone: string;
-    actions: boolean
-
+    actions: boolean;
   };
-
-
-
-
 
   React.useEffect(() => {
     const fetchData = async () => {
+      const getToken: any = sessionStorage.getItem("AuthToken");
+      const response: any = await apiService.get("tenant", getToken);
 
-        const getToken: any = sessionStorage.getItem('AuthToken');
-        const response: any = await apiService.get("tenant", getToken);
+      if (response.status === 200 || response.success === true) {
+        enqueueSnackbar(t("tenant-information-fetched-successfully"), {
+          variant: "success",
+        });
+      }
 
-        if (response.status === 200 || response.success === true) {
-          enqueueSnackbar(t('tenant-information-fetched-successfully'), { variant: 'success' });
-        }
+      const tenantData: any = response?.data[0];
+      if (response instanceof Error) {
+        const { status, variant, message } = apiService.CheckAndShow(
+          response,
+          t
+        );
 
-        const tenantData: any = response?.data[0];
-        if (response instanceof Error) {
-          const { status, variant, message } = apiService.CheckAndShow(response, t);
-          console.log(message);
-          // @ts-ignore
-          enqueueSnackbar(message, { variant: variant });
-        }
-        setRows(tenantData);  // Зберігаємо дані в стан
-
-      
-    
+        // @ts-ignore
+        enqueueSnackbar(message, { variant: variant });
+      }
+      setRows(tenantData); // Зберігаємо дані в стан
     };
 
     fetchData();
   }, []);
-
-
-
 
   // Lade die Daten
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = event.target.checked;
     if (isChecked) {
-      const newSelected = rows.map((row) => row.id);  // Mappe durch die Zeilen, um alle auszuwählen
+      const newSelected = rows.map((row) => row.id); // Mappe durch die Zeilen, um alle auszuwählen
       setSelected(newSelected);
     } else {
-      setSelected([]);  // Leere die Auswahl, wenn das Kontrollkästchen nicht markiert ist
+      setSelected([]); // Leere die Auswahl, wenn das Kontrollkästchen nicht markiert ist
     }
   };
-
 
   function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     if (b[orderBy] < a[orderBy]) {
@@ -132,9 +120,6 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
     }
     return 0;
   }
-
-
-
 
   // interface HeadCell {
   //   disablePadding: boolean;
@@ -148,49 +133,49 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
       id: "company_name",
       numeric: false,
       disablePadding: true,
-      label: t('Tenant.company_name'),
+      label: t("Tenant.company_name"),
     },
     {
       id: "address",
       numeric: false, // Text, daher numeric: false
       disablePadding: false,
-      label: t('Tenant.address'),
+      label: t("Tenant.address"),
     },
     {
       id: "invoice_address",
       numeric: false, // Text, daher numeric: false
       disablePadding: false,
-      label: t('Tenant.invoice_address'),
+      label: t("Tenant.invoice_address"),
     },
     {
       id: "license_valid_until",
       numeric: false, // Text, daher numeric: false
       disablePadding: false,
-      label: t('Tenant.license_valid_until'),
+      label: t("Tenant.license_valid_until"),
     },
     {
       id: "contact_email",
       numeric: false, // Text, daher numeric: false
       disablePadding: false,
-      label: t('Tenant.contact_email'),
+      label: t("Tenant.contact_email"),
     },
     {
       id: "invoice_email",
       numeric: false,
       disablePadding: false,
-      label: t('Tenant.invoice_email'),
+      label: t("Tenant.invoice_email"),
     },
     {
       id: "contact_phone",
       numeric: false,
       disablePadding: false,
-      label: t('Tenant.contact_phone'),
+      label: t("Tenant.contact_phone"),
     },
     {
       id: "actions",
       numeric: false,
       disablePadding: false,
-      label: t('Tenant.actions'),
+      label: t("Tenant.actions"),
     },
   ];
 
@@ -224,7 +209,6 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
       <TableHead>
         <TableRow>
           {CrudReadonly && (
-
             <>
               <TableCell padding="checkbox">
                 <Checkbox
@@ -239,7 +223,6 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
               </TableCell>
             </>
           )}
-
 
           {headCells.map((headCell: any) => (
             <TableCell
@@ -258,7 +241,9 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
                 {headCell.label}
                 {orderBy === headCell.id ? (
                   <Box component="span" sx={visuallyHidden}>
-                    {order === "desc" ? "sorted descending" : "sorted ascending"}
+                    {order === "desc"
+                      ? "sorted descending"
+                      : "sorted ascending"}
                   </Box>
                 ) : null}
               </TableSortLabel>
@@ -271,8 +256,6 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
   interface EnhancedTableToolbarProps {
     numSelected: number;
   }
-
-
 
   function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
     const { numSelected } = props;
@@ -309,7 +292,7 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
             component="div"
             textAlign={"center"}
           >
-            {t('Tenant.Tenant-Liste')}
+            {t("Tenant.Tenant-Liste")}
           </Typography>
         )}
         {numSelected > 0 ? (
@@ -319,7 +302,7 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
             </IconButton>
           </Tooltip>
         ) : (
-          <Tooltip className="FilterList" title={t('Userlist.filterlist')}>
+          <Tooltip className="FilterList" title={t("Userlist.filterlist")}>
             <IconButton>
               <FilterListIcon />
             </IconButton>
@@ -329,10 +312,7 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
     );
   }
 
-
   const handleRowClick = (id: number) => {
-    console.log(id);
-
     router.push(`/dashboard/superadmin/tenant/${id}`);
   };
 
@@ -345,11 +325,8 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
     setOrderBy(property);
   };
 
-
   const handleClick = (event: React.MouseEvent<unknown>, id: number) => {
-
     if (CrudReadonly) {
-
       const selectedIndex = selected.indexOf(id);
       let newSelected: readonly number[] = [];
 
@@ -384,7 +361,6 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
     setDense(event.target.checked);
   };
 
-
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
@@ -396,7 +372,7 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
     //     : (a: Data, b: Data) => -descendingComparator(a, b, orderBy);
     // };
 
-    return rows
+    return rows;
     // [...rows]
     //   .sort(getComparator(order, orderBy))
     //   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
@@ -456,11 +432,9 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
                     selected={isItemSelected}
                     className="tableRow"
 
-                  // ---------------------------
+                    // ---------------------------
                   >
-
                     {CrudReadonly && (
-
                       <>
                         <TableCell padding="checkbox">
                           <Checkbox
@@ -503,9 +477,8 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
                     <TableCell className="tableFont" align="left">
                       {row.contact_phone}
                     </TableCell>
-                    {CrudReadonly ?
-                      (<>
-
+                    {CrudReadonly ? (
+                      <>
                         <TableCell className="tableFont" align="left">
                           <button
                             style={{
@@ -519,19 +492,23 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
                             onClick={() => handleRowClick(row.id)}
                           >
                             <VisibilityIcon />
-                            <div style={{ position: "absolute", margin: "0", padding: "0", opacity: "0" }}>
+                            <div
+                              style={{
+                                position: "absolute",
+                                margin: "0",
+                                padding: "0",
+                                opacity: "0",
+                              }}
+                            >
                               {row.id}
                             </div>
                           </button>
                         </TableCell>
                         <ToggleSwitch align="left" />
-                      </>) :
-                      (
-                        <>
-                        </>
-                      )
-                    }
-
+                      </>
+                    ) : (
+                      <></>
+                    )}
                   </TableRow>
                 );
               })}
@@ -564,7 +541,7 @@ export default function EnhancedTable({ CrudReadonly }: EnhancedTableType) {
           width: "fit-content",
         }}
         control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label={t('Userlist.densepadding')}
+        label={t("Userlist.densepadding")}
       />
     </Box>
   );
