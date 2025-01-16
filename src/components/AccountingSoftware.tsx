@@ -26,19 +26,21 @@ import { useRouter } from "next/navigation";
 import ToggleSwitch from "@/components/toggleBtn";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 // @ts-expect-error
-import CryptoJS from 'crypto-js';
+import CryptoJS from "crypto-js";
 import apiService from "@/app/services/apiService";
 import { enqueueSnackbar } from "notistack";
-import { useTranslations } from 'next-intl';
+import { useTranslations } from "next-intl";
 
 type Order = "asc" | "desc";
 
 type TableHelperType = {
-  title?: string
-  tenantData?: any
-}
+  title?: string;
+  tenantData?: any;
+};
 
-export default function TableHelperAccountingSoftware({ title }: TableHelperType) {
+export default function TableHelperAccountingSoftware({
+  title,
+}: TableHelperType) {
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof Data>("name");
   const [selected, setSelected] = React.useState<readonly number[]>([]);
@@ -46,10 +48,9 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const router = useRouter();
-  const [rows, setRows] = React.useState<Data[]>([]);  // Zustand für die Zeilen
-  const [role, setRoles] = React.useState('');
- const t = useTranslations('API');
-
+  const [rows, setRows] = React.useState<Data[]>([]); // Zustand für die Zeilen
+  const [role, setRoles] = React.useState("");
+  const t = useTranslations("API");
 
   // Data und TenantData Typen
   type Data = {
@@ -74,53 +75,49 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
     contact_email: string;
     invoice_email: string;
     contact_phone: string;
-    actions: boolean
-
+    actions: boolean;
   };
-
-
-
-
 
   React.useEffect(() => {
     const fetchData = async () => {
-   
-        const getToken: any = sessionStorage.getItem('AuthToken');
-        const response: any = await apiService.get("accounting-software", getToken)
+      const getToken: any = sessionStorage.getItem("AuthToken");
+      const response: any = await apiService.get(
+        "accounting-software",
+        getToken
+      );
 
-        console.log(response.data);
-        
-        setRows(response.data);
-        if (response instanceof Error) {
-          const { status, variant, message } = apiService.CheckAndShow(response, t);
-          console.log(message);
-          // @ts-ignore
-          enqueueSnackbar(message, { variant: variant });
-        }
-     
-         if (response.status === 200 || response.success === true) {
-          enqueueSnackbar(t('accounting-data-fetched-successfully'), { variant: 'success' });
-         }
+      setRows(response.data);
+      if (response instanceof Error) {
+        const { status, variant, message } = apiService.CheckAndShow(
+          response,
+          t
+        );
+
+        // @ts-ignore
+        enqueueSnackbar(message, { variant: variant });
+      }
+
+      if (response.status === 200 || response.success === true) {
+        enqueueSnackbar(t("accounting-data-fetched-successfully"), {
+          variant: "success",
+        });
+      }
     };
 
     fetchData();
   }, []);
-
-
-
 
   // Lade die Daten
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = event.target.checked;
     if (isChecked) {
-      const newSelected = rows.map((row) => row.id);  // Mappe durch die Zeilen, um alle auszuwählen
+      const newSelected = rows.map((row) => row.id); // Mappe durch die Zeilen, um alle auszuwählen
       setSelected(newSelected);
     } else {
-      setSelected([]);  // Leere die Auswahl, wenn das Kontrollkästchen nicht markiert ist
+      setSelected([]); // Leere die Auswahl, wenn das Kontrollkästchen nicht markiert ist
     }
   };
-
 
   function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     if (b[orderBy] < a[orderBy]) {
@@ -132,9 +129,6 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
     return 0;
   }
 
-
-
-
   // interface HeadCell {
   //   disablePadding: boolean;
   //   id: keyof Data;
@@ -144,55 +138,54 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
 
   const headCells: any = [
     {
-        id: "name",
-        numeric: false,
-        disablePadding: true,
-        label: t('Accounting-Software.name'),
+      id: "name",
+      numeric: false,
+      disablePadding: true,
+      label: t("Accounting-Software.name"),
     },
     {
-        id: "type",
-        numeric: false, // Text, daher numeric: false
-        disablePadding: false,
-        label: t('Accounting-Software.type'),
+      id: "type",
+      numeric: false, // Text, daher numeric: false
+      disablePadding: false,
+      label: t("Accounting-Software.type"),
     },
     {
-        id: "url",
-        numeric: false, // Text, daher numeric: false
-        disablePadding: false,
-        label: t('Accounting-Software.url'),
+      id: "url",
+      numeric: false, // Text, daher numeric: false
+      disablePadding: false,
+      label: t("Accounting-Software.url"),
     },
     {
-        id: "organization_id",
-        numeric: false, // Text, daher numeric: false
-        disablePadding: false,
-        label: t('Accounting-Software.organization_id'),
+      id: "organization_id",
+      numeric: false, // Text, daher numeric: false
+      disablePadding: false,
+      label: t("Accounting-Software.organization_id"),
     },
     {
-        id: "event_type",
-        numeric: false, // Text, daher numeric: false
-        disablePadding: false,
-        label: t('Accounting-Software.event-type'),
+      id: "event_type",
+      numeric: false, // Text, daher numeric: false
+      disablePadding: false,
+      label: t("Accounting-Software.event-type"),
     },
     {
-        id: "description",
-        numeric: false,
-        disablePadding: false,
-        label: t('Accounting-Software.description'),
+      id: "description",
+      numeric: false,
+      disablePadding: false,
+      label: t("Accounting-Software.description"),
     },
     {
-        id: "is_active",
-        numeric: false,
-        disablePadding: false,
-        label: t('Accounting-Software.active'),
+      id: "is_active",
+      numeric: false,
+      disablePadding: false,
+      label: t("Accounting-Software.active"),
     },
     {
-        id: "actions",
-        numeric: false,
-        disablePadding: false,
-        label: t('Accounting-Software.actions'),
+      id: "actions",
+      numeric: false,
+      disablePadding: false,
+      label: t("Accounting-Software.actions"),
     },
-];
-
+  ];
 
   interface EnhancedTableProps {
     numSelected: number;
@@ -251,7 +244,9 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
                 {headCell.label}
                 {orderBy === headCell.id ? (
                   <Box component="span" sx={visuallyHidden}>
-                    {order === "desc" ? "sorted descending" : "sorted ascending"}
+                    {order === "desc"
+                      ? "sorted descending"
+                      : "sorted ascending"}
                   </Box>
                 ) : null}
               </TableSortLabel>
@@ -264,8 +259,6 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
   interface EnhancedTableToolbarProps {
     numSelected: number;
   }
-
-
 
   function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
     const { numSelected } = props;
@@ -312,7 +305,7 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
             </IconButton>
           </Tooltip>
         ) : (
-          <Tooltip className="FilterList" title={t('Userlist.filterlist')}>
+          <Tooltip className="FilterList" title={t("Userlist.filterlist")}>
             <IconButton>
               <FilterListIcon />
             </IconButton>
@@ -322,33 +315,26 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
     );
   }
 
-
-
   React.useEffect(() => {
-
-    const ciphertext = sessionStorage.getItem('user');
+    const ciphertext = sessionStorage.getItem("user");
     if (ciphertext) {
-      const bytes = CryptoJS.AES.decrypt(ciphertext, 'secret-key');
+      const bytes = CryptoJS.AES.decrypt(ciphertext, "secret-key");
       const getRole = bytes.toString(CryptoJS.enc.Utf8);
       if (!getRole) {
-        router.push('/dashboard');
+        router.push("/dashboard");
         return;
       }
-      setRoles(getRole)
+      setRoles(getRole);
     }
   }, [router]);
 
-
   const handleRowClick = (id: number) => {
-    console.log(id);
-    
     // enqueueSnackbar(`Ви обрали рядок з ID: ${id}`, { variant: 'info' });
     if (role === "admin") {
       router.push(`/dashboard/admin/accounting-software/${id}`);
     } else if (role === "superadmin") {
       router.push(`/dashboard/superadmin/accounting-software/${id}`);
     }
-
   };
 
   const handleRequestSort = (
@@ -359,7 +345,6 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
-
 
   const handleClick = (event: React.MouseEvent<unknown>, id: number) => {
     const selectedIndex = selected.indexOf(id);
@@ -395,7 +380,6 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
     setDense(event.target.checked);
   };
 
-
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
@@ -407,7 +391,7 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
     //     : (a: Data, b: Data) => -descendingComparator(a, b, orderBy);
     // };
 
-    return rows
+    return rows;
     // [...rows]
     //   .sort(getComparator(order, orderBy))
     //   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
@@ -467,7 +451,7 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
                     selected={isItemSelected}
                     className="tableRow"
 
-                  // ---------------------------
+                    // ---------------------------
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
@@ -520,7 +504,14 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
                         onClick={() => handleRowClick(row.tenant_id)}
                       >
                         <VisibilityIcon />
-                        <div style={{ position: "absolute", margin: "0", padding: "0", opacity: "0" }}>
+                        <div
+                          style={{
+                            position: "absolute",
+                            margin: "0",
+                            padding: "0",
+                            opacity: "0",
+                          }}
+                        >
                           {row?.id}
                         </div>
                       </button>
@@ -559,9 +550,8 @@ export default function TableHelperAccountingSoftware({ title }: TableHelperType
           width: "fit-content",
         }}
         control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label={t('Userlist.densepadding')}
+        label={t("Userlist.densepadding")}
       />
     </Box>
-
   );
 }

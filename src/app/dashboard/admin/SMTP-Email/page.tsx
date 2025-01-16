@@ -16,7 +16,7 @@ import {
 import axios from "axios";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { useTranslations } from 'next-intl';
+import { useTranslations } from "next-intl";
 import apiService from "@/app/services/apiService";
 import { enqueueSnackbar } from "notistack";
 
@@ -29,9 +29,7 @@ type EmailConfig = {
   from_address: string;
   from_name: string;
   is_active: boolean;
-
 };
-
 
 const Administrator: React.FC = () => {
   // Zustände für Eingaben
@@ -44,9 +42,11 @@ const Administrator: React.FC = () => {
   const [savePassword, setSavePassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [autoAuth, setAutoAuth] = useState(false);
-  const [emailConfig, setEmailConfig] = React.useState<EmailConfig | null>(null);
-  const tAPI = useTranslations('API');
-  const t = useTranslations('API');
+  const [emailConfig, setEmailConfig] = React.useState<EmailConfig | null>(
+    null
+  );
+  const tAPI = useTranslations("API");
+  const t = useTranslations("API");
 
   // Zustände für Fehlermeldungen
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -59,14 +59,14 @@ const Administrator: React.FC = () => {
   // Eingabe validieren
   const validateInputs = () => {
     const newErrors: Record<string, string> = {};
-    if (!smtpServer) newErrors.smtpServer =  t('Smtp.smtp-server');
+    if (!smtpServer) newErrors.smtpServer = t("Smtp.smtp-server");
     if (!smtpPort || isNaN(Number(smtpPort))) {
-      newErrors.smtpPort = t('Smtp.smtp-port');
+      newErrors.smtpPort = t("Smtp.smtp-port");
     }
-    if (!encryption) newErrors.encryption = t('Smtp.versch');
-    if (!username) newErrors.username = t('Smtp.benutzername');
+    if (!encryption) newErrors.encryption = t("Smtp.versch");
+    if (!username) newErrors.username = t("Smtp.benutzername");
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      newErrors.email = t('Smtp.bitte-geben');
+      newErrors.email = t("Smtp.bitte-geben");
     }
     if (!password) newErrors.password = "Passwort darf nicht leer sein.";
 
@@ -104,65 +104,71 @@ const Administrator: React.FC = () => {
       autoAuth,
     };
 
-
-
-
     // to-do fix email/config
     setServerError(null); // Vorherige Fehler zurücksetzen
 
-
-    const getToken: any = sessionStorage.getItem('AuthToken');
-    const response: any = await apiService.post("tenant/email-setting", payload, getToken)
+    const getToken: any = sessionStorage.getItem("AuthToken");
+    const response: any = await apiService.post(
+      "tenant/email-setting",
+      payload,
+      getToken
+    );
     if (response instanceof Error) {
-      const { status, variant, message } = apiService.CheckAndShow(response, tAPI);
-      console.log(message);
+      const { status, variant, message } = apiService.CheckAndShow(
+        response,
+        tAPI
+      );
+
       // @ts-ignore
       enqueueSnackbar(message, { variant: variant });
     }
 
     if (response.status === 200 || response.success === true) {
-      enqueueSnackbar(t('test-email-saved-successfully'), { variant: 'success' });
+      enqueueSnackbar(t("test-email-saved-successfully"), {
+        variant: "success",
+      });
     }
   };
 
   const handleTestEmail = async () => {
     const newErrors = validateInputs();
-    console.log(newErrors);
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     } else {
-
-      console.log(email);
-      const getToken: any = sessionStorage.getItem('AuthToken');
-      const response: any = await apiService.post("service/test-email", { email }
-        , getToken)
-
+      const getToken: any = sessionStorage.getItem("AuthToken");
+      const response: any = await apiService.post(
+        "service/test-email",
+        { email },
+        getToken
+      );
 
       if (response instanceof Error) {
-        const { status, variant, message } = apiService.CheckAndShow(response, tAPI);
-        console.log(message);
+        const { status, variant, message } = apiService.CheckAndShow(
+          response,
+          tAPI
+        );
+
         // @ts-ignore
         enqueueSnackbar(message, { variant: variant });
       }
-      console.log(response.status);
+
       if (response.status === 200 || response.success === true) {
-        enqueueSnackbar(t('test-email-saved-successfully'), { variant: 'success' });
+        enqueueSnackbar(t("test-email-saved-successfully"), {
+          variant: "success",
+        });
       }
-
     }
-
-
   };
-
-
 
   React.useEffect(() => {
     const fetchData = async () => {
-
-      const getToken: any = sessionStorage.getItem('AuthToken');
-      const response: any = await apiService.get("tenant/email-setting", getToken);
+      const getToken: any = sessionStorage.getItem("AuthToken");
+      const response: any = await apiService.get(
+        "tenant/email-setting",
+        getToken
+      );
 
       const data = response.data[0][0]; // Ваші дані з сервера
       setEmailConfig(data);
@@ -175,30 +181,30 @@ const Administrator: React.FC = () => {
       setEmail(data?.from_address || "");
 
       if (response instanceof Error) {
-        const { status, variant, message } = apiService.CheckAndShow(response, t);
-        console.log(message);
+        const { status, variant, message } = apiService.CheckAndShow(
+          response,
+          t
+        );
+
         // @ts-ignore
         enqueueSnackbar(message, { variant: variant });
       }
 
-
       if (response.status === 200 || response.success === true) {
-        enqueueSnackbar(t('dms-config-fetched-successfully'), { variant: 'success' });
-
+        enqueueSnackbar(t("dms-config-fetched-successfully"), {
+          variant: "success",
+        });
       }
-
-    }
+    };
 
     fetchData();
   }, []);
-  console.log(smtpServer);
-
 
   return (
     <Container
       id="AdminContainer"
       maxWidth="md"
-      style={{ minHeight: "890px", position: "relative", top: "-0px", }}
+      style={{ minHeight: "890px", position: "relative", top: "-0px" }}
     >
       <Typography
         variant="h4"
@@ -215,7 +221,7 @@ const Administrator: React.FC = () => {
         <Grid item xs={12} sm={6}>
           <TextField
             label={t("Smtp.smtp-email")}
-            value={smtpServer || ''}
+            value={smtpServer || ""}
             onChange={(e) => setSmtpServer(e.target.value)}
             error={!!errors.smtpServer}
             helperText={errors.smtpServer}
@@ -229,11 +235,10 @@ const Administrator: React.FC = () => {
         <Grid item xs={12} sm={6}>
           <TextField
             label={t("Smtp.smtp-port2")}
-            value={smtpPort || ''}
+            value={smtpPort || ""}
             onChange={(e) => setSmtpPort(e.target.value)}
             error={!!errors.smtpPort}
             helperText={errors.smtpPort}
-           
             fullWidth
             className="input-group"
           />
@@ -243,11 +248,10 @@ const Administrator: React.FC = () => {
         <Grid item xs={12} sm={6}>
           <TextField
             label={t("Smtp.art-der")}
-            value={encryption || ''}
+            value={encryption || ""}
             onChange={(e) => setEncryption(e.target.value)}
             error={!!errors.encryption}
             helperText={errors.encryption}
-       
             fullWidth
             className="input-group"
           />
@@ -257,11 +261,10 @@ const Administrator: React.FC = () => {
         <Grid item xs={12} sm={6}>
           <TextField
             label={t("Smtp.benutzername2")}
-            value={username || ''}
+            value={username || ""}
             onChange={(e) => setUsername(e.target.value)}
             error={!!errors.username}
             helperText={errors.username}
-       
             fullWidth
             className="input-group"
           />
@@ -271,7 +274,7 @@ const Administrator: React.FC = () => {
         <Grid item xs={12} sm={6}>
           <TextField
             label={t("Smtp.email-adresse")}
-            value={email || ''}
+            value={email || ""}
             onChange={(e) => setEmail(e.target.value)}
             error={!!errors.email}
             helperText={errors.email}
@@ -301,11 +304,7 @@ const Administrator: React.FC = () => {
                     edge="end"
                     aria-label={t("Smtp.passwort-umschalten")}
                   >
-                    {showPassword ? (
-                      <VisibilityOffIcon />
-                    ) : (
-                      <VisibilityIcon />
-                    )}
+                    {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
                   </IconButton>
                 </InputAdornment>
               ),

@@ -7,7 +7,7 @@ import { Button, TextField, Typography, Box, Container } from "@mui/material";
 import { useRouter } from "next/navigation";
 import apiService from "../services/apiService";
 import { enqueueSnackbar } from "notistack";
-import { useTranslations } from 'next-intl';
+import { useTranslations } from "next-intl";
 
 const ForgotPassword: NextPage = () => {
   const [email, setEmail] = useState<string>("");
@@ -49,7 +49,10 @@ const ForgotPassword: NextPage = () => {
       );
 
       if (response instanceof Error) {
-        const { status, variant, message } = apiService.CheckAndShow(response, t);
+        const { status, variant, message } = apiService.CheckAndShow(
+          response,
+          t
+        );
         //@ts-ignore
         enqueueSnackbar(message, { variant });
       }
@@ -89,9 +92,9 @@ const ForgotPassword: NextPage = () => {
           }}
         >
           <Typography variant="h5" gutterBottom>
-            {t('forgot-password')}
+            {t("forgot-password")}
           </Typography>
-  
+
           <form onSubmit={handleSubmit} style={{ width: "100%" }}>
             <TextField
               variant="outlined"
@@ -99,17 +102,17 @@ const ForgotPassword: NextPage = () => {
               required
               fullWidth
               id="email"
-              label={t('email-address')}
+              label={t("email-address")}
               name="email"
               autoComplete="email"
               autoFocus
               value={email}
               onChange={handleEmailChange}
-              placeholder={t('enter-your-email')}
+              placeholder={t("enter-your-email")}
               error={!!emailError}
-              helperText={emailError && t('email-error')}
+              helperText={emailError && t("email-error")}
             />
-  
+
             <Button
               type="submit"
               fullWidth
@@ -117,10 +120,10 @@ const ForgotPassword: NextPage = () => {
               color="primary"
               sx={{ mt: 2 }}
             >
-              {t('send-email')}
+              {t("send-email")}
             </Button>
           </form>
-  
+
           <Button
             onClick={handleLoginLinkClick}
             variant="text"
@@ -131,13 +134,12 @@ const ForgotPassword: NextPage = () => {
               fontWeight: 500,
             }}
           >
-            {t('back-to-login')}
+            {t("back-to-login")}
           </Button>
         </Box>
       </Container>
     </Box>
   );
-  
 };
 
 export default ForgotPassword;

@@ -162,8 +162,8 @@ const ConfigPage: React.FC = () => {
                   style: { color: "black", fontWeight: "bold" },
                 }}
               />
-              <FormControl fullWidth margin="normal" >
-                <InputLabel style={{ color: "black" }} >
+              <FormControl fullWidth margin="normal">
+                <InputLabel style={{ color: "black" }}>
                   DMS auswählen
                 </InputLabel>
                 <Select

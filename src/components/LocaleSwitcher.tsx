@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { useLocale, useTranslations } from 'next-intl';
-import LocaleSwitcherSelect from './LocaleSwitcherSelect';
+import { useLocale, useTranslations } from "next-intl";
+import LocaleSwitcherSelect from "./LocaleSwitcherSelect";
 
 export default function LocaleSwitcher() {
-  const t = useTranslations('LocaleSwitcher');
+  const t = useTranslations("LocaleSwitcher");
   const locale = useLocale(); // Получаем текущую локаль
 
   // Обработчик изменения локали
   const handleLocaleChange = (newLocale: string) => {
-    localStorage.setItem('locale', newLocale); // Сохраняем выбранную локаль в localStorage
+    localStorage.setItem("locale", newLocale); // Сохраняем выбранную локаль в localStorage
     // Перезагружаем страницу для применения новой локали
     window.location.reload();
   };
@@ -18,13 +18,13 @@ export default function LocaleSwitcher() {
     <LocaleSwitcherSelect
       defaultValue={locale}
       items={[
-        { value: 'en', label: t('en'), shortLabel: 'EN' },
-        { value: 'de', label: t('de'), shortLabel: 'DE' },
-        { value: 'ua', label: t('ua'), shortLabel: 'UA' },
-        { value: 'ru', label: t('ru'), shortLabel: 'RU' },
-        { value: 'zh-CN', label: t('zh-CN'), shortLabel: 'zh-CN' }
+        { value: "en", label: t("en"), shortLabel: "EN" },
+        { value: "de", label: t("de"), shortLabel: "DE" },
+        { value: "ua", label: t("ua"), shortLabel: "UA" },
+        { value: "ru", label: t("ru"), shortLabel: "RU" },
+        { value: "zh-CN", label: t("zh-CN"), shortLabel: "zh-CN" },
       ]}
-      label={t('label')}
+      label={t("label")}
       onLocaleChange={handleLocaleChange}
     />
   );

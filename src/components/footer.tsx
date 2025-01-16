@@ -1,19 +1,16 @@
-
-"use client"
+"use client";
 import React, { useEffect, useState, useCallback } from "react";
 import { Box, Typography, Modal, Button, Container } from "@mui/material";
-import Tooltip from '@mui/material/Tooltip';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Tooltip from "@mui/material/Tooltip";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { enqueueSnackbar } from "notistack";
 import apiService from "@/app/services/apiService";
-import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import useBooleanStore from "@/store/userStore";
-
-
 
 interface FooterProps {
   footerPosition?: string | number;
@@ -37,16 +34,19 @@ type UserType = {
   created_at: string; // ISO 8601 формат для дати
   updated_at: string; // ISO 8601 формат для дати
   deleted_at: string | null; // може бути null або рядок для дати
-}
+};
 
 // token_expires add time resresh
 
 const Timeout = parseInt(process.env.NEXT_PUBLIC_APP_TIMEOUT || "300", 10);
-const LogoutViewTimer = parseInt(process.env.NEXT_PUBLIC_APP_LOGOUT_VIEW_TIMER || "20", 10);
+const LogoutViewTimer = parseInt(
+  process.env.NEXT_PUBLIC_APP_LOGOUT_VIEW_TIMER || "20",
+  10
+);
 
 const Footer: React.FC = () => {
   const router = useRouter();
-  const t = useTranslations('API');
+  const t = useTranslations("API");
   const { isSynced }: any = useBooleanStore();
   const [isSyncedDebag, setIsSyncedDebag] = useState(false);
   const [User, setUser] = useState<UserType>();
@@ -58,16 +58,16 @@ const Footer: React.FC = () => {
     objectPage: false,
   });
   const [arrowDirection, setArrowDirection] = useState({
-    user: 'up',
-    time: 'up',
-    licInfo: 'up',
-    objectPage: 'up',
+    user: "up",
+    time: "up",
+    licInfo: "up",
+    objectPage: "up",
   });
 
-  const login_timeout = !User ? '300' : '300'
-  const page_refresh_time = !User ? '300' : '300'
-  const display_name = !User ? 'user' : '100'
-  const id = !User ? '1' : '100'
+  const login_timeout = !User ? "300" : "300";
+  const page_refresh_time = !User ? "300" : "300";
+  const display_name = !User ? "user" : "100";
+  const id = !User ? "1" : "100";
   const [count, setCount] = useState<number>(Number(login_timeout));
   const [refresh, setRefresh] = useState<number>(Number(page_refresh_time));
 
@@ -85,14 +85,12 @@ const Footer: React.FC = () => {
     });
   };
 
-
   const handleArrowToggle = (key: keyof typeof arrowDirection) => {
     setArrowDirection((prevState) => ({
       ...prevState,
-      [key]: prevState[key] === 'up' ? 'down' : 'up',
+      [key]: prevState[key] === "up" ? "down" : "up",
     }));
   };
-
 
   const getSharedObject = () => {
     const storedSetting = sessionStorage.getItem("setting");
@@ -108,8 +106,6 @@ const Footer: React.FC = () => {
   };
 
   const [sharedObject, setSharedObject] = useState(getSharedObject());
-
-
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -133,78 +129,74 @@ const Footer: React.FC = () => {
     }
   }, [refresh]);
 
-
   const handleLogout = async () => {
-    const getToken: any = sessionStorage.getItem('AuthToken');
+    const getToken: any = sessionStorage.getItem("AuthToken");
     if (!getToken) {
-      enqueueSnackbar("Kein Token gefunden. Automatisches Weiterleiten zur Login-Seite.", {
-        variant: "warning"
-      });
+      enqueueSnackbar(
+        "Kein Token gefunden. Automatisches Weiterleiten zur Login-Seite.",
+        {
+          variant: "warning",
+        }
+      );
       router.push("/login");
       sessionStorage.clear();
       return;
     }
     try {
       await apiService.get(`user/logout`, getToken);
-      enqueueSnackbar(t('logout-message'), {
-        variant: "success"
+      enqueueSnackbar(t("logout-message"), {
+        variant: "success",
       });
-
     } catch (error) {
-      enqueueSnackbar("Fehler beim Logout. Bitte versuchen Sie es später erneut.", {
-        variant: "error"
-      });
+      enqueueSnackbar(
+        "Fehler beim Logout. Bitte versuchen Sie es später erneut.",
+        {
+          variant: "error",
+        }
+      );
     }
 
     router.push("/login");
-    sessionStorage.clear()
+    sessionStorage.clear();
   };
-
 
   useEffect(() => {
     if (count !== 0) {
       if (refresh <= (refresh * 90) / 100) {
-        handleLogout()
+        handleLogout();
 
-        setRefresh(Number(page_refresh_time))
+        setRefresh(Number(page_refresh_time));
       }
     }
   }, [refresh, page_refresh_time, count]);
 
-
   const handleMouseMove = useCallback(() => {
     setCount(Number(login_timeout));
-    setRefresh(Number(page_refresh_time))
+    setRefresh(Number(page_refresh_time));
   }, [login_timeout, page_refresh_time]);
 
   useEffect(() => {
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove);
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener("mousemove", handleMouseMove);
     };
   }, [handleMouseMove]);
 
-
-
-
-
   useEffect(() => {
-    const userObj: any = sessionStorage.getItem('AuthUser')
-    const user: UserType = JSON.parse(userObj)
+    const userObj: any = sessionStorage.getItem("AuthUser");
+    const user: UserType = JSON.parse(userObj);
 
-    setUser(user)
+    setUser(user);
 
     if (count === 1) {
       router.push("/login");
-      sessionStorage.clear()
+      sessionStorage.clear();
     }
-  }, [count])
+  }, [count]);
 
   useEffect(() => {
-    setIsSyncedDebag(isSynced)
-    console.log(isSynced);
-  }, [isSynced])
-
+    setIsSyncedDebag(isSynced);
+  }, [isSynced]);
 
   return (
     <Box
@@ -221,11 +213,9 @@ const Footer: React.FC = () => {
         // transition: "left 0.23s ease",
         // borderTop: borderTop,
       }}
-
     >
       <Container maxWidth="lg" sx={{ margin: 0, padding: 0, width: "100vw" }}>
         {/* Social Media Links */}
-
 
         <Box
           width={"100vw"}
@@ -233,133 +223,160 @@ const Footer: React.FC = () => {
           justifyContent={"center"}
           alignItems={"center"}
         >
-          <Typography variant="body2" sx={{ color: "#fff", }} className="FooterLorem">
-            {t('footer.hi')} {sharedObject.name}  {sharedObject.last_name}
+          <Typography
+            variant="body2"
+            sx={{ color: "#fff" }}
+            className="FooterLorem"
+          >
+            {t("footer.hi")} {sharedObject.name} {sharedObject.last_name}
           </Typography>
         </Box>
       </Container>
 
-      {/* Kann hier Im Footer Countdown Anzeigen */}
-      {/* {isDebugON && (
-        <Box sx={{ textAlign: "center", zIndex: 9999 }}>
-          <Typography variant="body2" sx={{ color: "#fff" }}>
-            Timeout: {counter} Sekunden
-          </Typography>
-        </Box>
-      )} */}
-
+     
       <>
         {/* Modal for inactivity warning */}
 
-
         {/* Fixed Footer */}
-       
 
-          <Button
-            variant="contained"
-            sx={{
-              position: 'fixed',
-              bottom: 68,
-              right: 0,
-              backgroundColor: '#007BFF',
-              borderRadius: 0,
-              zIndex: 9999,
-              padding: '10px',
+        <Button
+          variant="contained"
+          sx={{
+            position: "fixed",
+            bottom: 68,
+            right: 0,
+            backgroundColor: "#007BFF",
+            borderRadius: 0,
+            zIndex: 9999,
+            padding: "10px",
 
-              display: isSyncedDebag ? 'flex' :'none' ,
-              justifyContent: 'center',
-              alignItems: 'center',
-              width: 'auto',
-              minWidth: '80px',
-              minHeight: '47px',
-              maxWidth: '100px',
-              maxHeight: '47px',
-              transition: 'width 0.3s ease',
-              '@media (max-width: 600px)': {
-                minWidth: '60px',
-                maxWidth: '80px',
-                right: '-10px',
-              },
-              '@media (max-width: 400px)': {
-                minWidth: '50px',
-                maxWidth: '60px',
-                right: '-20px',
-              },
-            }}
-            onClick={() => setFooterVisible(!footerVisible)}
-          >
-            {footerVisible ? <ArrowForwardIcon sx={{ color: 'white', marginRight: 'auto' }} /> : <ArrowBackIcon sx={{ color: 'white', marginRight: 'auto' }} />}
-          </Button>
+            display: isSyncedDebag ? "flex" : "none",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "auto",
+            minWidth: "80px",
+            minHeight: "47px",
+            maxWidth: "100px",
+            maxHeight: "47px",
+            transition: "width 0.3s ease",
+            "@media (max-width: 600px)": {
+              minWidth: "60px",
+              maxWidth: "80px",
+              right: "-10px",
+            },
+            "@media (max-width: 400px)": {
+              minWidth: "50px",
+              maxWidth: "60px",
+              right: "-20px",
+            },
+          }}
+          onClick={() => setFooterVisible(!footerVisible)}
+        >
+          {footerVisible ? (
+            <ArrowForwardIcon sx={{ color: "white", marginRight: "auto" }} />
+          ) : (
+            <ArrowBackIcon sx={{ color: "white", marginRight: "auto" }} />
+          )}
+        </Button>
 
-          <Box
-            sx={{
-              position: 'fixed',
-              bottom: 0,
-              left: 0,
-              right: 0,
-              backgroundColor: '#1976D2',
-              color: 'white',
-              padding: 2,
-              transform: footerVisible ? 'translateY(0)' : 'translateY(100%)',
-              transition: 'transform 0.5s ease',
-              visibility: footerVisible ? 'visible' : 'hidden',
-              zIndex: 9998,
-            }}
-          >
-            <Box sx={{ display: 'flex', justifyContent: 'center', gap: 3 }}>
-              {/* Tooltip Buttons */}
-              <Tooltip title={<div>
-                <p>{t('footer.email')} {User?.email || t('footer.noEmail')}</p>
-                <p>{t('footer.first_name')} {User?.first_name || t('footer.noName')}</p>
-                <p>{t('footer.role')} {User?.role || t('footer.noRole')}</p>
-              </div>} placement="top" open={tooltipVisible.user}>
-                <Button
-                  variant="text"
-                  color="inherit"
-                  onClick={() => {
-                    handleTooltipToggle('user');
-                    handleArrowToggle('user');
-                  }}
-                  sx={{
-                    textTransform: 'capitalize',
-                    color: 'white',
-                    '&:hover': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                    },
-                  }}
-                >
-                  {t('footer.user')}
-                  {arrowDirection.user === 'up' ? <ArrowUpwardIcon sx={{ color: 'white', marginLeft: 1 }} /> : <ArrowDownwardIcon sx={{ color: 'white', marginLeft: 1 }} />}
-                </Button>
-              </Tooltip>
+        <Box
+          sx={{
+            position: "fixed",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            backgroundColor: "#1976D2",
+            color: "white",
+            padding: 2,
+            transform: footerVisible ? "translateY(0)" : "translateY(100%)",
+            transition: "transform 0.5s ease",
+            visibility: footerVisible ? "visible" : "hidden",
+            zIndex: 9998,
+          }}
+        >
+          <Box sx={{ display: "flex", justifyContent: "center", gap: 3 }}>
+            {/* Tooltip Buttons */}
+            <Tooltip
+              title={
+                <div>
+                  <p>
+                    {t("footer.email")} {User?.email || t("footer.noEmail")}
+                  </p>
+                  <p>
+                    {t("footer.first_name")}{" "}
+                    {User?.first_name || t("footer.noName")}
+                  </p>
+                  <p>
+                    {t("footer.role")} {User?.role || t("footer.noRole")}
+                  </p>
+                </div>
+              }
+              placement="top"
+              open={tooltipVisible.user}
+            >
+              <Button
+                variant="text"
+                color="inherit"
+                onClick={() => {
+                  handleTooltipToggle("user");
+                  handleArrowToggle("user");
+                }}
+                sx={{
+                  textTransform: "capitalize",
+                  color: "white",
+                  "&:hover": {
+                    backgroundColor: "rgba(255, 255, 255, 0.1)",
+                  },
+                }}
+              >
+                {t("footer.user")}
+                {arrowDirection.user === "up" ? (
+                  <ArrowUpwardIcon sx={{ color: "white", marginLeft: 1 }} />
+                ) : (
+                  <ArrowDownwardIcon sx={{ color: "white", marginLeft: 1 }} />
+                )}
+              </Button>
+            </Tooltip>
 
-              <Tooltip title=
-                {<div>
-                  <p>{t('footer.logout')} {count || '0'}</p>
-                  <p>{t('footer.refresh')} {refresh || '0'}</p>
+            <Tooltip
+              title={
+                <div>
+                  <p>
+                    {t("footer.logout")} {count || "0"}
+                  </p>
+                  <p>
+                    {t("footer.refresh")} {refresh || "0"}
+                  </p>
+                </div>
+              }
+              placement="top"
+              open={tooltipVisible.time}
+            >
+              <Button
+                variant="text"
+                color="inherit"
+                onClick={() => {
+                  handleTooltipToggle("time");
+                  handleArrowToggle("time");
+                }}
+                sx={{
+                  textTransform: "capitalize",
+                  color: "white",
+                  "&:hover": {
+                    backgroundColor: "rgba(255, 255, 255, 0.1)",
+                  },
+                }}
+              >
+                {t("footer.time")}
+                {arrowDirection.time === "up" ? (
+                  <ArrowUpwardIcon sx={{ color: "white", marginLeft: 1 }} />
+                ) : (
+                  <ArrowDownwardIcon sx={{ color: "white", marginLeft: 1 }} />
+                )}
+              </Button>
+            </Tooltip>
 
-                </div>} placement="top" open={tooltipVisible.time}>
-                <Button
-                  variant="text"
-                  color="inherit"
-                  onClick={() => {
-                    handleTooltipToggle('time');
-                    handleArrowToggle('time');
-                  }}
-                  sx={{
-                    textTransform: 'capitalize',
-                    color: 'white',
-                    '&:hover': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                    },
-                  }}
-                >
-                  {t('footer.time')}
-                  {arrowDirection.time === 'up' ? <ArrowUpwardIcon sx={{ color: 'white', marginLeft: 1 }} /> : <ArrowDownwardIcon sx={{ color: 'white', marginLeft: 1 }} />}
-                </Button>
-              </Tooltip>
-
-              {/* <Tooltip title="License Info" placement="top" open={tooltipVisible.licInfo}>
+            {/* <Tooltip title="License Info" placement="top" open={tooltipVisible.licInfo}>
               <Button
                 variant="text"
                 color="inherit"
@@ -380,41 +397,69 @@ const Footer: React.FC = () => {
               </Button>
             </Tooltip> */}
 
-              <Tooltip title={
+            <Tooltip
+              title={
                 <div>
-                  <p>{t('footer.email')}: {User?.email || t('footer.noEmail')}</p>
-                  <p>{t('footer.first_name')} {User?.first_name || t('footer.noName')}</p>
-                  <p>{t('footer.created_at')} {User?.created_at || t('footer.noRole')}</p>
-                  <p>{t('footer.is_active')} {User?.is_active || t('footer.noRole')}</p>
-                  <p>{t('footer.language')} {User?.language || t('footer.noRole')}</p>
-                  <p>{t('footer.tenant_id')} {User?.tenant_id || t('footer.noRole')}</p>
-                  <p>{t('footer.id')} {User?.id || t('footer.noRole')}</p>
-                  <p>{t('footer.username')} {User?.username || t('footer.noRole')}</p>
-
+                  <p>
+                    {t("footer.email")}: {User?.email || t("footer.noEmail")}
+                  </p>
+                  <p>
+                    {t("footer.first_name")}{" "}
+                    {User?.first_name || t("footer.noName")}
+                  </p>
+                  <p>
+                    {t("footer.created_at")}{" "}
+                    {User?.created_at || t("footer.noRole")}
+                  </p>
+                  <p>
+                    {t("footer.is_active")}{" "}
+                    {User?.is_active || t("footer.noRole")}
+                  </p>
+                  <p>
+                    {t("footer.language")}{" "}
+                    {User?.language || t("footer.noRole")}
+                  </p>
+                  <p>
+                    {t("footer.tenant_id")}{" "}
+                    {User?.tenant_id || t("footer.noRole")}
+                  </p>
+                  <p>
+                    {t("footer.id")} {User?.id || t("footer.noRole")}
+                  </p>
+                  <p>
+                    {t("footer.username")}{" "}
+                    {User?.username || t("footer.noRole")}
+                  </p>
                 </div>
-              } placement="top" open={tooltipVisible.objectPage}>
-                <Button
-                  variant="text"
-                  color="inherit"
-                  onClick={() => {
-                    handleTooltipToggle('objectPage');
-                    handleArrowToggle('objectPage');
-                  }}
-                  sx={{
-                    textTransform: 'capitalize',
-                    color: 'white',
-                    '&:hover': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                    },
-                  }}
-                >
-                  {t('footer.object_page')}
-                  {arrowDirection.objectPage === 'up' ? <ArrowUpwardIcon sx={{ color: 'white', marginLeft: 1 }} /> : <ArrowDownwardIcon sx={{ color: 'white', marginLeft: 1 }} />}
-                </Button>
-              </Tooltip>
-            </Box>
+              }
+              placement="top"
+              open={tooltipVisible.objectPage}
+            >
+              <Button
+                variant="text"
+                color="inherit"
+                onClick={() => {
+                  handleTooltipToggle("objectPage");
+                  handleArrowToggle("objectPage");
+                }}
+                sx={{
+                  textTransform: "capitalize",
+                  color: "white",
+                  "&:hover": {
+                    backgroundColor: "rgba(255, 255, 255, 0.1)",
+                  },
+                }}
+              >
+                {t("footer.object_page")}
+                {arrowDirection.objectPage === "up" ? (
+                  <ArrowUpwardIcon sx={{ color: "white", marginLeft: 1 }} />
+                ) : (
+                  <ArrowDownwardIcon sx={{ color: "white", marginLeft: 1 }} />
+                )}
+              </Button>
+            </Tooltip>
           </Box>
- 
+        </Box>
       </>
     </Box>
   );

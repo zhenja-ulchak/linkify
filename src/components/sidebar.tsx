@@ -19,31 +19,24 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-import PersonIcon from '@mui/icons-material/Person';
-import WysiwygIcon from '@mui/icons-material/Wysiwyg';
-import EngineeringIcon from '@mui/icons-material/Engineering';
-import RecentActorsIcon from '@mui/icons-material/RecentActors';
-import EmailIcon from '@mui/icons-material/Email';
+import WysiwygIcon from "@mui/icons-material/Wysiwyg";
+import EngineeringIcon from "@mui/icons-material/Engineering";
+import RecentActorsIcon from "@mui/icons-material/RecentActors";
 import { Url } from "next/dist/shared/lib/router/router";
 import Logout from "./Logout";
 import { useRouter } from "next/navigation";
-import ChangeMode from "./DarkLightMode";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import SettingsIcon from "@mui/icons-material/Settings";
 import Image from "next/image";
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
-import SecurityIcon from '@mui/icons-material/Security';
-import axios from "axios";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
+import SecurityIcon from "@mui/icons-material/Security";
 // @ts-expect-error
-import CryptoJS from 'crypto-js';
+import CryptoJS from "crypto-js";
 import apiService from "@/app/services/apiService";
 import { enqueueSnackbar } from "notistack";
-import { useTranslations } from 'next-intl';
-import { useLocale } from 'next-intl';
+import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import LocaleSwitcher from "./LocaleSwitcher";
-
-
 
 const drawerWidth = 240;
 
@@ -134,22 +127,19 @@ type MiniDrawerProps = {
 };
 
 export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
-  const t = useTranslations('Panel-sidebar');
-  const tAPI = useTranslations('API');
+  const t = useTranslations("Panel-sidebar");
+  const tAPI = useTranslations("API");
   const theme = useTheme();
 
   // @ts-ignore
-  const authUser = JSON.parse(sessionStorage.getItem('AuthUser'))
-  const [TextRule, setTextRule] = useState('');
+  const authUser = JSON.parse(sessionStorage.getItem("AuthUser"));
+  const [TextRule, setTextRule] = useState("");
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
-  console.log(authUser.tenant_id);
-
-
   const handleDrawerOpen = () => {
     setOpen(true);
-    setIsSideBarOpen(true); // Funktion mit true aufrufen    
+    setIsSideBarOpen(true); // Funktion mit true aufrufen
   };
 
   const handleDrawerClose = () => {
@@ -161,29 +151,30 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
     router.push(path as string);
   };
 
-
-
-
-
   const handleLogout = async () => {
-    const getToken: any = sessionStorage.getItem('AuthToken');
+    const getToken: any = sessionStorage.getItem("AuthToken");
     if (!getToken) {
-      console.warn("Kein Token gefunden, automatisches Weiterleiten zur Login-Seite.");
-      enqueueSnackbar(t('logout-message'), {
-        variant: "warning"
+      console.warn(
+        "Kein Token gefunden, automatisches Weiterleiten zur Login-Seite."
+      );
+      enqueueSnackbar(t("logout-message"), {
+        variant: "warning",
       });
       router.push("/login");
       sessionStorage.clear();
       return;
     }
     const response: any = await apiService.get(`user/logout`, getToken);
-    enqueueSnackbar(t('logout-message'), {
-      variant: "success"
+    enqueueSnackbar(t("logout-message"), {
+      variant: "success",
     });
 
     if (response instanceof Error) {
-      const { status, variant, message } = apiService.CheckAndShow(response, tAPI);
-      console.log(message);
+      const { status, variant, message } = apiService.CheckAndShow(
+        response,
+        tAPI
+      );
+
       // @ts-ignore
       enqueueSnackbar(message, { variant: variant });
     }
@@ -193,40 +184,27 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
     // }
 
     router.push("/login");
-    sessionStorage.clear()
+    sessionStorage.clear();
   };
 
-
-
-
-
   useEffect(() => {
-    const ciphertext = sessionStorage.getItem('user');
+    const ciphertext = sessionStorage.getItem("user");
     if (ciphertext) {
-      const bytes = CryptoJS.AES.decrypt(ciphertext, 'secret-key');
+      const bytes = CryptoJS.AES.decrypt(ciphertext, "secret-key");
       const originalRole = bytes.toString(CryptoJS.enc.Utf8);
       setTextRule(originalRole);
-      console.log(originalRole);
     }
   }, []);
-
-
-
-
 
   const handleImageClick = () => {
     router.push("/dashboard");
   };
-
-
 
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
-
-
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -252,13 +230,16 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
               cursor: "pointer",
             }}
           />
-          <div className="locale-switcher-container" style={{
-            position: "absolute",
-            right: 30,
-            display: "flex",
-            justifyContent: "flex-end",
-            cursor: "pointer",
-          }}>
+          <div
+            className="locale-switcher-container"
+            style={{
+              position: "absolute",
+              right: 30,
+              display: "flex",
+              justifyContent: "flex-end",
+              cursor: "pointer",
+            }}
+          >
             <LocaleSwitcher />
           </div>
           {/* <ChangeMode color="#fff" /> */}
@@ -274,14 +255,9 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
               <ChevronLeftIcon />
             )}
           </IconButton>
-
         </DrawerHeader>
 
         <List sx={{ minHeight: "360px" }} className="ListContainer">
-
-
-
-
           {/* ------------------------------------------- */}
 
           <ListItem disablePadding>
@@ -293,16 +269,17 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
             </ListItemButton>
           </ListItem>
 
-
-
-
-
           {(() => {
-            const isAdmin = TextRule === 'admin';
-            const isSuperAdmin = TextRule === 'superadmin';
+            const isAdmin = TextRule === "admin";
+            const isSuperAdmin = TextRule === "superadmin";
             const locale = useLocale();
             const adminItems = [
-              { path: "/dashboard/admin/einstellungen", icon: <AdminPanelSettingsIcon style={{ color: "black" }} />, text: t("admin"), style: { backgroundColor: "pink" } },
+              {
+                path: "/dashboard/admin/einstellungen",
+                icon: <AdminPanelSettingsIcon style={{ color: "black" }} />,
+                text: t("admin"),
+                style: { backgroundColor: "pink" },
+              },
               {
                 path: `/dashboard/admin/accounting-software/${authUser?.tenant_id || ""}`,
                 icon: <WysiwygIcon style={{ color: "black" }} />,
@@ -310,28 +287,46 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
                   <>
                     {t("accounting")} <br /> {t("software")}
                   </>
-                )
+                ),
               },
-              { path: `/dashboard/admin/dms-config/${authUser?.tenant_id || ""}`, icon: <EngineeringIcon style={{ color: "black" }} />, text: t("dms-config") },
+              {
+                path: `/dashboard/admin/dms-config/${authUser?.tenant_id || ""}`,
+                icon: <EngineeringIcon style={{ color: "black" }} />,
+                text: t("dms-config"),
+              },
               {
                 path: "/dashboard/admin/user-list",
                 icon: <RecentActorsIcon style={{ color: "black" }} />,
-                text: locale === 'en'
-                  ? t("user-list")
-                  : locale === 'de'
-                    ? t("user-list")
-                    : (
-                      <>
-                        {t("user")} <br /> {t("list")}
-                      </>
-                    )
+                text:
+                  locale === "en" ? (
+                    t("user-list")
+                  ) : locale === "de" ? (
+                    t("user-list")
+                  ) : (
+                    <>
+                      {t("user")} <br /> {t("list")}
+                    </>
+                  ),
               },
-              { path: "/dashboard/admin/SMTP-Email", icon: <SupervisorAccountIcon style={{ color: "black" }} />, text: t("smtp-email") },
-              { path: `/dashboard/admin/tenant/${authUser?.tenant_id || ""}`, icon: <FormatListBulletedIcon style={{ color: "black" }} />, text: t("tenant") },
+              {
+                path: "/dashboard/admin/SMTP-Email",
+                icon: <SupervisorAccountIcon style={{ color: "black" }} />,
+                text: t("smtp-email"),
+              },
+              {
+                path: `/dashboard/admin/tenant/${authUser?.tenant_id || ""}`,
+                icon: <FormatListBulletedIcon style={{ color: "black" }} />,
+                text: t("tenant"),
+              },
             ];
 
             const superAdminItems = [
-              { path: "/dashboard/superadmin", icon: <SecurityIcon style={{ color: "black" }} />, text: t("superadmin"), style: { backgroundColor: "green" } },
+              {
+                path: "/dashboard/superadmin",
+                icon: <SecurityIcon style={{ color: "black" }} />,
+                text: t("superadmin"),
+                style: { backgroundColor: "green" },
+              },
               {
                 path: "/dashboard/superadmin/accounting-software",
                 icon: <WysiwygIcon style={{ color: "black" }} />,
@@ -339,30 +334,53 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
                   <>
                     {t("accounting")} <br /> {t("software")}
                   </>
-                )
+                ),
               },
-              { path: "/dashboard/superadmin/dms-config", icon: <EngineeringIcon style={{ color: "black" }} />, text: t("dms-config") },
-              { path: "/dashboard/superadmin/tenant", icon: <FormatListBulletedIcon style={{ color: "black" }} />, text: t("tenant") },
+              {
+                path: "/dashboard/superadmin/dms-config",
+                icon: <EngineeringIcon style={{ color: "black" }} />,
+                text: t("dms-config"),
+              },
+              {
+                path: "/dashboard/superadmin/tenant",
+                icon: <FormatListBulletedIcon style={{ color: "black" }} />,
+                text: t("tenant"),
+              },
             ];
 
-            const adminSection = isAdmin || isSuperAdmin ? (
-              adminItems.map((item, index) => (
-                <ListItem key={`admin-${index}`} disablePadding style={item.style || {}}>
-                  <ListItemButton onClick={() => handleNavigation(item.path)}>
-                    <ListItemIcon className="DashboadAndTableIcon">{item.icon}</ListItemIcon>
-                    <ListItemText primary={item.text} />
-                  </ListItemButton>
-                </ListItem>
-              ))
-            ) : null;
+            const adminSection =
+              isAdmin || isSuperAdmin
+                ? adminItems.map((item, index) => (
+                    <ListItem
+                      key={`admin-${index}`}
+                      disablePadding
+                      style={item.style || {}}
+                    >
+                      <ListItemButton
+                        onClick={() => handleNavigation(item.path)}
+                      >
+                        <ListItemIcon className="DashboadAndTableIcon">
+                          {item.icon}
+                        </ListItemIcon>
+                        <ListItemText primary={item.text} />
+                      </ListItemButton>
+                    </ListItem>
+                  ))
+                : null;
 
             const superAdminSection = isSuperAdmin ? (
               <>
                 <Divider style={{ backgroundColor: "black", height: "2px" }} />
                 {superAdminItems.map((item, index) => (
-                  <ListItem key={`superadmin-${index}`} disablePadding style={item.style || {}}>
+                  <ListItem
+                    key={`superadmin-${index}`}
+                    disablePadding
+                    style={item.style || {}}
+                  >
                     <ListItemButton onClick={() => handleNavigation(item.path)}>
-                      <ListItemIcon className="DashboadAndTableIcon">{item.icon}</ListItemIcon>
+                      <ListItemIcon className="DashboadAndTableIcon">
+                        {item.icon}
+                      </ListItemIcon>
                       <ListItemText primary={item.text} />
                     </ListItemButton>
                   </ListItem>
@@ -393,20 +411,22 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
               onClick={() => handleNavigation("/dashboard/profile")}
             >
               <AccountCircleIcon />
-              <ListItemText primary={t("profile")} style={{ marginLeft: "31px" }} />
+              <ListItemText
+                primary={t("profile")}
+                style={{ marginLeft: "31px" }}
+              />
             </ListItemButton>
           </ListItem>
-
 
           <ListItem disablePadding>
             <ListItemButton onClick={() => handleLogout()}>
               <Logout />
-              <ListItemText primary={t("logout")} style={{ marginLeft: "31px" }} />
+              <ListItemText
+                primary={t("logout")}
+                style={{ marginLeft: "31px" }}
+              />
             </ListItemButton>
           </ListItem>
-
-
-
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
