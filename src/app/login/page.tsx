@@ -23,7 +23,8 @@ import CryptoJS from "crypto-js";
 import { enqueueSnackbar } from "notistack";
 import useBooleanStore from "@/store/userStore";
 import RefreshSessionTimeout from "@/components/RefreshTimeout/Refresh";
-import ChangeMode from "@/components/DarkLightMode";
+import { useTheme } from '@mui/material/styles';
+import { useThemeContext } from '../../context/ThemeContext';
 import ThemeToggleButton from "@/components/ThemeToggleButton";
 
 const Login: React.FC = () => {
@@ -37,6 +38,9 @@ const Login: React.FC = () => {
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null); // State to track the remaining time
   const t = useTranslations("API"); // Переводы для компонента логина
   const { setIsSynced }: any = useBooleanStore();
+  const theme = useTheme();
+ const { mode } = useThemeContext();
+
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
@@ -136,10 +140,15 @@ const Login: React.FC = () => {
     }
   };
 
+  console.log(theme.palette);
+  
+
   return (
     <>
       <RefreshSessionTimeout time={time} />
-      <ThemeToggleButton />
+      <Box sx={{marginRight: "10px", marginTop: "10px", position: "absolute", top: "-5px", right: "8px"}}>
+        <ThemeToggleButton />
+      </Box>
       <div
         className="locale-switcher-container"
         style={{ position: "absolute", top: "3px", right: "66px" }}
@@ -243,7 +252,7 @@ const Login: React.FC = () => {
                   style={{
                     width: "100%",
                     height: "100%",
-                    background: "#050f32",
+                    background: mode === 'light' ?  "#050f32": "#fff" ,
                   }}
                 >
                   {t("return-to-the-info-page")}
@@ -270,11 +279,12 @@ const Login: React.FC = () => {
               >
                 <Button
                   id="RegisterBtnOnLoginPage"
-                  style={{ width: "26%", fontSize: "14px", margin: "auto" }}
+                  style={{ width: "26%", fontSize: "14px", margin: "auto",
+                    color: theme.palette.secondary.main, }}
                   variant="text"
-                  color="secondary"
+                  
                 >
-                  {t("question")}
+                 <Typography>{t("question")}</Typography> 
                 </Button>
               </Link>
             </Box>

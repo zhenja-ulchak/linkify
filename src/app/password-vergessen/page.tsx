@@ -7,7 +7,11 @@ import { Button, TextField, Typography, Box, Container } from "@mui/material";
 import { useRouter } from "next/navigation";
 import apiService from "../services/apiService";
 import { enqueueSnackbar } from "notistack";
+import { useTheme } from "@mui/material/styles";
+import { useThemeContext } from "../../context/ThemeContext";
+import ThemeToggleButton from "@/components/ThemeToggleButton";
 import { useTranslations } from "next-intl";
+import LocaleSwitcher from "@/components/LocaleSwitcher";
 
 const ForgotPassword: NextPage = () => {
   const [email, setEmail] = useState<string>("");
@@ -70,75 +74,95 @@ const ForgotPassword: NextPage = () => {
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "100vh",
-        backgroundColor: "#f5f5f5",
-      }}
-    >
-      <Container component="main" maxWidth="xs">
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            padding: 3,
-            boxShadow: 3,
-            borderRadius: 2,
-            backgroundColor: "white",
-          }}
-        >
-          <Typography variant="h5" gutterBottom>
-            {t("forgot-password")}
-          </Typography>
+    <>
+      <div
+            className="locale-switcher-container"
+            style={{ position: "absolute", top: "3px", right: "66px" }}
+          >
+            <LocaleSwitcher />
+          </div>
+      <Box
+        sx={{
+          marginRight: "10px",
+          marginTop: "10px",
+          position: "absolute",
+          top: "-5px",
+          right: "8px",
+        }}
+      >
+        <ThemeToggleButton />
+      </Box>
 
-          <form onSubmit={handleSubmit} style={{ width: "100%" }}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label={t("email-address")}
-              name="email"
-              autoComplete="email"
-              autoFocus
-              value={email}
-              onChange={handleEmailChange}
-              placeholder={t("enter-your-email")}
-              error={!!emailError}
-              helperText={emailError && t("email-error")}
-            />
-
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              sx={{ mt: 2 }}
-            >
-              {t("send-email")}
-            </Button>
-          </form>
-
-          <Button
-            onClick={handleLoginLinkClick}
-            variant="text"
-            color="secondary"
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "100vh",
+          // backgroundColor: "#f5f5f5",
+        }}
+      >
+        <Container component="main" maxWidth="xs">
+          <Box
             sx={{
-              marginTop: 2,
-              fontSize: "14px",
-              fontWeight: 500,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              padding: 3,
+              boxShadow: 3,
+              borderRadius: 2,
+              // backgroundColor: "white",
             }}
           >
-            {t("back-to-login")}
-          </Button>
-        </Box>
-      </Container>
-    </Box>
+            <Typography variant="h5" gutterBottom>
+              {t("forgot-password")}
+            </Typography>
+
+            <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label={t("email-address")}
+                name="email"
+                autoComplete="email"
+                autoFocus
+                value={email}
+                onChange={handleEmailChange}
+                placeholder={t("enter-your-email")}
+                error={!!emailError}
+                helperText={emailError && t("email-error")}
+              />
+
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                sx={{ mt: 2 }}
+              >
+                {t("send-email")}
+              </Button>
+            </form>
+
+            <Button
+              onClick={handleLoginLinkClick}
+              variant="text"
+              color="secondary"
+              sx={{
+                marginTop: 2,
+                fontSize: "14px",
+                fontWeight: 500,
+              }}
+            >
+              {t("back-to-login")}
+            </Button>
+          </Box>
+        </Container>
+      </Box>
+    </>
   );
 };
 

@@ -23,7 +23,9 @@ import axios from "axios";
 import LocaleSwitcher from "../../components/LocaleSwitcher";
 import { useTranslations } from "next-intl";
 import apiService from "@/app/services/apiService";
+import ThemeToggleButton from "@/components/ThemeToggleButton";
 import { enqueueSnackbar } from "notistack";
+import { useThemeContext } from "@/context/ThemeContext";
 
 const Register: React.FC = () => {
   const [firstName, setFirstName] = useState<string>("");
@@ -68,7 +70,7 @@ const Register: React.FC = () => {
   const t = useTranslations("API");
   // Erfolgsnachricht
   const router = useRouter();
-
+ const { mode } = useThemeContext();
   const border = {
     borderRadius: "5px",
   };
@@ -171,6 +173,9 @@ const Register: React.FC = () => {
       >
         <LocaleSwitcher />
       </div>
+      <Box sx={{marginRight: "10px", marginTop: "10px", position: "absolute", top: "5px", left: "16px"}}>
+        <ThemeToggleButton />
+      </Box>
       <Button
         id="LoginBtnOnRegisterPage"
         sx={{ float: "right", marginRight: "10px", marginTop: "10px" }}
