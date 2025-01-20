@@ -12,17 +12,18 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);5
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  5;
   const footerPosition = isSideBarOpen ? "230px" : "0";
   const footerIndex = isSideBarOpen ? "0" : "9999";
   const router = useRouter();
 
   useEffect(() => {
     // Перевірка сесії або токену
-    const token = sessionStorage.getItem('AuthToken');
+    const token = sessionStorage.getItem("AuthToken");
     if (!token) {
       // Якщо токен відсутній, перенаправляємо на сторінку входу
-      router.push('/login');
+      router.push("/login");
     } else {
       setIsAuthenticated(true);
     }
@@ -36,7 +37,7 @@ export default function DashboardLayout({
   return (
     <>
       <SideBar setIsSideBarOpen={setIsSideBarOpen} />
-      <div style={{ display: "flex", marginLeft: '57px' }}>
+      <div style={{ display: "flex", marginLeft: "57px" }}>
         <div
           style={{
             flex: 1,
@@ -46,11 +47,9 @@ export default function DashboardLayout({
           }}
         >
           <ProtectedRole>
-            <GlobalModalProvider>
-                   {children}
-                 </GlobalModalProvider>
+            <GlobalModalProvider>{children}</GlobalModalProvider>
           </ProtectedRole>
-          <Footer   />
+          <Footer />
         </div>
       </div>
     </>

@@ -22,7 +22,7 @@ const ButtonStatusCheck = ({
   const [isLoading, setIsLoading] = useState(false);
   const t = useTranslations("API");
 
-  console.log(isLoadPage);
+
 
   const StatusCheck = async () => {
     setIsLoading(true); // Починаємо завантаження
