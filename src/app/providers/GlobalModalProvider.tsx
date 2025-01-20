@@ -15,6 +15,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import apiService from "../services/apiService";
 import { enqueueSnackbar } from "notistack";
 import { useTranslations } from "next-intl";
+import { UserType } from "@/type/UserType";
+import { TenantType } from "@/type/TenantType";
 
 // Context for dialog state
 const GlobalDialogContext = createContext({
@@ -29,19 +31,20 @@ export const GlobalModalProvider: React.FC<{ children: React.ReactNode }> = ({
   const [day, setDay] = useState<number>();
 
   const t = useTranslations("API");
-
-  const name: string | null | any = sessionStorage.getItem("setting");
-  const nameFirstLast = JSON.parse(name);
-  const tenantObj: any = sessionStorage.getItem("tenant"); 
-  const tenant = JSON.parse(tenantObj);
-  const UserObj: any = sessionStorage.getItem("AuthUser"); 
-  const User = JSON.parse(UserObj);
-
+  const name: string | null = sessionStorage.getItem("setting");
+  const nameFirstLast: { [key: string]: any } | null = name ? JSON.parse(name) : null;
+  
+  const tenantObj: string | null = sessionStorage.getItem("tenant");
+  const tenant: TenantType | null = tenantObj ? JSON.parse(tenantObj) : null;
+  
+  const userObj: string | null = sessionStorage.getItem("AuthUser");
+  const user: UserType = userObj ? JSON.parse(userObj) : null;
+  
   const serviceRenewalGet = async () => {
      const getToken: any = sessionStorage.getItem("AuthToken");
           const response: any = await apiService.post(
             "accounting-software",
-            {"username": `${User.username}`},
+            {"username": `${user.username}`},
             getToken
           );
           if (response instanceof Error) {
@@ -61,7 +64,7 @@ export const GlobalModalProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     const checkCertificateExpiry = async () => {
-      const certificateExpiryDate = new Date(tenant.license_valid_until);
+      const certificateExpiryDate = new Date(tenant?.license_valid_until ? tenant?.license_valid_until : '');
       const today = new Date();
       const timeDifference = certificateExpiryDate.getTime() - today.getTime();
       const daysRemaining = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
@@ -78,7 +81,7 @@ export const GlobalModalProvider: React.FC<{ children: React.ReactNode }> = ({
   return (
     <GlobalDialogContext.Provider value={{ open, setOpen }}>
       {children}
-      <Dialog open={true} onClose={() => setOpen(false)}>
+      <Dialog open={open} onClose={() => setOpen(false)}>
         <DialogTitle
           sx={{
             display: "flex",
@@ -100,7 +103,7 @@ export const GlobalModalProvider: React.FC<{ children: React.ReactNode }> = ({
         <DialogContent sx={{ padding: "24px" }}>
           <CardContent>
             <Typography variant="h6" gutterBottom sx={{ fontSize: 16 }}>
-              {t("greeting")} {nameFirstLast.last_name} {nameFirstLast.name}
+              {t("greeting")} {nameFirstLast?.last_name} {nameFirstLast?.name}
               {/* Greeting */}
             </Typography>
             <Divider />
@@ -112,7 +115,7 @@ export const GlobalModalProvider: React.FC<{ children: React.ReactNode }> = ({
               variant="subtitle1"
               sx={{ color: "text.secondary", mt: 1.5 }}
             >
-              {t("active_until")} {tenant.license_valid_until}
+              {t("active_until")} {tenant?.license_valid_until}
               {/* Active until */}
             </Typography>
             <Typography variant="subtitle1" sx={{ color: "text.secondary" }}>
@@ -122,7 +125,7 @@ export const GlobalModalProvider: React.FC<{ children: React.ReactNode }> = ({
               variant="subtitle1"
               sx={{ color: "text.secondary", mb: 1.5 }}
             >
-              {t("tariff")} {tenant.tariff}
+              {t("tariff")} {tenant?.tariff}
             </Typography>
             <Divider />
             <Typography variant="h6" sx={{ mt: 1.5 }}>
