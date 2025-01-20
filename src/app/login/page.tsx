@@ -78,7 +78,7 @@ const Login: React.FC = () => {
         if (resp?.data?.length > 0 && resp.data[0]?.tanant) {
           sessionStorage.setItem(
             "tenant",
-            JSON.stringify(resp.data[0]?.tanant.license_valid_until)
+            JSON.stringify(resp.data[0]?.tanant)
           );
         }
 

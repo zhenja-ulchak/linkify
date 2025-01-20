@@ -351,8 +351,16 @@
     "syncAllInvoices": "Sincronizar todas las facturas",
     "question": "Pregunta",
     "LOADING": "Cargando...",
-    "OFFLINE": "desconectado.",
-    "ONLINE": "conectado."
+    "OFFLINE": "desconectado",
+    "ONLINE": "conectado",
+    "linkify": "LINKIFY",
+    "greeting": "Hola, {{firstName}} {{lastName}}",
+    "certificate_expiration": "Su certificado está a punto de caducar",
+    "active_until": "Válido hasta {{date}}",
+    "days_left": "Días restantes: {{days}}",
+    "tariff": "Tarifa: {{tariff}}",
+    "renewal_question": "¿Desea renovarlo?",
+    "continue": "Continuar"
     },
   "LocaleSwitcher": {
     "en": "Inglés",

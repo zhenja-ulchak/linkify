@@ -352,8 +352,16 @@
     "syncAllInvoices": "Синхронізувати всі рахунки",
     "question": "Питання",
     "LOADING": "Завантаження...",
-    "OFFLINE": "офлайн.",
-    "ONLINE": "онлайн."
+    "OFFLINE": "офлайн",
+    "ONLINE": "онлайн",
+    "linkify": "LINKIFY",
+    "greeting": "Привіт, {{firstName}} {{lastName}}",
+    "certificate_expiration": "У вас закінчується час дії сертифікату",
+    "active_until": "Aктивний до {{date}}",
+    "days_left": "Залишилось днів: {{days}}",
+    "tariff": "Тариф: {{tariff}}",
+    "renewal_question": "Чи хотіли ви б його продовжити?",
+    "continue": "Продовжити"
   },
   "LocaleSwitcher": {
     "en": "English",

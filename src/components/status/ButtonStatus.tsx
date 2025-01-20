@@ -4,6 +4,8 @@ import { Button, CircularProgress } from "@mui/material";
 import { enqueueSnackbar } from "notistack";
 import ApiService from "../../../src/app/services/apiService";
 import { useTranslations } from "next-intl";
+import ReplayIcon from '@mui/icons-material/Replay';
+
 
 type ButtonStatusType = {
   Url: string;
@@ -72,7 +74,7 @@ const ButtonStatusCheck = ({
         onClick={StatusCheck}
         disabled={isLoading} // Вимикаємо кнопку під час завантаження
         startIcon={
-          isLoading ? <CircularProgress size={20} color="inherit" /> : null
+          isLoading ? <CircularProgress size={20} color="inherit" /> : <ReplayIcon/>
         } // Іконка лоадера замість тексту
       >
         {isLoading ? t("LOADING") : isText ? t(`${textOnline}`) : t(`${textOffline}`)}

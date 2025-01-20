@@ -367,14 +367,14 @@ const DetailsTableDms: React.FC = () => {
           xs={12}
           sx={{ textAlign: addNewDetails ? "center" : "left" }}
         >
-          <Button
+          {/* <Button
             variant="outlined"
             startIcon={<KeyboardBackspaceIcon />}
             onClick={handleGoingBack}
             title={t("Accounting-Software.back")}
           >
             {t("Accounting-Software.back")}
-          </Button>
+          </Button> */}
         </Grid>
       </Grid>
       <Dialog

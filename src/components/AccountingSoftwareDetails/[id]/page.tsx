@@ -37,6 +37,8 @@ import AccountingDialog from "@/components/modal/AccountingSoftwareDialog";
 import { SelectChangeEvent } from "@mui/material";
 import ConfirmDeleteModal from "@/components/modal/ConfirmDeleteModal";
 import ButtonStatusCheck from "@/components/status/ButtonStatus";
+import ReplayIcon from '@mui/icons-material/Replay';
+
 
 type TenantDetails = {
   id?: number;
@@ -279,6 +281,7 @@ const DetailsTable: React.FC = () => {
         <Grid item xs={12} style={{ textAlign: "center" }}>
           <h3>{t("Accounting-Software.details")}</h3>
         <Box sx={{float: "right"}}>
+
         <ButtonStatusCheck isLoadPage={isLoadPage} Url="accounting-software/ping" textOnline="ONLINE" textOffline="OFFLINE"/>
         </Box>
           <Grid container spacing={2}>
@@ -408,14 +411,14 @@ const DetailsTable: React.FC = () => {
             xs={12}
             sx={{ textAlign: addNewDetails ? "center" : "left" }}
           >
-            <Button
+            {/* <Button
               variant="outlined"
               startIcon={<KeyboardBackspaceIcon />}
               onClick={handleGoingBack}
               title={t("Accounting-Software.back")}
             >
               {t("Accounting-Software.back")}
-            </Button>
+            </Button> */}
           </Grid>
         </Grid>
         <Dialog

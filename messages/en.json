@@ -354,8 +354,16 @@
     "syncAllInvoices": "Sync All Invoices",
     "question": "Questions",
     "LOADING": "Loading...",
-    "OFFLINE": "offline.",
-    "ONLINE": "online."
+    "OFFLINE": "offline",
+    "ONLINE": "online",
+    "linkify": "LINKIFY",
+    "greeting": "Hi, ",
+    "certificate_expiration": "Your certificate is about to expire",
+    "active_until": "Active until: ",
+    "days_left": "Days left: ",
+    "tariff": "Tariff: ",
+    "renewal_question": "Would you like to renew it?",
+    "continue": "Continue"
   },
   "LocaleSwitcher": {
     "en": "English",

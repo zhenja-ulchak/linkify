@@ -351,8 +351,16 @@
     "syncAllInvoices": "Alle Rechnungen synchronisieren",
     "question": "Frage",
     "LOADING": "Wird geladen...",
-    "OFFLINE": "offline.",
-    "ONLINE": "online."
+    "OFFLINE": "offline",
+    "ONLINE": "online",
+    "linkify": "LINKIFY",
+    "greeting": "Hallo, {{firstName}} {{lastName}}",
+    "certificate_expiration": "Ihr Zertifikat läuft bald ab",
+    "active_until": "Gültig bis {{date}}",
+    "days_left": "Verbleibende Tage: {{days}}",
+    "tariff": "Tarif: {{tariff}}",
+    "renewal_question": "Möchten Sie es verlängern?",
+    "continue": "Weiter"
   },
   "LocaleSwitcher": {
     "en": "English",
