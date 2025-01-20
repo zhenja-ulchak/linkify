@@ -358,6 +358,7 @@
     "certificate_expiration": "У вас заканчивается срок действия сертификата",
     "active_until": "Активен до {{date}}",
     "days_left": "Осталось дней: {{days}}",
+    "logout-message": "Выход из системы!",
     "tariff": "Тариф: {{tariff}}",
     "renewal_question": "Хотите ли вы продлить его?",
 

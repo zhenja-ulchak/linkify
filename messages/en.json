@@ -363,6 +363,7 @@
     "days_left": "Days left: ",
     "tariff": "Tariff: ",
     "renewal_question": "Would you like to renew it?",
+    "logout-message": "Logout successful!",
     "continue": "Continue"
   },
   "LocaleSwitcher": {

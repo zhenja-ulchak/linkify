@@ -360,6 +360,7 @@
     "active_until": "Aктивний до {{date}}",
     "days_left": "Залишилось днів: {{days}}",
     "tariff": "Тариф: {{tariff}}",
+    "logout-message": "Вихід із системи!",
     "renewal_question": "Чи хотіли ви б його продовжити?",
     "continue": "Продовжити"
   },

@@ -358,6 +358,7 @@
     "active_until": "有效期至 {{date}}",
     "days_left": "剩余天数: {{days}}",
     "tariff": "套餐: {{tariff}}",
+    "logout-message": "退出！",
     "renewal_question": "您想继续使用吗？",
     "continue": "继续"
   },

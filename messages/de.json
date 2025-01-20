@@ -359,6 +359,7 @@
     "active_until": "Gültig bis {{date}}",
     "days_left": "Verbleibende Tage: {{days}}",
     "tariff": "Tarif: {{tariff}}",
+    "logout-message": "Logout erfolgreich!",
     "renewal_question": "Möchten Sie es verlängern?",
     "continue": "Weiter"
   },
