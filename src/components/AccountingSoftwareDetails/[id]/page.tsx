@@ -36,6 +36,7 @@ import { useTranslations } from "next-intl";
 import AccountingDialog from "@/components/modal/AccountingSoftwareDialog";
 import { SelectChangeEvent } from "@mui/material";
 import ConfirmDeleteModal from "@/components/modal/ConfirmDeleteModal";
+import ButtonStatusCheck from "@/components/status/ButtonStatus";
 
 type TenantDetails = {
   id?: number;
@@ -65,7 +66,7 @@ const DetailsTable: React.FC = () => {
   const id = useParams();
 
   const [isEditing, setIsEditing] = useState(false);
-
+  const [isLoadPage, setIsLoadPage] = useState(false);
   const [modalTextColor, setModalTextColor] = useState("black");
   const [tenantDetails, setTenantDetails] = useState<TenantDetails | null>(
     null
@@ -155,6 +156,7 @@ const DetailsTable: React.FC = () => {
           variant: "success",
         });
         setTenantDetails(response.data);
+        setIsLoadPage(true)
       }
 
       if (response?.data && response.data) {
@@ -276,6 +278,9 @@ const DetailsTable: React.FC = () => {
       <Grid container spacing={2} style={{ width: "100%" }}>
         <Grid item xs={12} style={{ textAlign: "center" }}>
           <h3>{t("Accounting-Software.details")}</h3>
+        <Box sx={{float: "right"}}>
+        <ButtonStatusCheck isLoadPage={isLoadPage} Url="accounting-software/ping" textOnline="ONLINE" textOffline="OFFLINE"/>
+        </Box>
           <Grid container spacing={2}>
             {addNewDetails ? (
               <AccountingDialog tenantDetails={tenantDetails} />

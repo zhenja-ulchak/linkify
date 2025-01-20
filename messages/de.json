@@ -349,7 +349,10 @@
     "importDate": "Importdatum",
     "invoiceDate": "Rechnungsdatum",
     "syncAllInvoices": "Alle Rechnungen synchronisieren",
-    "question": "Frage"
+    "question": "Frage",
+    "LOADING": "Wird geladen...",
+    "OFFLINE": "offline.",
+    "ONLINE": "online."
   },
   "LocaleSwitcher": {
     "en": "English",

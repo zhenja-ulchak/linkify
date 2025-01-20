@@ -349,8 +349,11 @@
     "importDate": "Fecha de importación",
     "invoiceDate": "Fecha de factura",
     "syncAllInvoices": "Sincronizar todas las facturas",
-    "question": "Pregunta"
-  },
+    "question": "Pregunta",
+    "LOADING": "Cargando...",
+    "OFFLINE": "desconectado.",
+    "ONLINE": "conectado."
+    },
   "LocaleSwitcher": {
     "en": "Inglés",
     "de": "Alemán",

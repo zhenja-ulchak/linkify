@@ -1,59 +1,84 @@
-import { useState } from "react";
-import { Button } from "@mui/material"
-import { enqueueSnackbar } from "notistack"
+"use client";
+import { useEffect, useState } from "react";
+import { Button, CircularProgress } from "@mui/material";
+import { enqueueSnackbar } from "notistack";
 import ApiService from "../../../src/app/services/apiService";
 import { useTranslations } from "next-intl";
 
-
-
 type ButtonStatusType = {
-    Url: string
-    textOnlain?: string
-    textOfflain?: string
-    
-}
+  Url: string;
+  textOnline?: string;
+  textOffline?: string;
+  isLoadPage: boolean;
+};
 
-const ButtonStatusCheck  = ({Url, textOnlain, textOfflain}: ButtonStatusType) => {
-    
+const ButtonStatusCheck = ({
+  Url,
+  textOnline,
+  textOffline,
+  isLoadPage,
+}: ButtonStatusType) => {
   const [isText, setIsText] = useState(false);
-
-
-
+  const [isLoading, setIsLoading] = useState(false);
   const t = useTranslations("API");
 
+  console.log(isLoadPage);
 
- const StatusCheck = async () => {
+  const StatusCheck = async () => {
+    setIsLoading(true); // Починаємо завантаження
+    try {
       const Auth: any = sessionStorage.getItem("AuthToken");
-      const response: any = await ApiService.get(
-        `${Url}`,
-        Auth
-      ); 
+      const response: any = await ApiService.get(Url, Auth);
 
       if (response instanceof Error) {
         const { status, variant, message } = ApiService.CheckAndShow(
           response,
           t
         );
+
+        if (status === 404) {
+          console.log(404);
+        } else {
           // @ts-ignore
           enqueueSnackbar(message, { variant: variant });
-        
+        }
       }
 
-      if (response.status === 200 || response.success === true) {
-        enqueueSnackbar(t("ONLAIN"), {
-          variant: "success",
-        });
-        setIsText(true)
+      if (response.status === 200 || response.success) {
+        enqueueSnackbar(t("ONLINE"), { variant: "success" });
+        setIsText(response.data.message === "The service is online.");
+      } else {
+        setIsText(false);
       }
-    };
+    } catch (error) {
+      console.error("Error during status check:", error);
+      enqueueSnackbar(t("OFFLINE"), { variant: "error" });
+      setIsText(false);
+    } finally {
+      setIsLoading(false); // Завершення завантаження
+    }
+  };
+  useEffect(() => {
+    if (isLoadPage) {
+      StatusCheck();
+    }
+  }, [isLoadPage]);
 
   return (
     <>
-        <Button onClick={()=>StatusCheck()}>
-         {isText ? textOnlain : textOfflain }   
-        </Button>
+      <Button
+        variant="contained"
+        color={isText ? "success" : "error"}
+        onClick={StatusCheck}
+        disabled={isLoading} // Вимикаємо кнопку під час завантаження
+        startIcon={
+          isLoading ? <CircularProgress size={20} color="inherit" /> : null
+        } // Іконка лоадера замість тексту
+      >
+        {isLoading ? t("LOADING") : isText ? t(`${textOnline}`) : t(`${textOffline}`)}
+      </Button>
     </>
-  )
-}
+  );
+};
 
-export default ButtonStatusCheck
+export default ButtonStatusCheck;

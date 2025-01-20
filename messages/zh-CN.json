@@ -348,7 +348,10 @@
     "importDate": "导入日期",
     "invoiceDate": "发票日期",
     "syncAllInvoices": "同步所有发票",
-    "question": "问题"
+    "question": "问题",
+    "LOADING": "加载中...",
+    "OFFLINE": "离线。",
+    "ONLINE": "在线。"
   },
   "LocaleSwitcher": {
     "en": "English",

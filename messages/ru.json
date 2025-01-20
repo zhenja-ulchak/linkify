@@ -349,7 +349,10 @@
     "importDate": "Дата импорта",
     "invoiceDate": "Дата счета",
     "syncAllInvoices": "Синхронизировать все счета",
-  "question": "Вопросы"
+  "question": "Вопросы",
+  "LOADING": "Загрузка...",
+  "OFFLINE": "офлайн.",
+  "ONLINE": "онлайн."
   },
   "LocaleSwitcher": {
     "en": "English",

@@ -36,6 +36,7 @@ import { useTranslations } from "next-intl";
 import DMSDialog from "@/components/modal/DmsConfigDialog";
 import ConfirmDeleteModal from "@/components/modal/ConfirmDeleteModal";
 import DmsDialogForm from "@/components/SyncAccountDialogForm";
+import ButtonStatusCheck from "@/components/status/ButtonStatus";
 
 type TenantDetails = {
   id?: number;
@@ -66,7 +67,7 @@ const DetailsTableDms: React.FC = () => {
   const id = useParams();
 
   const t = useTranslations("API");
-
+  const [isLoadPage, setIsLoadPage] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   // const [open, setOpen] = React.useState(false);
@@ -140,6 +141,7 @@ const DetailsTableDms: React.FC = () => {
         enqueueSnackbar(t("dms-configuration-fetched-successfully"), {
           variant: "success",
         });
+        setIsLoadPage(true)
       }
       if (
         response?.data &&
@@ -280,6 +282,9 @@ const DetailsTableDms: React.FC = () => {
       <Grid container spacing={2} style={{ width: "100%" }}>
         <Grid item xs={12} style={{ textAlign: "center" }}>
           <h3>{t("dms-details")}</h3>
+          <Box sx={{float: "right"}}>
+        <ButtonStatusCheck isLoadPage={isLoadPage} Url="dms-config/ping" textOnline="ONLINE" textOffline="OFFLINE"/>
+        </Box>
         </Grid>
 
         {addNewDetails ? (

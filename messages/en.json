@@ -352,7 +352,10 @@
     "importDate": "Import Date",
     "invoiceDate": "Invoice Date",
     "syncAllInvoices": "Sync All Invoices",
-    "question": "Questions"
+    "question": "Questions",
+    "LOADING": "Loading...",
+    "OFFLINE": "offline.",
+    "ONLINE": "online."
   },
   "LocaleSwitcher": {
     "en": "English",
