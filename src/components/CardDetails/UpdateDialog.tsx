@@ -11,6 +11,9 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
 } from "@mui/material";
 import { enqueueSnackbar } from "notistack";
 import { useTranslations } from "next-intl";
@@ -18,14 +21,12 @@ import ApiService from "@/app/services/apiService";
 
 type DetailsFormUpdateType = {
   tenant: any;
+  openCard?: boolean;
 };
 
-const DetailsFormUpdate = ({ tenant }: DetailsFormUpdateType) => {
-  const router = useRouter();
-  const id = useParams();
-
+const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [isLoadPage, setIsLoadPage] = useState(false);
+
   const [modalTextColor, setModalTextColor] = useState("black");
   const [tenantDetails, setTenantDetails] = useState<any>();
 
@@ -114,12 +115,20 @@ const DetailsFormUpdate = ({ tenant }: DetailsFormUpdateType) => {
     e.preventDefault();
 
     const Auth: any = sessionStorage.getItem("AuthToken");
+    let apiUrl = " ";
+    if (tenant?.type === "EcoDms") {
+      apiUrl = "dms-config";
+    } else if (tenant?.type === "lexoffice-cloud") {
+      apiUrl = "accounting-software";
+    }
 
     const response: any = await ApiService.put(
-      `accounting-software/${id.id}`,
+      `${apiUrl}/${tenant.id}`,
       initialTenant,
       Auth
     );
+
+    console.log(tenant?.type);
     if (response instanceof Error) {
       const { status, variant, message } = ApiService.CheckAndShow(response, t);
 
@@ -134,27 +143,9 @@ const DetailsFormUpdate = ({ tenant }: DetailsFormUpdateType) => {
       });
       setOpen(false);
     }
-    // @ts-ignore
-    setTenantDetails(response.data[0]);
+
     setIsEditing(false);
   };
-
-  // useEffect(() => {
-  //   if (tenantDetails) {
-  //     setUpdatedTenant((prevTenant) => ({
-  //       ...prevTenant,
-  //       name: tenantDetails.name || "",
-  //       type: tenantDetails.type || "",
-  //       url: tenantDetails.url || "",
-  //       organization_id: tenantDetails.organization_id || "0",
-  //       // @ts-ignore
-  //       event_type: tenantDetails?.event_type?.document || "",
-  //       description: tenantDetails.description || "",
-  //       is_active: tenantDetails.is_active,
-  //     }));
-  //     setSelectedOption(tenantDetails.type || ""); // Оновлення вибору в Select
-  //   }
-  // }, [tenantDetails]); // Виконується при зміні tenantDetails
 
   const openModalDetails = () => {
     setOpen(true);
@@ -170,6 +161,16 @@ const DetailsFormUpdate = ({ tenant }: DetailsFormUpdateType) => {
     "updated_by",
     "created_by",
   ];
+
+  useEffect(() => {
+    if (openCard) {
+      setOpen(openCard);
+    } else {
+      setOpen(false);
+    }
+  }, [openCard]);
+
+  console.log(openCard);
 
   return (
     <div
@@ -262,6 +263,12 @@ const DetailsFormUpdate = ({ tenant }: DetailsFormUpdateType) => {
           </DialogContent>
 
           <DialogActions>
+            <FormGroup>
+              <FormControlLabel
+                control={<Checkbox defaultChecked />}
+                label="Label"
+              />
+            </FormGroup>
             <Button onClick={handleClose}>
               {t("Accounting-Software.cancel")}
             </Button>
