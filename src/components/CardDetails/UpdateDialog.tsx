@@ -136,7 +136,7 @@ const DetailsFormUpdate = ({ tenant }: DetailsFormUpdateType) => {
   }, [tenant]);
 
   // Обробка змін в полях
-  const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleEditChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
 
     setInitialTenant((prevTenant: any) => ({
