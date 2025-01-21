@@ -59,11 +59,16 @@ type TenantDetails = {
   deleted_at: string | null;
 };
 
+type DetailsFormUpdateType = {
+  tenant: any;
+};
+
 const dmsOptions = ["sevdesk-cloud", "lexoffice-cloud"];
 
-const DetailsFormUpdate: React.FC = () => {
-  const router = useRouter();
+const DetailsFormUpdate = ({ tenant }: DetailsFormUpdateType) => {
+  console.log(tenant);
 
+  const router = useRouter();
   const id = useParams();
 
   const [isEditing, setIsEditing] = useState(false);
@@ -104,10 +109,6 @@ const DetailsFormUpdate: React.FC = () => {
     }));
   };
 
-  // const handleClickOpen = () => {
-  //   setOpen(true);
-  // };
-
   const handleClose = () => {
     setOpen(false);
   };
@@ -131,44 +132,8 @@ const DetailsFormUpdate: React.FC = () => {
   }, [isEditing]);
 
   useEffect(() => {
-    const fetchTenantDetails = async () => {
-      const Auth: any = sessionStorage.getItem("AuthToken");
-      const response: any = await ApiService.get(
-        `accounting-software/${id.id}`,
-        Auth
-      ); //${id}
-
-      if (response instanceof Error) {
-        const { status, variant, message } = ApiService.CheckAndShow(
-          response,
-          t
-        );
-
-        if (status === 404) {
-          console.log(404);
-        } else {
-          // @ts-ignore
-          enqueueSnackbar(message, { variant: variant });
-        }
-      }
-
-      if (response.status === 200 || response.success === true) {
-        enqueueSnackbar(t("accounting-entry-updated-successfully"), {
-          variant: "success",
-        });
-        setTenantDetails(response.data);
-        setIsLoadPage(true);
-      }
-
-      if (response?.data && response.data) {
-        setTenantDetails(response.data);
-      } else {
-        setAddNewDetails(true);
-      }
-    };
-
-    fetchTenantDetails();
-  }, [id]);
+    setTenantDetails(tenant);
+  }, [tenant]);
 
   // Обробка змін в полях
   const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -214,41 +179,6 @@ const DetailsFormUpdate: React.FC = () => {
     setIsEditing(false);
   };
 
-  const handleDelete = async () => {
-    const Auth: any = sessionStorage.getItem("AuthToken");
-    const response: any = await ApiService.delete(
-      `accounting-software/${id}`,
-      Auth
-    );
-
-    if (response.success === true) {
-      enqueueSnackbar("Accounting entry deleted successfully!", {
-        variant: "success",
-      });
-      router.push("/dashboard/admin");
-      setOpenModal(false);
-    }
-    if (response instanceof Error) {
-      const { status, variant, message } = ApiService.CheckAndShow(response, t);
-
-      // @ts-ignore
-      enqueueSnackbar(message, { variant: variant });
-      setOpenModal(false);
-    }
-  };
-
-  const handleOpenModal = () => {
-    setOpenModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setOpenModal(false);
-  };
-
-  function handleGoingBack() {
-    router.back();
-  }
-
   useEffect(() => {
     if (tenantDetails) {
       setUpdatedTenant((prevTenant) => ({
@@ -266,11 +196,9 @@ const DetailsFormUpdate: React.FC = () => {
     }
   }, [tenantDetails]); // Виконується при зміні tenantDetails
 
-
-  const openModalDetails = ()=>{
+  const openModalDetails = () => {
     setOpen(true);
-  }
-
+  };
 
   return (
     <div
@@ -282,173 +210,55 @@ const DetailsFormUpdate: React.FC = () => {
         margin: "0 auto",
       }}
     >
-      <Grid container spacing={2} style={{ width: "100%" }}>
-        <Grid item xs={12} style={{ textAlign: "center" }}>
-          {/* <h3>{t("Accounting-Software.details")}</h3> */}
-          {/* <Box sx={{ float: "right" }}>
-            <ButtonStatusCheck
-              isLoadPage={isLoadPage}
-              Url="accounting-software/ping"
-              textOnline="ONLINE"
-              textOffline="OFFLINE"
-            />
-          </Box> */}
-          <Grid container spacing={2}>
+      <Button onClick={openModalDetails} size="small" color="primary">
+        Edit
+      </Button>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        fullWidth
+      >
+        <DialogTitle id="alert-dialog-title">
+          {t("Accounting-Software.changeaccounting")}
+        </DialogTitle>
+        <form onSubmit={handleSaveChanges}>
+          <DialogContent>
+            <Typography
+              variant="body1"
+              component="span"
+              id="alert-dialog-description"
+            >
+              {tenant &&
+                Object.keys(tenant).map((key) => (
+                  <Box key={key}>
+                    <label htmlFor={key}>
+                      {key.charAt(0).toUpperCase() + key.slice(1)}
+                    </label>
+                    <TextField
+                      id={key}
+                      name={key}
+                      value={tenant[key] || ""}
+                      onChange={(e) => handleEditChange(e)} // Використовуємо handleEditChange
+                      variant="outlined"
+                      fullWidth
+                    />
+                  </Box>
+                ))}
+            </Typography>
+          </DialogContent>
 
-          </Grid>
-          {/* <ConfirmDeleteModal
-            open={openModal}
-            title={t("delete")}
-            handleDelete={handleDelete}
-            onClose={handleCloseModal}
-            description={t("delete-Accounting-Software")}
-          /> */}
-     
-        </Grid>
-        <Button onClick={openModalDetails} size="small" color="primary">
-          Edit
-        </Button>
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-          fullWidth
-        >
-          <DialogTitle id="alert-dialog-title">
-            {t("Accounting-Software.changeaccounting")}
-          </DialogTitle>
-          <form onSubmit={handleSaveChanges}>
-            <DialogContent>
-              <Typography
-                variant="body1"
-                component="span"
-                id="alert-dialog-description"
-              >
-                <Box sx={{ marginBottom: 2, marginTop: "15px" }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="dms-select-label">
-                      {t("Accounting-Software.type")}
-                    </InputLabel>
-                    <Select
-                      labelId="dms-select-label"
-                      value={selectedOption}
-                      onChange={handleSelectChange}
-                      label="DMS"
-                    >
-                      {dmsOptions.map((option, index) => (
-                        <MenuItem key={index} value={option}>
-                          {option}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Box>
-
-                <Box sx={{ marginBottom: 2 }}>
-                  <TextField
-                    fullWidth
-                    label={t("Accounting-Software.url")}
-                    name="url"
-                    value={updatedTenant?.url || ""}
-                    onChange={handleEditChange}
-                  />
-                </Box>
-
-                <Box sx={{ marginBottom: 2 }}>
-                  <TextField
-                    fullWidth
-                    label={t("Accounting-Software.organization_id")}
-                    name="organization_id"
-                    value={updatedTenant?.organization_id || ""}
-                    onChange={handleEditChange}
-                  />
-                </Box>
-
-                <Box sx={{ marginBottom: 2 }}>
-                  <TextField
-                    fullWidth
-                    label={t("Accounting-Software.event-type")}
-                    name="event_type"
-                    value={
-                      updatedTenant?.event_type
-                        ? updatedTenant?.event_type || ""
-                        : // @ts-ignore
-                          updatedTenant?.event_type?.document || ""
-                    }
-                    onChange={handleEditChange}
-                  />
-                </Box>
-
-                <Box sx={{ marginBottom: 2 }}>
-                  <TextField
-                    fullWidth
-                    label={t("Accounting-Software.description")}
-                    name="description"
-                    value={updatedTenant?.description || ""}
-                    onChange={handleEditChange}
-                  />
-                </Box>
-
-                <Box sx={{ marginBottom: 2 }}>
-                  <TextField
-                    fullWidth
-                    label={t("Accounting-Software.region")}
-                    name="additional_settings.region"
-                    value={updatedTenant?.additional_settings?.region || ""}
-                    onChange={handleEditChange}
-                  />
-                </Box>
-
-                <Box sx={{ marginBottom: 2 }}>
-                  <TextField
-                    fullWidth
-                    label={t("New-password")}
-                    name="password"
-                    required
-                    type="password"
-                    value={formData.password}
-                    onChange={handleInputChange}
-                    error={!!formData.password && formData.password.length < 8} // Перевірка на мінімальну довжину
-                    helperText={
-                      formData.password && formData.password.length < 8
-                        ? t("password-length-error")
-                        : ""
-                    } // Повідомлення про помилку
-                  />
-                </Box>
-
-                <Box sx={{ marginBottom: 2 }}>
-                  <TextField
-                    fullWidth
-                    label={t("confirmation-password")}
-                    name="confirmationPassword"
-                    required
-                    type="password"
-                    value={formData.confirmationPassword}
-                    onChange={handleInputChange}
-                    error={formData.confirmationPassword !== formData.password} // Перевірка на збіг паролів
-                    helperText={
-                      formData.confirmationPassword !== formData.password
-                        ? t("password-mismatch")
-                        : ""
-                    } // Повідомлення про помилку
-                  />
-                </Box>
-              </Typography>
-            </DialogContent>
-
-            <DialogActions>
-              <Button onClick={handleClose}>
-                {t("Accounting-Software.cancel")}
-              </Button>
-              <Button type="submit" color="primary">
-                {t("Accounting-Software.ok")}
-              </Button>
-            </DialogActions>
-          </form>
-        </Dialog>
-      </Grid>
+          <DialogActions>
+            <Button onClick={handleClose}>
+              {t("Accounting-Software.cancel")}
+            </Button>
+            <Button type="submit" color="primary">
+              {t("Accounting-Software.ok")}
+            </Button>
+          </DialogActions>
+        </form>
+      </Dialog>
     </div>
   );
 };

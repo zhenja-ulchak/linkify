@@ -140,7 +140,6 @@ const Login: React.FC = () => {
     }
   };
 
-  console.log(theme.palette);
   
 
   return (
