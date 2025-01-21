@@ -109,6 +109,7 @@ const handleCardClick = (tenant: any) => {
                     variant="body2"
                     color="textSecondary"
                     component="p"
+                    sx={{minHeight: '40px'}}
                   >
                     {item?.description || "No description provided"}
                   </Typography>

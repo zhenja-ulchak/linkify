@@ -2,105 +2,60 @@
 
 import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation"; // Для URL параметрів і маршрутизатора
-
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
-
-import ApiService from "../../app/services/apiService";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
   Typography,
   Box,
   TextField,
   Button,
-  IconButton,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
-  Grid,
 } from "@mui/material";
 import { enqueueSnackbar } from "notistack";
 import { useTranslations } from "next-intl";
-import AccountingDialog from "@/components/modal/AccountingSoftwareDialog";
-import { SelectChangeEvent } from "@mui/material";
-import ConfirmDeleteModal from "@/components/modal/ConfirmDeleteModal";
-import ButtonStatusCheck from "@/components/status/ButtonStatus";
-import ReplayIcon from "@mui/icons-material/Replay";
-
-type TenantDetails = {
-  id?: number;
-  tenant_id?: number;
-  name: string;
-  type: string;
-  url: string;
-  organization_id: string;
-  event_type: string | null;
-  description: string;
-  additional_settings?: {
-    region: string;
-  };
-  is_active: number;
-  created_by: string | null;
-  updated_by: string | null;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string | null;
-};
+import ApiService from "@/app/services/apiService";
 
 type DetailsFormUpdateType = {
   tenant: any;
 };
 
-const dmsOptions = ["sevdesk-cloud", "lexoffice-cloud"];
-
 const DetailsFormUpdate = ({ tenant }: DetailsFormUpdateType) => {
-  console.log(tenant);
-
   const router = useRouter();
   const id = useParams();
 
   const [isEditing, setIsEditing] = useState(false);
   const [isLoadPage, setIsLoadPage] = useState(false);
   const [modalTextColor, setModalTextColor] = useState("black");
-  const [tenantDetails, setTenantDetails] = useState<TenantDetails | null>(
-    null
-  );
-  const [addNewDetails, setAddNewDetails] = useState<any>(false);
+  const [tenantDetails, setTenantDetails] = useState<any>();
+
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState<any>({
     password: "",
     confirmationPassword: "",
   });
-  const [selectedOption, setSelectedOption] = useState(tenantDetails?.type);
+  // const [selectedOption, setSelectedOption] = useState(tenantDetails?.type);
   const t = useTranslations("API");
-  const [openModal, setOpenModal] = useState(false);
-  const [updatedTenant, setUpdatedTenant] = useState<TenantDetails>({
-    name: "",
-    type: "",
-    url: "",
-    organization_id: "",
-    event_type: null,
-    description: "",
-    is_active: 0,
-    created_by: null,
-    updated_by: null,
-    created_at: "",
-    updated_at: "",
-    deleted_at: null,
-  });
+
   const [initialTenant, setInitialTenant] = useState<any>();
+  const [extraSettings, setExtraSettings] = useState<Record<string, string>>(
+    {}
+  );
+
+  // Ініціалізація extra_settings при першому рендері
+  useEffect(() => {
+    if (tenant?.extra_settings) {
+      try {
+        setExtraSettings(JSON.parse(tenant?.extra_settings));
+      } catch (error) {
+        console.error(
+          "Invalid JSON format in extra_settings:",
+          tenant?.extra_settings
+        );
+      }
+    }
+  }, [tenant?.extra_settings]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData: any) => ({
@@ -113,14 +68,14 @@ const DetailsFormUpdate = ({ tenant }: DetailsFormUpdateType) => {
     setOpen(false);
   };
 
-  const handleSelectChange = (event: SelectChangeEvent<string>) => {
-    const newValue = event.target.value;
-    setSelectedOption(newValue);
-    setUpdatedTenant((prevTenant: any) => ({
-      ...prevTenant,
-      type: newValue,
-    }));
-  };
+  // const handleSelectChange = (event: SelectChangeEvent<string>) => {
+  //   const newValue = event.target.value;
+  //   setSelectedOption(newValue);
+  //   setUpdatedTenant((prevTenant: any) => ({
+  //     ...prevTenant,
+  //     type: newValue,
+  //   }));
+  // };
 
   useEffect(() => {
     const bodyBackgroundColor = window.getComputedStyle(
@@ -132,11 +87,15 @@ const DetailsFormUpdate = ({ tenant }: DetailsFormUpdateType) => {
   }, [isEditing]);
 
   useEffect(() => {
-    setTenantDetails(tenant);
+    setTenantDetails({
+      ...tenant,
+      type: tenant?.type || "", // Забезпечуємо, що тип має значення
+    });
   }, [tenant]);
 
-  // Обробка змін в полях
-  const handleEditChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleEditChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
 
     setInitialTenant((prevTenant: any) => ({
@@ -144,7 +103,8 @@ const DetailsFormUpdate = ({ tenant }: DetailsFormUpdateType) => {
       [name]: value,
     }));
 
-    setUpdatedTenant((prevTenant) => ({
+    // Оновлюємо tenant через setTenantDetails
+    setTenantDetails((prevTenant: any) => ({
       ...prevTenant,
       [name]: value,
     }));
@@ -179,26 +139,37 @@ const DetailsFormUpdate = ({ tenant }: DetailsFormUpdateType) => {
     setIsEditing(false);
   };
 
-  useEffect(() => {
-    if (tenantDetails) {
-      setUpdatedTenant((prevTenant) => ({
-        ...prevTenant,
-        name: tenantDetails.name || "",
-        type: tenantDetails.type || "",
-        url: tenantDetails.url || "",
-        organization_id: tenantDetails.organization_id || "0",
-        // @ts-ignore
-        event_type: tenantDetails?.event_type?.document || "",
-        description: tenantDetails.description || "",
-        is_active: tenantDetails.is_active,
-      }));
-      setSelectedOption(tenantDetails.type || ""); // Оновлення вибору в Select
-    }
-  }, [tenantDetails]); // Виконується при зміні tenantDetails
+  // useEffect(() => {
+  //   if (tenantDetails) {
+  //     setUpdatedTenant((prevTenant) => ({
+  //       ...prevTenant,
+  //       name: tenantDetails.name || "",
+  //       type: tenantDetails.type || "",
+  //       url: tenantDetails.url || "",
+  //       organization_id: tenantDetails.organization_id || "0",
+  //       // @ts-ignore
+  //       event_type: tenantDetails?.event_type?.document || "",
+  //       description: tenantDetails.description || "",
+  //       is_active: tenantDetails.is_active,
+  //     }));
+  //     setSelectedOption(tenantDetails.type || ""); // Оновлення вибору в Select
+  //   }
+  // }, [tenantDetails]); // Виконується при зміні tenantDetails
 
   const openModalDetails = () => {
     setOpen(true);
   };
+
+  const excludedFields = [
+    "id",
+    "created_at",
+    "updated_at",
+    "deleted_at",
+    "tenant_id",
+    "updated_by",
+    "updated_by",
+    "created_by",
+  ];
 
   return (
     <div
@@ -231,21 +202,62 @@ const DetailsFormUpdate = ({ tenant }: DetailsFormUpdateType) => {
               id="alert-dialog-description"
             >
               {tenant &&
-                Object.keys(tenant).map((key) => (
-                  <Box key={key}>
-                    <label htmlFor={key}>
-                      {key.charAt(0).toUpperCase() + key.slice(1)}
-                    </label>
-                    <TextField
-                      id={key}
-                      name={key}
-                      value={tenant[key] || ""}
-                      onChange={(e) => handleEditChange(e)} // Використовуємо handleEditChange
-                      variant="outlined"
-                      fullWidth
-                    />
-                  </Box>
-                ))}
+                Object.keys(tenant)
+                  .filter((key) => !excludedFields.includes(key))
+                  .map((key) => {
+                    if (key === "extra_settings") {
+                      // Відображаємо інпути для кожного налаштування в extraSettings
+                      return Object.keys(extraSettings).map((subKey) => (
+                        <Box key={`${key}-${subKey}`}>
+                          <TextField
+                            sx={{ marginBottom: 2 }}
+                            id={subKey}
+                            name={subKey}
+                            value={extraSettings[subKey] || ""}
+                            onChange={(e) => {
+                              const { name, value } = e.target;
+
+                              // Оновлення стану extraSettings
+                              setExtraSettings((prevSettings) => ({
+                                ...prevSettings,
+                                [name]: value,
+                              }));
+
+                              setTenantDetails((prevTenant: any) => ({
+                                ...prevTenant,
+                                [key]: JSON.stringify({
+                                  ...extraSettings,
+                                  [name]: value,
+                                }),
+                              }));
+                            }}
+                            label={
+                              subKey.charAt(0).toUpperCase() + subKey.slice(1)
+                            }
+                            variant="outlined"
+                            fullWidth
+                          />
+                        </Box>
+                      ));
+                    }
+
+                    // Інші поля
+                    return (
+                      <Box key={key}>
+                        <TextField
+                          sx={{ marginBottom: 2 }}
+                          id={key}
+                          name={key}
+                          //@ts-ignore
+                          value={tenantDetails[key] || ""}
+                          onChange={(e) => handleEditChange(e)} // Використовуємо handleEditChange
+                          label={key.charAt(0).toUpperCase() + key.slice(1)}
+                          variant="outlined"
+                          fullWidth
+                        />
+                      </Box>
+                    );
+                  })}
             </Typography>
           </DialogContent>
 
