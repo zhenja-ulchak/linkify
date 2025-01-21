@@ -90,7 +90,7 @@ const handleCardClick = (tenant: any) => {
       <Grid container spacing={2} sx={{ flexGrow: 1 }}>
         {details.map((item, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
-            <Card sx={{ maxWidth: 345 }} onClick={() => handleCardClick(item)}>
+            <Card sx={{ maxWidth: 345, minHeight: "300px" }} onClick={() => handleCardClick(item)}>
               <CardActionArea>
                 <CardMedia
                   sx={{ height: 140 }}
