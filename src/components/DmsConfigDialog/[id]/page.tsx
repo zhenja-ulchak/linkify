@@ -123,7 +123,8 @@ const DetailsTableDms: React.FC = () => {
     const fetchTenantDetails = async () => {
       const Auth: any = sessionStorage.getItem("AuthToken");
       const response: any = await ApiService.get(`dms-config/${id.id}`, Auth); //${id.id}
-
+      console.log(response.data);
+      
       if (response instanceof Error) {
         const { status, variant, message } = ApiService.CheckAndShow(
           response,
