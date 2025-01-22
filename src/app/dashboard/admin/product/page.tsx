@@ -82,9 +82,19 @@ export default function SuperAdminTenant() {
         display: "flex",
         alignContent: "center",
         justifyContent: "center",
-        width: "100%",
+        width: "80%",
         flexDirection: "column",
+        "@media (max-width: 480px)": {
+          position: "relative",
+          left: "8px",
+          display: "flex",
+          alignContent: "center",
+          justifyContent: "center",
+          width: "80%",
+          flexDirection: "column",
+        },
       }}
+     
     >
       <Grid
         container

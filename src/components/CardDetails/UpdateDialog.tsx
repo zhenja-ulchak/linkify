@@ -262,19 +262,53 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
             </Typography>
           </DialogContent>
 
-          <DialogActions>
-            <FormGroup>
-              <FormControlLabel
-                control={<Checkbox defaultChecked />}
-                label="Label"
-              />
-            </FormGroup>
-            <Button onClick={handleClose}>
-              {t("Accounting-Software.cancel")}
-            </Button>
-            <Button type="submit" color="primary">
-              {t("Accounting-Software.ok")}
-            </Button>
+          <DialogActions
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: 2,
+            }}
+          >
+            {/* FormGroup зліва */}
+            <Box
+              sx={{
+               
+                textAlign: "left",
+                "@media (max-width: 600px)": {
+                  flexBasis: "100%",
+                },
+              }}
+            >
+              <FormGroup sx={{marginLeft:'15px'}}>
+                <FormControlLabel
+                  control={<Checkbox defaultChecked />}
+                  label="check the work"
+                />
+              </FormGroup>
+            </Box>
+
+            {/* Кнопки справа */}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                gap: 2,
+                flexBasis: "30%",
+                "@media (max-width: 600px)": {
+                  flexBasis: "100%",
+                  justifyContent: "center",
+                },
+              }}
+            >
+              <Button onClick={handleClose} variant="outlined">
+                {t("Accounting-Software.cancel")}
+              </Button>
+              <Button type="submit" color="primary" variant="contained">
+                {t("Accounting-Software.ok")}
+              </Button>
+            </Box>
           </DialogActions>
         </form>
       </Dialog>
