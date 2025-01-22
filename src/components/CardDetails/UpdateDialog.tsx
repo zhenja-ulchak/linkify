@@ -46,7 +46,6 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
   const [checked, setChecked] = useState(true); // Початкове значення - true (defaultChecked)
   const [modalOpen, setModalOpen] = useState(false);
 
-
   const handleChange = (event: {
     target: { checked: boolean | ((prevState: boolean) => boolean) };
   }) => {
@@ -111,47 +110,65 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
     e.preventDefault();
 
     const Auth: any = sessionStorage.getItem("AuthToken");
+    let apiUrlGet = " ";
+    if (tenant?.type === "EcoDms") {
+      apiUrlGet = "dms-config/ping";
+    } else if (tenant?.type === "lexoffice-cloud") {
+      apiUrlGet = "accounting-software/ping";
+    }
+
+    const responseCheck: any = await ApiService.get(apiUrlGet, Auth);
+
+    if (responseCheck.status === 200 || responseCheck.success === true) {
+      apiPutStart(initialTenant);
+    } else {
+      setModalOpen(true);
+    }
+
+    setIsEditing(false);
+  };
+
+  const handleConfirmNew = () => {
+    apiPutStart(initialTenant);
+    setModalOpen(false);
+    setOpen(false);
+  };
+
+  const handleRevertOld = () => {
+    setModalOpen(false);
+    setOpen(false);
+  };
+
+  const apiPutStart = async (obj: any) => {
+    const Auth: any = sessionStorage.getItem("AuthToken");
     let apiUrl = " ";
     if (tenant?.type === "EcoDms") {
       apiUrl = "dms-config";
     } else if (tenant?.type === "lexoffice-cloud") {
       apiUrl = "accounting-software";
     }
+    const response: any = await ApiService.put(
+      `/${tenant.id}`,
+      obj,
+      Auth
+    );
 
-    const responseCheck: any = await ApiService.get('', Auth);
+    if (response instanceof Error) {
+      const { status, variant, message } = ApiService.CheckAndShow(response, t);
 
-    if (responseCheck.status === 200 || responseCheck.success === true) {
-      const response: any = await ApiService.put(
-        `/${tenant.id}`,
-        initialTenant,
-        Auth
-      );
-
-      if (response instanceof Error) {
-        const { status, variant, message } = ApiService.CheckAndShow(
-          response,
-          t
-        );
-
-        // @ts-ignore
-        enqueueSnackbar(message, { variant: variant });
-        setOpen(false);
-      }
-
-      if (response.status === 200 || response.success === true) {
-        enqueueSnackbar("Accounting entry updated successfully!", {
-          variant: "success",
-        });
-        setOpen(false);
-      }
-
+      // @ts-ignore
+      enqueueSnackbar(message, { variant: variant });
       setOpen(false);
-    } else {
-      setModalOpen(true)
-      
     }
 
-    setIsEditing(false);
+    if (response.status === 200 || response.success === true) {
+      enqueueSnackbar("Accounting entry updated successfully!", {
+        variant: "success",
+      });
+      setOpen(false);
+    }
+
+    setOpen(false);
   };
 
   const openModalDetails = () => {
@@ -169,15 +186,7 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
     "created_by",
   ];
 
-  const handleConfirmNew = () => {
-    setModalOpen(false)
-    setOpen(false);
-  };
-
-  const handleRevertOld = () => {
-    setModalOpen(false)
-    setOpen(false);
-  };
+ 
 
   useEffect(() => {
     if (openCard) {
