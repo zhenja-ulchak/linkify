@@ -18,6 +18,7 @@ import {
 import { enqueueSnackbar } from "notistack";
 import { useTranslations } from "next-intl";
 import ApiService from "@/app/services/apiService";
+import ConfirmChangeModal from "../modal/confirmDialog/ConfirmationModalDialog";
 
 type DetailsFormUpdateType = {
   tenant: any;
@@ -43,6 +44,8 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
     {}
   );
   const [checked, setChecked] = useState(true); // Початкове значення - true (defaultChecked)
+  const [modalOpen, setModalOpen] = useState(false);
+
 
   const handleChange = (event: {
     target: { checked: boolean | ((prevState: boolean) => boolean) };
@@ -87,22 +90,6 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
   //   }));
   // };
 
-  useEffect(() => {
-    const bodyBackgroundColor = window.getComputedStyle(
-      document.body
-    ).backgroundColor;
-    setModalTextColor(
-      bodyBackgroundColor === "rgb(0, 0, 0)" ? "black" : "black"
-    );
-  }, [isEditing]);
-
-  useEffect(() => {
-    setTenantDetails({
-      ...tenant,
-      type: tenant?.type || "", // Забезпечуємо, що тип має значення
-    });
-  }, [tenant]);
-
   const handleEditChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -131,11 +118,11 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
       apiUrl = "accounting-software";
     }
 
-    const responseCheck: any = await ApiService.get(apiUrl, Auth);
+    const responseCheck: any = await ApiService.get('', Auth);
 
     if (responseCheck.status === 200 || responseCheck.success === true) {
       const response: any = await ApiService.put(
-        `${apiUrl}/${tenant.id}`,
+        `/${tenant.id}`,
         initialTenant,
         Auth
       );
@@ -159,7 +146,8 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
       }
 
       setOpen(false);
-    }else{
+    } else {
+      setModalOpen(true)
       
     }
 
@@ -181,6 +169,16 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
     "created_by",
   ];
 
+  const handleConfirmNew = () => {
+    setModalOpen(false)
+    setOpen(false);
+  };
+
+  const handleRevertOld = () => {
+    setModalOpen(false)
+    setOpen(false);
+  };
+
   useEffect(() => {
     if (openCard) {
       setOpen(openCard);
@@ -188,6 +186,22 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
       setOpen(false);
     }
   }, [openCard]);
+
+  useEffect(() => {
+    const bodyBackgroundColor = window.getComputedStyle(
+      document.body
+    ).backgroundColor;
+    setModalTextColor(
+      bodyBackgroundColor === "rgb(0, 0, 0)" ? "black" : "black"
+    );
+  }, [isEditing]);
+
+  useEffect(() => {
+    setTenantDetails({
+      ...tenant,
+      type: tenant?.type || "", // Забезпечуємо, що тип має значення
+    });
+  }, [tenant]);
 
   console.log(openCard);
 
@@ -335,6 +349,14 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
           </DialogActions>
         </form>
       </Dialog>
+      <ConfirmChangeModal
+        open={modalOpen}
+        title="Підтвердження змін"
+        description="Ви хочете залишити нове значення чи повернути старе?"
+        onConfirmNew={handleConfirmNew}
+        onRevertOld={handleRevertOld}
+        onClose={() => setModalOpen(false)}
+      />
     </div>
   );
 };

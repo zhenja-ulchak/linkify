@@ -5,6 +5,7 @@ import SideBar from "../../components/sidebar";
 import { useRouter } from "next/navigation";
 import ProtectedRole from "./ProtectRole";
 import { GlobalModalProvider } from "../providers/GlobalModalProvider";
+import { Box } from "@mui/material";
 
 export default function DashboardLayout({
   children,
@@ -37,7 +38,16 @@ export default function DashboardLayout({
   return (
     <>
       <SideBar setIsSideBarOpen={setIsSideBarOpen} />
-      <div style={{ display: "flex", marginLeft: "57px" }}>
+      <Box
+        sx={{
+          display: "flex",
+          marginLeft: "57px",
+          // "@media (max-width: 480px)": {
+          //   display: "flex",
+          //   marginLeft: "17px",
+          // },
+        }}
+      >
         <div
           style={{
             flex: 1,
@@ -51,7 +61,7 @@ export default function DashboardLayout({
           </ProtectedRole>
           <Footer />
         </div>
-      </div>
+      </Box>
     </>
   );
 }
