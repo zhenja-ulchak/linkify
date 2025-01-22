@@ -37,8 +37,9 @@ import { enqueueSnackbar } from "notistack";
 import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
 import LocaleSwitcher from "./LocaleSwitcher";
-import { useThemeContext } from '../context/ThemeContext';
+import { useThemeContext } from "../context/ThemeContext";
 import ThemeToggleButton from "./ThemeToggleButton";
+import InventoryIcon from '@mui/icons-material/Inventory';
 
 const drawerWidth = 240;
 
@@ -129,7 +130,6 @@ type MiniDrawerProps = {
 };
 
 export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
-
   // @ts-ignore
   const authUser = JSON.parse(sessionStorage.getItem("AuthUser"));
   const [TextRule, setTextRule] = useState("");
@@ -246,13 +246,10 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
             }}
           >
             <LocaleSwitcher />
-            <Box sx={{marginLeft: '20px'}}>
-
-            <ThemeToggleButton />
+            <Box sx={{ marginLeft: "20px" }}>
+              <ThemeToggleButton />
             </Box>
-           
           </div>
-        
         </Toolbar>
       </AppBar>
 
@@ -273,7 +270,9 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
           <ListItem disablePadding>
             <ListItemButton onClick={() => handleNavigation("/dashboard/user")}>
               <ListItemIcon className="DashboadAndTableIcon">
-                <DashboardIcon style={{ color: mode === 'light' ?  "black": "#fff" }} />
+                <DashboardIcon
+                  style={{ color: mode === "light" ? "black" : "#fff" }}
+                />
               </ListItemIcon>
               <ListItemText primary={t("DOCS-LIst")} />
             </ListItemButton>
@@ -286,27 +285,49 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
             const adminItems = [
               {
                 path: "/dashboard/admin",
-                icon: <AdminPanelSettingsIcon style={{  color: mode === 'light' ?  "black": "#fff" }} />,
+                icon: (
+                  <AdminPanelSettingsIcon
+                    style={{ color: mode === "light" ? "black" : "#fff" }}
+                  />
+                ),
                 text: t("admin"),
                 style: { backgroundColor: "pink" },
               },
               {
-                path: `/dashboard/admin/accounting-software/${authUser?.tenant_id || ""}`,
-                icon: <WysiwygIcon style={{ color: mode === 'light' ?  "black": "#fff" }} />,
+                path: `/dashboard/admin/product`,
+                icon: (
+                  <InventoryIcon
+                    style={{ color: mode === "light" ? "black" : "#fff" }}
+                  />
+                ),
                 text: (
                   <>
-                    {t("accounting")} <br /> {t("software")}
+                    {t("Product")} 
                   </>
                 ),
               },
-              {
-                path: `/dashboard/admin/dms-config/${authUser?.tenant_id || ""}`,
-                icon: <EngineeringIcon style={{ color: mode === 'light' ?  "black": "#fff" }} />,
-                text: t("dms-config"),
-              },
+
+              // {
+              //   path: `/dashboard/admin/accounting-software/${authUser?.tenant_id || ""}`,
+              //   icon: <WysiwygIcon style={{ color: mode === 'light' ?  "black": "#fff" }} />,
+              //   text: (
+              //     <>
+              //       {t("accounting")} <br /> {t("software")}
+              //     </>
+              //   ),
+              // },
+              // {
+              //   path: `/dashboard/admin/dms-config/${authUser?.tenant_id || ""}`,
+              //   icon: <EngineeringIcon style={{ color: mode === 'light' ?  "black": "#fff" }} />,
+              //   text: t("dms-config"),
+              // },
               {
                 path: "/dashboard/admin/user-list",
-                icon: <RecentActorsIcon style={{ color: mode === 'light' ?  "black": "#fff" }} />,
+                icon: (
+                  <RecentActorsIcon
+                    style={{ color: mode === "light" ? "black" : "#fff" }}
+                  />
+                ),
                 text:
                   locale === "en" ? (
                     t("user-list")
@@ -320,12 +341,20 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
               },
               {
                 path: "/dashboard/admin/SMTP-Email",
-                icon: <SupervisorAccountIcon style={{ color: mode === 'light' ?  "black": "#fff" }} />,
+                icon: (
+                  <SupervisorAccountIcon
+                    style={{ color: mode === "light" ? "black" : "#fff" }}
+                  />
+                ),
                 text: t("smtp-email"),
               },
               {
                 path: `/dashboard/admin/tenant/${authUser?.tenant_id || ""}`,
-                icon: <FormatListBulletedIcon style={{ color: mode === 'light' ?  "black": "#fff" }} />,
+                icon: (
+                  <FormatListBulletedIcon
+                    style={{ color: mode === "light" ? "black" : "#fff" }}
+                  />
+                ),
                 text: t("tenant"),
               },
             ];
@@ -333,13 +362,21 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
             const superAdminItems = [
               {
                 path: "/dashboard/superadmin",
-                icon: <SecurityIcon style={{ color: mode === 'light' ?  "black": "#fff" }} />,
+                icon: (
+                  <SecurityIcon
+                    style={{ color: mode === "light" ? "black" : "#fff" }}
+                  />
+                ),
                 text: t("superadmin"),
                 style: { backgroundColor: "green" },
               },
               {
                 path: "/dashboard/superadmin/accounting-software",
-                icon: <WysiwygIcon style={{ color: mode === 'light' ?  "black": "#fff" }} />,
+                icon: (
+                  <WysiwygIcon
+                    style={{ color: mode === "light" ? "black" : "#fff" }}
+                  />
+                ),
                 text: (
                   <>
                     {t("accounting")} <br /> {t("software")}
@@ -348,12 +385,20 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
               },
               {
                 path: "/dashboard/superadmin/dms-config",
-                icon: <EngineeringIcon style={{ color: mode === 'light' ?  "black": "#fff" }} />,
+                icon: (
+                  <EngineeringIcon
+                    style={{ color: mode === "light" ? "black" : "#fff" }}
+                  />
+                ),
                 text: t("dms-config"),
               },
               {
                 path: "/dashboard/superadmin/tenant",
-                icon: <FormatListBulletedIcon style={{ color: mode === 'light' ?  "black": "#fff" }} />,
+                icon: (
+                  <FormatListBulletedIcon
+                    style={{ color: mode === "light" ? "black" : "#fff" }}
+                  />
+                ),
                 text: t("tenant"),
               },
             ];
