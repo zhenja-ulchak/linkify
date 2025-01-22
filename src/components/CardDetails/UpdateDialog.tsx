@@ -119,10 +119,14 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
 
     const responseCheck: any = await ApiService.get(apiUrlGet, Auth);
 
-    if (responseCheck.status === 200 || responseCheck.success === true) {
+    if (checked) {
+      if (responseCheck.status === 200 || responseCheck.success === true) {
+        apiPutStart(initialTenant);
+      } else {
+        setModalOpen(true);
+      }
+    }else{
       apiPutStart(initialTenant);
-    } else {
-      setModalOpen(true);
     }
 
     setIsEditing(false);
@@ -147,11 +151,7 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
     } else if (tenant?.type === "lexoffice-cloud") {
       apiUrl = "accounting-software";
     }
-    const response: any = await ApiService.put(
-      `/${tenant.id}`,
-      obj,
-      Auth
-    );
+    const response: any = await ApiService.put(`/${tenant.id}`, obj, Auth);
 
     if (response instanceof Error) {
       const { status, variant, message } = ApiService.CheckAndShow(response, t);
@@ -185,8 +185,6 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
     "updated_by",
     "created_by",
   ];
-
- 
 
   useEffect(() => {
     if (openCard) {
@@ -313,7 +311,6 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
               gap: 2,
             }}
           >
-            {/* FormGroup зліва */}
             <Box
               sx={{
                 textAlign: "left",
@@ -335,7 +332,6 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
               </FormGroup>
             </Box>
 
-            {/* Кнопки справа */}
             <Box
               sx={{
                 display: "flex",
