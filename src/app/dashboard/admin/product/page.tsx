@@ -82,7 +82,7 @@ export default function SuperAdminTenant() {
         display: "flex",
         alignContent: "center",
         justifyContent: "center",
-        width: "80%",
+        width: "95%",
         flexDirection: "column",
         "@media (max-width: 480px)": {
           position: "relative",

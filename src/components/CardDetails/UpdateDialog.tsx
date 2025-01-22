@@ -42,6 +42,15 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
   const [extraSettings, setExtraSettings] = useState<Record<string, string>>(
     {}
   );
+  const [checked, setChecked] = useState(true); // Початкове значення - true (defaultChecked)
+
+  const handleChange = (event: {
+    target: { checked: boolean | ((prevState: boolean) => boolean) };
+  }) => {
+    setChecked(event.target.checked); // Оновлення стану
+    console.log("Чекбокс значення:", event.target.checked);
+  };
+  console.log(checked);
 
   // Ініціалізація extra_settings при першому рендері
   useEffect(() => {
@@ -122,26 +131,36 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
       apiUrl = "accounting-software";
     }
 
-    const response: any = await ApiService.put(
-      `${apiUrl}/${tenant.id}`,
-      initialTenant,
-      Auth
-    );
+    const responseCheck: any = await ApiService.get(apiUrl, Auth);
 
-    console.log(tenant?.type);
-    if (response instanceof Error) {
-      const { status, variant, message } = ApiService.CheckAndShow(response, t);
+    if (responseCheck.status === 200 || responseCheck.success === true) {
+      const response: any = await ApiService.put(
+        `${apiUrl}/${tenant.id}`,
+        initialTenant,
+        Auth
+      );
 
-      // @ts-ignore
-      enqueueSnackbar(message, { variant: variant });
+      if (response instanceof Error) {
+        const { status, variant, message } = ApiService.CheckAndShow(
+          response,
+          t
+        );
+
+        // @ts-ignore
+        enqueueSnackbar(message, { variant: variant });
+        setOpen(false);
+      }
+
+      if (response.status === 200 || response.success === true) {
+        enqueueSnackbar("Accounting entry updated successfully!", {
+          variant: "success",
+        });
+        setOpen(false);
+      }
+
       setOpen(false);
-    }
-
-    if (response.status === 200 || response.success === true) {
-      enqueueSnackbar("Accounting entry updated successfully!", {
-        variant: "success",
-      });
-      setOpen(false);
+    }else{
+      
     }
 
     setIsEditing(false);
@@ -274,16 +293,20 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
             {/* FormGroup зліва */}
             <Box
               sx={{
-               
                 textAlign: "left",
                 "@media (max-width: 600px)": {
                   flexBasis: "100%",
                 },
               }}
             >
-              <FormGroup sx={{marginLeft:'15px'}}>
+              <FormGroup sx={{ marginLeft: "15px" }}>
                 <FormControlLabel
-                  control={<Checkbox defaultChecked />}
+                  control={
+                    <Checkbox
+                      checked={checked} // Зв'язуємо стан зі значенням чекбокса
+                      onChange={handleChange} // Викликаємо функцію зміни стану
+                    />
+                  }
                   label="check the work"
                 />
               </FormGroup>
