@@ -13,16 +13,14 @@ export default function Admin() {
     { tenant_id: 100, document_type: "orderconfirmation", total_documents: 63, total_amount: "140,753.06" },
     { tenant_id: 100, document_type: "salesinvoice", total_documents: 2, total_amount: "5,088.00" },
     { tenant_id: 100, document_type: "creditnote", total_documents: 15, total_amount: "6,509.02" },
-    { tenant_id: 100, document_type: "invoice", total_documents: 3_025, total_amount: "2,008,621.20" },
-    { tenant_id: 100, document_type: "ALL", total_documents: 3_767, total_amount: "2,376,140.35" },
-    { tenant_id: 100, document_type: "ACC_SYNCED", total_documents: 3_767, total_amount: "2,376,140.35" },
-    { tenant_id: 100, document_type: "DMS_SYNCED", total_documents: 100, total_amount: "54,905.42" }
+    { tenant_id: 100, document_type: "invoice", total_documents: 3_025, total_amount: "2,008,621.20" }
+
   ];
   
 
   return (
     <>
-      {/* <ConfigPage /> */}
+ 
 
       <div
         style={{
@@ -76,10 +74,10 @@ export default function Admin() {
                       {item.document_type}
                     </Typography>
                     <Typography variant="h4" color="text.secondary">
-                      {item.total_amount}
+                    {item.total_documents}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      {item.total_documents}
+                        {item.total_amount}
                     </Typography>
                 
                   </CardContent>
@@ -90,19 +88,22 @@ export default function Admin() {
         </Grid>
         <Grid container spacing={3} sx={{ margin: "auto" }}>
           <Grid item xs={12} sm={4}>
-            {" "}
+            {"ALL"}
             <Speedometer value="70" />
           </Grid>
           <Grid item xs={12} sm={4}>
-            {" "}
+            {"ACC_SYNCED"}
             <Speedometer value="20" />
           </Grid>
           <Grid item xs={12} sm={4}>
-            {" "}
+            {"DMS_SYNCED"}
             <Speedometer value="30" />
           </Grid>
         </Grid>
+        <ConfigPage /> 
       </Box>
+
+        
     </>
   );
 }

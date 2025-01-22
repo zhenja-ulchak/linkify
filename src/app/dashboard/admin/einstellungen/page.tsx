@@ -64,17 +64,18 @@ const ConfigPage: React.FC = () => {
 
   return (
     // TODO FIX УДАЛИТИ МОДАЛКИ ЗРОБИТИ СИЛКИ НА ТАБЛИЦІ
-    <Container className="ContainerConfigPage" maxWidth="sm">
+    <Container sx={{marginTop:" 60px"}}>
+      <Typography variant="h4" gutterBottom sx={{textAlign: 'center', marginBottom: '30px'}}>
+      Settings Management
+      </Typography>
       <Box
-        className="BoxConfigPage"
-        display="flex"
-        flexDirection="column" // Встановлюємо вертикальне вирівнювання
-        alignItems="center" // Центруємо елементи по горизонталі
-        gap={2} // Додаємо відстань між кнопками
+       className="BoxConfigPage"
+       display="flex"
+       flexDirection="row" // Змінили на рядок
+       justifyContent="space-between" // Додаємо відстань між елементами в рядку
+       gap={2} // Додаємо відстань між кнопкамипками
       >
-        <Typography variant="h4" gutterBottom>
-          {t("einstellungen.admin")}
-        </Typography>
+        
 
         {/* Email Button */}
         <Button
