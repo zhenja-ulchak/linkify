@@ -285,7 +285,7 @@ export default function MiniDrawer({ setIsSideBarOpen }: MiniDrawerProps) {
             const locale = useLocale();
             const adminItems = [
               {
-                path: "/dashboard/admin/einstellungen",
+                path: "/dashboard/admin",
                 icon: <AdminPanelSettingsIcon style={{  color: mode === 'light' ?  "black": "#fff" }} />,
                 text: t("admin"),
                 style: { backgroundColor: "pink" },
