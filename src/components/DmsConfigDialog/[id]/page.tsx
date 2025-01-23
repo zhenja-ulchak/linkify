@@ -39,7 +39,11 @@ import DmsDialogForm from "@/components/SyncAccountDialogForm";
 import ButtonStatusCheck from "@/components/status/ButtonStatus";
 
 type TenantDetails = {
+  name: string
   id?: number;
+  host: string
+  port: string
+  path?: string
   tenant_id?: number;
   type: string;
   endpoint_url: string;
@@ -72,6 +76,10 @@ const DetailsTableDms: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
   // const [open, setOpen] = React.useState(false);
   const [updatedTenant, setUpdatedTenant] = useState<TenantDetails>({
+    name: "",
+    host: "",
+    port: "",
+    path: "",
     type: "",
     endpoint_url: "",
     username: "",
@@ -81,6 +89,10 @@ const DetailsTableDms: React.FC = () => {
     created_at: "",
     updated_at: "",
   });
+
+
+
+
   const [error, setError] = useState<string>("");
   const [modalTextColor, setModalTextColor] = useState("black");
   const [tenantDetails, setTenantDetails] = useState<TenantDetails | null>(
@@ -420,6 +432,48 @@ const DetailsTableDms: React.FC = () => {
             </Box>
 
             <DmsDialogForm selectedOption={selectedOption} />
+
+            <TextField
+              fullWidth
+              label={t("name")}
+              name="name"
+              value={updatedTenant.name}
+              onChange={handleEditChange}
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              fullWidth
+              label={t("ecoDmsHost")}
+              name="host"
+              value={updatedTenant.host}
+              onChange={handleEditChange}
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              fullWidth
+              label={t("ecoDmsPort")}
+              name="port"
+              value={updatedTenant.port}
+              onChange={handleEditChange}
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              fullWidth
+              label={t("ecoDmsUsername")}
+              name="username"
+              value={updatedTenant.username}
+              onChange={handleEditChange}
+              sx={{ mb: 2 }}
+            />
+          
+            <TextField
+              fullWidth
+              label={t("path")}
+              name="path"
+              value={updatedTenant.path}
+              onChange={handleEditChange}
+              sx={{ mb: 2 }}
+            />
 
             <Box sx={{ marginBottom: 2 }}>
               <TextField

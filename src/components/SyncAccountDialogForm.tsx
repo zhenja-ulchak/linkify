@@ -67,7 +67,7 @@ const DmsDialogForm = ({ selectedOption }: DmsDialogFormType) => {
       <Box sx={{ ...boxStyle }}>
         {selectedOption === "EcoDms" && (
           <>
-            <TextField
+            {/* <TextField
               fullWidth
               label={t("name")}
               name="name"
@@ -115,7 +115,7 @@ const DmsDialogForm = ({ selectedOption }: DmsDialogFormType) => {
               value={formData.path}
               onChange={handleInputChange}
               sx={{ mb: 2 }}
-            />
+            /> */}
             <FormControlLabel
               control={
                 <Checkbox

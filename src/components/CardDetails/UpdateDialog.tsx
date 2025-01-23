@@ -19,6 +19,7 @@ import { enqueueSnackbar } from "notistack";
 import { useTranslations } from "next-intl";
 import ApiService from "@/app/services/apiService";
 import ConfirmChangeModal from "../modal/confirmDialog/ConfirmationModalDialog";
+import DmsDialogForm from "../SyncAccountDialogForm";
 
 type DetailsFormUpdateType = {
   tenant: any;
@@ -125,7 +126,7 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
       } else {
         setModalOpen(true);
       }
-    }else{
+    } else {
       apiPutStart(initialTenant);
     }
 
@@ -281,7 +282,7 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
                         </Box>
                       ));
                     }
-
+                  
                     // Інші поля
                     return (
                       <Box key={key}>
@@ -298,6 +299,15 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
                         />
                       </Box>
                     );
+                  })}
+              {tenant &&
+                Object.keys(tenant)
+                  .filter((key) => !excludedFields.includes(key))
+                  .map((key) => {
+                    console.log(tenant[key]);
+                    if (tenant[key] === "EcoDms") {
+                      return <DmsDialogForm selectedOption={"EcoDms"} />;
+                    }
                   })}
             </Typography>
           </DialogContent>
