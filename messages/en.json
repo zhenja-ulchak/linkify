@@ -394,7 +394,9 @@
     "continue": "Continue",
     "confirmNewValue": "Confirm New Value",
     "revertOldValue": "Revert Old Value",
-    "Product": "Product"
+    "Product": "Product",
+    "chenge": "Chenge"
+
   },
   "LocaleSwitcher": {
     "en": "English",

@@ -211,7 +211,7 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
     });
   }, [tenant]);
 
-  console.log(openCard);
+  console.log(tenant);
 
   return (
     <div
@@ -234,9 +234,9 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
         fullWidth
       >
         <DialogTitle id="alert-dialog-title">
-          {t("Accounting-Software.changeaccounting")}
+          {t('chenge')} {tenant?.name}
         </DialogTitle>
-        <DialogContent>
+        <DialogContent >
           <form onSubmit={handleSaveChanges}>
             {tenant &&
               Object.keys(tenant)
@@ -247,7 +247,7 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
                     return Object.keys(extraSettings).map((subKey, index) => (
                       <Box key={`${key}-${subKey}-${index}`}>
                         <TextField
-                          sx={{ marginBottom: 2 }}
+                          sx={{ marginBottom: 2, marginTop:1 }}
                           id={subKey}
                           name={subKey}
                           value={extraSettings[subKey] || ""}
@@ -275,13 +275,46 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
                       </Box>
                     ));
                   }
-                  console.log(key);
+
+                  // if(key === "additional_settings"){
+                  //    return Object.keys(extraSettings).map((subKey, index) => (
+                  //     <Box key={`${key}-${subKey}-${index}`}>
+                  //       <TextField
+                  //         sx={{ marginBottom: 2, marginTop:1 }}
+                  //         id={subKey}
+                  //         name={subKey}
+                  //         value={extraSettings[subKey] || ""}
+                  //         onChange={(e) => {
+                  //           const { name, value } = e.target;
+
+                  //           // Оновлення стану extraSettings
+                  //           setExtraSettings((prevSettings) => ({
+                  //             ...prevSettings,
+                  //             [name]: value,
+                  //           }));
+
+                  //           setTenantDetails((prevTenant: any) => ({
+                  //             ...prevTenant,
+                  //             [key]: JSON.stringify({
+                  //               ...extraSettings,
+                  //               [name]: value,
+                  //             }),
+                  //           }));
+                  //         }}
+                  //         label={t(`extra_settings.${subKey}`)}
+                  //         variant="outlined"
+                  //         fullWidth
+                  //       />
+                  //     </Box>
+                  //   ));
+                  // }
+                
 
                   // Інші поля
                   return (
                     <Box key={key}>
                       <TextField
-                        sx={{ marginBottom: 2 }}
+                        sx={{ marginBottom: 2, marginTop:1 }}
                         id={key}
                         name={key}
                         //@ts-ignore
@@ -306,7 +339,7 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
           </form>
         </DialogContent>
 
-        {/* <DialogActions
+        <DialogActions
           sx={{
             display: "flex",
             flexWrap: "wrap",
@@ -355,7 +388,7 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
               {t("Accounting-Software.ok")}
             </Button>
           </Box>
-        </DialogActions> */}
+        </DialogActions>
       </Dialog>
       <ConfirmChangeModal
         open={modalOpen}
