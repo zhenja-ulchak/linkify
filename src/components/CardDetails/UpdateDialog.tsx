@@ -238,19 +238,15 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
         </DialogTitle>
         <form onSubmit={handleSaveChanges}>
           <DialogContent>
-            <Typography
-              variant="body1"
-              component="span"
-              id="alert-dialog-description"
-            >
+      
               {tenant &&
                 Object.keys(tenant)
                   .filter((key) => !excludedFields.includes(key))
                   .map((key) => {
                     if (key === "extra_settings") {
                       // Відображаємо інпути для кожного налаштування в extraSettings
-                      return Object.keys(extraSettings).map((subKey) => (
-                        <Box key={`${key}-${subKey}`}>
+                      return Object.keys(extraSettings).map((subKey,index) => (
+                        <Box key={`${key}-${subKey}-${index}`}>
                           <TextField
                             sx={{ marginBottom: 2 }}
                             id={subKey}
@@ -310,7 +306,7 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
                       return <DmsDialogForm selectedOption={"EcoDms"} />;
                     }
                   })}
-            </Typography>
+          
           </DialogContent>
 
           <DialogActions

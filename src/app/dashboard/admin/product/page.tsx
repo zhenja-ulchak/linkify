@@ -117,7 +117,7 @@ export default function SuperAdminTenant() {
               sx={{ maxWidth: 345, minHeight: "300px" }}
               onClick={() => handleCardClick(item)}
             >
-              <CardActionArea>
+              <CardActionArea component="div">
                 <Box sx={{ float: "right", marginRight: 2, marginTop: 2 }}>
                   <ButtonStatusCheck
                     isLoadPage={isLoadPage}
@@ -166,7 +166,7 @@ export default function SuperAdminTenant() {
         ))}
         <Grid item xs={12} sm={6} md={4}>
           <Card sx={{ maxWidth: 345, minHeight: "300px" }}>
-            <CardActionArea>
+            <CardActionArea component="div">
               <Box sx={{ float: "right", marginRight: 2, marginTop: 2 }}>
                 <ButtonStatusCheck
                   isLoadPage={isLoadPage}

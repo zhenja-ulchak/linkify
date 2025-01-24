@@ -271,6 +271,33 @@
       "dateTime": "Date+Time",
       "notFound": "Not Found"
     },
+    "fields": {
+      "tenant_id": "Tenant ID",
+      "name": "Name",
+      "type": "Type",
+      "url": "URL",
+      "api_key": "API Key",
+      "organization_id": "Organization ID",
+      "event_type": "Event Type",
+      "description": "Description",
+      "additional_settings": "Additional Settings",
+      "is_active": "Is Active",
+      "endpoint_url": "Endpoint URL",
+      "endpoint_local_url": "Endpoint Local URL",
+      "endpoint_port": "Endpoint Port",
+      "endpoint_local_port": "Endpoint Local Port",
+      "username": "Username",
+      "password": "Password",
+      "repository": "Repository",
+      "extra_settings": "Extra Settings"
+    },
+    "extra_settings": {
+      "theme": "Theme",
+      "language": "Language",
+      "notifications": "Notifications",
+      "setting1": "setting1",
+      "setting2": "setting2"
+    },
     "login": "Login",
     "username": "Username",
     "password": "Password",
@@ -367,7 +394,7 @@
     "continue": "Continue",
     "confirmNewValue": "Confirm New Value",
     "revertOldValue": "Revert Old Value",
-    "product": "Product"
+    "Product": "Product"
   },
   "LocaleSwitcher": {
     "en": "English",
@@ -399,6 +426,7 @@
     "accounting": "Accounting",
     "software": "Software",
     "user": "User",
+    "Product": "Product",
     "list": "List"
   },
   "Document-Table": {
