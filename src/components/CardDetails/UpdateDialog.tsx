@@ -236,130 +236,126 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
         <DialogTitle id="alert-dialog-title">
           {t("Accounting-Software.changeaccounting")}
         </DialogTitle>
-        <form onSubmit={handleSaveChanges}>
-          <DialogContent>
-      
-              {tenant &&
-                Object.keys(tenant)
-                  .filter((key) => !excludedFields.includes(key))
-                  .map((key) => {
-                    if (key === "extra_settings") {
-                      // Відображаємо інпути для кожного налаштування в extraSettings
-                      return Object.keys(extraSettings).map((subKey,index) => (
-                        <Box key={`${key}-${subKey}-${index}`}>
-                          <TextField
-                            sx={{ marginBottom: 2 }}
-                            id={subKey}
-                            name={subKey}
-                            value={extraSettings[subKey] || ""}
-                            onChange={(e) => {
-                              const { name, value } = e.target;
-
-                              // Оновлення стану extraSettings
-                              setExtraSettings((prevSettings) => ({
-                                ...prevSettings,
-                                [name]: value,
-                              }));
-
-                              setTenantDetails((prevTenant: any) => ({
-                                ...prevTenant,
-                                [key]: JSON.stringify({
-                                  ...extraSettings,
-                                  [name]: value,
-                                }),
-                              }));
-                            }}
-                            label={
-                              t(`extra_settings.${subKey}`)
-                            }
-                            variant="outlined"
-                            fullWidth
-                          />
-                        </Box>
-                      ));
-                    }
-                  console.log(key);
-                  
-                    // Інші поля
-                    return (
-                      <Box key={key}>
+        <DialogContent>
+          <form onSubmit={handleSaveChanges}>
+            {tenant &&
+              Object.keys(tenant)
+                .filter((key) => !excludedFields.includes(key))
+                .map((key) => {
+                  if (key === "extra_settings") {
+                    // Відображаємо інпути для кожного налаштування в extraSettings
+                    return Object.keys(extraSettings).map((subKey, index) => (
+                      <Box key={`${key}-${subKey}-${index}`}>
                         <TextField
                           sx={{ marginBottom: 2 }}
-                          id={key}
-                          name={key}
-                          //@ts-ignore
-                          value={tenantDetails[key] || ""}
-                          onChange={(e) => handleEditChange(e)} // Використовуємо handleEditChange
-                          label={t(`fields.${key}`)}
+                          id={subKey}
+                          name={subKey}
+                          value={extraSettings[subKey] || ""}
+                          onChange={(e) => {
+                            const { name, value } = e.target;
+
+                            // Оновлення стану extraSettings
+                            setExtraSettings((prevSettings) => ({
+                              ...prevSettings,
+                              [name]: value,
+                            }));
+
+                            setTenantDetails((prevTenant: any) => ({
+                              ...prevTenant,
+                              [key]: JSON.stringify({
+                                ...extraSettings,
+                                [name]: value,
+                              }),
+                            }));
+                          }}
+                          label={t(`extra_settings.${subKey}`)}
                           variant="outlined"
                           fullWidth
                         />
                       </Box>
-                    );
-                  })}
-              {tenant &&
-                Object.keys(tenant)
-                  .filter((key) => !excludedFields.includes(key))
-                  .map((key) => {
-                    console.log(tenant[key]);
-                    if (tenant[key] === "EcoDms") {
-                      return <DmsDialogForm selectedOption={"EcoDms"} />;
-                    }
-                  })}
-          
-          </DialogContent>
+                    ));
+                  }
+                  console.log(key);
 
-          <DialogActions
+                  // Інші поля
+                  return (
+                    <Box key={key}>
+                      <TextField
+                        sx={{ marginBottom: 2 }}
+                        id={key}
+                        name={key}
+                        //@ts-ignore
+                        value={tenantDetails[key] || ""}
+                        onChange={(e) => handleEditChange(e)} // Використовуємо handleEditChange
+                        label={t(`fields.${key}`)}
+                        variant="outlined"
+                        fullWidth
+                      />
+                    </Box>
+                  );
+                })}
+            {tenant &&
+              Object.keys(tenant)
+                .filter((key) => !excludedFields.includes(key))
+                .map((key) => {
+                  console.log(tenant[key]);
+                  if (tenant[key] === "EcoDms") {
+                    return <DmsDialogForm selectedOption={"EcoDms"} />;
+                  }
+                })}
+          </form>
+        </DialogContent>
+
+        {/* <DialogActions
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
+            alignItems: "center",
+            gap: 2,
+          }}
+        >
+          <Box
             sx={{
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "space-between",
-              alignItems: "center",
-              gap: 2,
+              textAlign: "left",
+              "@media (max-width: 600px)": {
+                flexBasis: "100%",
+              },
             }}
           >
-            <Box
-              sx={{
-                textAlign: "left",
-                "@media (max-width: 600px)": {
-                  flexBasis: "100%",
-                },
-              }}
-            >
-              <FormGroup sx={{ marginLeft: "15px" }}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={checked} // Зв'язуємо стан зі значенням чекбокса
-                      onChange={handleChange} // Викликаємо функцію зміни стану
-                    />
-                  }
-                  label="check the work"
-                />
-              </FormGroup>
-            </Box>
+            <FormGroup sx={{ marginLeft: "15px" }}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={checked} // Зв'язуємо стан зі значенням чекбокса
+                    onChange={handleChange} // Викликаємо функцію зміни стану
+                  />
+                }
+                label="check the work"
+              />
+            </FormGroup>
+          </Box>
 
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "flex-end",
-                gap: 2,
-                flexBasis: "30%",
-                "@media (max-width: 600px)": {
-                  flexBasis: "100%",
-                  justifyContent: "center",
-                },
-              }}
-            >
-              <Button onClick={handleClose} variant="outlined">
-                {t("Accounting-Software.cancel")}
-              </Button>
-              <Button type="submit" color="primary" variant="contained">
-                {t("Accounting-Software.ok")}
-              </Button>
-            </Box>
-          </DialogActions>
-        </form>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+              gap: 2,
+              flexBasis: "30%",
+              "@media (max-width: 600px)": {
+                flexBasis: "100%",
+                justifyContent: "center",
+              },
+            }}
+          >
+            <Button onClick={handleClose} variant="outlined">
+              {t("Accounting-Software.cancel")}
+            </Button>
+            <Button type="submit" color="primary" variant="contained">
+              {t("Accounting-Software.ok")}
+            </Button>
+          </Box>
+        </DialogActions> */}
       </Dialog>
       <ConfirmChangeModal
         open={modalOpen}
