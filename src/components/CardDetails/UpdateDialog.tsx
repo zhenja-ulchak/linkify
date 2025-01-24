@@ -274,7 +274,7 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
                               }));
                             }}
                             label={
-                              subKey.charAt(0).toUpperCase() + subKey.slice(1)
+                              t(`extra_settings.${subKey}`)
                             }
                             variant="outlined"
                             fullWidth
@@ -282,6 +282,7 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
                         </Box>
                       ));
                     }
+                  console.log(key);
                   
                     // Інші поля
                     return (
@@ -293,7 +294,7 @@ const DetailsFormUpdate = ({ tenant, openCard }: DetailsFormUpdateType) => {
                           //@ts-ignore
                           value={tenantDetails[key] || ""}
                           onChange={(e) => handleEditChange(e)} // Використовуємо handleEditChange
-                          label={key.charAt(0).toUpperCase() + key.slice(1)}
+                          label={t(`fields.${key}`)}
                           variant="outlined"
                           fullWidth
                         />

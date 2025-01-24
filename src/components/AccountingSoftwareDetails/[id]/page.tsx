@@ -37,8 +37,7 @@ import AccountingDialog from "@/components/modal/AccountingSoftwareDialog";
 import { SelectChangeEvent } from "@mui/material";
 import ConfirmDeleteModal from "@/components/modal/ConfirmDeleteModal";
 import ButtonStatusCheck from "@/components/status/ButtonStatus";
-import ReplayIcon from '@mui/icons-material/Replay';
-
+import ReplayIcon from "@mui/icons-material/Replay";
 
 type TenantDetails = {
   id?: number;
@@ -49,6 +48,7 @@ type TenantDetails = {
   organization_id: string;
   event_type: string | null;
   description: string;
+  api_key: string | null;
   additional_settings?: {
     region: string;
   };
@@ -86,6 +86,7 @@ const DetailsTable: React.FC = () => {
     name: "",
     type: "",
     url: "",
+    api_key: null,
     organization_id: "",
     event_type: null,
     description: "",
@@ -97,6 +98,10 @@ const DetailsTable: React.FC = () => {
     deleted_at: null,
   });
   const [initialTenant, setInitialTenant] = useState<any>();
+
+console.log(tenantDetails);
+
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData: any) => ({
@@ -158,7 +163,7 @@ const DetailsTable: React.FC = () => {
           variant: "success",
         });
         setTenantDetails(response.data);
-        setIsLoadPage(true)
+        setIsLoadPage(true);
       }
 
       if (response?.data && response.data) {
@@ -280,10 +285,14 @@ const DetailsTable: React.FC = () => {
       <Grid container spacing={2} style={{ width: "100%" }}>
         <Grid item xs={12} style={{ textAlign: "center" }}>
           <h3>{t("Accounting-Software.details")}</h3>
-        <Box sx={{float: "right"}}>
-
-        <ButtonStatusCheck isLoadPage={isLoadPage} Url="accounting-software/ping" textOnline="ONLINE" textOffline="OFFLINE"/>
-        </Box>
+          <Box sx={{ float: "right" }}>
+            <ButtonStatusCheck
+              isLoadPage={isLoadPage}
+              Url="accounting-software/ping"
+              textOnline="ONLINE"
+              textOffline="OFFLINE"
+            />
+          </Box>
           <Grid container spacing={2}>
             {addNewDetails ? (
               <AccountingDialog tenantDetails={tenantDetails} />
@@ -512,40 +521,13 @@ const DetailsTable: React.FC = () => {
                     onChange={handleEditChange}
                   />
                 </Box>
-
                 <Box sx={{ marginBottom: 2 }}>
                   <TextField
                     fullWidth
-                    label={t("New-password")}
-                    name="password"
-                    required
-                    type="password"
-                    value={formData.password}
-                    onChange={handleInputChange}
-                    error={!!formData.password && formData.password.length < 8} // Перевірка на мінімальну довжину
-                    helperText={
-                      formData.password && formData.password.length < 8
-                        ? t("password-length-error")
-                        : ""
-                    } // Повідомлення про помилку
-                  />
-                </Box>
-
-                <Box sx={{ marginBottom: 2 }}>
-                  <TextField
-                    fullWidth
-                    label={t("confirmation-password")}
-                    name="confirmationPassword"
-                    required
-                    type="password"
-                    value={formData.confirmationPassword}
-                    onChange={handleInputChange}
-                    error={formData.confirmationPassword !== formData.password} // Перевірка на збіг паролів
-                    helperText={
-                      formData.confirmationPassword !== formData.password
-                        ? t("password-mismatch")
-                        : ""
-                    } // Повідомлення про помилку
+                    label={t("Accounting-Software.api_key")}
+                    name="api_key"
+                    value={updatedTenant.api_key || ""}
+                    onChange={handleEditChange}
                   />
                 </Box>
               </Typography>

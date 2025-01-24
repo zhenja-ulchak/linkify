@@ -364,7 +364,10 @@
     "tariff": "Tariff: ",
     "renewal_question": "Would you like to renew it?",
     "logout-message": "Logout successful!",
-    "continue": "Continue"
+    "continue": "Continue",
+    "confirmNewValue": "Confirm New Value",
+    "revertOldValue": "Revert Old Value",
+    "product": "Product"
   },
   "LocaleSwitcher": {
     "en": "English",
