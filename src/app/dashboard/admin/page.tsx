@@ -87,17 +87,17 @@ export default function Admin() {
           ))}
         </Grid>
         <Grid container spacing={3} sx={{ margin: "auto" }}>
-          <Grid item xs={12} sm={4}>
+          <Grid sx={{ textAlign: "center" }} item xs={12} sm={4}>
             {"ALL"}
             <Speedometer value="70" />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid sx={{ textAlign: "center"  }} item xs={12} sm={4}>
             {"ACC_SYNCED"}
             <Speedometer value="20" />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid sx={{textAlign: "center"  }} item xs={12} sm={4}>
             {"DMS_SYNCED"}
-            <Speedometer value="30" />
+            <Speedometer  value="30" />
           </Grid>
         </Grid>
         <ConfigPage /> 
